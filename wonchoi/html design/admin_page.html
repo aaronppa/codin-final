@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Page</title>
+<link rel="stylesheet" type="text/css" href="table.css">
+<style>
+.container{
+    width: 80%;
+    margin: auto;
+    border: 1px solid skyblue;
+}
+
+table, tr, th, td{
+    border: 1px solid black;
+}
+
+table{
+    width: 990px;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+h3{
+    text-indent: 5%;
+}
+
+.search{
+    text-indent: 5%;
+    margin-bottom: 15px;
+}
+
+button#write{
+    margin-left: 5%;
+    margin-bottom: 10px;
+}
+
+tbody > tr:hover{
+    background-color: #f4e8e6 !important;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.datetime{
+    width: 160px;
+    text-align: center;
+}
+
+.status{
+    width: 40px;
+    text-align: center;
+}
+
+.membername{
+    width: 150px;
+    text-align: center;
+}
+
+.listno{
+    max-width: 25px !important;
+    text-align: center;
+}
+
+</style>
+</head>
+<body>
+    <div class="main container">
+        <div class="listarea">
+            <h3>수의사 인증 요청 리스트</h3>
+             <table class="clickable">
+                <thead>
+                <tr>
+                    <th class="listno">요청 번호</th>
+                    <th class="datetime">요청 날짜</th>
+                    <th class="membername">요청자 이름</th>
+                    <th>요청자 계정</th>
+                    <th class="status">상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td class="listno">1</td><td class="datetime">2018-11-28 HH:mm:SS</td><td class="membername">홍길동</td><td>hong@hongvet.com</td><td class="status">신규</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="listarea">
+            <h3>신고 접수 리스트</h3>
+             <table class="clickable">
+                    <thead>
+                <tr>
+                    <th class="listno">신고 번호</th>
+                    <th class="datetime">신고 날짜</th>
+                    <th>신고자 계정</th>
+                    <th>신고 유형</th>
+                    <th class="status">상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td class="listno">10</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">9</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">8</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">7</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">6</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">5</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">4</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">3</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">2</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                <tr><td class="listno">1</td><td class="datetime">2018-11-28 HH:mm:SS</td><td>hong@hongvet.com</td><td>유해 게시글</td><td class="status">신규</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="listarea">
+            <h3>사이트 전체 공지 게시판</h3>
+            <button type="button" id="write">글작성</button>
+             <table class="clickable">
+                <thead>
+                <tr>
+                    <th class="listno">공지글 번호</th>
+                    <th>유형</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th class="datetime">작성날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td class="listno">1</td><td>서버점검</td><td>서버점검 안내</td><td>serveradmin@myvet.com</td><td class="datetime">2018-11-28 HH:mm:SS</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="listarea">
+            <h3>회원관리(검색)</h3>
+            <div class="search">
+            <form action="">
+                회원검색: 
+                <select>
+                    <option>=검색유형선택=</option>
+                    <option>계정</option>
+                    <option>닉네임</option>
+                    <option>이름</option>
+                    <option>구분</option>
+                    <option>상태</option>
+                </select>
+                <input type="search">
+            </form>
+            </div>
+             <table class="clickable">
+                <thead>
+                <tr>
+                    <th class="listno">회원 번호</th>
+                    <th>회원 계정</th>
+                    <th>회원 닉네임</th>
+                    <th class="membername">회원 이름</th>
+                    <th>회원 구분</th>
+                    <th class="status">회원 상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td class="listno">3</td><td>hong@hongvet.com</td><td>서버관리자</td><td class="membername">조용제</td><td>a</td><td class="status">정상</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
