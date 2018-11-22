@@ -11,7 +11,6 @@ CREATE TABLE member (
 	hos_code             INT           NULL,     -- hos_code
 	member_career        VARCHAR(1000) NULL,     -- member_career
 	mailing_opt          CHAR          NULL,     -- mailing_opt
-	member_file_no       INT           NULL,     -- member_file_no
 	member_ori_name      VARCHAR(50)   NULL,     -- member_ori_name
 	member_sys_name      VARCHAR(50)   NULL,     -- member_sys_name
 	member_file_path     VARCHAR(50)   NULL,     -- member_file_path
@@ -43,7 +42,6 @@ CREATE TABLE pet (
 	pet_age           INT           NULL,     -- pet_age
 	weight            INT           NULL,     -- weight
 	remark            VARCHAR(4000) NULL,     -- remark
-	pet_file_no       INT           NULL,     -- pet_file_no
 	pet_ori_name      VARCHAR(50)   NULL,     -- pet_ori_name
 	pet_sys_name      VARCHAR(50)   NULL,     -- pet_sys_name
 	pet_file_path     VARCHAR(50)   NULL,     -- pet_file_path
