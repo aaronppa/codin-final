@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.NoticeMapper">
+	<resultMap type="Notice" id="noticeMap">
+		<result column="notice_no" property="noticeNo"/>		
+		<result column="notice_title" property="noticeTitle"/>		
+		<result column="notice_writer" property="noticeWriter"/>		
+		<result column="notice_reg_date" property="noticeRegDate"/>		
+		<result column="notice_view_cnt" property="noticeViewCnt"/>		
+		<result column="notice_content" property="noticeContent"/>		
+		<result column="temp_save" property="tempSave"/>
+<!-- 		<association column="notice_writer" property="noticeMember" select="selectMemberByNo"></association> -->
+	</resultMap>
+	
+	<select id="noticeList" parameterType="Page" resultMap="noticeMap">
+		select *
+		from notice
+		where temp_save = 0
+		order by notice_no desc
+		limit #{begin}, #{pageNum}
+	</select>
+	
+	<select id="noticeDetail" parameterType="int" resultMap="noticeMap">
+		select *
+		from notice
+		where notice_no = #{no}
+	</select>
+	
+	<select id="noticeCount" resultType="int">
+		select count(*)
+		from notice
+	</select>
+	
+</mapper>

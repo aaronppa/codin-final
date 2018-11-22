@@ -9,5 +9,7 @@
 </head>
 <body>
 	index 접속 확인
+	
+	<a href="<c:url value='/notice/list.do'/>">공지사항</a>
 </body>
 </html>
