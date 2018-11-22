@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <style>
+    .notes-wrapper .saver-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+*, *:before, *:after, h2, p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  background-color: transparent;
+}
+*:focus, *:before:focus, *:after:focus, h2:focus, p:focus {
+  outline: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 50px 0;
+  margin: 0;
+  background-color: #eee;
+  font-family: 'Source Sans Pro';
+  padding-bottom: 50px;
+}
+
+.notes-wrapper {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  height: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  position: relative;
+  z-index: 999;
+  
+}
+.notes-wrapper .saver-wrap {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.notes-wrapper .saver-wrap .notes-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #D1D3D6;
+  border-radius: 50px;
+  transition: .1s ease-in-out;
+}
+.notes-wrapper .saver-wrap .notes-dot.saved {
+  background-color: #66cc8f;
+  transition: .1s ease-in-out;
+  transition-delay: 2.10s;
+}
+.notes-wrapper .saver-wrap .rest {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  clip: rect(0, 30px, 30px, 15px);
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  left: calc(50% - 15px);
+  top: calc(50% - 15px);
+}
+.notes-wrapper .saver-wrap .rest.active {
+  -webkit-animation: animate 1.05s linear 2;
+          animation: animate 1.05s linear 2;
+}
+.notes-wrapper .saver-wrap .rest.active:after {
+  -webkit-animation: animate2 1.05s linear 2;
+          animation: animate2 1.05s linear 2;
+}
+.notes-wrapper .saver-wrap .rest:after {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  clip: rect(0, 30px, 30px, 15px);
+  content: '';
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+}
+.notes-wrapper .writer {
+  padding: 25px 30px;
+  padding-right: 60px;
+  font-weight: 600;
+  color: #000C2F;
+  font-size: 13px;
+  text-transform: uppercase;
+  position: relative;
+}
+.notes-wrapper .title {
+  padding: 25px 30px;
+  padding-right: 60px;
+  font-weight: 600;
+  color: #000C2F;
+  font-size: 13px;
+  text-transform: uppercase;
+  position: relative;
+}
+.notes-wrapper .content {
+  padding: 10px 30px;
+  padding-bottom: 15px;
+  font-weight: 400;
+  color: #666D82;
+  line-height: 1.4;
+  font-size: 14px;
+}
+.notes-wrapper .content span.bold {
+  font-weight: 700;
+}
+.notes-wrapper .content img {
+  width: 90%;
+  border-radius: 5px;
+  margin: 15px 5%;
+}
+.notes-wrapper .line {
+  width: 95%;
+  margin: 0 auto;
+  height: 1px;
+  background-color: #CCCED5;
+}
+.notes-wrapper .comment {
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 13px;
+  color: #999EAC;
+  position: relative;
+}
+.notes-wrapper .getImg {
+  width: 60px;
+  height: 60px;
+  /* position: left; */
+  /* position: absolute; */
+  bottom: 0;
+  /* right: -15px; */
+  text-align: center;
+  cursor: pointer;
+}
+.notes-wrapper .getImg .fa-camera-retro {
+  line-height: 60px;
+  /* color: #999EAC; */
+  color:black;
+  font-size: 30px;
+  text-align: left;
+}
+
+.listnsub {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  
+  height: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  /* position: relative; */
+  z-index: 999;
+  font-size: 25px;
+}
+.rounded-circle{
+    width: 50px;
+    height: 50px;
+}
+
+
+@-webkit-keyframes animate {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform: rotate(220deg);
+            transform: rotate(220deg);
+  }
+}
+
+@keyframes animate {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform: rotate(220deg);
+            transform: rotate(220deg);
+  }
+}
+@-webkit-keyframes animate2 {
+  0% {
+    box-shadow: inset #D1D3D6 0 0 0 2px;
+    -webkit-transform: rotate(-140deg);
+            transform: rotate(-140deg);
+  }
+  100% {
+    box-shadow: inset #D1D3D6 0 0 0 2px;
+    -webkit-transform: rotate(140deg);
+            transform: rotate(140deg);
+  }
+}
+@keyframes animate2 {
+  0% {
+    box-shadow: inset #D1D3D6 0 0 0 2px;
+    -webkit-transform: rotate(-140deg);
+            transform: rotate(-140deg);
+  }
+  100% {
+    box-shadow: inset #D1D3D6 0 0 0 2px;
+    -webkit-transform: rotate(140deg);
+            transform: rotate(140deg);
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div class="notes-wrapper">
+            <div class="saver-wrap" contenteditable="false">
+                <div class="notes-dot" contenteditable="false"></div>
+                <div class="rest" contenteditable="false"></div>
+            </div>
+            <div class="writer" aria-placeholder="writer..">
+                <img src="../images/pony01.jpg" class="rounded-circle">&nbsp;writer
+            </div>
+            <div class="title" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);" aria-placeholder="title..">
+                title
+            </div>
+            <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                Content...
+            </div>
+            <!-- <div class="line"></div>
+            <div class="comment"></div> -->
+            <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
+            <div class="getImg" onclick="document.getElementById('selectedFile').click();">
+                <i class="fas fa-camera-retro"></i>
+            </div>
+            <div class="listnsub">
+                <a href="./news-list.html">
+                    <i class="fas fa-list-ul" style="float:left;"></i>
+                </a>
+                <i class="fas fa-file-upload"></i>
+            </div>    
+        </div>
+        
+    
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script>
+        var typingTimer;
+        var doneTypingInterval = 10;
+        var finaldoneTypingInterval = 2000;
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        };
+
+        var today = new Date();
+        var m = today.getMonth();
+        var d = today.getDate();
+
+        m = checkTime(m);
+        d = checkTime(d);
+
+        $('.content, .title').keydown(function() {
+            clearTimeout(typingTimer);
+            if ($('.content, .title').val) {
+                typingTimer = setTimeout(function() {
+                $(".rest").removeClass('active');
+                    $(".notes-dot").removeClass('saved');
+                }, doneTypingInterval);
+            }
+        });
+
+        $('.content, .title').keyup(function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function() {
+                $('.rest').addClass('active');
+                $('.notes-dot').addClass('saved');
+                $('.comment').html('Last updated by you on ' + d + '/' + m +'')
+            }, finaldoneTypingInterval);
+        });
+
+        function previewFile() {
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader  = new FileReader();
+
+            reader.onloadend = function () {
+                reader.result;
+                console.log(reader.result)
+                $('.content').append('<img src="' + reader.result + '" />');
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(function() {
+                    $('.rest').addClass('active');
+                    $('.notes-dot').addClass('saved');
+                    $('.comment').html('Last updated by you on ' + d + '/' + m +'')
+                }, finaldoneTypingInterval);
+            } else {
+            }
+        }
+
+        document.onpaste = function(event){
+            var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            console.log(JSON.stringify(items)); // will give you the mime types
+            for (index in items) {
+                var item = items[index];
+                if (item.kind === 'file') {
+                var blob = item.getAsFile();
+                var reader = new FileReader();
+                reader.onload = function(event){
+                        console.log(event.target.result); // data url!
+                        $('.content').append('<img src="' + event.target.result + '" />');
+                        $('.comment').html('Last updated by you on ' + d + '/' + m +'')
+                    };
+                reader.readAsDataURL(blob);
+                }
+            }
+        }
+        </script>
+</body>
+</html>

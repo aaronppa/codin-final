@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!---->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <style>
+        body {
+            padding:30px 30px;
+        }
+
+        /*category*/
+        @import "compass/css3";
+        
+        select[disabled]{
+        color:#aaa;
+        }
+        h1{color:#563d7c;}
+
+
+        /*search*/
+        .mb-3{
+            margin-left: 70%;
+        }
+        .dropdown-toggle{
+            background: none;
+        }
+        .dropdown-toggle:hover{
+            opacity: 0.5;
+            /* color:white; */
+        }
+        /*검색입력창*/
+        .input-search{
+            border:none;
+            width: 280px;
+            color: saddlebrown;
+        }
+        /*검색버튼*/
+        .btn-outline{
+            background: none;
+            border:none;
+        }
+        .btn-outline:hover{
+            border:none;
+            opacity: 0.5;
+        }
+
+        input#search-bar {
+        margin: 0 auto;
+        width: 100%;
+        height: 45px;
+        padding: 0 20px;
+        font-size: 1rem;
+        border: 1px solid #D0CFCE;
+        outline: none;
+        }
+        input#search-bar:focus {
+        border: 1px solid #008ABF;
+        transition: 0.20s ease;
+        color: #008ABF;
+        }
+        input#search-bar:focus::-webkit-input-placeholder {
+        transition: opacity 0.45s ease;
+        opacity: 0;
+        }
+        input#search-bar:focus::-moz-placeholder {
+        transition: opacity 0.45s ease;
+        opacity: 0;
+        }
+        input#search-bar:focus:-ms-placeholder {
+        transition: opacity 0.45s ease;
+        opacity: 0;
+        }
+
+        .search-icon {
+        position: relative;
+        float: right;
+        width: 75px;
+        height: 75px;
+        top: -62px;
+        right: -10px;
+        }
+        .search-icon:hover{
+            transform: scale(1.5);
+            transition: 0.5s;
+        }
+        
+        /*writeBtn*/
+        .btn-light:hover{
+            background: black;
+            color: white;
+            transition: .5s;
+        }
+        
+        /*table*/
+        tr:hover{
+            background: gray;
+            opacity: 0.8;
+        }
+        .no{
+            width:10%;
+        }
+        .writer{
+            width:15%;
+        }
+        .reg_date{
+            width:15%;
+        }
+        .view_cnt{
+            width:15%;
+        }
+        /*pagenation*/
+   
+
+    </style>
+</head>
+<body>
+    
+    <!--search-->
+    <!--category-->
+    <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Title</button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Title</a>
+                <a class="dropdown-item" href="#">Content</a>
+                <div role="separator" class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Title + Content</a>
+              </div>
+            </div>
+            <input type="text" class="input-search" placeholder="search">
+            <button type="button" class="btn btn-outline">검색</button>
+    </div>
+    <!--count-->
+    
+    <!--list-->
+    <table class="table">
+            <div style="text-align: right;">전체2041개</div>
+            <!-- <caption>List of users</caption> -->
+            <thead>
+                <tr>
+                <th scope="col" class="no">글 번호</th>
+                <th scope="col" class="writer">작성자</th>
+                <th scope="col" class="title">제목</th>
+                <th scope="col" class="reg_date">작성일</th>
+                <th scope="col" class="view_cnt">조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td><a href="./news-detail.html">Otto</a></td>
+                <td>2018-18-18</td>
+                <td>55555</td>
+                </tr>
+                <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td><a href="./news-detail.html">Thornton</a></td>
+                <td>2018-18-18</td>
+                <td>546457</td>
+                </tr>
+                <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td><a href="./news-detail.html">the Bird</a></td>
+                <td>2018-18-18</td>
+                <td>123545</td>
+                </tr>
+        </tbody>
+    </table>
+    <!--writeBtn-->
+    <div class="writeBtn"style="text-align: right;">
+        <a href="./news-write.html">
+            <button type="button" class="btn btn-light">글쓰기</button>
+        </a>
+    </div>
+    <!--pagenation-->
+    <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+</body>
+<script>
+/*category*/
+function chainSelect(current, target){
+  var value1 = $(current).on('change', function(){
+    if($(this).find(':selected').val() != ''){
+      $(target).removeAttr('disabled');
+      var value = $(this).find(':selected').text();
+    }else{
+      $(target).prop('disabled', 'disabled').val(null);
+    }
+  return value;
+  });
+  return value1;
+}
+size = chainSelect('select#size', '#color');
+color = chainSelect('select#color', '#qty');
+qty = chainSelect('select#qty', '#submit');
+
+$('#addToCart').submit(function(){
+  event.preventDefault();
+  alert('Size: ' + size + '\nColor: ' + color + '\nQuantity: ' + qty);
+});
+
+//pagenation
+<nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+
+</script>
+</html>
