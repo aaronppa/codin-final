@@ -132,6 +132,15 @@
     			}
     		});
     	});
+    	
+    	$("#formSubmit").click(function (e) {
+    		if (emailCheck != 1){
+    			e.preventDefault();
+    			alert("이메일 중복 체크를 해주세요.")
+    		} else {
+    			alert("회원가입을 축하합니다.")
+    		}
+    	});
     </script>
 </body>
 </html>
