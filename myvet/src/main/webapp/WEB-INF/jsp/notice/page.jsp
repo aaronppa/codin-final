@@ -12,7 +12,7 @@
     <nav aria-label="Pagination">
         <ul class="pagination">
             <li ><a <c:if test="${pageResult.pageNo == 1}">class='disabled'</c:if> id="first" href="1">&laquo;First</a></li>
-            <li ><a <c:if test="${pageResult.pageNo-10 <= 1}">class='disabled'</c:if>href=${pageResult.beginPage-1 }>&laquo;Previous</a></li>
+            <li ><a <c:if test="${pageResult.pageNo-10 < 1}">class='disabled'</c:if>href=${pageResult.beginPage-1 }>&laquo;Previous</a></li>
             
 			<c:forEach var="i" begin="${pageResult.beginPage}" end="${pageResult.endPage}">
 		    	<li <c:if test="${i eq pageResult.pageNo }">class="current"</c:if> ><a href="${i}">${i}</a></li>
@@ -25,17 +25,15 @@
     </nav>
     
     <script>
-	$(".disabled").click (function(e) {
-		e.preventDefault();
-		return;
-	})
 	$("nav > ul.pagination > li > a").click (function(e) {
 		e.preventDefault();
 		
 		var pageNo = $(this).attr("href")
 		
 		if (pageNo == 0 || pageNo == ${pageResult.lastPage + 1}) return false;
+		if ($(this).hasClass("disabled")) return false;
 		location.href = "list.do?pageNo=" + pageNo;
 	})
+	
     </script>
 </c:if>

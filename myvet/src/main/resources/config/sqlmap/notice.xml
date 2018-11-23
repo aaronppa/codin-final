@@ -32,4 +32,10 @@
 		from notice
 	</select>
 	
+	<update id="incrementViewCnt" parameterType="int">
+		update notice
+		set notice_view_cnt = notice_view_cnt + 1
+		where notice_no = #{no}
+	</update>
+	
 </mapper>

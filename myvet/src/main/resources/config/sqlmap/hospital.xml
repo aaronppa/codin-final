@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.HosMapper">
+
+	<resultMap type="Hospital" id="hospitalMap">
+		<result column="hos_code" property="hosCode"/>
+		<result column="title" property="title"/>
+		<result column="road_address" property="roadAddress"/>
+		<result column="address" property="address"/>
+		<result column="mapx" property="mapx"/>
+		<result column="mapy" property="mapy"/>
+		<result column="hos_search_cnt" property="hosSearchCnt"/>
+		<result column="telephone" property="telephone"/>
+		<result column="hos_register" property="hosRegister"/>
+		<result column="lunch_start" property="lunchStart"/>
+		<result column="lunch_end" property="lunchEnd"/>
+		<result column="hos_homepage" property="hosHomepage"/>
+		<result column="hos_comment" property="hosComment"/>		
+	</resultMap>
+
+	<insert id="insertHospital" parameterType="Hospital">
+		insert into hos_basic
+		(title, roadAddress, address, mapx, mapy, telephone)
+		values
+		(#{title}, #{roadAddress}, #{address}, #{mapx}, #{mapy}, #{telephone})
+	</insert>
+</mapper>

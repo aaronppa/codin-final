@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,6 +49,7 @@
                 <td>글 번호</td>
                 <td id="tableTitle">제목</td>
                 <td>게시일</td>
+                <td>조회수</td>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +62,12 @@
         					${notice.noticeTitle }
         				</a>
         			</td>
-        			<td class="notice-reg-date">${notice.noticeRegDate }</td>
+        			<td class="notice-reg-date">
+	        			<fmt:formatDate value="${notice.noticeRegDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
+        			</td>
+        			<td class="notice-view-cnt">
+        				${notice.noticeViewCnt }
+        			</td>
         		</tr>
         	</c:forEach>
         </tbody>

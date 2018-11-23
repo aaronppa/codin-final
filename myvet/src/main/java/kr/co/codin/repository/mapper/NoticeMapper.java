@@ -9,4 +9,5 @@ public interface NoticeMapper {
 	List<Notice> noticeList(Page page);
 	Notice noticeDetail(int no);
 	int noticeCount();
+	void incrementViewCnt(int no);
 }

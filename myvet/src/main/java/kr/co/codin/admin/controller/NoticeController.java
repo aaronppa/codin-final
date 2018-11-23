@@ -21,10 +21,14 @@ public class NoticeController {
 	public void noticeList(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) {
 		
 		Page page = new Page(pageNo);
-		System.out.println(pageNo);
-		System.out.println(service.noticeCount());
 		
 		model.addAttribute("notice", service.noticeList(page));
 		model.addAttribute("pageResult", new PageResult(pageNo, service.noticeCount()));
+	}
+	
+	@RequestMapping("detail.do")
+	public void noticeDetail (Model model, int noticeNo) {
+		service.incrementViewCnt(noticeNo);
+		model.addAttribute("notice", service.noticeDetail(noticeNo));
 	}
 }

@@ -536,9 +536,10 @@ textarea {
     background: #412427;
     color: #fefefe;
     cursor: default; }
-.disabled {
-    color: #cacaca !important;
-    cursor: not-allowed; }
+  .disabled {
+	color: #8b787a !important;
+	text-decoration: none;
+  }
   .pagination .disabled:hover {
       background: transparent; }
   .pagination .ellipsis::after {

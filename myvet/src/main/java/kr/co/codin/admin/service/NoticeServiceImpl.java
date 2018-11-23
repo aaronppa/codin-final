@@ -30,4 +30,9 @@ public class NoticeServiceImpl implements NoticeService{
 	public int noticeCount() {
 		return mapper.noticeCount();
 	}
+
+	@Override
+	public void incrementViewCnt(int no) {
+		mapper.incrementViewCnt(no);
+	}
 }
