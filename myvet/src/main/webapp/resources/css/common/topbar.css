@@ -439,46 +439,10 @@ img {
   height: auto;
   -ms-interpolation-mode: bicubic; }
 
-textarea {
-  height: auto;
-  min-height: 50px;
-  border-radius: 3px; }
-
-select {
-  box-sizing: border-box;
-  width: 100%;
-  border-radius: 3px; }
-
-.map_canvas img,
-.map_canvas embed,
-.map_canvas object,
-.mqa-display img,
-.mqa-display embed,
-.mqa-display object {
-  max-width: none !important; }
-
-button {
-  padding: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border: 0;
-  border-radius: 3px;
-  background: transparent;
-  line-height: 1;
-  cursor: auto; }
-  [data-whatinput='mouse'] button {
-    outline: 0; }
 
 pre {
   overflow: auto; }
 
-button,
-input,
-optgroup,
-
-textarea {
-  font-family: inherit; }
 
 .is-visible {
   display: block !important; }
