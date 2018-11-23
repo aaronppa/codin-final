@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.MemberMapper">
+	<resultMap type="Member" id="MemberMap">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_email" property="memberEmail"/>
+		<result column="password" property="password"/>
+		<result column="member_grade" property="memberGrade"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="member_career" property="memberCareer"/>
+		<result column="mailing_opt" property="mailingOpt"/>
+		<result column="member_ori_name" property="memberOriName"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="member_file_size" property="memberFileSize"/>
+		<result column="member_file_reg_date" property="memberFileRegDate"/>
+	</resultMap>
+	
+	<insert id="insertMember" parameterType="Member">
+		insert into member(
+			member_email, password, member_grade, member_name, member_phone, member_nickname
+		) values (
+			#{memberEmail}, #{password}, #{memberGrade}, #{memberName}, #{memberPhone}, #{memberNickname}
+		)
+	</insert>
+	
+	<select id="IdCheck" parameterType="String" resultType="int">
+		select count(*)
+		  from member
+		 where member_email = #{memberEmail}
+	</select>
+</mapper>

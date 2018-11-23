@@ -10,6 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script
+	  src="https://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
     <style>
         #grade {
             margin-left: 100px;
@@ -39,18 +43,17 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="far fa-envelope"></i></span>
                             </div>
-                            <input type="email" class="form-control" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" />
+                            <input type="email" class="form-control" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" id="email" />
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">메일 인증</button>
+                                <button class="btn btn-outline-secondary" type="button" id="EmailCheck"><i class="fas fa-user-check"></i></button>
                             </div>                          
                         </div>
-                        <span id="checkEmail"></span>
-                        <br>                       
+                        <span id="checkEmail"><br></span>
                         <div class="input-group password">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" class="form-control" id="password1" placeholder="password" name="memberPassword" aria-label="Password" />
+                            <input type="password" class="form-control" id="password1" placeholder="password" name="password" aria-label="Password" />
                         </div>
                         <br>
                         <div class="input-group password">           
@@ -81,20 +84,54 @@
                             <input type="text" class="form-control" placeholder="이름" name="memberName" aria-label="name" />                   
                         </div>
                         <br>
+                        <div class="input-group nickname">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon5"><i class="fas fa-user-tag"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="닉네임" name="memberNickname" aria-label="nickname" />                   
+                        </div>
+                        <br>
                         <div class="input-group phone">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon5">&nbsp;<i class="fas fa-mobile-alt"></i></span>
+                                <span class="input-group-text" id="basic-addon6">&nbsp;<i class="fas fa-mobile-alt"></i></span>
                             </div>
                             <input type="text" class="form-control" placeholder="연락처" name="memberPhone" aria-label="phone" />
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">cancel</button>
-                        <button type="submit" class="btn btn-outline-primary">OK</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">cancel</button>
+                        <button type="submit" class="btn btn-outline-primary" id="formSubmit">OK</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
+    <script>
+    	var emailCheck = 0;
+    	$("#EmailCheck").click(function () {
+    		var memberEmail = $("#email").val();
+    		
+    		$.ajax({
+    			url: "idCheck.do",
+    			data: memberEmail,
+    			dataType: "json",
+    			method: "POST",
+    			contentType: "application/json; charset=UTF-8",
+    		}).done(function (data) {
+//     			console.dir(data)
+    			if (data.count > 0){
+    				$("#checkEmail").html("<p style='color:red;'>이메일이 존재합니다. 다른 이메일을 입력해주세요.</p>");
+    				$("#formSubmit").prop("disabled", true);
+    				$("#email").focus();
+    			} else {
+    				$("#checkEmail").html("<p style='color:blue;'>사용가능한 이메일입니다.</p>");
+    				$("#formSubmit").prop("disabled", false);
+    				$("#password1").focus();
+    				emailCheck = 1;
+    			}
+    		});
+    	});
+    </script>
 </body>
 </html>

@@ -8,21 +8,21 @@ import lombok.Data;
 
 @Data
 public class Member {
-	int memberNo;
-	String memberEmail;
-	String password;
-	String memberGrade;
-	String memberName;
-	String memberPhone;
-	String memberNickname;
-	int hosCode;
-	String memberCareer;
-	String mailingOpt;
-	String memberOriName;
-	String memberSysName;
-	String memberFilePath;
-	int memberFileSize;
+	private int memberNo;
+	private String memberEmail;
+	private String password;
+	private String memberGrade;
+	private String memberName;
+	private String memberPhone;
+	private String memberNickname;
+	private int hosCode;
+	private String memberCareer;
+	private String mailingOpt;
+	private String memberOriName;
+	private String memberSysName;
+	private String memberFilePath;
+	private int memberFileSize;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	Date memberFileRegDate;
+	private Date memberFileRegDate;
 }
