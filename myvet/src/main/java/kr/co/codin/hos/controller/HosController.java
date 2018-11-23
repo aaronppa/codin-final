@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.View;
 
 import com.google.gson.Gson;
 
@@ -26,6 +26,16 @@ public class HosController {
 
 	@Autowired
 	HosService service = new HosServiceImpl();
+	
+	@RequestMapping("register.do")
+	public void registerHos(Model model) {
+		model.addAttribute("facilityList", service.selectFacility());
+	}
+	
+	@RequestMapping("facilitylist.do")
+	public void facilitylist(Model model) {
+		
+	}
 	
 	@RequestMapping("insert.do")
 	public void insertHos() throws Exception {

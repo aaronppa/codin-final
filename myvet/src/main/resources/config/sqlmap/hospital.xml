@@ -18,6 +18,11 @@
 		<result column="hos_homepage" property="hosHomepage"/>
 		<result column="hos_comment" property="hosComment"/>		
 	</resultMap>
+	
+	<resultMap type="HosFacilitylist" id="facilitylistMap">
+		<result column="facility_code" property="facilityCode"/>		
+		<result column="facility_name" property="facilityName"/>		
+	</resultMap>
 
 	<insert id="insertHospital" parameterType="Hospital">
 		insert into hos_basic
@@ -25,4 +30,11 @@
 		values
 		(#{title}, #{roadAddress}, #{address}, #{mapx}, #{mapy}, #{telephone})
 	</insert>
+	
+	<select id="selectFacility" resultMap="facilitylistMap">
+		select *
+		from hos_facilitylist
+		order by facility_code
+	</select>
+	
 </mapper>
