@@ -10,8 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Document</title>
-<link rel="stylesheet" href="<c:url value='/css/notice/notice.css'/>"/>
-<link rel="stylesheet" href="<c:url value='/css/common/pagination.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/css/notice/notice.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
 
 <style>
     #body {
@@ -36,7 +36,7 @@
         color: red;
     }
 </style>
-<script src="<c:url value="../js/vendor/jquery.js"/>"></script>
+<script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
 
 </head>
 <body>

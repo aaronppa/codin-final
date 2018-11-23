@@ -33,7 +33,7 @@
         
 /*
 */    </style>
-<link rel="stylesheet" href="<c:url value='/css/notice/notice.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/css/notice/notice.css'/>"/>
 
 </head>
 <body>
