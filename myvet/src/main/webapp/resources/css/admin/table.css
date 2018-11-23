@@ -2571,3 +2571,93 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
 
 .long-delay {
   animation-delay: 700ms !important; }
+
+.admin.main.container{
+    width: 80%;
+    margin: auto;
+    border: 1px solid skyblue;
+    font-size: 13px;
+    padding-bottom: 50px;
+}
+
+table, tr, th, td{
+    border: 1px solid black;
+    text-align: center;
+}
+
+table{
+    width: 990px;
+    margin: auto;
+    margin-bottom: 30px;
+    table-layout: fixed;
+}
+h2, .search{
+	margin-left: 75px;
+}
+
+h2{
+    font-size: initial-scale;
+    margin-bottom: -10px;;
+}
+
+.search{
+    margin-top: 20px;
+}
+
+.listarea:nth-of-type(3) > h2 {
+    float: left;
+}
+
+.listcnt{
+    clear:left;
+    margin-right: 80px;
+    float:right;
+}
+
+button#write{
+    margin-top: 1.5em;
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #a56e50;
+    color: #f5e9c3;
+}
+button, input[type="button"]{
+    cursor: pointer;
+}
+
+tbody > tr:hover{
+    background-color: #f4e8e6 !important;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.datetime{
+    width: 160px;
+
+}
+
+.status{
+    width: 80px;
+
+}
+
+.nickname, .name{
+    width: 150px;
+
+}
+
+.listno{
+    width: 78px;
+
+}
+
+.category{
+    width: 90px;
+
+}
+
+hr{
+    margin-top: 40px;
+    margin-bottom: 30px;
+}

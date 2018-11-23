@@ -1,108 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>Admin Page</title>
 
 <script
 src="https://code.jquery.com/jquery-3.3.1.js"
 integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="table.css">
+<link rel="stylesheet" href="<c:url value="/resources/css/admin/table.css"/>">
 <style>
-.admin.main.container{
-    width: 80%;
-    margin: auto;
-    border: 1px solid skyblue;
-    font-size: 13px;
-    padding-bottom: 50px;
-}
 
-table, tr, th, td{
-    border: 1px solid black;
-    text-align: center;
-}
-
-table{
-    width: 990px;
-    margin: auto;
-    margin-bottom: 30px;
-    table-layout: fixed;
-}
-
-h2{
-    font-size: initial-scale;
-    text-indent: 58px;
-    margin-bottom: -10px;;
-}
-
-.listarea:nth-of-type(3) > h2 {
-    float: left;
-}
-
-.listcnt{
-    clear:left;
-    margin-right: 80px;
-    float:right;
-}
-.search{
-    margin-top: 20px;
-    text-indent: 58px;
-}
-
-button#write{
-    margin-top: 1.5em;
-    margin-left: 20px;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: #a56e50;
-    color: #f5e9c3;
-}
-button, input[type="button"]{
-    cursor: pointer;
-}
-
-tbody > tr:hover{
-    background-color: #f4e8e6 !important;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.datetime{
-    width: 160px;
-
-}
-
-.status{
-    width: 80px;
-
-}
-
-.nickname, .name{
-    width: 150px;
-
-}
-
-.listno{
-    width: 78px;
-
-}
-
-.category{
-    width: 90px;
-
-}
-
-hr{
-    margin-top: 40px;
-    margin-bottom: 30px;
-}
 </style>
 
 </head>
 <body>
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
     <div class="admin main container">
         <div class="listarea vetauth">
             <h2>수의사 인증 요청 리스트</h2>
@@ -315,10 +231,10 @@ hr{
         var h = 600;
         var left = (screen.width/2)-(w/2);
         var top = (screen.height/2)-(h/2);
-        window.open("./popup_write_notice.html","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
+        window.open("<c:url value='/admin/writenotice.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
     })
-
-    $("table#vetauth").
+/* 
+    $("table#vetauth"). */
 </script>    
 </body>
 </html>
