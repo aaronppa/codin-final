@@ -62,8 +62,7 @@
                             </div>
                             <input type="password" class="form-control" id="password2" placeholder="password" aria-label="Password" />
                         </div>
-                        <span id="checkPassword"></span>
-                        <br>
+                        <span id="checkPassword"><br></span>
                         <div class="btn-group btn-group-toggle" id="grade" data-toggle="buttons">
                             <label class="btn btn-outline-primary btn-lg active">
                                 <input type="radio" name="memberGrade" id="option1" autocomplete="off" value="U" checked> 반려인
@@ -139,6 +138,13 @@
     			alert("이메일 중복 체크를 해주세요.")
     		} else {
     			alert("회원가입을 축하합니다.")
+    		}
+    	});
+    	
+    	$("#password2").keyup(function (e) {
+    		console.dir($("#password1").val()==$("#password2").val());
+    		if ($("#password1").val()==$("#password2").val()) {
+    			$("#checkPassword").html("<p style='color:blue;'>비밀번호가 일치합니다.</p>");
     		}
     	});
     </script>
