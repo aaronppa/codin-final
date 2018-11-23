@@ -22,14 +22,14 @@
             color: #412427;
         }
     </style>
-	<link rel="stylesheet" href="<c:url value='../css/common/topbar.css'/>"/>
+	<link rel="stylesheet" href="<c:url value='../resources/css/common/topbar.css'/>"/>
     <!-- <script
     src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script> -->
 
-    <script src="<c:url value='../js/vendor/jquery.js'/>"></script>
-    <script src="<c:url value='../js/vendor/foundation.js'/>"></script>
+    <script src="<c:url value='../resources/js/vendor/jquery.js'/>"></script>
+    <script src="<c:url value='../resources/js/vendor/foundation.js'/>"></script>
 </head>
 <body>
 
