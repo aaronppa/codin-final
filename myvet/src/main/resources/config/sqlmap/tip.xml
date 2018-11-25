@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.TipMapper">
+	<resultMap type="tip" id="tipMap">
+		<result column="tip_no" property="tipNo"/>		
+		<result column="board_code" property="boardCode"/>
+		<!-- 작성자 -->		
+		<result column="member_no" property="memberNo"/>		
+		<result column="title" property="title"/>		
+		<result column="content" property="content"/>		
+		<result column="reg_date" property="regDate"/>		
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="category_code" property="categoryCode"/>
+	</resultMap>
+	<resultMap type="tipComment" id="tipCommentMap">
+		<result column="comment_no" property="commentNo"/>
+		<result column="tip_no" property="tipNo"/>		
+		<result column="commenter_no" property="commenterNo"/>		
+		<result column="comment" property="comment"/>		
+		<result column="reg_date" property="regDate"/>
+	</resultMap>
+
+	
+	<select id="selectTip" resultMap="tipMap">
+		select *
+		  from tip
+		 order by tip_no desc		
+	</select>
+	<select id="selectTipByNo" parameterType="int" resultMap="tipMap">
+		select *
+		  from tip
+		 where tip_no = #{tipNo}
+	</select>
+	<insert id="insertTip" parameterType="tip">
+		insert into tip(
+		board_code, category_code, member_no, title, content
+			)values(
+		#{boardCode},#{categoryCode}, #{memberNo}, #{title}, #{content}
+		)
+	</insert>
+	<update id="updateTip" parameterType="tip">
+		update tip
+		   set title=#{title},
+		       content=#{content},
+		       category_code=#{categoryCode}
+		 where tip_no=#{tipNo}
+	</update>
+	<delete id="deleteTip" parameterType="int">
+		delete 
+		  from tip
+		 where tip_no=#{tipNo}
+	</delete>
+	
+	<update id="updateViewCnt" parameterType="int">
+		update tip
+		   set view_cnt = view_cnt+1
+		 where tip_no = #{tipNo}
+	</update>
+	
+	<select id="countTip" resultType="int">
+		select count(*)
+		  from tip
+	</select>
+	
+	<!-- 댓글 -->
+	<insert id="insertComment" parameterType="tipComment">
+		insert into tip_comment(
+			tip_no, commenter_no, comment, 
+		)values(
+			#{tipNo}, #{commenterNo}, #{comment}
+		)
+	</insert>
+	
+	
+</mapper>
