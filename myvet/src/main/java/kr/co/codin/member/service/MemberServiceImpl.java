@@ -22,4 +22,9 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(String memberEmail) {
 		return mapper.IdCheck(memberEmail);
 	}
+
+	@Override
+	public Member login(Member member) {
+		return mapper.selectMemberById(member);
+	}
 }

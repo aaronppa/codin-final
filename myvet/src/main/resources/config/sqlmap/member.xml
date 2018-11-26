@@ -33,4 +33,11 @@
 		  from member
 		 where member_email = #{memberEmail}
 	</select>
+	
+	<select id="selectMemberById" parameterType="Member" resultMap="MemberMap">
+		select *
+		  from member
+		 where member_email = #{memberEmail}
+		   and password = #{password}
+	</select>
 </mapper>

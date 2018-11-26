@@ -3,6 +3,8 @@ package kr.co.codin.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,4 +38,23 @@ public class MemberController {
 		map.put("count", count);
 		return map;
 	}
+	
+	@RequestMapping("/login.do")
+	public String login(Member member, HttpSession session) {
+		if (service.login(member) != null) {
+			session.setAttribute("user", service.login(member));
+			
+			System.out.println(service.login(member).getMemberGrade());
+			System.out.println(service.login(member).getMemberGrade().equals("U"));
+			
+//			if (service.login(member).getMemberGrade().equals('s')) {
+//				
+//			}
+			
+			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "myPage.do";
+		}
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
+	}
+	
+	
 }
