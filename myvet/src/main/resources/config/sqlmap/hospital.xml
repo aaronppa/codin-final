@@ -6,7 +6,7 @@
 	<resultMap type="Hospital" id="hospitalMap">
 		<result column="hos_code" property="hosCode"/>
 		<result column="title" property="title"/>
-		<result column="road_address" property="roadAddress"/>
+		<result column="roadAddress" property="roadAddress"/>
 		<result column="address" property="address"/>
 		<result column="mapx" property="mapx"/>
 		<result column="mapy" property="mapy"/>
@@ -19,9 +19,27 @@
 		<result column="hos_comment" property="hosComment"/>		
 	</resultMap>
 	
+	<resultMap type="HosFacility" id="facilityMap">
+		<result column="facility_no" property="facilityNo"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="facility_code" property="facilityCode"/>
+		<result column="facility_bookable" property="facilityBookable"/>
+		<result column="staff_no" property="staffNo"/>
+		<result column="max_booking" property="maxBooking"/>
+	</resultMap>
+	
 	<resultMap type="HosFacilitylist" id="facilitylistMap">
 		<result column="facility_code" property="facilityCode"/>		
 		<result column="facility_name" property="facilityName"/>		
+	</resultMap>
+	
+	<resultMap type="HosHours" id="hoursMap">
+		<result column="hours_no" property="hoursNo"/>		
+		<result column="hos_code" property="hosCode"/>		
+		<result column="open_day" property="openDay"/>		
+		<result column="open_time" property="openTime"/>		
+		<result column="close_time" property="closeTime"/>		
+		<result column="dayoff" property="dayoff"/>		
 	</resultMap>
 
 	<insert id="insertHospital" parameterType="Hospital">
@@ -36,5 +54,32 @@
 		from hos_facilitylist
 		order by facility_code
 	</select>
+	
+	<select id="searchHos" parameterType="string" resultMap="hospitalMap">
+		select *
+		from hos_basic
+		where title like CONCAT('%',#{keyWord},'%')
+	</select>
+	
+	<insert id="insertFacility" parameterType="HosFacility">
+		insert into hos_facility
+		(hos_code, facility_code)
+		values
+		(#{hosCode}, #{facilityCode})
+	</insert>
+	
+	<insert id="insertDayoff" parameterType="HosHours">
+		insert into hos_hours
+		(hos_code, open_day, dayoff)
+		values
+		(#{hosCode},#{openDay},'Y')
+	</insert>
+	
+	<update id="registerUpdate" parameterType="Hospital">
+		update hos_basic
+		set hos_register = 'Y',
+			hos_comment = #{hosComment}
+		where hos_code = #{hosCode}
+	</update>
 	
 </mapper>

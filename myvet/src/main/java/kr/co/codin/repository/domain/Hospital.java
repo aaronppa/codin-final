@@ -14,7 +14,6 @@ public class Hospital {
 	char hosRegister;
 	Time lunchStart;
 	Time lunchEnd;
-	String hosHomepage;
 	String hosComment;
 	
 	public int getHosCode() {
@@ -83,12 +82,6 @@ public class Hospital {
 	public void setLunchEnd(Time lunchEnd) {
 		this.lunchEnd = lunchEnd;
 	}
-	public String getHosHomepage() {
-		return hosHomepage;
-	}
-	public void setHosHomepage(String hosHomepage) {
-		this.hosHomepage = hosHomepage;
-	}
 	public String getHosComment() {
 		return hosComment;
 	}
@@ -100,7 +93,7 @@ public class Hospital {
 		return "Hospital [hosCode=" + hosCode + ", title=" + title + ", roadAddress=" + roadAddress + ", address="
 				+ address + ", mapx=" + mapx + ", mapy=" + mapy + ", hosSeachCnt=" + hosSearchCnt + ", telephone="
 				+ telephone + ", hosRegister=" + hosRegister + ", lunchStart=" + lunchStart + ", lunchEnd=" + lunchEnd
-				+ ", hosHomepage=" + hosHomepage + ", hosComment=" + hosComment + "]";
+				+ ", hosComment=" + hosComment + "]";
 	}
 	
 	

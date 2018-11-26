@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
 import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
+import kr.co.codin.repository.domain.HosFacility;
+import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.SearchPlace;
 import kr.co.codin.repository.domain.TestHospital;
@@ -27,14 +30,65 @@ public class HosController {
 	@Autowired
 	HosService service = new HosServiceImpl();
 	
+	@RequestMapping("search.do")
+	public void search() {
+		
+	}
+	
 	@RequestMapping("register.do")
-	public void registerHos(Model model) {
+	public void registerForm(Model model) {
 		model.addAttribute("facilityList", service.selectFacility());
 	}
 	
-	@RequestMapping("facilitylist.do")
-	public void facilitylist(Model model) {
+	@RequestMapping("registerHos.do")
+	@ResponseBody
+	public void registerHos(
+					int hosCode, 
+					int[] hosFacility, 
+					int[] dayoff, 
+					String hosHomePage,
+					String hosComment
+					) {
+//		System.out.println("hosCode : " + hosCode);
+//		System.out.println("hosFacility : " + hosFacility);
+//		System.out.println("dayoff : " + dayoff);
+//		System.out.println("hosHomepage : " + hosHomePage);
+//		System.out.println("hosContent : " + hosComment);
 		
+		for (int i = 0; i < hosFacility.length; i++) {
+			HosFacility facility = new HosFacility();
+			facility.setHosCode(hosCode);
+			facility.setFacilityCode(hosFacility[i]);
+			service.insertFacility(facility);
+		}
+		
+		for (int i =0; i < dayoff.length; i++) {
+			HosHours hours = new HosHours();
+			hours.setHosCode(hosCode);
+			hours.setOpenDay(dayoff[i]);
+			service.insertDayoff(hours);
+		}
+		
+		Hospital hospital = new Hospital();
+		hospital.setHosCode(hosCode);
+		hospital.setHosComment(hosComment);
+		service.registerUpdate(hospital);
+		
+		
+	}
+	
+	@RequestMapping("hosList.do")
+	public void hosList(Model model) {}
+		
+	
+	@RequestMapping("hosSearch.do")
+	@ResponseBody
+	public List<Hospital> hosSearch(String keyWord) {
+		
+		System.out.println("keyWord : " + keyWord);
+		List<Hospital> list = service.searchHos(keyWord);
+		System.out.println(list);
+		return list;
 	}
 	
 	@RequestMapping("insert.do")
