@@ -6,5 +6,6 @@ public class places {
 	public double x;
 	public double y;
 	public String road_address;
+	public String phone_number;
 
 }

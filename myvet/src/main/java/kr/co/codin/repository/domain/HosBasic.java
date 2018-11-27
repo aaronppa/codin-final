@@ -13,15 +13,13 @@ public class HosBasic {
 	//List<Addresses2> addresses;
 	public double mapy;
 	public double mapx;
-	
-	//public List<items> getItems() {
-	//	return items;
-	//}
-	//public void setItems(List<items> items) {
-	//	this.items = items;
-	//}
-	
-
+	public char hosRegister;
+	public char getHosRegister() {
+		return hosRegister;
+	}
+	public void setHosRegister(char hosRegister) {
+		this.hosRegister = hosRegister;
+	}
 	public String getTitle() {
 		return title;
 	}

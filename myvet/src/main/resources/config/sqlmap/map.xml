@@ -3,5 +3,39 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.codin.repository.mapper.MapMapper">
 
+	<resultMap type="HosBasic" id="HosBasicMap">
+		
+		<result column="title" property="title"/>
+		<result column="roadAddress" property="roadAddress"/>
+		<result column="address" property="address"/>
+		<result column="mapx" property="mapx"/>
+		<result column="mapy" property="mapy"/>		
+		<result column="telephone" property="telephone"/>
+		<result column="hos_register" property="hosRegister"/>
+	
+	</resultMap>
+	
+	<insert id="insertMap" parameterType="HosBasic">
+		insert into 
+			hos_basic(title,address,roadAddress,mapx,mapy,telephone)
+			values(#{title},#{address},#{roadAddress},#{mapx},#{mapy},#{telephone})
+				
+	</insert>
+	
+	<select id="selectMap" parameterType="HosBasic" resultMap="HosBasicMap">
+		select *
+			from hos_basic
+			where title=#{title} and mapx=#{mapx} and mapy = #{mapy} and address = #{address}
+	</select>
+	
+	
+	
+	<select id="unregiCheck" parameterType="HosBasic" resultType="string">
+		select title
+			from hos_basic
+			where hos_register='n' and title=#{title} and address=#{address} and roadAddress=#{roadAddress}
+	</select>
+	
+	
 	
 </mapper>

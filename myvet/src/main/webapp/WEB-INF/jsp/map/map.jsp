@@ -22,7 +22,7 @@
 <body>
 	<div>
 
-		<input id="addr" >
+		<input id="addr">
 
 		<button id="button">검색</button>
 
@@ -40,16 +40,17 @@
 	    
 	    
 	    $("#button").click(function(){
-	    	console.log($("#addr").val());
+	    //	console.log($("#addr").val());
 	    	$.ajax({
 	    		url:"<c:url value='/map/ajax.do'/>",
 	    		type:"post",
 	    		dataType:"json",
 	    		data:{data:$("#addr").val()}
 	    	}).done(function(result){
-	    		console.log("성공");
-	    		alert(result.length);
-	    		
+	    	//	alert(result[0].mapx,result[0].mapy);
+	    		//console.log("성공");
+	    	//	alert(result.length);
+	    		MainMap(result[0].mapx,result[0].mapy,result);
 	    	})
 	    })
 	    function geoLocation(){
@@ -63,48 +64,79 @@
 	                y=position.coords.latitude;
 	                x=position.coords.longitude;
 	               //console.log(position.coords.latitude+"  "+position.coords.longitude);
-	      			console.log("허용");
-	      			console.log(x,y);
+	      	//		console.log("허용");
+	      	//		console.log(x,y);
 	      			$.ajax({
 	      				url:"<c:url value='/map/mainajax.do'/>",
 	      				type:"post",
 	      				dataType:"json",
 	      				data:{x : x, y : y}
 	      			}).done(function(result){
-	      				console.log(result);
-	      				console.log("됨");
-	      				console.log(x);		console.log(y);//위치정보 제공시의 중심점
+	      			//	console.log(result);
+	      			//	console.log("됨");
+	      			//	console.log(x);		console.log(y);//위치정보 제공시의 중심점
 	      				//MainMap(x,y);
 	      				
 	      				for(var i =0 ; i < result.length;i++){
-	      					console.log(result[i]);
-	      					console.log(result[i].name);
-	      					console.log(result[i].jibun_address);
-	      					console.log(result[i].x);
-	      					console.log(result[i].y);
+	      					//console.log(result[i]);
+	      					//console.log(result[i].title);
+	      					//console.log(result[i].address);
+	      					//console.log(result[i].mapx);
+	      					//console.log(result[i].mapy);
 	      					var data = new Object();
 	      					data.number = i;
-	      					data.name=result[i].name;
-	      					data.jibun_address=result[i].jibun_address;
-	      					data.x = result[i].x;
-	      					data.y=result[i].y;
+	      					data.name=result[i].title;
+	      					data.jibun_address=result[i].address;
+	      					data.x = result[i].mapx;
+	      					data.y=result[i].mapy;
 	      					positionData.push(data);
 	      				}
 	      				 jsondata = positionData;
-	      				MainMap(x,y,jsondata);//넘어온 병원 정보를 지도 api에 넘겼음
+	      				MainMap(x,y,result);//넘어온 병원 정보를 지도 api에 넘겼음
 	      			}).fail(function(result){
-	      				console.log("안됨");
-	      				console.log(result);
+	      			//	console.log("안됨");
+	      			//	console.log(result);
 	      			})
 	      			
 	      			
 	            },function(error){
-	                console.log(error.code);
+	                //console.log(error.code);
 	                switch(error.code){
-	                    case error.PERMISSION_DENIED:console.log("위치정보 제공 x");
+	                    case error.PERMISSION_DENIED:
+	                    	//console.log("위치정보 제공 x");
 	                    
+	                    $.ajax({
+	                    	url:"<c:url value='/map/ajax.do'/>",
+	                    	type:"post",
+	                    	dataType:"json",
+	                    	data:{data:"광화문"}
+	                    }).done(function(result){
+	                    	for(var i =0 ; i < result.length;i++){
+	                    	//	console.log("뽀");
+		      					//console.log(result[i]);
+		      				//	console.log(result[i].address);
+		      				//	console.log(result[i].roadAddress);
+		      				//	console.log(result[i].mapy);
+		      				//	console.log(result[i].mapx);
+		      					var data = new Object();
+		      					data.number = i;
+		      					data.name=result[i].title;
+		      					data.jibun_address=result[i].address;
+		      					data.x = result[i].mapx;
+		      					data.y=result[i].mapy;
+		      					positionData.push(data);
+		      					
+		      				}
+	                    	MainMap(result[0].mapx,result[0].mapy,result);
+	                //    	console.log("성공"+result);
+	                    }).fail(function(result){
+	                //    	console.log("실패"+result);//여기서 막힘 하아
+	                    });
+	                    
+	                    
+	                    //여기서부터 작업
 	                    break;
-	                    case error.UNKNOWN_ERROR:console.log("알수없음 에러");
+	                    case error.UNKNOWN_ERROR://console.log("알수없음 에러");
 	                    break;
 	                }
 	             
@@ -125,8 +157,8 @@
 			//console.log(jsondata);
 			//console.log(jsondata.length);
 			//console.log(jsondata[0].name);
-		
-			
+			//console.log("MaisdfsdfsdfsdsfnMap" + jsondata);
+			//console.log(jsondata.length);
 		    var map = new naver.maps.Map('map');
 		      var myaddress = '불정로 6';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
 		      naver.maps.Service.geocode({address: myaddress}, function(status, response) {
@@ -144,13 +176,13 @@
 		          var centerXY = new naver.maps.Point(x,y);//중심점으로 이동
 		          map.setCenter(centerXY); // 검색된 좌표로 지도 이동
 		          
-		          console.log(myaddr);
+		      //    console.log(myaddr);
 		          
 		       // 마커 표시
 		          var marker = new naver.maps.Marker({
 		            position: myaddr,
 		            icon: {  				    	
-					       url:'/map/resources/img/mapmark/blackIcon.gif'
+					       url:'/myvet/resources/img/mapmark/blackIcon.gif'
 					    },
 		            title:'중심좌표',
 		            map: map
@@ -162,24 +194,85 @@
 			                infowindow.open(map, marker);
 			            }
 			       });
-		       		
+		       		//   /map/mapunrigi.do
+		          //console.log(jsondata);
 		          
+		 /*          $.ajax({
+		        	  url:"<c:url value='/map/mapUnregi.do'/>",
+		        	  type:'post',
+		        	  dataType:"json",
+		        	  data:{HosBasic:jsondata}
+		          }).done(function(result){
+		        	  for(var r=0; r < result.length; r++){
+		        		  var hosaddr = new naver.maps.Point(result[r].mapx,result[r].mapy);
+		        		  var hosmarker = new naver.maps.Marker({
+								position:hosaddr,
+								map:map,
+								title:jsondata[r].title,
+							    icon: {  				    	
+							       url:'/myvet/resources/img/mapmark/KakaoTalk20181125194810379.gif'
+							    }
+							});
+							  naver.maps.Event.addListener(hosmarker, "click", function(e) {
+						            if (infowindow.getMap()) {
+						                infowindow.close();
+						            } else {
+						                infowindow.open(map, hosmarker);
+						            }
+						       });
+							
+							var hosInfo = new naver.maps.InfoWindow({
+								content:'<p>ㅇㅇ</p>'
+							});
+		        	  }
+		          }).fail(function(result){
+		        	  console.log(result);
+		        	  console.log("실패");
+		          }) */
+		          
+		          
+		          
+		          
+		          
+		          
+		          
+		          
+		          console.log(jsondata);
+		 		//  console.log(jsondata.length);
+		         console.log("개꿀띠"+jsondata[0]);
 		          //병원의 마크점 생성
 		          for(var k = 0 ; k < jsondata.length; k ++){
-						console.log(jsondata[k].name);
-						console.log(jsondata[k].x);
-						console.log(jsondata[k].y);
-						console.log("끵!");
-						var hosaddr = new naver.maps.Point(jsondata[k].x,jsondata[k].y);
+		        	  
+		        	  console.log("dd::"+jsondata[0]);
+        	  	
+		        	  if(MarkLog(jsondata[k])==null){
+		        		  console.log("요기냐");
+		        	  }else{
+		        		  console.log("조기냐");
+		        	  };
+		        
+		        	 // 	console.log("됨"+k);
+						//console.log(jsondata[k].title);
+						//console.log(jsondata[k].mapx);
+						//console.log(jsondata[k].mapy);
+					//	console.log("끵!");
+						//CheckingMark(jsondata);
+						//console.log("끵1");
+						//console.log(jsondata[0]);
+						//console.log("긩3");
+						//console.log("if != null;");
+					
+						var hosaddr = new naver.maps.Point(jsondata[k].mapx,jsondata[k].mapy);
 						var hosmarker = new naver.maps.Marker({
 							position:hosaddr,
 							map:map,
-							title:jsondata[k].name,
+							title:jsondata[k].title,
 						    icon: {  				    	
-						       url:'/map/resources/img/mapmark/KakaoTalk20181125194810379.gif'
+						       url:'/myvet/resources/img/mapmark/KakaoTalk20181125194810379.gif'
 						    }
 						});
 						  naver.maps.Event.addListener(hosmarker, "click", function(e) {
+							  alert("등록되지 않은 병원입니다.");
 					            if (infowindow.getMap()) {
 					                infowindow.close();
 					            } else {
@@ -188,8 +281,13 @@
 					       });
 						
 						var hosInfo = new naver.maps.InfoWindow({
-							content:'<p>ㅇㅇ</p>'
-						});
+							content:'<p>등록되지 않은 병원입니다.</p>'
+							
+							
+							
+						}); 
+						//console.log("므아?");
+					
 					}//개별 병원의 마커
 		          // 마커 클릭 이벤트 처리
 		        
@@ -203,7 +301,21 @@
 		      });
 		 	    
 		}
-    
+    	
+		function MarkLog(data){
+			  $.ajax({
+        		  url:"<c:url value='/map/mapUnregi.do'/>",
+        		  type:"post",
+        		  data:{HosBasic:data},
+        		  dataType:"json"
+        	  }).done(function(result){
+        		  console.log("성공");
+        	  }).fail(function(result){
+        		  console.log(result);
+        		  console.log("실패");
+        	  })
+		}
+
    
       </script>
 </html>
