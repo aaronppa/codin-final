@@ -10,7 +10,25 @@
 		<result column="notice_view_cnt" property="noticeViewCnt"/>		
 		<result column="notice_content" property="noticeContent"/>		
 		<result column="temp_save" property="tempSave"/>
-<!-- 		<association column="notice_writer" property="noticeMember" select="selectMemberByNo"></association> -->
+ 		<association column="notice_writer" property="member" select="selectMemberByNo"></association>
+	</resultMap>
+		
+	<resultMap type="Member" id="memberMap">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_email" property="memberEmail"/>
+		<result column="password" property="password"/>
+		<result column="member_grade" property="memberGrade"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="member_career" property="memberCareer"/>
+		<result column="mailing_opt" property="mailingOpt"/>
+		<result column="member_ori_name" property="memberOriName"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="member_file_size" property="memberFileSize"/>
+		<result column="member_file_reg_date" property="memberFileRegDate"/>
 	</resultMap>
 	
 	<select id="noticeList" parameterType="Page" resultMap="noticeMap">
@@ -32,10 +50,32 @@
 		from notice
 	</select>
 	
+	<select id="selectMemberByNo" parameterType="int" resultMap="memberMap">
+		select *
+		from member
+		where member_no=#{noticeWriter}
+	</select>
+	
 	<update id="incrementViewCnt" parameterType="int">
 		update notice
 		set notice_view_cnt = notice_view_cnt + 1
 		where notice_no = #{no}
 	</update>
+	
+	<insert id="insertNotice" parameterType="Notice">
+		insert into notice(
+				notice_title, notice_writer, notice_content
+			) values (
+				#{noticeTitle}, #{noticeWriter},#{noticeContent}
+			)
+	</insert>
+	
+	<insert id="insertNoticeSave" parameterType="Notice">
+		insert into notice(
+				notice_title, notice_writer, notice_content, temp_save
+			) values (
+				#{noticeTitle}, #{noticeWriter},#{noticeContent}, 1
+			)
+	</insert>
 	
 </mapper>

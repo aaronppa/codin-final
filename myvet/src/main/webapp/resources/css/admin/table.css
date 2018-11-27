@@ -2604,6 +2604,10 @@ h2{
     margin-top: 20px;
 }
 
+table.list{
+	clear: right;
+}
+
 .listarea:nth-of-type(3) > h2 {
     float: left;
 }
@@ -2637,7 +2641,7 @@ tbody > tr:hover{
 
 }
 
-.status{
+.status, .notice-view-cnt{
     width: 80px;
 
 }
@@ -2647,12 +2651,8 @@ tbody > tr:hover{
 
 }
 
-.listno{
-    width: 78px;
 
-}
-
-.category{
+.category, .listno{
     width: 90px;
 
 }

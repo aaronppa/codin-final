@@ -10,7 +10,7 @@ public class Notice {
 	int noticeViewCnt;
 	String noticeContent;
 	int tempSave;
-	TestMember noticeMember;
+	Member member;
 	
 	public int getNoticeNo() {
 		return noticeNo;
@@ -56,17 +56,18 @@ public class Notice {
 		this.tempSave = tempSave;
 	}
 	
-	public TestMember getNoticeMember() {
-		return noticeMember;
+	public Member getMember() {
+		return member;
 	}
-	public void setNoticeMember(TestMember noticeMember) {
-		this.noticeMember = noticeMember;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeWriter=" + noticeWriter
 				+ ", noticeRegDate=" + noticeRegDate + ", noticeViewCnt=" + noticeViewCnt + ", noticeContent="
-				+ noticeContent + ", tempSave=" + tempSave + "]";
+				+ noticeContent + ", tempSave=" + tempSave + ", member=" + member + "]";
 	}
+	
 	
 }

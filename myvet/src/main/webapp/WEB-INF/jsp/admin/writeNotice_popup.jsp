@@ -7,169 +7,171 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title>공지사항 작성 Form</title>
 </head>
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <script
-src="https://code.jquery.com/jquery-3.3.1.js"
-integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-crossorigin="anonymous"></script>
-<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
 <style>
-/* Set dropdown font-families */
-  
-#toolbar-container .ql-font span[data-label="Sans Serif"]::before {
-    font-family: "Sans Serif";
-  }
-  
-  #toolbar-container .ql-font span[data-label="Inconsolata"]::before {
-    font-family: "Inconsolata";
-  }
-  
-  #toolbar-container .ql-font span[data-label="Roboto"]::before {
-    font-family: "Roboto";
-  }
-  
-  #toolbar-container .ql-font span[data-label="Mirza"]::before {
-    font-family: "Mirza";
-  }
-  
-  #toolbar-container .ql-font span[data-label="Arial"]::before {
-    font-family: "Arial";
-  }
-  /* Set content font-families */
-  
-  .ql-font-inconsolata {
-    font-family: "Inconsolata";
-  }
-  
-  .ql-font-roboto {
-    font-family: "Roboto";
-  }
-  
-  .ql-font-mirza {
-    font-family: "Mirza";
-  }
-  
-  .ql-font-arial {
-    font-family: "Arial";
-    }
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: sans-serif;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */ }
 
-input#title{
+button,
+select {
+  /* 1 */
+  text-transform: none; }
+
+/**
+     * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+     *    controls in Android 4.
+     * 2. Correct the inability to style clickable types in iOS and Safari.
+     */
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */ }
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  /**
+       * Remove the inner border and padding in Firefox.
+       */
+  /**
+       * Restore the focus styles unset by the previous rule.
+       */ }
+  button::-moz-focus-inner,
+  [type="button"]::-moz-focus-inner,
+  [type="reset"]::-moz-focus-inner,
+  [type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0; }
+  button:-moz-focusring,
+  [type="button"]:-moz-focusring,
+  [type="reset"]:-moz-focusring,
+  [type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText; }
+
+/**
+     * Show the overflow in Edge.
+     */
+input {
+  overflow: visible; }
+
+input#noticeTitle{
     width: 400px;
 }
 
+.submitbtn{
+	margin: auto;
+	width: 170px;
+}
+
+#save{
+margin-top: 1.5em;
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #8b787a;
+    color: #f5e9c3;
+    cursor: pointer;
+  }
+
+#publish{
+    margin-top: 1.5em;
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #a56e50;
+    color: #f5e9c3;
+    cursor: pointer;
+  }
+
 </style>
 <body>
+    <div class="container">
     <h2>공지사항 작성</h2>
-    <div>
-        <form>
-            <input type="hidden" id="notice_writer" name="memberNo">
+        <form action="<c:url value='/admin/write.do'/>" method="post">
+            <input type="hidden" id="noticeWriter" name="noticeWriter" value="3">
             <table>
-            <tr><td>작성자:</td><td><input type="text" id="writer_nickname" name="memberNickname" readonly></td></tr>
-            <tr><td>공지글 제목:</td><td><input type="text" id="title" name="title"></td></tr>
+            <tr><td>작성자:</td><td><input type="text" id="memberNickname" name="memberNickname" value="관리자" readonly></td></tr>
+            <tr><td>공지글 제목:</td><td><input type="text" id="noticeTitle" name="noticeTitle" required></td></tr>
             </table>
-            <input type="hidden" id="content" name="content">
-            <div id="standalone-container">
-                <div id="toolbar-container">
-                    <span class="ql-formats">å
-                    <select class="ql-font">
-                        <option selected>Sans Serif</option>
-                        <option value="inconsolata">Inconsolata</option>
-                        <option value="roboto">Roboto</option>
-                        <option value="mirza">Mirza</option>
-                        <option value="arial">Arial</option>
-                    </select>
-                    <select class="ql-size"></select>
-                    </span>
-                    <span class="ql-formats">
-                        <select class="ql-header">
-                            <option class="ql-header" value="1">H1</option>
-                            <option class="ql-header" value="2">H2</option>
-                            <option class="ql-header" value="3">H3</option>
-                            <option class="ql-header" value="4">H4</option>
-                            <option class="ql-header" value="5">H5</option>
-                            <option class="ql-header" value="6">H6</option>
-                        </select>
-                    </span>
-                    <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-strike"></button>
-                    </span>
-                    <span class="ql-formats">
-                    <select class="ql-color"></select>
-                    <select class="ql-background"></select>
-                    </span>
-                    <span class="ql-formats">
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-code-block"></button>
-                    <button class="ql-link"></button>
-                    </span>
-                    <span class="ql-formats">
-                    <select class="ql-align"></select>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="-1"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-direction" value="rtl"></button>
-                    </span>
-                    <span class="ql-formats">
-                    <button class="ql-script" value="sub"></button>
-                    <button class="ql-script" value="super"></button>
-                    </span>
-                    <span class="ql-formats">
-                    <button class="ql-clean"></button>
-                    </span>
-                </div>
+            <input type="hidden" id="noticeContent" name="noticeContent">
+            <div id="summernote"></div>
+            <div class="submitbtn">
+            <input type="button" id="save" value="임시저장">
+            <input type="submit" id="publish" value="게시">
             </div>
-            <div id="editor-container">
-            </div>
-            <button class="btn btn-primary" id="save">임시저장</button>
-            <button class="btn btn-primary" id="publish">게시</button>
         </form>
     </div>
 
+<!-- Summernote -->
 <script>
-// Add fonts to whitelist
-var Font = Quill.import('formats/font');
-// We do not add Sans Serif since it is the default
-Font.whitelist = ['inconsolata', 'roboto', 'mirza', 'arial'];
-Quill.register(Font, true);
-
-var quill = new Quill('#editor-container', {
-  modules: {
-    toolbar: '#toolbar-container'
-  },
-  placeholder: '공지글을 작성해주세요.',
-  theme: 'snow'
+  $('#summernote').summernote({
+  toolbar: [
+	    // [groupName, [list of button]]
+	    ['style', ['bold', 'italic', 'underline', 'clear']],
+	    ['font', ['strikethrough', 'superscript', 'subscript']],
+	    ['fontsize', ['fontsize']],
+	    ['color', ['color']],
+	    ['para', ['ul', 'ol', 'paragraph']],
+	    ['height', ['height']]
+	  ],
+    placeholder: '공지 게시글 작성',
+    tabsize: 2,
+    height: 300
+  });
+</script>
+<!-- Button Action -->
+<script>
+$("#publish").on("click", function(e){
+	e.preventDefault();
+	var post_url = $("form").attr("action");
+	var content = $(".note-editable").html();
+	$("#noticeContent").val(content);
+	var data = $("form").serialize()
+	console.log(data);
+	
+ $.post(post_url, data, function(){
+	})
+	.done(function(){
+	alert("공지글이 작성되었습니다.");
+	window.close();
+	});
 });
 
-var form = document.querySelector('form');
-
-$("button#save").on("click",function() {
-  // Populate hidden form on submit
-  var content = document.querySelector('input#content');
-  content.value = JSON.stringify(quill.getContents());
-  
-  console.log("Submitted", $(form).serialize(), $(form).serializeArray());
-  
-  // No back end to actually submit to!
-  alert('Open the console to see the saved data!')
-  return false;
-});
-
-$("button#publish").on("click",function() {
-  // Populate hidden form on submit
-  var content = document.querySelector('input#content');
-  content.value = JSON.stringify(quill.getContents());
-  
-  console.log("Submitted", $(form).serialize(), $(form).serializeArray());
-  
-  // No back end to actually submit to!
-  alert('Open the console to see the publish data!')
-  return false;
+$("#save").on("click", function(e){
+	e.preventDefault();
+	var post_url = $("form").attr("action");
+	var content = $(".note-editable").html();
+	$("#noticeContent").val(content);
+	var data = $("form").serialize()
+	console.log(data);
+	
+ $.post("<c:url value='/admin/save.do'/>", data, function(){
+	})
+	.done(function(){
+	alert("작성중인 공지글이 임시저장되었습니다.");
+	window.close();
+	});
 });
 </script>
+
 </body>
 </html>

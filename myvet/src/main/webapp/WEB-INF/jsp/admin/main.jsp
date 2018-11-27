@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,8 +13,31 @@ src="https://code.jquery.com/jquery-3.3.1.js"
 integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/admin/table.css"/>">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
+<script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
+<script src="<c:url value='/resources/js/waitme/common-waitme.js'/>"></script>
 <style>
+select {
+    width: auto;
+}
 
+a.nostyle{
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.nostyle:hover{
+	cursor: pointer;
+}
 </style>
 
 </head>
@@ -39,11 +63,11 @@ crossorigin="anonymous"></script>
                     </select>
                     <input type="search" name="keyword">
                     <input type="button" id="searchbtn" value="검색">
-                    <button id="reset">초기화</button>
+                    <input type="button" id="reset" value="초기화">
                 </form>
             </div>
-            <div class="listcnt"><span>목록 갯수/전체 갯수: </span><span id="itemcnt">(1/123)</span></div>
-             <table class="clickable" id="vetauth">
+            <div class="listcnt"><span>전체: </span><span id="itemcnt">(1/123)</span></div>
+             <table class="clickable list" id="vetauth">
                 <thead>
                 <tr>
                     <th class="listno">요청 번호</th>
@@ -106,11 +130,12 @@ crossorigin="anonymous"></script>
                         <option>댓글</option>
                         <option>리뷰</option>
                     </select>
-                    <button id="reset">초기화</button>
+                    <input type="button" id="searchbtn" value="검색">
+                    <input type="button" id="reset" value="초기화">
                 </form>
             </div>
-            <div class="listcnt"><span>목록 갯수/전체 갯수: </span><span id="itemcnt">(1/123)</span></div>
-             <table class="clickable" id="report">
+            <div class="listcnt"><span>전체: </span><span id="itemcnt">(1/123)</span></div>
+             <table class="clickable list" id="report">
                     <thead>
                 <tr>
                     <th class="listno">신고 번호</th>
@@ -153,26 +178,68 @@ crossorigin="anonymous"></script>
                     검색키워드: 
                     <input type="search" name="keyword">
                     <input type="button" id="searchbtn" value="검색">
-                    <button id="reset">초기화</button>
+                  	<input type="button" id="reset" value="초기화">
                     <label for="tempsave">임시저장</label>
-                    <input type="checkbox" id="tempsave">
+                    <input type="checkbox" id="tempsave" value="1">
                 </form>
                 </div>
-            <div class="listcnt"><span>목록 갯수/전체 갯수: </span><span id="itemcnt">(1/123)</span></div>
-             <table class="clickable" id="notice">
+            <div class="listcnt"><span>전체: </span><span id="itemcnt">${noticePageResult.count}개</span></div>
+             <table class="clickable list" id="notice">
                 <thead>
                 <tr>
                     <th class="listno">공지글 번호</th>
                     <th class="category">임시저장</th>
-                    <th>제목</th>
-                    <th class="nickname">작성자 넥네임</th>
+                    <th class="notice-title">제목</th>
+                    <th class="nickname">작성자 닉네임</th>
                     <th class="datetime">작성날짜</th>
+                    <th class="notice-view-cnt">조회수</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr><td class="listno">1</td><td class="category">서버점검</td><td>서버점검 안내</td><td class="nickname">서버관리자</td><td class="datetime">2018-11-28 HH:mm:SS</td></tr>
+                <tbody id="noticelist">
+                <c:forEach var="notice" items="${notice}">
+	        		<tr class="notice-tr">
+	        			<td class="listno">${notice.noticeNo}</td>
+	        			<c:choose>
+	        			<c:when test="${notice.tempSave == 1}">
+	        			<td class="category">임시저장</td>
+	        			</c:when>
+	        			<c:otherwise>
+	        			<td class="category">완료</td>
+	        			</c:otherwise>
+	        			</c:choose>
+	        			<td class="notice-title">
+	        				<a class="nostyle link" 
+	        				   href="<c:url value="/admin/detail.do?noticeNo=${notice.noticeNo }"/>">
+	        					${notice.noticeTitle}
+	        				</a>
+	        			</td>
+	        			<td class="nickname">${notice.member.memberNickname}</td>
+	        			<td class="datetime notice-reg-date">
+		        			<fmt:formatDate value="${notice.noticeRegDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
+	        			</td>
+	        			<td class="notice-view-cnt">
+	        				${notice.noticeViewCnt}
+	        			</td>
+	        		</tr>
+        		</c:forEach>
                 </tbody>
             </table>
+            <c:if test="${noticePageResult.count != 0}">
+			    <nav aria-label="Pagination">
+			        <ul class="pagination">
+			            <li ><a <c:if test="${noticePageResult.pageNo == 1}">class='disabled'</c:if> id="first" href="1" class="nostyle">&laquo;First</a></li>
+			            <li ><a <c:if test="${noticePageResult.pageNo-10 < 1}">class='disabled'</c:if>href=${noticePageResult.beginPage-1 } class="nostyle">&laquo;Previous</a></li>
+			            
+						<c:forEach var="i" begin="${noticePageResult.beginPage}" end="${noticePageResult.endPage}">
+					    	<li <c:if test="${i eq noticePageResult.pageNo }">class="current"</c:if> ><a href="${i}" class="nostyle" data-boardtype="notice">${i}</a></li>
+						</c:forEach>
+			            
+			            <li <c:if test="${noticePageResult.pageNo == noticePageResult.lastPage}">class='disabled'</c:if>><a href="${noticePageResult.endPage+1 }" class="nostyle">Next&raquo;</a></li>
+			            <li <c:if test="${noticePageResult.pageNo + 10 > noticePageResult.lastPage}">class='disabled'</c:if>><a href="${noticePageResult.lastPage }" class="nostyle">End&raquo;</a>
+			            </li>
+			        </ul>
+			    </nav>
+		    </c:if>
         </div>
         <hr>
         <div class="listarea member">
@@ -203,11 +270,11 @@ crossorigin="anonymous"></script>
                 </select>
                 <input type="search" name="keyword">
                 <input type="button" id="searchbtn" value="검색">
-                <button id="reset">초기화</button>
+                <input type="button" id="reset" value="초기화">
             </form>
             </div>
-            <div class="listcnt"><span>목록 갯수/전체 갯수: </span><span id="itemcnt">(1/123)</span></div>
-             <table class="clickable" id="member">
+            <div class="listcnt"><span>전체: </span><span id="itemcnt">123</span></div>
+             <table class="clickable list" id="member">
                 <thead>
                 <tr>
                     <th class="listno">회원 번호</th>
@@ -231,10 +298,51 @@ crossorigin="anonymous"></script>
         var h = 600;
         var left = (screen.width/2)-(w/2);
         var top = (screen.height/2)-(h/2);
-        window.open("<c:url value='/admin/writenotice.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
+        window.open("<c:url value='/admin/writeForm.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
     })
-/* 
-    $("table#vetauth"). */
+
+    
+    /* Paging Action */
+    $("nav > ul.pagination > li > a").click (function(e) {
+		e.preventDefault();
+		
+		var pageNo = $(this).attr("href")
+		var boardType = $(this).data("boardtype");
+		console.log(boardType);
+		if (pageNo == 0 || pageNo == ${pageResult.lastPage + 1}) return false;
+		if ($(this).hasClass("disabled")) return false;
+		
+		$.ajax({
+			url: boardType +"/" + pageNo +".do",
+			/* url: "noticelist.do", */
+			/* data: {"boardType":boardType, "pageNo": pageNo}, */
+			method: "post"
+		})
+		.fail(function(jqXHR, textStatus, errorThrown){
+			console.log(jqXHR, textStatus, errorThrown);
+		})
+		.done(function(result){
+			console.log("result: ", result);
+			var html="";
+			var saveStatus="";
+			for(var item of result.notice){
+				if(item.tempSave==0){
+					saveStatus="완료";
+				} else {
+					saveStatus="임시저장";
+				}
+				html += "<tr class='notice-tr'><td class='listno'>"+item.noticeNo+
+					   "</td><td class='category'>"+saveStatus+
+					   "</td><td class='notice-title'><a class='nostyle link' href='/myvet/admin/detail.do?noticeNo='"+item.noticeNo+
+					   "'>"+item.noticeTitle+
+    				   "</a></td><td class='nickname'>"+item.noticeWriter+
+    				   "</td><td class='datetime notice-reg-date'>"+item.noticeRegDate+
+    				   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
+    				   "</td></tr>"
+			};
+			$("tbody#noticelist").html(html);
+		});
+	})
 </script>    
 </body>
 </html>

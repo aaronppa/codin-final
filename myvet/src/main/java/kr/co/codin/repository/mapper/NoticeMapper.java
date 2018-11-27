@@ -10,4 +10,6 @@ public interface NoticeMapper {
 	Notice noticeDetail(int no);
 	int noticeCount();
 	void incrementViewCnt(int no);
+	void insertNotice(Notice notice);
+	void insertNoticeSave(Notice notice);
 }
