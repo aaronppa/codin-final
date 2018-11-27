@@ -149,7 +149,7 @@
     
     <!--list-->
     <table class="table">
-            <div style="text-align: right;">전체 개</div>
+            <div style="text-align: right;">전체 ${count} 개</div>
             <!-- <caption>List of users</caption> -->
             <thead>
                 <tr style="text-align: center;">

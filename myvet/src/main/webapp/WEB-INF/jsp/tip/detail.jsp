@@ -29,10 +29,10 @@
 
     <style>
     .notes-wrapper .saver-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
 
 *, *:before, *:after, h2, p {
   margin: 0;
@@ -63,7 +63,7 @@ html, body {
   width: 100%;
   margin: 0 auto;
   height: 700px;
-  background-color: #fff;
+  background-color: #fff; 
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   position: relative;
@@ -123,7 +123,7 @@ html, body {
   padding: 25px 30px;
   padding-right: 60px;
   font-weight: 600;
-  color: #000C2F;
+/*   color: #000C2F; */
   font-size: 13px;
   text-transform: uppercase;
   position: relative;
@@ -132,7 +132,7 @@ html, body {
   padding: 25px 30px;
   padding-right: 60px;
   font-weight: 600;
-  color: #000C2F;
+/*   color: #000C2F; */
   font-size: 13px;
   text-transform: uppercase;
   position: relative;
@@ -141,7 +141,7 @@ html, body {
   padding: 10px 30px;
   padding-bottom: 15px;
   font-weight: 400;
-  color: #666D82;
+/*   color: #666D82; */
   line-height: 1.4;
   font-size: 14px;
   
@@ -154,18 +154,12 @@ html, body {
   border-radius: 5px;
   margin: 15px 5%;
 }
-.notes-wrapper .line {
-  width: 95%;
-  margin: 0 auto;
-  height: 1px;
-  background-color: #CCCED5;
-}
 .notes-wrapper .comment {
   height: 60px;
   line-height: 60px;
-  text-align: center;
+  text-align: left;
   font-size: 13px;
-  color: #999EAC;
+/*   color: #999EAC; */
   position: relative;
 }
 .notes-wrapper .getImg {
@@ -369,9 +363,21 @@ p {
   color: #0095ff;
 }
 
-/*좋아요, 싫어요*/
+/*댓글 제출*/
+.commentSubmit:hover{
+	background:gray;
+	color: white;
+	transition: .5s;
+}
 
-
+#deleteCommentBtn:hover{
+	background: gray;
+	color:white;
+	transition: .5s;
+}
+#comment::-webkit-scrollbar{
+	display: none;
+	}
     </style>
 </head>
 <body style="overflow-y:hidden; overflow-y:hidden;">
@@ -410,8 +416,8 @@ p {
             </span>
           <!-- 좋아요,싫어요 -->
           <div class="like-or-dislike" style="text-align: center;">
-<!--           	<i class="fas fa-thumbs-up" id="like" title="like" style="margin-left: 60px;"></i> -->
-<!--           	<i class="fas fa-thumbs-down" id="dislike" title="dislike" style="margin-left: 60px;"></i> -->
+          	<i class="fas fa-thumbs-up" data-toggle="toggle" id="like" title="like" style="cursor:pointer;margin-left: 60px;color:black;"></i>
+          	<i class="fas fa-thumbs-down" data-toggle="toggle" id="dislike" title="dislike" style="cursor:pointer;margin-left: 60px;"></i>
           </div>
           <!-- 삭제, 수정 -->
             <div id="delete-update" style="text-align: center;">
@@ -435,61 +441,60 @@ p {
             <!--Comment-->
             <div class="comment">
                 <div class="comments">
+<!--                 <form action="" method="post"> -->
                     <div class="comment-wrap">
                         <div class="photo">
                             <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
                         </div>
-                        <div class="comment-block">
-                            <form action="">
-                                <textarea name="" id="" cols="30" rows="3" placeholder="Add comment..."></textarea>
-                            </form>
-                          </div>
-                        </div>
-                        <ul class="comment-actions">
-                            <li class="registration">등록</li>
-                        </ul>
+                        <input type="hidden" name="tipNo" id="tipNo" value="${tip.tipNo}">
+                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="1">
+                        <div class="comment-block" style="-ms-overflow-style: none;">                            
+                           <textarea name="comment" id="comment" cols="30" rows="4" placeholder="300자 이내..." ></textarea>
+                           <span id="counter">###</span>
+                           <input type="submit" class="commentSubmit" style="float: right; cursor: pointer; font-style: ">
+                       </div>
+                     </div>
+<!--                 </form> -->
                 <!-- 댓글 목록-->
-                <i class="far fa-comments" style="margin-left: 5%; font-size: 20px;">&nbsp;458</i>
-                    <div class="comment-wrap">
-                        <div class="photo">
-                            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')"></div>
-                        </div>
-                        <div class="comment-block">
-                            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam reprehenderit quasi
-                                sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?</p>
-                            <div class="bottom-comment">
-                                <div class="comment-date"><fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></div>
-                                <ul class="comment-actions">
-                                    <li class="complain">삭제</li>
-                                    <li class="reply">신고</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="comment-wrap">
-                        <div class="photo">
-                            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')"></div>
-                        </div>
-                        <div class="comment-block">
-                            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam.</p>
-                            <div class="bottom-comment">
-                                <div class="comment-date"><fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/> </div>
-                                <ul class="comment-actions">
-                                    <li class="complain">삭제</li>
-                                    <li class="reply">신고</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                <i class="far fa-comments" style="margin-left: 5%; font-size: 20px;">&nbsp;${countComment}</i>
+                </div>
+                <br>
+				<div class="comment-list" style="text-align: left;">
+				
+				</div>
                 </div>
                 
-                </div>
             </div> 
             <br>   
     
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
+        //좋아요, 싫어요 토글
+        $("#like").click(function(){
+        	console.log("like!")
+	        	$(this).css("color","red");
+        	
+        	})
+        $("#dislike").click(function(){
+        	console.log("dislike!")
+        	if($(this).css("color","black")){
+	        	$(this).css("color","red");
+        	}
+        })
+        
+        //댓글 글자 입력수
+		$(function typing() {
+		      $('#comment').keyup(function (e){
+		          var content = $(this).val();
+		          $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
+		          $('#counter').html(content.length + '/300');
+		      });
+		      $('#comment').keyup();
+		});
+        
+        //댓글 글자 입력수 끝
+        
+        
         var typingTimer;
         var doneTypingInterval = 10;
         var finaldoneTypingInterval = 2000;
@@ -567,31 +572,199 @@ p {
             }
         }
         
-        //댓글 등록
-//         	$("#submitComment").click(function(){
-// 			console.log("function")
-// 			$.ajax({
-// 				type:"post",
-// 				url: "<c:url value='/tip/writeComment.do'/>",
-// 				data: {tipNo : $("#tipNo").val(), 
-// 					   commenterNo : $("#commenterNo").val(),
-// 					   content: $("#content").val()}
-// 				success: onSuccess(),
-// 				error: onError(),
-// 				async:false
-// 			});
-// 			function onSuccess(json, status){
-				
-// 			};
-// 			function onError(data,status){};
-// 		});
+        
 
         
+        //댓글 등록
+        	$(".commentSubmit").click(function(){
+			console.log("function")
+			$.ajax({
+				url: "/myvet/tip/writeComment.do",
+				data: "tipNo="+$("#tipNo").val()+"&commenterNo="+$(".commenterNo").val()+"&comment="+$("#comment").val()
+
+			}).done(function(result){
+				console.log("성공:"+result);
+				$("#comment").val('')
+				$(".comment-list").children().remove();
+				list();
+				$("#counter").val().remove();
+				typing();
+				
+			}).fail(function(result){
+				console.log($("#tipNo").val());
+				console.log($("#commenterNo").val());
+				console.log($("#comment").val());
+				console.log("실패"+result);
+			});
+		});
+	
+        //댓글 목록
         
+        
+        $(function(){
+        	list();
+        })
+        
+        function list(){
+        	$.ajax({
+        		url:"/myvet/tip/commentList.do",
+        		type: "post",
+        		data: {tipNo : $("#tipNo").val()},
+        		datatype:"json"
+        	}).done(function(result){
+        		console.log("성공 tipNo"+result);
+//         		console.log(result[1].comment)
+               for (let i = 0; i < result.length; i++) {
+                $(".comment-list").append(
+                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
+                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
+                +"<div class='comment-content'>" 
+	                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].comment+"'/>"
+	                +"<div class='comment' style='width:400px;font-size:20px;font-style:italic;' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
+              	+"</div>"
+              	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
+              		+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
+              	+"<hr>"
+                );
+			}
+        	}).fail(function(result){
+        		console.log("실패 tipNo"+result.val())
+        	})
+        
+        }
+        	
+        	
+        	//댓글 삭제
+        	$(".comment-list").on("click", ".deleteCommentBtn", function(){
+        		console.log("delete!");
+        		console.log("작성자 : "+$(".commenterNo").val());
+        		console.log("댓글 번호 : "+$(this).data("deletecombtn"));
+        		$.ajax({
+        			url: "/myvet/tip/deleteComment.do",
+        	/* 		data: {
+        				commentNo: $(this).data("deletecombtn"),
+        				commenterNo: $(".commenterNo").val()
+        				},
+ 					dataType:"json" */
+ 					data:"commentNo="+$(this).data("deletecombtn")+"&commenterNo="+$(".commenterNo").val()
+        		})
+        		.done(function(){
+        			console.log("deleteComplete");
+        			$(".comment-list").children().remove();
+        			list();
+        		})
+        		.fail(function(){
+        			console.log("deleteFail")
+        		})
+        	});
+        
+       
+        
+        
+       		 //수정 폼
+        	$(".comment-list").on("click", ".updateCommentBtn",  function(){
+        		console.log("updateForm!");
+        		console.log("작성자 : "+$(".commenterNo").val());
+        		console.log("댓글 번호 : "+$(this).data("updatecomno"));
+        		console.log("댓글 내용 : "+ $(this).data("updatecombtn"));
+        		console.dir($(this).prev().prev());
+        		$(this).prev().prev().replaceWith(
+           		"<textarea placeholder='댓글수정..' cols='100' rows='2' style='border: gray;'>"+$(this).data('updatecombtn')+"</textarea>"
+        		)
+        		$(this).prev().replaceWith(
+        		"<button class='cancelupdatecom' style='cursor:pointer;'>취소</button>"		
+        		)
+        		$(this).replaceWith(
+        		"<button class='submitupdatecom' style='cursor:pointer;margin-left:20%;'>제출<button>"		
+        		)
+        	})
+        		
+       			$(".comment-list").on("click", ".cancelupdatecom", function(){
+        			console.log("cancel");
+     				console.log("textarea : "+$(this).prev().val());
+     		        console.dir("this : "+$(this).prev().prev());
+     		        $(".comment-list").children().remove();
+       				list();
+        		})
+        		
+        		$(".comment-list").on("click", ".submitupdatecom", function(){
+        			console.log("submitcom")
+        			console.dir($(this).prev().prev())//댓글내용 경로
+        			console.log($(this).prev().prev().val())//댓글 내용
+        			console.log($(".commenterNo").val())//작성자
+					console.log($(this).prev().prev().prev().data("commentno"))//댓글번호        
+					$.ajax({
+						url : "/myvet/tip/updateComment.do",
+						data : "commentNo="+$(this).prev().prev().prev().data("commentno")
+							   +"&commenterNo="+$(".commenterNo").val()
+							   +"&comment="+$(this).prev().prev().val()
+						}).done(function(){
+							console.log("success")
+							$(".comment-list").children().remove();
+							list();
+						}).fail(function(){
+							console.log("fail")
+						})
+						
+        		})
+						
+						
+
+//         		 $.ajax({
+//          			url: "/myvet/tip/updateComment.do",
+//          			type: "get",
+//          			data: {
+//          				commentNo: $("#commentNo").data("commentno"),
+//          				commenterNo: $("#commenterNo").val()
+//          				},
+//   					dataType:"json"
+//          		})
+//          		.done(function(result){
+//          			console.log("updateSuccess")
+         	        
+//          		})
+//          		.fail(function(){
+//          			console.log("updateFail")
+//          		})
+//          	});
+        		
+        		
+//         	   $.ajax({
+//         			url: "/myvet/tip/comment.do",
+//         			type: "get",
+//         			data: {
+//         				commentNo: $("#commentNo").data("commentno"),
+//         				commenterNo: $("#commenterNo").val()
+//         				},
+//  					dataType:"json"
+//         		})
+//         		.done(function(){
+//         			console.log("updateSuccess")
+//         			$(".comment").replace("<textarea cols='50' rows='4'></textarea>")
+//         		})
+//         		.fail(function(){
+//         			console.log("updateFail")
+//         		})
+//         	});
+        	
+        	
+        
+        
+        //like-dislike
+// 		$("#like").toggle(
+// 		    function(){$("i").css({"color": "red"})}
+// 		});
+        
+// 		if($("#layer").css("display") == "none"){
+// 			$("#layer").show();
+// 		}else{
+// 			$("#layer").hide();
+// 		}
+// 	}
         
         //tooltip
 //         $(function(){
-	        $('[data-toggle="tooltip"]').tooltip()
+// 	        $('[data-toggle="tooltip"]').tooltip()
         	
 //         })
 

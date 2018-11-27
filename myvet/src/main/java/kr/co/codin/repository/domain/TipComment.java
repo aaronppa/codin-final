@@ -39,6 +39,14 @@ public class TipComment {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	@Override
+	public String toString() {
+		return "TipComment [commentNo=" + commentNo + ", tipNo=" + tipNo + ", commenterNo=" + commenterNo + ", comment="
+				+ comment + ", regDate=" + regDate + "]";
+	}
+	
+	
+	
 	
 	
 }

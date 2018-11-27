@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
+import kr.co.codin.repository.domain.TipRecommend;
 import kr.co.codin.repository.mapper.TipMapper;
 
 @Service
@@ -63,6 +64,39 @@ public class TipServiceImpl implements TipService{
 	public void insertComment(TipComment tipComment) {
 		mapper.insertComment(tipComment);
 	}
+
+	@Override
+	public List<TipComment> commentList(int tipNo) {
+		return mapper.selectComment(tipNo);
+	}
+
+	@Override
+	public void deleteComment(TipComment tipComment) {
+		mapper.deleteComment(tipComment);
+	}
+
+	@Override
+	public void updateComment(TipComment tipComment) {
+		mapper.updateComment(tipComment);
+	}
+
+	
+
+	@Override
+	public int countComment(int tipNo) {
+		return mapper.countComment(tipNo);
+	}
+
+	//추천
+	@Override
+	public void insertRecommend(TipRecommend tipRecommend) {
+		mapper.insertRecommend(tipRecommend);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

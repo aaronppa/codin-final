@@ -72,9 +72,9 @@
 	  <div class="input-group-prepend">
 	    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
 	  </div>
-	  <input name="title" type="text" style="width:300px"class="form-control" aria-label="Sizing example input" value="${tip.title }" aria-describedby="inputGroup-sizing-default">
-		<select name="categoryCode">
-			<option selected>Category</option>
+	  <input name="title" id="title" type="text" style="width:300px"class="form-control" aria-label="Sizing example input" value="${tip.title}" aria-describedby="inputGroup-sizing-default">
+		<select name="categoryCode" class="categoryCode">
+			<option selected value="">Category</option>
 			<option value="1">건강</option>
 			<option value="2">생활</option>
 			<option value="3">용품</option>
@@ -87,7 +87,7 @@
           <textarea name="content" id="summernote">${tip.content }</textarea>
         </div>
     <div style="text-align: center;">
-		<input class="btn btn-primary" type="submit" value="Update">
+		<input class="btn btn-primary" id="updateSubmit" type="submit" value="Update">
 		<a href="<c:url value='/tip/list.do'/>">
 			<button type="button" class="btn btn-outline-primary">List</button>			
 		</a>
@@ -106,6 +106,24 @@ $(document).ready(function() {
              maxHeight: null,             // set maximum height of editor
              focus: true                  // set focus to editable area after initializing summernote
      });
+});
+
+$("#updateSubmit").click(function(){
+	console.log("updateSubmit!")
+	if($("#title").val() == ""){
+		event.preventDefault();
+		alert("제목을 입력해 주세요")
+		
+	}else if( $(".categoryCode").val() == ""){
+		console.log($(".categoryCode").val());
+		console.log("카테고리없음");
+		event.preventDefault();
+		alert("카테고리를 입력해 주세용");
+	}else if($("#summernote").val() == ""){
+		console.log($("#summernote").val());
+		event.preventDefault();
+		alert("내용을 입력해주세요")
+	}
 });
 </script>
 </body>

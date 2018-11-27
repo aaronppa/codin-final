@@ -20,6 +20,21 @@
 		<result column="comment" property="comment"/>		
 		<result column="reg_date" property="regDate"/>
 	</resultMap>
+	<resultMap type="tipRecommend" id="tipRecommendMap">
+		<result column="no" property="no"/>
+		<result column="tip_no" property="tipNo"/>		
+		<result column="member_no" property="memberNo"/>		
+		<result column="recommend" property="recommend"/>
+	</resultMap>
+<!-- 	<resultMap id="fileMap" type="file"> -->
+<!-- 		<result column="file_id" property="fileId"/> -->
+<!-- 		<result column="board_code" property="boardCode"/> -->
+<!-- 		<result column="board_no" property="boardNo"/> -->
+<!-- 		<result column="ori_name" property="oriName"/> -->
+<!-- 		<result column="sys_name" property="sysName"/> -->
+<!-- 		<result column="file_path" property="filePath"/> -->
+<!-- 		<result column="file_size" property="fileSize"/> -->
+<!-- 	</resultMap> -->
 
 	
 	<select id="selectTip" resultMap="tipMap">
@@ -66,11 +81,51 @@
 	<!-- 댓글 -->
 	<insert id="insertComment" parameterType="tipComment">
 		insert into tip_comment(
-			tip_no, commenter_no, comment, 
-		)values(
+			tip_no, commenter_no, comment 
+		) values(
 			#{tipNo}, #{commenterNo}, #{comment}
+		)
+	</insert>
+	<select id="selectComment" parameterType="int" resultMap="tipCommentMap">
+		select *
+		  from tip_comment
+		 where tip_no=#{tipNo}
+		 order by comment_no desc
+	</select>
+	<delete id="deleteComment" parameterType="tipComment">
+		delete 
+		  from tip_comment
+		 where commenter_no = #{commenterNo}
+		   and comment_no = #{commentNo}
+	</delete>
+	<update id="updateComment" parameterType="tipComment">
+		update tip_comment 
+		   set comment = #{comment}  
+		 where commenter_no = #{commenterNo}
+		   and comment_no = #{commentNo}
+	</update>
+	<select id="countComment" parameterType="int" resultType="int">
+		select count(*)
+		  from tip_comment
+		 where tip_no=#{tipNo}
+	</select>
+	<!-- 추천 -->
+	<insert id="insertRecommend" parameterType="tipRecommend">
+		insert into tip_recommend(
+			tip_no, member_no, recommend
+		)values(
+			#{tipNo}, #{memberNo}, #{recommend}
 		)
 	</insert>
 	
 	
+	<!-- file -->
+<!-- 	<insert id="uploadFile"> -->
+<!-- 		insert into file( -->
+<!-- 			board_code, board_no, ori_name, sys_name, file_path, file_size -->
+<!-- 		)values( -->
+<!-- 			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize} -->
+<!-- 		) -->
+<!-- 	</insert> -->
+	  
 </mapper>
