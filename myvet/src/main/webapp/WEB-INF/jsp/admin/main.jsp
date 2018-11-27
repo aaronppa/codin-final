@@ -225,17 +225,17 @@ a.nostyle:hover{
                 </tbody>
             </table>
             <c:if test="${noticePageResult.count != 0}">
-			    <nav aria-label="Pagination">
-			        <ul class="pagination">
-			            <li ><a <c:if test="${noticePageResult.pageNo == 1}">class='disabled'</c:if> id="first" href="1" class="nostyle">&laquo;First</a></li>
-			            <li ><a <c:if test="${noticePageResult.pageNo-10 < 1}">class='disabled'</c:if>href=${noticePageResult.beginPage-1 } class="nostyle">&laquo;Previous</a></li>
+			    <nav class="pagination" aria-label="Pagination">
+			        <ul class="pagination" data-boardtype='notice'>
+			            <li><a class='disabled nostyle firstpage' data-boardtype='notice' id="first" href="1">&laquo;First</a></li>
+			            <li><a class='disabled nostyle previouspage' data-boardtype='notice' href=${noticePageResult.beginPage-1 }>&laquo;Previous</a></li>
 			            
 						<c:forEach var="i" begin="${noticePageResult.beginPage}" end="${noticePageResult.endPage}">
 					    	<li <c:if test="${i eq noticePageResult.pageNo }">class="current"</c:if> ><a href="${i}" class="nostyle" data-boardtype="notice">${i}</a></li>
 						</c:forEach>
 			            
-			            <li <c:if test="${noticePageResult.pageNo == noticePageResult.lastPage}">class='disabled'</c:if>><a href="${noticePageResult.endPage+1 }" class="nostyle">Next&raquo;</a></li>
-			            <li <c:if test="${noticePageResult.pageNo + 10 > noticePageResult.lastPage}">class='disabled'</c:if>><a href="${noticePageResult.lastPage }" class="nostyle">End&raquo;</a>
+			            <li><a class='<c:if test="${noticePageResult.pageNo == noticePageResult.lastPage}">disabled </c:if>nostyle nextpage' data-boardtype="notice" href="${noticePageResult.endPage+1 }">Next&raquo;</a></li>
+			            <li><a class='<c:if test="${noticePageResult.pageNo + 10 > noticePageResult.lastPage}">disabled </c:if>nostyle endpage' data-boardtype="notice" href="${noticePageResult.lastPage }">End&raquo;</a>
 			            </li>
 			        </ul>
 			    </nav>
@@ -303,13 +303,12 @@ a.nostyle:hover{
 
     
     /* Paging Action */
-    $("nav > ul.pagination > li > a").click (function(e) {
+    $("nav.pagination").on("click","a.nostyle", function(e) {
 		e.preventDefault();
-		
+		var selectedLn = $(this);
 		var pageNo = $(this).attr("href")
 		var boardType = $(this).data("boardtype");
 		console.log(boardType);
-		if (pageNo == 0 || pageNo == ${pageResult.lastPage + 1}) return false;
 		if ($(this).hasClass("disabled")) return false;
 		
 		$.ajax({
@@ -322,27 +321,67 @@ a.nostyle:hover{
 			console.log(jqXHR, textStatus, errorThrown);
 		})
 		.done(function(result){
-			console.log("result: ", result);
-			var html="";
-			var saveStatus="";
-			for(var item of result.notice){
-				if(item.tempSave==0){
-					saveStatus="완료";
-				} else {
-					saveStatus="임시저장";
-				}
-				html += "<tr class='notice-tr'><td class='listno'>"+item.noticeNo+
-					   "</td><td class='category'>"+saveStatus+
-					   "</td><td class='notice-title'><a class='nostyle link' href='/myvet/admin/detail.do?noticeNo='"+item.noticeNo+
-					   "'>"+item.noticeTitle+
-    				   "</a></td><td class='nickname'>"+item.noticeWriter+
-    				   "</td><td class='datetime notice-reg-date'>"+item.noticeRegDate+
-    				   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
-    				   "</td></tr>"
-			};
-			$("tbody#noticelist").html(html);
+			console.dir(result);
+			lastPage=result.noticePageResult.lastPage;
+			switch(boardType){
+			case "notice": 	$("tbody#noticelist").html(updateNoticeList(result.notice));
+							updateCurrPg(boardType, result.noticePageResult);
+							break;
+			
+			}
+			console.dir($(this));
 		});
+		
 	})
+	
+/* Paging Function */
+function updateCurrPg(boardType, pageResult){
+				console.dir(pageResult);
+				console.log(boardType);
+				var html = "<li ><a class='nostyle firstpage' data-boardtype='"+boardType+
+						   "' href='1'>&laquo;First</a></li>"+
+		            	   "<li ><a class='nostyle previouspage' data-boardtype='"+boardType+"' href='"+(pageResult.pageNo-1)+
+		            	   "'>&laquo;Previous</a></li>"
+				for(var i=pageResult.beginPage; i<=pageResult.endPage; i++){
+					html += "<li><a href='"+i+"' class='nostyle' data-boardtype='"+boardType+"'>"+i+"</a></li>"
+				}
+		            html += "<li><a href='"+(pageResult.endPage+1)+"' class='nostyle nextpage' data-boardtype='"+boardType+"'>Next&raquo;</a></li>"+
+			                "<li><a href='"+pageResult.lastPage+"' class='nostyle lastpage' data-boardtype='"+boardType+"'>End&raquo;</a>"
+		        $("ul.pagination").data("boardtype",boardType).html(html);
+    			$("a[href="+pageResult.pageNo+"]").not(".firstpage, .previouspage, .nextpage, .lastpage").parent().addClass("current");
+    			$("a[href=0]").addClass("disabled");
+    			$("a[href='"+(pageResult.lastPage+1)+"']").addClass("disabled");
+    			
+    			if(pageResult.pageNo==1){
+    				$("a.firstpage").addClass("disabled");
+    			}
+    			
+    			if(pageResult.pageNo + 10 > pageResult.lastPage){
+    				$("a.lastpage").addClass("disabled");
+    			}
+    			
+}
+
+function updateNoticeList(resultItems){
+	var html="";
+	var saveStatus="";
+	for(var item of resultItems){
+		if(item.tempSave==0){
+			saveStatus="완료";
+		} else {
+			saveStatus="임시저장";
+		}
+		html += "<tr class='notice-tr'><td class='listno'>"+item.noticeNo+
+			   "</td><td class='category'>"+saveStatus+
+			   "</td><td class='notice-title'><a class='nostyle link' href='/myvet/admin/detail.do?noticeNo='"+item.noticeNo+
+			   "'>"+item.noticeTitle+
+  				   "</a></td><td class='nickname'>"+item.noticeWriter+
+  				   "</td><td class='datetime notice-reg-date'>"+item.noticeRegDate+
+  				   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
+  				   "</td></tr>"
+	};
+	return html;
+}	
 </script>    
 </body>
 </html>
