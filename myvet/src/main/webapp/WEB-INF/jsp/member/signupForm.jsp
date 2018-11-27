@@ -94,7 +94,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon6">&nbsp;<i class="fas fa-mobile-alt"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="연락처" name="memberPhone" aria-label="phone" />
+                            <input type="text" class="form-control" placeholder="연락처" name="memberPhone" aria-label="phone"
+                            	   onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style='ime-mode:disabled;' />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -147,6 +148,28 @@
     			$("#checkPassword").html("<p style='color:blue;'>비밀번호가 일치합니다.</p>");
     		}
     	});
+    	
+    	function onlyNumber(event) {
+    		event = event || window.event;
+    		var keyCode = event.keyCode;
+    		
+    		if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105) || keyCode == 8 || keyCode == 46 || keyCode == 37 || keyCode == 39) {
+    			return;
+    		} else {
+    			return false;
+    		}
+    	}
+    	
+    	function removeChar(event) {
+    		event = event || window.event;
+    		var keyCode = event.keyCode;
+    		
+    		if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105) || keyCode == 8 || keyCode == 46 || keyCode == 37 || keyCode == 39) {
+    			return;
+    		} else {
+    			event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    		}
+    	}
     </script>
 </body>
 </html>
