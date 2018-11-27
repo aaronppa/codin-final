@@ -41,11 +41,13 @@ public class MemberController {
 	
 	@RequestMapping("/login.do")
 	public String login(Member member, HttpSession session) {
-		if (service.login(member) != null) {
-			session.setAttribute("user", service.login(member));
+		Member loginMember = service.login(member);
+				
+		if (loginMember != null) {
+			session.setAttribute("user", loginMember);
 			
-			System.out.println(service.login(member).getMemberGrade());
-			System.out.println(service.login(member).getMemberGrade().equals("U"));
+//			System.out.println(service.login(member).getMemberGrade());
+//			System.out.println(service.login(member).getMemberGrade().equals("U"));
 			
 //			if (service.login(member).getMemberGrade().equals('s')) {
 //				

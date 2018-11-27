@@ -6,4 +6,5 @@ public interface MemberMapper {
 	void insertMember(Member member);
 	int IdCheck(String memberEmail);
 	Member selectMemberById(Member member);
+	Member selectPasswordById(String memberEmail);
 }

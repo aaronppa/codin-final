@@ -6,12 +6,14 @@
   <packaging>war</packaging>
     
     <properties>
-  	<spring-framework.version>5.1.1.RELEASE</spring-framework.version>
-  	<aspectj.version>1.9.1</aspectj.version>
-  	<jackson.version>2.9.7</jackson.version>
-  </properties>
+  		<spring-framework.version>5.1.1.RELEASE</spring-framework.version>
+  		<aspectj.version>1.9.1</aspectj.version>
+  		<jackson.version>2.9.7</jackson.version>
+  	</properties>
+	
 	<dependencies>
-	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+	
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -30,6 +32,7 @@
 			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
 			<version>1.16</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -38,7 +41,7 @@
 			<scope>provided</scope>
 		</dependency>
 		
-				<!-- mybatis : https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<!-- mybatis : https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -51,11 +54,12 @@
 			<version>1.2</version>
 		</dependency>
 		
-				<dependency>
+		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
@@ -165,6 +169,27 @@
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>8.0.13</version>
+		</dependency>
+		
+		<!--스프링시큐리티 web 라이브러리-->
+		<dependency>
+	    	<groupId>org.springframework.security</groupId>
+	    	<artifactId>spring-security-web</artifactId>
+	    	<version>4.1.0.RELEASE</version>
+	  	</dependency>
+  
+  		<!--스프링시큐리티 core 라이브러리-->
+  		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-core</artifactId>
+    		<version>4.1.0.RELEASE</version>
+  		</dependency>
+  		
+  		<!--스프링시큐리티 config 라이브러리-->
+  		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-config</artifactId>
+    		<version>4.1.0.RELEASE</version>
 		</dependency>
 		
 	</dependencies>

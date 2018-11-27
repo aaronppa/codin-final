@@ -9,7 +9,10 @@
 	<!-- Tomcat 구동 시 자동 구동 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:config/spring/repository-context.xml</param-value>
+		<param-value>
+			classpath:config/spring/repository-context.xml
+			classpath:config/spring/spring-security.xml
+		</param-value>
 	</context-param>
 	
 	<listener>
