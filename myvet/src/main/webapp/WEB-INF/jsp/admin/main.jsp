@@ -322,13 +322,13 @@ a.nostyle:hover{
 		})
 		.done(function(result){
 			console.dir(result);
-			lastPage=result.noticePageResult.lastPage;
 			switch(boardType){
 			case "notice": 	$("tbody#noticelist").html(updateNoticeList(result.notice));
-							updateCurrPg(boardType, result.noticePageResult);
 							break;
 			
+			
 			}
+			updateCurrPg(boardType, result.noticePageResult);
 			console.dir($(this));
 		});
 		

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.codin.admin.service.AdminService;
-import kr.co.codin.admin.service.NoticeService;
 import kr.co.codin.repository.domain.Notice;
 import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.PageResult;
@@ -22,18 +21,14 @@ import kr.co.codin.repository.domain.PageResult;
 public class AdminController {
 	
 	@Autowired
-	private AdminService adminService;
-
-	@Autowired
-	private NoticeService noticeService;
-	
+	private AdminService service;
 	
 	@RequestMapping("main.do")
 	public void main(Model model) throws Exception{
 		int pageNo = 1;
 		Page page = new Page(pageNo);
-		model.addAttribute("notice", noticeService.noticeList(page));
-		model.addAttribute("noticePageResult", new PageResult(1, noticeService.noticeCount()));
+		model.addAttribute("notice", service.noticeList(page));
+		model.addAttribute("noticePageResult", new PageResult(1, service.noticeCount()));
 		
 	}
 	
@@ -46,14 +41,14 @@ public class AdminController {
 	@ResponseBody
 	public void write(Notice notice) throws Exception{
 		System.out.println("Write Notice: "+notice);
-		adminService.write(notice);
+		service.write(notice);
 	}
 	
 	@RequestMapping("save.do")
 	@ResponseBody
 	public void save(Notice notice) throws Exception{
 		System.out.println("Save Notice"+notice);
-		adminService.save(notice);     
+		service.save(notice);     
 	}
 	
 	@RequestMapping(value="/{boardType}/{pageNo}.do", method=RequestMethod.POST)
@@ -70,8 +65,8 @@ public class AdminController {
 	
 	public Map<String, Object> noticeList(int pageNo) throws Exception{
 		Map<String, Object> map = new HashMap<>();
-		map.put("notice", noticeService.noticeList(new Page(pageNo)));
-		map.put("noticePageResult", new PageResult(pageNo, noticeService.noticeCount()));
+		map.put("notice", service.noticeList(new Page(pageNo)));
+		map.put("noticePageResult", new PageResult(pageNo, service.noticeCount()));
 		return map;
 	}
 	

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.codin.repository.mapper.NoticeMapper">
+<mapper namespace="kr.co.codin.repository.mapper.AdminMapper">
 	<resultMap type="Notice" id="noticeMap">
 		<result column="notice_no" property="noticeNo"/>		
 		<result column="notice_title" property="noticeTitle"/>		
@@ -34,7 +34,6 @@
 	<select id="noticeList" parameterType="Page" resultMap="noticeMap">
 		select *
 		from notice
-		where temp_save = 0
 		order by notice_no desc
 		limit #{begin}, #{pageNum}
 	</select>
@@ -56,10 +55,20 @@
 		where member_no=#{noticeWriter}
 	</select>
 	
-	<update id="incrementViewCnt" parameterType="int">
-		update notice
-		set notice_view_cnt = notice_view_cnt + 1
-		where notice_no = #{no}
-	</update>
+	<insert id="insertNotice" parameterType="Notice">
+		insert into notice(
+				notice_title, notice_writer, notice_content
+			) values (
+				#{noticeTitle}, #{noticeWriter},#{noticeContent}
+			)
+	</insert>
+	
+	<insert id="insertNoticeSave" parameterType="Notice">
+		insert into notice(
+				notice_title, notice_writer, notice_content, temp_save
+			) values (
+				#{noticeTitle}, #{noticeWriter},#{noticeContent}, 1
+			)
+	</insert>
 	
 </mapper>

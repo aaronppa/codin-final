@@ -8,22 +8,22 @@ import org.springframework.stereotype.Service;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Notice;
 import kr.co.codin.repository.domain.Page;
-import kr.co.codin.repository.mapper.NoticeMapper;
+import kr.co.codin.repository.mapper.AdminMapper;
 
 @Service
 public class AdminServiceImpl implements AdminService{
 	@Autowired
-	NoticeMapper noticeMapper;
+	AdminMapper mapper;
 	
 	@Override
 	public void write(Notice notice) {
-		noticeMapper.insertNotice(notice);
+		mapper.insertNotice(notice);
 		
 	}
 
 	@Override
 	public void save(Notice notice) {
-		noticeMapper.insertNoticeSave(notice);
+		mapper.insertNoticeSave(notice);
 	}
 
 	@Override
@@ -31,4 +31,21 @@ public class AdminServiceImpl implements AdminService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Notice> noticeList(Page page) {
+		return mapper.noticeList(page);
+	}
+
+	@Override
+	public Notice noticeDetail(int no) {
+		// TODO Auto-generated method stub
+		return mapper.noticeDetail(no);
+	}
+
+	@Override
+	public int noticeCount() {
+		return mapper.noticeCount();
+	}
+
 }
