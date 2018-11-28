@@ -9,5 +9,5 @@ import kr.co.codin.repository.domain.HosBasic;
 @Service
 public interface MainMapService {
 	void insertMap(HosBasic list);
-	String unregiCheck(HosBasic list);
+	char HosCheck(HosBasic list);
 }

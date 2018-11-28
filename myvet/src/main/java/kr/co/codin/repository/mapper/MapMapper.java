@@ -7,5 +7,5 @@ import kr.co.codin.repository.domain.HosBasic;
 public interface MapMapper {
 	void insertMap(HosBasic basic);
 	HosBasic selectMap(HosBasic basic);
-	String unregiCheck(HosBasic basic);
+	String selectRegiMap(HosBasic basic);
 }

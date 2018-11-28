@@ -14,11 +14,13 @@ public class HosBasic {
 	public double mapy;
 	public double mapx;
 	public char hosRegister;
+	
 	public char getHosRegister() {
 		return hosRegister;
 	}
-	public void setHosRegister(char hosRegister) {
+	public HosBasic setHosRegister(char hosRegister) {
 		this.hosRegister = hosRegister;
+		return null;
 	}
 	public String getTitle() {
 		return title;
@@ -55,6 +57,11 @@ public class HosBasic {
 	}
 	public void setMapx(double mapx) {
 		this.mapx = mapx;
+	}
+	@Override
+	public String toString() {
+		return "HosBasic [title=" + title + ", telephone=" + telephone + ", address=" + address + ", roadAddress="
+				+ roadAddress + ", mapy=" + mapy + ", mapx=" + mapx + ", hosRegister=" + hosRegister + "]";
 	}
 	
 	

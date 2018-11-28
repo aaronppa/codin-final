@@ -17,6 +17,10 @@ public class MainMapServiceImpl implements MainMapService{
 	
 	@Override
 	public void insertMap(HosBasic list) {
+		/*
+		 * 검색된 병원의 결과가 디비에 없을 경우에만
+		 * 디비에 저장
+		 */
 		if(mapper.selectMap(list)==null) {
 			mapper.insertMap(list);
 		}		
@@ -24,10 +28,14 @@ public class MainMapServiceImpl implements MainMapService{
 	}
 
 	@Override
-	public String unregiCheck(HosBasic list) {
+	public char HosCheck(HosBasic list) {
 		
-		System.out.println("이거 값이 뭐? :"+mapper.unregiCheck(list));
-		return mapper.unregiCheck(list);
+		/*
+		 * 디비에 저장된 병원의 register값을 조회
+		 */
+		return mapper.selectRegiMap(list).charAt(0);//mapper.selectRegiMap의 타입이 Stringd이기 때문에 char로 타입 형변환
 	}
+
+
 	
 }
