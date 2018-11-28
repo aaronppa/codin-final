@@ -2,10 +2,14 @@ package kr.co.codin.repository.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Notice {
 	int noticeNo;
 	String noticeTitle;
 	int noticeWriter;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	Date noticeRegDate;
 	int noticeViewCnt;
 	String noticeContent;

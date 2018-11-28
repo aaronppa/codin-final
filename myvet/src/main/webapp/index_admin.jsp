@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Admin Page Test Index</title>
 </head>
 <body>
 	index 접속 확인

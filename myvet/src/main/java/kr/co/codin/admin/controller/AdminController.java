@@ -29,7 +29,18 @@ public class AdminController {
 		Page page = new Page(pageNo);
 		model.addAttribute("notice", service.noticeList(page));
 		model.addAttribute("noticePageResult", new PageResult(1, service.noticeCount()));
+	}
+	
+	@RequestMapping("detail")
+	public String detail(String boardType, int itemno, Model model) {
+		String url = null;
+		switch(boardType) {
+			case "notice": 
+				model.addAttribute("detail", service.noticeDetail(itemno));
+				url="admin/noticedetail";
+		}
 		
+		return url;
 	}
 	
 	@RequestMapping("writeForm.do")
@@ -55,10 +66,11 @@ public class AdminController {
 	@ResponseBody
 	public Map<String, Object> boardPage(@PathVariable String boardType, @PathVariable int pageNo) throws Exception{
 		switch(boardType) {
-		case "notice": 
-			System.out.println("Request 들어옴.");
-			return noticeList(pageNo);
-		default: return null;
+			case "notice": 
+				System.out.println("Request 들어옴.");
+				System.out.println(noticeList(pageNo));
+				return noticeList(pageNo);
+			default: return null;
 		}
 	}
 	

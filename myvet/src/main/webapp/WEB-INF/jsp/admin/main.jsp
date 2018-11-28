@@ -197,7 +197,7 @@ a.nostyle:hover{
                 </thead>
                 <tbody id="noticelist">
                 <c:forEach var="notice" items="${notice}">
-	        		<tr class="notice-tr">
+	        		<tr class="notice-tr" data-boardtype='notice' data-itemno='${notice.noticeNo}'>
 	        			<td class="listno">${notice.noticeNo}</td>
 	        			<c:choose>
 	        			<c:when test="${notice.tempSave == 1}">
@@ -208,11 +208,8 @@ a.nostyle:hover{
 	        			</c:otherwise>
 	        			</c:choose>
 	        			<td class="notice-title">
-	        				<a class="nostyle link" 
-	        				   href="<c:url value="/admin/detail.do?noticeNo=${notice.noticeNo }"/>">
 	        					${notice.noticeTitle}
-	        				</a>
-	        			</td>
+	 					</td>
 	        			<td class="nickname">${notice.member.memberNickname}</td>
 	        			<td class="datetime notice-reg-date">
 		        			<fmt:formatDate value="${notice.noticeRegDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -292,48 +289,87 @@ a.nostyle:hover{
             </table>
         </div>
     </div>
-<script>
-    $("button#write").on("click",function(){
-        var w = 1000;
-        var h = 600;
-        var left = (screen.width/2)-(w/2);
-        var top = (screen.height/2)-(h/2);
-        window.open("<c:url value='/admin/writeForm.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
-    })
 
-    
-    /* Paging Action */
-    $("nav.pagination").on("click","a.nostyle", function(e) {
-		e.preventDefault();
-		var selectedLn = $(this);
-		var pageNo = $(this).attr("href")
-		var boardType = $(this).data("boardtype");
-		console.log(boardType);
-		if ($(this).hasClass("disabled")) return false;
-		
-		$.ajax({
-			url: boardType +"/" + pageNo +".do",
-			/* url: "noticelist.do", */
-			/* data: {"boardType":boardType, "pageNo": pageNo}, */
-			method: "post"
-		})
-		.fail(function(jqXHR, textStatus, errorThrown){
-			console.log(jqXHR, textStatus, errorThrown);
-		})
-		.done(function(result){
-			console.dir(result);
-			switch(boardType){
-			case "notice": 	$("tbody#noticelist").html(updateNoticeList(result.notice));
-							break;
-			
-			
-			}
-			updateCurrPg(boardType, result.noticePageResult);
-			console.dir($(this));
-		});
-		
+<script src="<c:url value='/resources/js/datetime/jquery-dateformat.js'/>"></script>
+<script>
+/* Popup Size and Location */
+var w = 1000;
+var h = 600;
+var left = (screen.width/2)-(w/2);
+var top = (screen.height/2)-(h/2);
+
+/* Table Row Click Detection */
+$("body").on("click", "table", function(e){
+	console.log("Clicked: ", e.target);
+})
+
+/* Notice 상세 */
+$(".clickable > tbody > tr").on("click", function(e){
+	console.log("Clicked: ", $(this).data("boardtype"));
+	console.log("Clicked: ", $(this).data("itemno"));
+    window.open("<c:url value='/admin/detail.do?boardtype="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
+})
+
+/* Notice Board Write Form Popup */
+$("button#write").on("click",function(){
+    window.open("<c:url value='/admin/writeForm.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
+})
+
+   
+/* Paging Action */
+$("nav.pagination").on("click","a.nostyle", function(e) {
+	e.preventDefault();
+	var selectedLn = $(this);
+	var pageNo = $(this).attr("href")
+	var boardType = $(this).data("boardtype");
+	console.log(boardType);
+	if ($(this).hasClass("disabled")) return false;
+
+	$.ajax({
+		url: boardType +"/" + pageNo +".do",
+		/* url: "noticelist.do", */
+		/* data: {"boardType":boardType, "pageNo": pageNo}, */
+		method: "post"
 	})
+	.fail(function(jqXHR, textStatus, errorThrown){
+		console.log(jqXHR, textStatus, errorThrown);
+	})
+	.done(function(result){
+		console.dir(result);
+		switch(boardType){
+		case "notice": 	$("tbody#noticelist").html(updateNoticeList(boardType, result.notice));
+						break;
+		
+		
+		}
+		updateCurrPg(boardType, result.noticePageResult);
+		console.dir($(this));
+	});
 	
+})
+
+/* Update Notice List */
+function updateNoticeList(boardType, resultItems){
+	var html="";
+	var saveStatus="";
+	for(var item of resultItems){
+		if(item.tempSave==0){
+			saveStatus="완료";
+		} else {
+			saveStatus="임시저장";
+		}
+		html += "<tr class='notice-tr' data-boardtype='"+boardType+"' data-itemno='"+item.noticeNo+"'><td class='listno'>"+item.noticeNo+
+			   "</td><td class='category'>"+saveStatus+
+			   "</td><td class='notice-title'><a class='nostyle link' href='/myvet/admin/detail.do?noticeNo='"+item.noticeNo+
+			   "'>"+item.noticeTitle+
+			   "</a></td><td class='nickname'>"+item.member.memberNickname+
+			   "</td><td class='datetime notice-reg-date'>"+$.format.date(item.noticeRegDate,'yyyy-MM-dd HH:mm:ss')+
+			   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
+			   "</td></tr>"
+	};
+	return html;
+}	
+
 /* Paging Function */
 function updateCurrPg(boardType, pageResult){
 				console.dir(pageResult);
@@ -362,26 +398,6 @@ function updateCurrPg(boardType, pageResult){
     			
 }
 
-function updateNoticeList(resultItems){
-	var html="";
-	var saveStatus="";
-	for(var item of resultItems){
-		if(item.tempSave==0){
-			saveStatus="완료";
-		} else {
-			saveStatus="임시저장";
-		}
-		html += "<tr class='notice-tr'><td class='listno'>"+item.noticeNo+
-			   "</td><td class='category'>"+saveStatus+
-			   "</td><td class='notice-title'><a class='nostyle link' href='/myvet/admin/detail.do?noticeNo='"+item.noticeNo+
-			   "'>"+item.noticeTitle+
-  				   "</a></td><td class='nickname'>"+item.noticeWriter+
-  				   "</td><td class='datetime notice-reg-date'>"+item.noticeRegDate+
-  				   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
-  				   "</td></tr>"
-	};
-	return html;
-}	
 </script>    
 </body>
 </html>
