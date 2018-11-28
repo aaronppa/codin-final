@@ -31,11 +31,12 @@ public class AdminController {
 		model.addAttribute("noticePageResult", new PageResult(1, service.noticeCount()));
 	}
 	
-	@RequestMapping("detail")
+	@RequestMapping("detail.do")
 	public String detail(String boardType, int itemno, Model model) {
 		String url = null;
 		switch(boardType) {
 			case "notice": 
+				System.out.println("Detail Request 들어옴");
 				model.addAttribute("detail", service.noticeDetail(itemno));
 				url="admin/noticedetail";
 		}
@@ -67,7 +68,7 @@ public class AdminController {
 	public Map<String, Object> boardPage(@PathVariable String boardType, @PathVariable int pageNo) throws Exception{
 		switch(boardType) {
 			case "notice": 
-				System.out.println("Request 들어옴.");
+				System.out.println("페이징 Request 들어옴.");
 				System.out.println(noticeList(pageNo));
 				return noticeList(pageNo);
 			default: return null;

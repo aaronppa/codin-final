@@ -47,23 +47,23 @@ a.nostyle:hover{
         <div class="listarea vetauth">
             <h2>수의사 인증 요청 리스트</h2>
             <div class="search">
-                <form action="">
+                <form action="" id="vetAuth-search" method="post">
                     요청검색: 
-                    <select>
-                        <option>=검색유형선택=</option>
-                        <option>요청자 이름</option>
-                        <option>요청자 계정</option>
+                    <select name="requester">
+                        <option value="">=검색유형선택=</option>
+                        <option value="">요청자 이름</option>
+                        <option value="">요청자 계정</option>
                     </select>
                     상태:
-                    <select>
-                        <option>전체</option>
-                        <option>승인</option>
-                        <option>보류</option>
-                        <option>반려</option>
+                    <select name="status">
+                        <option value="">전체</option>
+                        <option value="">승인</option>
+                        <option value="">보류</option>
+                        <option value="">반려</option>
                     </select>
                     <input type="search" name="keyword">
-                    <input type="button" id="searchbtn" value="검색">
-                    <input type="button" id="reset" value="초기화">
+                    <input type="button" class="searchbtn" value="검색" data-boardtype="vetAuth">
+                    <input type="button" class="reset" value="초기화">
                 </form>
             </div>
             <div class="listcnt"><span>전체: </span><span id="itemcnt">(1/123)</span></div>
@@ -86,52 +86,52 @@ a.nostyle:hover{
         <div class="listarea report">
             <h2>신고 접수 리스트</h2>
             <div class="search">
-                <form action="">
+                <form action="" id="report-search" method="post">
                     신고검색: 
-                    <select>
-                        <option>=검색유형선택=</option>
-                        <option>신고자 계정</option>
-                        <option>신고자 닉네임</option>
+                    <select name="requester">
+                        <option value="">=검색유형선택=</option>
+                        <option value="">신고자 계정</option>
+                        <option value="">신고자 닉네임</option>
                     </select>
                     상태:
-                    <select>
-                        <option>전체</option>
-                        <option>승인</option>
-                        <option>보류</option>
-                        <option>반려</option>
+                    <select name="status">
+                        <option value="">전체</option>
+                        <option value="">승인</option>
+                        <option value="">보류</option>
+                        <option value="">반려</option>
                     </select>
                     신고유형:
-                    <select>
-                        <option>전체</option>
-                        <option>음란성/선정성</option>
-                        <option>상업적 광고 홍보</option>
-                        <option>지나친 혐오성</option>
-                        <option>개인정보 유출</option>
-                        <option>욕설</option>
-                        <option>특정대상 비난</option>
-                        <option>도배/낚시 내용</option>
-                        <option>악성 프로그램</option>
-                        <option>저작권법 위반</option>
-                        <option>유령병원</option>
-                        <option>기타</option>
+                    <select name="reportType">
+                        <option value="">전체</option>
+                        <option value="">음란성/선정성</option>
+                        <option value="">상업적 광고 홍보</option>
+                        <option value="">지나친 혐오성</option>
+                        <option value="">개인정보 유출</option>
+                        <option value="">욕설</option>
+                        <option value="">특정대상 비난</option>
+                        <option value="">도배/낚시 내용</option>
+                        <option value="">악성 프로그램</option>
+                        <option value="">저작권법 위반</option>
+                        <option value="">유령병원</option>
+                        <option value="">기타</option>
                     </select>
                     게시판:
-                    <select>
-                        <option>전체</option>
-                        <option>Q&A</option>
-                        <option>겔러리</option>
-                        <option>꿀팁</option>
-                        <option>병원리뷰</option>
+                    <select name="board">
+                        <option value="">전체</option>
+                        <option value="">Q&A</option>
+                        <option value="">겔러리</option>
+                        <option value="">꿀팁</option>
+                        <option value="">병원리뷰</option>
                     </select>
                     콘텐츠유형:
-                    <select>
-                        <option>전체</option>
-                        <option>게시글</option>
-                        <option>댓글</option>
-                        <option>리뷰</option>
+                    <select name="contentType">
+                        <option value="">전체</option>
+                        <option value="">게시글</option>
+                        <option value="">댓글</option>
+                        <option value="">리뷰</option>
                     </select>
-                    <input type="button" id="searchbtn" value="검색">
-                    <input type="button" id="reset" value="초기화">
+                    <input type="button" class="searchbtn" value="검색" data-boardtype="report">
+                    <input type="button" class="reset" value="초기화">
                 </form>
             </div>
             <div class="listcnt"><span>전체: </span><span id="itemcnt">(1/123)</span></div>
@@ -164,21 +164,21 @@ a.nostyle:hover{
         </div>
         <hr>
         <div class="listarea notice">
-            <h2>사이트 전체 공지 게시판</h2>
+            <h2>사이트 전체 공지사항</h2>
             <button type="button" id="write">글작성</button>
             <div class="search">
-                <form action="">
+                <form action="" id="notice-search" method="post">
                     작성자: 
-                    <select>
-                        <option>전체</option>
-                        <option>사이트관리자</option>
-                        <option>서버관리자</option>
-                        <option>......</option>
+                    <select name="writer">
+                        <option value="">전체</option>
+                        <option value="">사이트관리자</option>
+                        <option value="">서버관리자</option>
+                        <option value="">......</option>
                     </select>
                     검색키워드: 
                     <input type="search" name="keyword">
-                    <input type="button" id="searchbtn" value="검색">
-                  	<input type="button" id="reset" value="초기화">
+                    <input type="button" class="searchbtn" value="검색" data-boardtype="notice">
+                  	<input type="button" class="reset" value="초기화">
                     <label for="tempsave">임시저장</label>
                     <input type="checkbox" id="tempsave" value="1">
                 </form>
@@ -242,32 +242,32 @@ a.nostyle:hover{
         <div class="listarea member">
             <h2>회원관리(검색)</h2>
             <div class="search">
-            <form action="">
+            <form action="" id="member-search">
                 회원검색: 
-                <select>
-                    <option>=검색유형선택=</option>
-                    <option>계정</option>
-                    <option>닉네임</option>
-                    <option>이름</option>
+                <select name="keywordType">
+                    <option value="">=검색유형선택=</option>
+                    <option value="account">계정</option>
+                    <option value="nickname">닉네임</option>
+                    <option value="name">이름</option>
                 </select>
                 회원구분: 
-                <select>
-                    <option>전체</option>
-                    <option>관리자</option>
-                    <option>일반회원</option>
-                    <option>수의사</option>
-                    <option>병원관계자</option>
+                <select name="memberType">
+                    <option value="">전체</option>
+                    <option value="admin">관리자</option>
+                    <option value="general">일반회원</option>
+                    <option value="vet">수의사</option>
+                    <option value="staff">병원관계자</option>
                 </select>
                 회원상태: 
-                <select>
-                    <option>전체</option>
-                    <option>정상</option>
-                    <option>탈퇴</option>
-                    <option>차단</option>
+                <select name="status">
+                    <option value="">전체</option>
+                    <option value="ok">정상</option>
+                    <option value="out">탈퇴</option>
+                    <option value="blocked">차단</option>
                 </select>
                 <input type="search" name="keyword">
-                <input type="button" id="searchbtn" value="검색">
-                <input type="button" id="reset" value="초기화">
+                <input type="button" class="searchbtn" value="검색" data-boardtype="member">
+                <input type="button" class="reset" value="초기화">
             </form>
             </div>
             <div class="listcnt"><span>전체: </span><span id="itemcnt">123</span></div>
@@ -295,8 +295,26 @@ a.nostyle:hover{
 /* Popup Size and Location */
 var w = 1000;
 var h = 600;
-var left = (screen.width/2)-(w/2);
-var top = (screen.height/2)-(h/2);
+var left = Math.round((screen.width/2)-(w/2));
+var topx = Math.round((screen.height/2)-(h/2));
+console.log(topx);
+console.log(left);
+console.log("screenTop: ", topx);
+console.log("screenLeft: ", left);
+
+/* search */
+$(".searchbtn").click(function(e){
+	e.preventDefault();
+	console.log("Search boardType: ", e.target.dataset.boardtype);
+	console.log("Search form#: ", e.target.form)
+	var postUrl = 
+	$.get()
+});
+
+/* Reset Button */
+$(".reset").click(function(){
+	location.reload();
+})
 
 /* Table Row Click Detection */
 $("body").on("click", "table", function(e){
@@ -304,15 +322,15 @@ $("body").on("click", "table", function(e){
 })
 
 /* Notice 상세 */
-$(".clickable > tbody > tr").on("click", function(e){
+$(".clickable").on("click", "tr", function(e){
 	console.log("Clicked: ", $(this).data("boardtype"));
 	console.log("Clicked: ", $(this).data("itemno"));
-    window.open("<c:url value='/admin/detail.do?boardtype="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
+    window.open("<c:url value='/admin/detail.do?boardType="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
 })
 
 /* Notice Board Write Form Popup */
 $("button#write").on("click",function(){
-    window.open("<c:url value='/admin/writeForm.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+top+", left="+left);
+    window.open("<c:url value='/admin/writeForm.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
 })
 
    
@@ -360,9 +378,8 @@ function updateNoticeList(boardType, resultItems){
 		}
 		html += "<tr class='notice-tr' data-boardtype='"+boardType+"' data-itemno='"+item.noticeNo+"'><td class='listno'>"+item.noticeNo+
 			   "</td><td class='category'>"+saveStatus+
-			   "</td><td class='notice-title'><a class='nostyle link' href='/myvet/admin/detail.do?noticeNo='"+item.noticeNo+
-			   "'>"+item.noticeTitle+
-			   "</a></td><td class='nickname'>"+item.member.memberNickname+
+			   "</td><td class='notice-title'>"+item.noticeTitle+
+			   "</td><td class='nickname'>"+item.member.memberNickname+
 			   "</td><td class='datetime notice-reg-date'>"+$.format.date(item.noticeRegDate,'yyyy-MM-dd HH:mm:ss')+
 			   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
 			   "</td></tr>"
@@ -372,29 +389,29 @@ function updateNoticeList(boardType, resultItems){
 
 /* Paging Function */
 function updateCurrPg(boardType, pageResult){
-				console.dir(pageResult);
-				console.log(boardType);
-				var html = "<li ><a class='nostyle firstpage' data-boardtype='"+boardType+
-						   "' href='1'>&laquo;First</a></li>"+
-		            	   "<li ><a class='nostyle previouspage' data-boardtype='"+boardType+"' href='"+(pageResult.pageNo-1)+
-		            	   "'>&laquo;Previous</a></li>"
-				for(var i=pageResult.beginPage; i<=pageResult.endPage; i++){
-					html += "<li><a href='"+i+"' class='nostyle' data-boardtype='"+boardType+"'>"+i+"</a></li>"
-				}
-		            html += "<li><a href='"+(pageResult.endPage+1)+"' class='nostyle nextpage' data-boardtype='"+boardType+"'>Next&raquo;</a></li>"+
-			                "<li><a href='"+pageResult.lastPage+"' class='nostyle lastpage' data-boardtype='"+boardType+"'>End&raquo;</a>"
-		        $("ul.pagination").data("boardtype",boardType).html(html);
-    			$("a[href="+pageResult.pageNo+"]").not(".firstpage, .previouspage, .nextpage, .lastpage").parent().addClass("current");
-    			$("a[href=0]").addClass("disabled");
-    			$("a[href='"+(pageResult.lastPage+1)+"']").addClass("disabled");
-    			
-    			if(pageResult.pageNo==1){
-    				$("a.firstpage").addClass("disabled");
-    			}
-    			
-    			if(pageResult.pageNo + 10 > pageResult.lastPage){
-    				$("a.lastpage").addClass("disabled");
-    			}
+		console.dir(pageResult);
+		console.log(boardType);
+		var html = "<li ><a class='nostyle firstpage' data-boardtype='"+boardType+
+				   "' href='1'>&laquo;First</a></li>"+
+            	   "<li ><a class='nostyle previouspage' data-boardtype='"+boardType+"' href='"+(pageResult.pageNo-1)+
+            	   "'>&laquo;Previous</a></li>"
+		for(var i=pageResult.beginPage; i<=pageResult.endPage; i++){
+			html += "<li><a href='"+i+"' class='nostyle' data-boardtype='"+boardType+"'>"+i+"</a></li>"
+		}
+            html += "<li><a href='"+(pageResult.endPage+1)+"' class='nostyle nextpage' data-boardtype='"+boardType+"'>Next&raquo;</a></li>"+
+	                "<li><a href='"+pageResult.lastPage+"' class='nostyle lastpage' data-boardtype='"+boardType+"'>End&raquo;</a>"
+        $("ul.pagination").data("boardtype",boardType).html(html);
+  			$("a[href="+pageResult.pageNo+"]").not(".firstpage, .previouspage, .nextpage, .lastpage").parent().addClass("current");
+  			$("a[href=0]").addClass("disabled");
+  			$("a[href='"+(pageResult.lastPage+1)+"']").addClass("disabled");
+  			
+  			if(pageResult.pageNo==1){
+  				$("a.firstpage").addClass("disabled");
+  			}
+  			
+  			if(pageResult.pageNo + 10 > pageResult.lastPage){
+  				$("a.lastpage").addClass("disabled");
+  			}
     			
 }
 
