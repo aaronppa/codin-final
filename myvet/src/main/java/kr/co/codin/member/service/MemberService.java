@@ -3,6 +3,7 @@ package kr.co.codin.member.service;
 import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.Member;
+import kr.co.codin.repository.domain.VetAuth;
 
 @Service
 public interface MemberService {
@@ -25,4 +26,10 @@ public interface MemberService {
 	 * @return member
 	 */
 	Member login(Member member);
+	
+	/**
+	 * 수의사 인증 파일 처리에 대한 비즈니스 로직 처리
+	 * @param file
+	 */
+	void uploadVetAuth(VetAuth file);
 }

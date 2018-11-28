@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.Member;
+import kr.co.codin.repository.domain.VetAuth;
 import kr.co.codin.repository.mapper.MemberMapper;
 
 @Service
@@ -44,5 +45,10 @@ public class MemberServiceImpl implements MemberService {
 			System.out.println("비밀번호 불일치");
 		}
 		return mapper.selectMemberById(member);
+	}
+
+	@Override
+	public void uploadVetAuth(VetAuth file) {
+		mapper.insertVetAuth(file);
 	}
 }

@@ -46,4 +46,12 @@
 		  from member
 		 where member_email = #{memberEmail}
 	</select>
+	
+	<insert id="insertVetAuth" parameterType="VetAuth" useGeneratedKeys="true" keyProperty="memberNo">
+		insert into vet_auth(
+			vet_ori_name, vet_sys_name, vet_file_path, vet_file_size, member_no
+		)values(
+			#{vetOriName}, #{vetSysName}, #{vetFilePath}, #{vetFileSize}, #{memberNo}
+		)		  
+	</insert>
 </mapper>
