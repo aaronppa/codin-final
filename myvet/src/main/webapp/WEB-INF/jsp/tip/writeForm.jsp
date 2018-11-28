@@ -49,6 +49,7 @@
     </style>
 </head>
 <body>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 
     <form action="<c:url value='/tip/write.do' />" method="post">
     <br>

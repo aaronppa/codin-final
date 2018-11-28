@@ -10,8 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <!-- 좋아요,싫어요 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></script>
     
     
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -378,8 +377,36 @@ p {
 #comment::-webkit-scrollbar{
 	display: none;
 	}
+	
+
+<!-- 좋아요 -->
+.rating {
+  text-align: center;
+}
+
+.like,
+.dislike {
+  font-size: 30px;
+  display: inline-block;
+  cursor: pointer;
+  margin: 10px;
+/*   color: gray; */
+}
+
+.dislike:hover,
+.like:hover {
+  color:red;
+  transition: all .2s ease-in-out;
+  transform: scale(1.1);
+}
+
+.active {
+  color: red;
+}
     </style>
 </head>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+
 <body style="overflow-y:hidden; overflow-y:hidden;">
     <div class="notes-wrapper">
             <div class="saver-wrap" contenteditable="false">
@@ -415,10 +442,17 @@ p {
             <span data-toggle="tooltip" title="포니, 포돌이">
             </span>
           <!-- 좋아요,싫어요 -->
-          <div class="like-or-dislike" style="text-align: center;">
-          	<i class="fas fa-thumbs-up" data-toggle="toggle" id="like" title="like" style="cursor:pointer;margin-left: 60px;color:black;"></i>
-          	<i class="fas fa-thumbs-down" data-toggle="toggle" id="dislike" title="dislike" style="cursor:pointer;margin-left: 60px;"></i>
-          </div>
+			 <div class="rating" style="text-align: center;">
+			  <!-- Thumbs up -->
+			  <div class="like grow">
+			    <i class="fa fa-thumbs-up fa-3x like" aria-hidden="true"></i>
+			  </div>
+			  <!-- Thumbs down -->
+			  <div class="dislike grow">
+			    <i class="fa fa-thumbs-down fa-3x like" aria-hidden="true"></i>
+			  </div>
+			</div>
+		  
           <!-- 삭제, 수정 -->
             <div id="delete-update" style="text-align: center;">
                 <span data-toggle="tooltip" title="LIST" style="margin-left: 60px;">
@@ -466,21 +500,17 @@ p {
                 
             </div> 
             <br>   
-    
+  		  
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
         //좋아요, 싫어요 토글
-        $("#like").click(function(){
-        	console.log("like!")
-	        	$(this).css("color","red");
-        	
-        	})
-        $("#dislike").click(function(){
-        	console.log("dislike!")
-        	if($(this).css("color","black")){
-	        	$(this).css("color","red");
-        	}
-        })
+		    $('.like, .dislike').on('click', function() {
+			    event.preventDefault();
+			    $('.active').removeClass('active');
+			    $(this).addClass('active');
+			});
+        
+        
         
         //댓글 글자 입력수
 		$(function typing() {
@@ -709,46 +739,6 @@ p {
         		})
 						
 						
-
-//         		 $.ajax({
-//          			url: "/myvet/tip/updateComment.do",
-//          			type: "get",
-//          			data: {
-//          				commentNo: $("#commentNo").data("commentno"),
-//          				commenterNo: $("#commenterNo").val()
-//          				},
-//   					dataType:"json"
-//          		})
-//          		.done(function(result){
-//          			console.log("updateSuccess")
-         	        
-//          		})
-//          		.fail(function(){
-//          			console.log("updateFail")
-//          		})
-//          	});
-        		
-        		
-//         	   $.ajax({
-//         			url: "/myvet/tip/comment.do",
-//         			type: "get",
-//         			data: {
-//         				commentNo: $("#commentNo").data("commentno"),
-//         				commenterNo: $("#commenterNo").val()
-//         				},
-//  					dataType:"json"
-//         		})
-//         		.done(function(){
-//         			console.log("updateSuccess")
-//         			$(".comment").replace("<textarea cols='50' rows='4'></textarea>")
-//         		})
-//         		.fail(function(){
-//         			console.log("updateFail")
-//         		})
-//         	});
-        	
-        	
-        
         
         //like-dislike
 // 		$("#like").toggle(

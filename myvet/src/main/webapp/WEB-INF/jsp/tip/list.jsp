@@ -127,8 +127,11 @@
    
 
     </style>
+    <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
+    
 </head>
 <body>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
     
     <!--search-->
     <!--category-->
@@ -193,20 +196,7 @@
         </a>
     </div>
     <!--pagenation-->
-    <c:import url="../notice/page.jsp"></c:import>
-<!--     <nav aria-label="Page navigation example"> -->
-<!--             <ul class="pagination justify-content-center"> -->
-<!--                 <li class="page-item disabled"> -->
-<!--                 <a class="page-link" href="#" tabindex="-1">Previous</a> -->
-<!--                 </li> -->
-<!--                 <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!--                 <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!--                 <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!--                 <li class="page-item"> -->
-<!--                 <a class="page-link" href="#">Next</a> -->
-<!--                 </li> -->
-<!--             </ul> -->
-<!--         </nav> -->
+    <c:import url="page.jsp"></c:import>
 </body>
 <script>
 /*category*/
@@ -240,19 +230,7 @@ $('#addToCart').submit(function(){
 // });
 
 //pagenation
-<nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+
 
 
 </script>
