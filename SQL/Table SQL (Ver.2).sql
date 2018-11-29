@@ -6,7 +6,7 @@ CREATE TABLE board_list (
 );
 
 -- file
-CREATE TABLE file (
+CREATE TABLE file_info (
 	file_id    INT           primary key auto_increment, -- file_id
 	board_code INT           NULL,     -- board_code
 	board_no   INT   		 NULL,     -- board_no
