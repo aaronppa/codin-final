@@ -9,6 +9,8 @@ public class FileInfo {
 	private String sysName;
 	private String filePath;
 	private int fileSize;
+	private String url;
+	
 	public int getFileId() {
 		return fileId;
 	}
@@ -51,6 +53,11 @@ public class FileInfo {
 	public void setFileSize(int fileSize) {
 		this.fileSize = fileSize;
 	}
-	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	
 }
