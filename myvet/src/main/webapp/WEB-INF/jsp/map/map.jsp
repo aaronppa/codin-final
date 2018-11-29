@@ -7,18 +7,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-
-.mapsearchdiv,#addr,#button{
-	postion:absoute;
-	margin-top:200px;
-	
+.mapsearchdiv {
+	margin-left: 30px;
 }
-.map{
-	width:500px;
-	height:500px;
-	margin-left:300px;
-	
-	
+
+.map {
+	width: 500px;
+	height: 500px;
+	margin-left: 300px;
+	margin-top: 150px;
+}
+
+#addr {
+	width: 249px;
+}
+
+#resultDiv {
+	border: 1px solid black;
+	width: 299px;
+	height: 473.8px;
+}
+
+#mapsearchdiv {
+	position: absolute;
+	top: 150px;
 }
 </style>
 
@@ -28,15 +40,64 @@
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=S_tAkybRyVr0rREE6Wvr&submodules=geocoder"></script>
 </head>
 <body>
-	<div id="mapsearchdiv">
-	
+	<div>
+		<div id="mapsearchdiv">
+
 			<input id="addr">
-	
+
 			<button id="button">검색</button>
-		<div id="searchResult"></div>
+			<br>
+			<div id="resultDiv">
+				<div>
+					<table>
+						<tbody>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr><tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							<tr>
+								<td>sd00</td>
+							</tr>
+							
+
+						</tbody>
+					</table>
+				</div>
+				<div>페이징 디아브</div>
+			</div>
+
 		</div>
 		<div id="map" class="map"></div>
-
+	</div>
 	<script>
 		var mapx;
 		var mapy;
@@ -46,7 +107,7 @@
 		var jsondata;
 
 		$("#button").click(function() {
-			//	console.log($("#addr").val());
+			
 			$.ajax({
 				url : "<c:url value='/map/ajax.do'/>",
 				type : "post",
@@ -215,25 +276,34 @@
 								
 								console.log(jsondata);
 								
+								
+								
+								$("")
+								
+								
+								
 								let MarkerClicklist = new Array();
 						
 								//병원의 마크점 생성
 								for (let k = 0; k < jsondata.length; k++) {
 									//if(jsondata[k] == null)continue;//서강대로 검색시 null값이 있음
-									console.dir(jsondata[k]);
+									//console.dir(jsondata[k]);
 
-									console.dir("ddd:"
-											+ jsondata[k].hosRegister);
+									//console.dir("ddd:"
+									//		+ jsondata[k].hosRegister);
 									let hosmarker=null;
 									let hosaddr =null;
 									if (jsondata[k].hosRegister == "N") { //if 조건에 따른 마크점 분기 완료
-										//  MarkLog(jsondata[k]);
-										console.log("ddㅇㅇㅇㄹ널이");
-										console.log(jsondata[k].title,
-												jsondata[k].mapx,
+										 // MarkLog(jsondata[k]);
+										//console.log("ddㅇㅇㅇㄹ널이");
+										//console.log(jsondata[k].title,
+												/* jsondata[/* k].mapx,
 												jsondata[k].mapy,
-												jsondata[k].address);
-										console.log("sldjfslkdjfsldj");
+												
+												
+												
+												jsondata[k].address); */ 
+									//	console.log("sldjfslkdjfsldj");
 
 										 hosaddr = new naver.maps.Point(
 												jsondata[k].mapx,
@@ -264,7 +334,10 @@
 									}//if-else
 									MarkerClicklist[k] = hosmarker;
 									
-									console.log(jsondata[k].title);
+								//	console.log(jsondata[k].title);
+									
+									
+									
 									
 									let infowindow = new naver.maps.InfoWindow({
 
@@ -272,36 +345,35 @@
 									});
 									
 									
-									naver.maps.Event.addListener(MarkerClicklist[k],
-											"click", function(e) {
+									//마크점 클릭시 나오는 action의 분기
+									if (jsondata[k].hosRegister == "N") {
+										naver.maps.Event.addListener(MarkerClicklist[k],
+												"click", function(e) {
 
-												if (infowindow.getMap()) {
-													infowindow.close();
-												} else {
-													infowindow.open(map,
-															MarkerClicklist[k]);
-												}
-											});
+													alert("병원 이름:"+jsondata[k].title+"은 등록되지 않은 병원입니다.");
+												});
+									}else{
+										naver.maps.Event.addListener(MarkerClicklist[k],
+												"click", function(e) {
+
+													if (infowindow.getMap()) {
+														infowindow.close();
+													} else {
+														infowindow.open(map,
+																MarkerClicklist[k]);
+													}
+												});
+									}
+									
+									
 
 									let hosInfo = new naver.maps.InfoWindow({
 										content : '<p>등록되지 않은 병원입니다.</p>'+hosmarker
 
 									});
 
-									// 	console.log("됨"+k);
-									//console.log(jsondata[k].title);
-									//console.log(jsondata[k].mapx);
-									//console.log(jsondata[k].mapy);
-									//	console.log("끵!");
-									//CheckingMark(jsondata);
-									//console.log("끵1");
-									//console.log(jsondata[0]);
-									//console.log("긩3");
-									//console.log("if != null;");
-
-									//console.log("므아?");
-
-
+									
+						
 								}//for
 								
 							});

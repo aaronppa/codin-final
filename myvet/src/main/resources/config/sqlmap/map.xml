@@ -12,7 +12,7 @@
 		<result column="mapy" property="mapy"/>		
 		<result column="telephone" property="telephone"/>
 		<result column="hos_register" property="hosRegister"/>
-	
+		<result column="hos_search_cnt" property="hosSearchCnt"/>
 	</resultMap>
 	
 	<insert id="insertMap" parameterType="HosBasic">
@@ -22,17 +22,21 @@
 				
 	</insert>
 	
+	<update id="updateSearchCnt" parameterType="HosBasic">
+	 update hos_basic
+	 	set hos_search_cnt=hos_search_cnt+1
+	 	where title = #{title} and address= #{address} and roadAddress=#{roadAddress} and mapx = #{mapx} and mapy=#{mapy} 
+	</update>
+	
 	<select id="selectRegiMap" parameterType="HosBasic" resultType="string">
 		select hos_register 
-			from hos_basic
+			from  hos_basic
 			where title=#{title} and 
-				  address= #{address} and 
+					address=#{address} and 
 				  roadAddress=#{roadAddress} and 
 				  mapx=#{mapx} and 
 				  mapy=#{mapy} and
-				  telephone = #{telephone}
-			
-				
+				  telephone = #{telephone}			
 	</select>
 	
 	<select id="selectMap" parameterType="HosBasic" resultMap="HosBasicMap">

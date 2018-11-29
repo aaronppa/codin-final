@@ -1,6 +1,6 @@
 package kr.co.codin.repository.domain;
 
-public class places {
+public class Places {
 	public String name;
 	public String jibun_address;
 	public double x;

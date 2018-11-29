@@ -23,7 +23,9 @@ public class MainMapServiceImpl implements MainMapService{
 		 */
 		if(mapper.selectMap(list)==null) {
 			mapper.insertMap(list);
-		}		
+		}else {
+			mapper.updateSearchCnt(list);
+		}
 	
 	}
 

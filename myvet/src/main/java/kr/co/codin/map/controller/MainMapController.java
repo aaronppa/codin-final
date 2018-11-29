@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 import kr.co.codin.map.service.MainMapService;
 //import kr.co.codin.member.service.MemberService;
 import kr.co.codin.repository.domain.HosBasic;
-import kr.co.codin.repository.domain.places;
+import kr.co.codin.repository.domain.Places;
 
 @Controller
 @RequestMapping("map")
@@ -33,7 +33,7 @@ public class MainMapController {
 	
 	@RequestMapping("map.do")
 	public void dd() {
-		//	System.out.println("옴");
+		
 	}
 
 
@@ -71,10 +71,11 @@ public class MainMapController {
 			JSONObject obj = new JSONObject(response.toString());
 			Gson gson = new Gson();
 			List<HosBasic> Rlist = new ArrayList<HosBasic>();
+	
 			for(int i = 0 ; i < obj.length(); i++) {
 				Object list = (Object) obj.getJSONArray("places").get(i);
 				String list1 = list.toString();
-				places p = gson.fromJson(list1, places.class);
+				Places p = gson.fromJson(list1, Places.class);
 				Rlist.add(addressSearch(p.jibun_address,p.phone_number, p.name));
 			}
 			return Rlist;
@@ -101,51 +102,60 @@ public class MainMapController {
 		}
 		
 		try {
-			String clientId = "ZOkOJ2shguhudlHkiOL9";//애플리케이션 클라이언트 아이디값";
-			String clientSecret = "tibcZC2qX9";//애플리케이션 클라이언트 시크릿값";
-			String text = URLEncoder.encode(data, "UTF-8");
-			String apiURL = "https://openapi.naver.com/v1/search/local.json?query="+ text; // json 결과
-			//String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
-			URL url = new URL(apiURL);
-			HttpURLConnection con = (HttpURLConnection)url.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("X-Naver-Client-Id", clientId);
-			con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
-			int responseCode = con.getResponseCode();
-			BufferedReader br;
-			if(responseCode==200) { // 정상 호출
-				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			} else {  // 에러 발생
-				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-			}
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			while ((inputLine = br.readLine()) != null) {
-				response.append(inputLine);
-			}
-			br.close();
-			JSONObject obj = new JSONObject(response.toString());
-			Gson gson = new Gson();
-			List<HosBasic> list11 = new ArrayList<>();
-			for(int i = 0 ; i < obj.length(); i++) {
-			//	if(obj.getJSONArray("items").get(i)== null)continue;//dddd
-				Object list = (Object) obj.getJSONArray("items").get(i);
-				String list1 = list.toString();
-				System.out.println("list1 : " + list1);
-				
-				HosBasic cate = gson.fromJson(list1, HosBasic.class);
-				//if(cate==null)continue;
-				System.out.println("137번째 줄:"+i +"   "+cate.address+" , "+cate.telephone+"  , "+cate.title+","+cate.getMapx()+","+cate.getMapy());
-				HosBasic basic = addressSearch(cate.address,cate.telephone,cate.title);
-				if (basic == null) continue;
-				
-				list11.add(basic);
-				
-			}
-			return list11;
+		//	try {
+				String clientId = "ZOkOJ2shguhudlHkiOL9";//애플리케이션 클라이언트 아이디값";
+				String clientSecret = "tibcZC2qX9";//애플리케이션 클라이언트 시크릿값";
+				String text = URLEncoder.encode(data, "UTF-8");
+				String apiURL = "https://openapi.naver.com/v1/search/local.json?query="+ text; // json 결과
+				//String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
+				URL url = new URL(apiURL);
+				HttpURLConnection con = (HttpURLConnection)url.openConnection();
+				con.setRequestMethod("GET");
+				con.setRequestProperty("X-Naver-Client-Id", clientId);
+				con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+				int responseCode = con.getResponseCode();
+				BufferedReader br;
+				if(responseCode==200) { // 정상 호출
+					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				} else {  // 에러 발생
+					br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+				}
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+				while ((inputLine = br.readLine()) != null) {
+					response.append(inputLine);
+				}
+				br.close();
+				JSONObject obj = new JSONObject(response.toString());
+				Gson gson = new Gson();
+				List<HosBasic> list11 = new ArrayList<>();
+			
+				for(int i = 0 ; i < obj.length(); i++) {
+					if(obj.getJSONArray("items").isNull(i)==true)continue;
+				//	if(obj.getJSONArray("items").getJSONObject(5).getString("category").toString().equalsIgnoreCase("건강,의료>동물병원")==false)continue;
+					Object list = (Object) obj.getJSONArray("items").get(i);
+					
+					String list1 = list.toString();
+					
+					
+					HosBasic cate = gson.fromJson(list1, HosBasic.class);		
+					if(cate.category.equalsIgnoreCase("건강,의료>동물병원")==false)continue;
+										
+					HosBasic basic = addressSearch(cate.address,cate.telephone,cate.title);
+					if (basic == null) continue;
+							
+							
+						list11.add(basic);
+						
+						
+					}
+				return list11;
+					
+		
 		} catch (Exception e) {
-			System.err.println(e);
-		}
+			e.printStackTrace();
+		
+		} 
 		return null;
 	}
 	
@@ -173,30 +183,42 @@ public class MainMapController {
 			
 				response.append(inputLine);
 			
-			}
-			
-			System.out.println("-------" + response.toString());
-			
+			}	
 			br.close();
 			JSONObject job = new JSONObject(response.toString());
 			
 			JSONArray arr = job.getJSONArray("addresses");
-			System.out.println("178:"+arr.toString());
+	
 			try {
 				
 			
 			JSONObject job3 = new JSONObject(arr.get(0).toString());
 			HosBasic hos = new HosBasic();
 			
+			String setTitle = title.replace("<b>", " ");
+			
+			String resultTitle = setTitle.replace("</b>"," ");
+			
+			String RTitle = resultTitle.replace("  ", " " );
+			
+			if(RTitle.substring(0,1).equalsIgnoreCase(" ")==true) {
+			
+				RTitle =RTitle.substring(1, RTitle.length());
+			}
+			
+			if(RTitle.substring(RTitle.length()-1,RTitle.length()).equalsIgnoreCase(" ")==true ) {
+			
+				RTitle =RTitle.substring(0, RTitle.length()-1);
+			}
+			
 			hos.setAddress(job3.get("jibunAddress").toString());
 			hos.setRoadAddress(job3.get("roadAddress").toString());
 			hos.setMapx(Double.parseDouble(job3.get("x").toString()));
 			hos.setMapy(Double.parseDouble(job3.get("y").toString()));
-			hos.setTitle(title);
+			hos.setTitle(RTitle);
 			hos.setTelephone(telephone);
-			//hos.setAddress(job3.get("roadAddress"));
-			//
-			service.insertMap(hos);//의도적으로 {}로 감싸놓았음 이거 없으면 에러
+		
+			service.insertMap(hos);
 			hos.setHosRegister(service.HosCheck(hos));
 			
 			return hos;

@@ -8,4 +8,5 @@ public interface MapMapper {
 	void insertMap(HosBasic basic);
 	HosBasic selectMap(HosBasic basic);
 	String selectRegiMap(HosBasic basic);
+	void updateSearchCnt(HosBasic basic);
 }

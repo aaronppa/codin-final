@@ -14,7 +14,20 @@ public class HosBasic {
 	public double mapy;
 	public double mapx;
 	public char hosRegister;
-	
+	public int hosSearchCnt;
+	public String category;
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public int getHosSearchCnt() {
+		return hosSearchCnt;
+	}
+	public void setHosSearchCnt(int hosSearchCnt) {
+		this.hosSearchCnt = hosSearchCnt;
+	}
 	public char getHosRegister() {
 		return hosRegister;
 	}
