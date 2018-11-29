@@ -38,6 +38,14 @@ a.nostyle:visited {
 a.nostyle:hover{
 	cursor: pointer;
 }
+
+select{
+	margin-right: 15px;
+}
+
+input[name="keyword"]{
+	margin-left: -15px;
+}
 </style>
 
 </head>
@@ -47,19 +55,19 @@ a.nostyle:hover{
         <div class="listarea vetauth">
             <h2>수의사 인증 요청 리스트</h2>
             <div class="search">
-                <form action="" id="vetAuth-search" method="post">
-                    요청검색: 
-                    <select name="requester">
-                        <option value="">=검색유형선택=</option>
-                        <option value="">요청자 이름</option>
-                        <option value="">요청자 계정</option>
-                    </select>
+                <form action="" id="vetAuth-search" method="post"> 
                     상태:
                     <select name="status">
                         <option value="">전체</option>
                         <option value="">승인</option>
                         <option value="">보류</option>
                         <option value="">반려</option>
+                    </select>
+                    요청검색: 
+                    <select name="memberId">
+                        <option value="">=검색유형선택=</option>
+                        <option value="">요청자 이름</option>
+                        <option value="">요청자 계정</option>
                     </select>
                     <input type="search" name="keyword">
                     <input type="button" class="searchbtn" value="검색" data-boardtype="vetAuth">
@@ -86,13 +94,7 @@ a.nostyle:hover{
         <div class="listarea report">
             <h2>신고 접수 리스트</h2>
             <div class="search">
-                <form action="" id="report-search" method="post">
-                    신고검색: 
-                    <select name="requester">
-                        <option value="">=검색유형선택=</option>
-                        <option value="">신고자 계정</option>
-                        <option value="">신고자 닉네임</option>
-                    </select>
+                <form action="" id="report-search" method="post" data-boardtype='report'>
                     상태:
                     <select name="status">
                         <option value="">전체</option>
@@ -130,6 +132,13 @@ a.nostyle:hover{
                         <option value="">댓글</option>
                         <option value="">리뷰</option>
                     </select>
+                    신고검색: 
+                    <select name="memberId">
+                        <option value="">=검색유형선택=</option>
+                        <option value="">신고자 계정</option>
+                        <option value="">신고자 닉네임</option>
+                    </select>
+                     <input type="search" name="keyword">
                     <input type="button" class="searchbtn" value="검색" data-boardtype="report">
                     <input type="button" class="reset" value="초기화">
                 </form>
@@ -167,9 +176,9 @@ a.nostyle:hover{
             <h2>사이트 전체 공지사항</h2>
             <button type="button" id="write">글작성</button>
             <div class="search">
-                <form action="" id="notice-search" method="post">
+                <form action="" id="notice-search" method="post" data-boardtype='notice'>
                     작성자: 
-                    <select name="writer">
+                    <select name="memberId">
                         <option value="">전체</option>
                         <option value="">사이트관리자</option>
                         <option value="">서버관리자</option>
@@ -242,14 +251,7 @@ a.nostyle:hover{
         <div class="listarea member">
             <h2>회원관리(검색)</h2>
             <div class="search">
-            <form action="" id="member-search">
-                회원검색: 
-                <select name="keywordType">
-                    <option value="">=검색유형선택=</option>
-                    <option value="account">계정</option>
-                    <option value="nickname">닉네임</option>
-                    <option value="name">이름</option>
-                </select>
+            <form action="" id="member-search" method="post" data-boardtype='member'>
                 회원구분: 
                 <select name="memberType">
                     <option value="">전체</option>
@@ -264,6 +266,13 @@ a.nostyle:hover{
                     <option value="ok">정상</option>
                     <option value="out">탈퇴</option>
                     <option value="blocked">차단</option>
+                </select>
+                회원검색: 
+                <select name="memberId">
+                    <option value="">=검색유형선택=</option>
+                    <option value="account">계정</option>
+                    <option value="nickname">닉네임</option>
+                    <option value="name">이름</option>
                 </select>
                 <input type="search" name="keyword">
                 <input type="button" class="searchbtn" value="검색" data-boardtype="member">
@@ -292,6 +301,11 @@ a.nostyle:hover{
 
 <script src="<c:url value='/resources/js/datetime/jquery-dateformat.js'/>"></script>
 <script>
+/* Global Variables */
+var pageNo;
+var boardType;
+var formData;
+
 /* Popup Size and Location */
 var w = 1000;
 var h = 600;
@@ -302,15 +316,6 @@ console.log(left);
 console.log("screenTop: ", topx);
 console.log("screenLeft: ", left);
 
-/* search */
-$(".searchbtn").click(function(e){
-	e.preventDefault();
-	console.log("Search boardType: ", e.target.dataset.boardtype);
-	console.log("Search form#: ", e.target.form)
-	var postUrl = 
-	$.get()
-});
-
 /* Reset Button */
 $(".reset").click(function(){
 	location.reload();
@@ -318,13 +323,17 @@ $(".reset").click(function(){
 
 /* Table Row Click Detection */
 $("body").on("click", "table", function(e){
+	
 	console.log("Clicked: ", e.target);
+	
 })
 
 /* Notice 상세 */
 $(".clickable").on("click", "tr", function(e){
+	
 	console.log("Clicked: ", $(this).data("boardtype"));
 	console.log("Clicked: ", $(this).data("itemno"));
+	
     window.open("<c:url value='/admin/detail.do?boardType="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
 })
 
@@ -338,22 +347,29 @@ $("button#write").on("click",function(){
 $("nav.pagination").on("click","a.nostyle", function(e) {
 	e.preventDefault();
 	var selectedLn = $(this);
-	var pageNo = $(this).attr("href")
-	var boardType = $(this).data("boardtype");
+	pageNo = $(this).attr("href")
+	boardType = $(this).data("boardtype");
 	console.log(boardType);
+	formData="";
 	if ($(this).hasClass("disabled")) return false;
 
+	sendRetrieveReq(boardType, pageNo, formData);
+	/* 
 	$.ajax({
 		url: boardType +"/" + pageNo +".do",
-		/* url: "noticelist.do", */
-		/* data: {"boardType":boardType, "pageNo": pageNo}, */
+		// url: "noticelist.do", 
+		// data: {"boardType":boardType, "pageNo": pageNo}, 
 		method: "post"
 	})
 	.fail(function(jqXHR, textStatus, errorThrown){
+		
 		console.log(jqXHR, textStatus, errorThrown);
+		
 	})
 	.done(function(result){
+		
 		console.dir(result);
+		
 		switch(boardType){
 		case "notice": 	$("tbody#noticelist").html(updateNoticeList(boardType, result.notice));
 						break;
@@ -361,17 +377,83 @@ $("nav.pagination").on("click","a.nostyle", function(e) {
 		
 		}
 		updateCurrPg(boardType, result.noticePageResult);
+		
+		console.dir($(this));
+	}); 
+	*/
+	
+});
+
+/* search */
+$(".searchbtn").click(function(e){
+	e.preventDefault();
+	var thisForm = e.target.form;
+	pageNo="1";
+	boardType= $(thisForm).data("boardtype"); 
+	
+	console.log("Search Input: ",$(thisForm).find("input[type='search']").val(), " / Search Select: ", $(thisForm).find("select[name='memberId']").val());
+	console.log("Search boardType: ",e.target.dataset.boardtype, " / Search form#: ",thisForm);
+	
+	if($(thisForm).find("input[type='search']").val() && !$(thisForm).find("select[name='memberId']").val()){
+		alert("검색유형을 선택해 주세요.");
+		$(thisForm).find("select[name='memberId']").focus();
+		return false;
+	};
+
+	formData = $(thisForm).serialize();
+	
+	console.log("pageNo: ",pageNo,"boardType: ",boardType, "formData: ",formData);
+	console.log(formData);
+	
+	sendRetrieveReq(boardType, pageNo, formData);
+
+});
+
+/* Ajax Send Request */
+function sendRetrieveReq(boardType, pageNo, formData){
+	if(!formData){
+		formData = {
+				memberId : "*"
+		}
+		console.log(formData);
+	}
+	$.ajax({
+		url: boardType +"/" + pageNo +".do",
+		method: "post",
+		data: formData
+	})
+	.fail(function(jqXHR, textStatus, errorThrown){
+		
+		console.log(jqXHR, textStatus, errorThrown);
+		
+	})
+	.done(function(result){
+		
+		console.dir(result);
+		
+		switch(boardType){
+		case "notice": 	console.dir(result);
+						$("tbody#noticelist").html(updateNoticeList(boardType, result.notice));
+					    updateCurrPg(boardType, result.noticePageResult);
+						break;
+		case "member":  console.dir(result);
+						// $("tbody#noticelist").html(updateNoticeList(boardType, result.notice));
+						
+						break;
+		
+		}
+		
+		
 		console.dir($(this));
 	});
-	
-})
+}
 
 /* Update Notice List */
 function updateNoticeList(boardType, resultItems){
 	var html="";
 	var saveStatus="";
 	for(var item of resultItems){
-		if(item.tempSave==0){
+		if(item.tempSave===0){
 			saveStatus="완료";
 		} else {
 			saveStatus="임시저장";
@@ -389,8 +471,10 @@ function updateNoticeList(boardType, resultItems){
 
 /* Paging Function */
 function updateCurrPg(boardType, pageResult){
+	
 		console.dir(pageResult);
 		console.log(boardType);
+		
 		var html = "<li ><a class='nostyle firstpage' data-boardtype='"+boardType+
 				   "' href='1'>&laquo;First</a></li>"+
             	   "<li ><a class='nostyle previouspage' data-boardtype='"+boardType+"' href='"+(pageResult.pageNo-1)+
@@ -400,12 +484,12 @@ function updateCurrPg(boardType, pageResult){
 		}
             html += "<li><a href='"+(pageResult.endPage+1)+"' class='nostyle nextpage' data-boardtype='"+boardType+"'>Next&raquo;</a></li>"+
 	                "<li><a href='"+pageResult.lastPage+"' class='nostyle lastpage' data-boardtype='"+boardType+"'>End&raquo;</a>"
-        $("ul.pagination").data("boardtype",boardType).html(html);
+        	$("ul.pagination").data("boardtype",boardType).html(html);
   			$("a[href="+pageResult.pageNo+"]").not(".firstpage, .previouspage, .nextpage, .lastpage").parent().addClass("current");
   			$("a[href=0]").addClass("disabled");
   			$("a[href='"+(pageResult.lastPage+1)+"']").addClass("disabled");
   			
-  			if(pageResult.pageNo==1){
+  			if(pageResult.pageNo===1){
   				$("a.firstpage").addClass("disabled");
   			}
   			

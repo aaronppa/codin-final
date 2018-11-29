@@ -31,10 +31,17 @@
 		<result column="member_file_reg_date" property="memberFileRegDate"/>
 	</resultMap>
 	
-	<select id="noticeList" parameterType="Page" resultMap="noticeMap">
+	<select id="noticeList" parameterType="Search" resultMap="noticeMap">
 		select *
 		from notice
 		order by notice_no desc
+		limit #{begin}, #{pageNum}
+	</select>
+	
+	<select id="memberList" parameterType="Search" resultMap="memberMap">
+		select *
+		from member
+		order by member_no desc
 		limit #{begin}, #{pageNum}
 	</select>
 	
@@ -47,6 +54,11 @@
 	<select id="noticeCount" resultType="int">
 		select count(*)
 		from notice
+	</select>
+	
+	<select id="memberCount" resultType="int">
+		select count(*)
+		from member
 	</select>
 	
 	<select id="selectMemberByNo" parameterType="int" resultMap="memberMap">

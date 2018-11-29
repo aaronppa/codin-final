@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Notice;
-import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.Search;
 import kr.co.codin.repository.mapper.AdminMapper;
 
 @Service
@@ -27,14 +27,14 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Member> vetList(Page page) {
+	public List<Member> vetList(Search search) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Notice> noticeList(Page page) {
-		return mapper.noticeList(page);
+	public List<Notice> noticeList(Search search) {
+		return mapper.noticeList(search);
 	}
 
 	@Override
@@ -46,6 +46,16 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int noticeCount() {
 		return mapper.noticeCount();
+	}
+
+	@Override
+	public List<Member> memberList(Search search) {
+		return mapper.memberList(search);
+	}
+
+	@Override
+	public int memberCount() {
+		return mapper.memberCount();
 	}
 
 }

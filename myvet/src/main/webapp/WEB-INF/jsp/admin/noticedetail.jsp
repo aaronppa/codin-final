@@ -14,7 +14,7 @@ crossorigin="anonymous"></script>
 <title>Admin - 공지사항 - ${detail.noticeNo }</title>
 	<style>
         #body {
-        width: 800px;
+        width: 900px;
         margin: auto;
         }
         table > thead > tr > th {

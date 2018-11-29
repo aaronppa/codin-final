@@ -2573,7 +2573,7 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   animation-delay: 700ms !important; }
 
 .admin.main.container{
-    width: 80%;
+    width: 1100px;
     margin: auto;
     border: 1px solid skyblue;
     font-size: 13px;
@@ -2592,7 +2592,7 @@ table{
     table-layout: fixed;
 }
 h2, .search{
-	margin-left: 75px;
+	margin-left: 55px;
 }
 
 h2{
@@ -2601,6 +2601,7 @@ h2{
 }
 
 .search{
+	width: 990px;
     margin-top: 20px;
 }
 
@@ -2614,7 +2615,7 @@ table.list{
 
 .listcnt{
     clear:left;
-    margin-right: 80px;
+    margin-right: 55px;
     float:right;
 }
 
