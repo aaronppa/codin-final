@@ -20,7 +20,7 @@
 		<result column="member_file_reg_date" property="memberFileRegDate"/>
 	</resultMap>
 	
-	<insert id="insertMember" parameterType="Member">
+	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="memberNo">
 		insert into member(
 			member_email, password, member_grade, member_name, member_phone, member_nickname
 		) values (
@@ -47,7 +47,7 @@
 		 where member_email = #{memberEmail}
 	</select>
 	
-	<insert id="insertVetAuth" parameterType="VetAuth" useGeneratedKeys="true" keyProperty="memberNo">
+	<insert id="insertVetAuth" parameterType="VetAuth">
 		insert into vet_auth(
 			vet_ori_name, vet_sys_name, vet_file_path, vet_file_size, member_no
 		)values(

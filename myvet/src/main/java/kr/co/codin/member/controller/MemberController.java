@@ -36,14 +36,37 @@ public class MemberController {
 	private MemberMapper mapper;
 	
 	@RequestMapping("/signup.do")
-	public String signup(Member member) {
-//		System.out.println("controller");
+	public String signup(Member member, MultipartFile fileV, VetAuth vetFile) throws Exception {
 		service.signup(member);
 		
+//		System.out.println(fileV.isEmpty());
+		if (fileV.isEmpty() == true)
+			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "signupForm.do";
+		
+		String vetOriName = fileV.getOriginalFilename();
+		vetFile.setVetOriName(vetOriName);
+		
+		int vetFileSize = (int)fileV.getSize();
+		vetFile.setVetFileSize(vetFileSize);
+		
+		vetFile.setVetFilePath("/upload/vetAuth");
+		
+		UUID uid = UUID.randomUUID();
+		String vetSysName = uid.toString() + "_" + vetOriName;
+		vetFile.setVetSysName(vetSysName);
+		
+		int memberNo = member.getMemberNo();
+//		System.out.println(memberNo);
+		vetFile.setMemberNo(memberNo);
+		
+		service.uploadVetAuth(vetFile);
+		
+		fileV.transferTo(new File(context.getRealPath("/upload/vetAuth"), vetSysName));
+		
 //		System.out.println(!(member.getMemberGrade().equals("U")));
-		if (!(member.getMemberGrade().equals("U"))){
-			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "vetAuthForm.do";
-		}
+//		if (!(member.getMemberGrade().equals("U"))){
+//			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "vetAuthForm.do";
+//		}
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
 	}
@@ -77,32 +100,32 @@ public class MemberController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
 	}
 	
-	@RequestMapping("/vetAuth.do")
-	public String vetAuth(MultipartFile fileV, VetAuth vetFile, String memberEmail) throws Exception {
-		System.out.println(fileV.isEmpty());
-		if (fileV.isEmpty() == true)
-			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "vetAuthForm.do";
-		
-		String vetOriName = fileV.getOriginalFilename();
-		vetFile.setVetOriName(vetOriName);
-		
-		int vetFileSize = (int)fileV.getSize();
-		vetFile.setVetFileSize(vetFileSize);
-		
-		vetFile.setVetFilePath(context.getRealPath("/vetAuth"));
-		
-		UUID uid = UUID.randomUUID();
-		String vetSysName = uid.toString() + "_" + vetOriName;
-		vetFile.setVetSysName(vetSysName);
-		
-		// selectPasswordById 메서드가 memberEmail로 member 테이블을 조회하여 Member 객체를 리턴
-		int memberNo = mapper.selectPasswordById(memberEmail).getMemberNo();
-		vetFile.setMemberNo(memberNo);
-		
-		service.uploadVetAuth(vetFile);
-		
-		fileV.transferTo(new File(context.getRealPath("/vetAuth"), vetSysName + ".jpg"));
-				
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
-	}
+//	@RequestMapping("/vetAuth.do")
+//	public String vetAuth(MultipartFile fileV, VetAuth vetFile, String memberEmail) throws Exception {
+////		System.out.println(fileV.isEmpty());
+//		if (fileV.isEmpty() == true)
+//			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "vetAuthForm.do";
+//		
+//		String vetOriName = fileV.getOriginalFilename();
+//		vetFile.setVetOriName(vetOriName);
+//		
+//		int vetFileSize = (int)fileV.getSize();
+//		vetFile.setVetFileSize(vetFileSize);
+//		
+//		vetFile.setVetFilePath(context.getRealPath("/vetAuth"));
+//		
+//		UUID uid = UUID.randomUUID();
+//		String vetSysName = uid.toString() + "_" + vetOriName;
+//		vetFile.setVetSysName(vetSysName);
+//		
+//		// selectPasswordById 메서드가 memberEmail로 member 테이블을 조회하여 Member 객체를 리턴
+//		int memberNo = mapper.selectPasswordById(memberEmail).getMemberNo();
+//		vetFile.setMemberNo(memberNo);
+//		
+//		service.uploadVetAuth(vetFile);
+//		
+//		fileV.transferTo(new File(context.getRealPath("/vetAuth"), vetSysName + ".jpg"));
+//				
+//		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
+//	}
 }

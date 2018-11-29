@@ -19,6 +19,15 @@
             margin-left: 100px;
             /* text-align: center; */
         }
+        .custom-file-input {
+        	opacity: 1;
+        }
+/* 		#input-file { */
+/* 			display: none; */
+/* 		} */
+		#input-file {
+/*  			display: none;  */
+		}	
     </style>
 </head>
 <body>
@@ -31,7 +40,7 @@
     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="signup.do" method="post">
+                <form action="signup.do" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">회원가입</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -65,13 +74,13 @@
                         <span id="checkPassword"><br></span>
                         <div class="btn-group btn-group-toggle" id="grade" data-toggle="buttons">
                             <label class="btn btn-outline-primary btn-lg active">
-                                <input type="radio" name="memberGrade" id="option1" autocomplete="off" value="U" checked> 반려인
+                                <input type="radio" name="memberGrade" id="option1" onchange="viewHideFile(1);" autocomplete="off" value="U" checked> 반려인
                             </label>
                             <label class="btn btn-outline-primary btn-lg">
-                                <input type="radio" name="memberGrade" id="option2" autocomplete="off" value="S"> 관계자
+                                <input type="radio" name="memberGrade" id="option2" onchange="viewHideFile(2);" autocomplete="off" value="U"> 관계자
                             </label>
                             <label class="btn btn-outline-primary btn-lg">
-                                <input type="radio" name="memberGrade" id="option3" autocomplete="off" value="V"> 수의사
+                                <input type="radio" name="memberGrade" id="option3" onchange="viewHideFile(3);" autocomplete="off" value="P"> 수의사
                             </label>
                         </div>
                         <br>
@@ -97,6 +106,17 @@
                             <input type="text" class="form-control" placeholder="연락처" name="memberPhone" aria-label="phone"
                             	   onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style='ime-mode:disabled;' />
                         </div>
+                        <br>
+                        <div class="input-group file" id="input-file">
+							<div class="input-group-prepend">
+								<span class="input-group-text">&nbsp;<i class="fas fa-file-image"></i></span>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+									   name="fileV">
+								<label class="custom-file-label" for="inputGroupFile01"><span id="fileName"></span></label>
+							</div>
+						</div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">cancel</button>
@@ -108,7 +128,9 @@
     </div>
     
     <script>
+    	$("#input-file").hide();
     	var emailCheck = 0;
+    	
     	$("#EmailCheck").click(function () {
     		var memberEmail = $("#email").val();
     		
@@ -145,7 +167,11 @@
     	$("#password2").keyup(function (e) {
     		console.dir($("#password1").val()==$("#password2").val());
     		if ($("#password1").val()==$("#password2").val()) {
+    			$("#formSubmit").prop("disabled", false);
     			$("#checkPassword").html("<p style='color:blue;'>비밀번호가 일치합니다.</p>");
+    		} else {
+    			$("#formSubmit").prop("disabled", true);
+    			$("#checkPassword").html("<p style='color:red;'>비밀번호가 일치하지 않습니다.</p>");
     		}
     	});
     	
@@ -170,6 +196,17 @@
     			event.target.value = event.target.value.replace(/[^0-9]/g, "");
     		}
     	}
+//     	document.querySelector("#option2").addEventListener("click", function () {alert(1)});
+//     	$("#option2").click(function () { alert(1)})
+		
+		function viewHideFile(radioEleType) {
+			if (radioEleType == 1 || radioEleType == 2) {
+				$("#input-file").hide();
+				return;
+			}
+			$("#input-file").show();
+		}
+
     </script>
 </body>
 </html>
