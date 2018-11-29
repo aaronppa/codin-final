@@ -2,8 +2,8 @@ package kr.co.codin.repository.domain;
 
 public class Page {
 	// 페이지 번호
-	private int pageNo;
-	private int pageNum;
+	protected int pageNo;
+	protected int pageNum;
 	
 	public Page (int pageNo) {
 		this(pageNo, 10);
@@ -37,5 +37,5 @@ public class Page {
 	public int getBegin() {
 		return ((pageNo-1)*pageNum);
 	}
-
+	
 }
