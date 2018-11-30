@@ -145,10 +145,10 @@ public class MainMapController {
 					if (basic == null) continue;
 							
 							
-						list11.add(basic);
+					list11.add(basic);
 						
 						
-					}
+				}
 				return list11;
 					
 		
@@ -219,6 +219,9 @@ public class MainMapController {
 			hos.setTelephone(telephone);
 		
 			service.insertMap(hos);
+			
+			
+			
 			hos.setHosRegister(service.HosCheck(hos));
 			
 			return hos;

@@ -9,4 +9,5 @@ public interface MapMapper {
 	HosBasic selectMap(HosBasic basic);
 	String selectRegiMap(HosBasic basic);
 	void updateSearchCnt(HosBasic basic);
+	
 }

@@ -26,11 +26,20 @@
 	border: 1px solid black;
 	width: 299px;
 	height: 473.8px;
+	position:relative;
 }
 
 #mapsearchdiv {
 	position: absolute;
 	top: 150px;
+}
+#MapSearchlist{
+	postion:absolute;
+}
+
+#MapSearchlist >table{
+	postion:absolute;
+	width:100%;
 }
 </style>
 
@@ -48,10 +57,11 @@
 			<button id="button">검색</button>
 			<br>
 			<div id="resultDiv">
-				<div>
+				<div id="MapSearchlist">
 					<table>
 						<tbody>
-							<tr>
+						<!-- 	<tr>
+								<td>sd0sdf0    </td>
 								<td>sd00</td>
 							</tr>
 							<tr>
@@ -88,11 +98,11 @@
 								<td>sd00</td>
 							</tr>
 							
-
+ -->
 						</tbody>
 					</table>
 				</div>
-				<div>페이징 디아브</div>
+				<div style="border:red 1px solid;position:absolute; bottom:0px;width:100%;">페이징 디아브</div>
 			</div>
 
 		</div>
@@ -105,7 +115,9 @@
 		var positionData = new Array();
 		geoLocation();
 		var jsondata;
-
+		let xx=null;
+		let yy=null;
+		let centerXY;
 		$("#button").click(function() {
 			
 			$.ajax({
@@ -183,12 +195,7 @@
 							}
 						}).done(function(result) {
 							for (var i = 0; i < result.length; i++) {
-								//	console.log("뽀");
-								//console.log(result[i]);
-								//	console.log(result[i].address);
-								//	console.log(result[i].roadAddress);
-								//	console.log(result[i].mapy);
-								//	console.log(result[i].mapx);
+							
 								var data = new Object();
 								data.number = i;
 								data.name = result[i].title;
@@ -198,8 +205,10 @@
 								positionData.push(data);
 
 							}
-							MainMap(result[0].mapx, result[0].mapy, result);
+							MainMap(result[0].mapx, result[0].mapy, result);//첫번째 매개변수 x값 두번째 매개변수 y값 , --> 중심좌표 , result 데이터의 갯수
 							//    	console.log("성공"+result);
+							
+							
 						}).fail(function(result) {
 							//    	console.log("실패"+result);//여기서 막힘 하아
 						});
@@ -212,7 +221,7 @@
 
 				}, {
 					enableHighAccuracy : true,
-					maximumAge : 0,
+					maximumAge : 0
 				})
 
 			} else {
@@ -220,11 +229,31 @@
 			}
 		}
 
-		function MainMap(x, y, jsondata) {//x,y는 중심점 , jsondata는 병원 좌표
-			//console.log(jsondata);
-			//console.log(jsondata.length);
-			//console.log(jsondata[0].name);
-			//console.log("MaisdfsdfsdfsdsfnMap" + jsondata);
+		function MainMap(x, y, jsondata,xx,yy) {//x,y는 중심점 , jsondata는 병원 좌표
+			
+			
+			
+			
+			$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
+			for(let k = 0 ;  k < jsondata.length; k ++){
+				$("#MapSearchlist >table > tbody").append(
+				"<tr><td class='"+(k+1)+"td'>"+(k+1)+":"+jsondata[k].title +"</td></tr>"		
+				)
+				$("#MapSearchlist > table > tbody> tr > ."+(k+1)+"td").on("click",function(e){
+					
+					
+					//alert("클릭");
+					xx=jsondata[k].mapx;
+					yy=jsondata[k].mapy;
+					MainMap(xx, yy, jsondata);
+					
+					
+					
+				})
+			}
+			
+			
+			
 			//console.log(jsondata.length);
 			var map = new naver.maps.Map('map');
 			var myaddress = '불정로 6';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
@@ -243,9 +272,18 @@
 								// 첫번째 결과 결과 주소: result.items[0].address
 								// 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
 								//  var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
-								let myaddr = new naver.maps.Point(x, y);//마커
-
-								let centerXY = new naver.maps.Point(x, y);//중심점으로 이동
+								let myaddr = new naver.maps.Point(x, y);//마커중심 좌표 설정(현재위치)
+								console.log(x);
+								console.log(y);
+								console.log("273:"+xx);
+								console.log(yy)
+								if(xx==null && yy==null){
+									console.log("if")
+									 centerXY = new naver.maps.Point(x, y);//중심점으로 이동
+								}else{
+									console.log("else");
+									 centerXY = new naver.maps.Point(xx, yy);
+								}
 								map.setCenter(centerXY); // 검색된 좌표로 지도 이동
 
 								//    console.log(myaddr);
@@ -270,18 +308,6 @@
 											alert("중심좌표입니다");
 										});
 
-								
-								
-								
-								
-								console.log(jsondata);
-								
-								
-								
-								$("")
-								
-								
-								
 								let MarkerClicklist = new Array();
 						
 								//병원의 마크점 생성
@@ -376,8 +402,15 @@
 						
 								}//for
 								
+								console.log("374번 줄 "+ jsondata);
+								console.log(jsondata);
+							/* 	
+									 
+								}*/			
 							});
 
 		}
-	</script>
+		</script>
+</body>
+
 </html>

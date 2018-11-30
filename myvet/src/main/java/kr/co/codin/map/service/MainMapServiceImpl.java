@@ -21,11 +21,14 @@ public class MainMapServiceImpl implements MainMapService{
 		 * 검색된 병원의 결과가 디비에 없을 경우에만
 		 * 디비에 저장
 		 */
-		if(mapper.selectMap(list)==null) {
-			mapper.insertMap(list);
-		}else {
-			mapper.updateSearchCnt(list);
-		}
+		
+			if(mapper.selectMap(list)==null) {
+				//System.out.println("ddd");
+				//System.out.println(list.address);
+				mapper.insertMap(list);
+			}else {
+				mapper.updateSearchCnt(list);
+			}					
 	
 	}
 
