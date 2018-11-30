@@ -19,32 +19,8 @@ crossorigin="anonymous"></script>
 <script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
 <script src="<c:url value='/resources/js/waitme/common-waitme.js'/>"></script>
 <style>
-select {
-    width: auto;
-}
-
-a.nostyle{
-    text-decoration: inherit;
-    color: inherit;
-    cursor: auto;
-}
-
-a.nostyle:visited {
-    text-decoration: inherit;
-    color: inherit;
-    cursor: auto;
-}
-
-a.nostyle:hover{
-	cursor: pointer;
-}
-
-select{
-	margin-right: 15px;
-}
-
-input[name="keyword"]{
-	margin-left: -15px;
+ul.pagination{
+	padding: 0px;
 }
 </style>
 
@@ -53,7 +29,7 @@ input[name="keyword"]{
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
     <div class="admin main container">
         <div class="listarea vetauth">
-            <h2>수의사 인증 요청 리스트</h2>
+            <h2 id="vetauthheader">수의사 인증 요청 리스트</h2>
             <div class="search">
                 <form action="" id="vetAuth-search" method="post"> 
                     상태:
@@ -74,7 +50,7 @@ input[name="keyword"]{
                     <input type="button" class="reset" value="초기화">
                 </form>
             </div>
-            <div class="listcnt"><span>전체: </span><span id="itemcnt">(1/123)</span></div>
+            <div class="listcnt"><span>전체: </span><span class="itemcnt" data-boardtype="vetAuth"> - 개</span></div>
              <table class="clickable list" id="vetauth">
                 <thead>
                 <tr>
@@ -92,7 +68,7 @@ input[name="keyword"]{
         </div>
         <hr>
         <div class="listarea report">
-            <h2>신고 접수 리스트</h2>
+            <h2 id="reportheader">신고 접수 리스트</h2>
             <div class="search">
                 <form action="" id="report-search" method="post" data-boardtype='report'>
                     상태:
@@ -143,7 +119,7 @@ input[name="keyword"]{
                     <input type="button" class="reset" value="초기화">
                 </form>
             </div>
-            <div class="listcnt"><span>전체: </span><span id="itemcnt">(1/123)</span></div>
+            <div class="listcnt"><span>전체: </span><span class="itemcnt" data-boardtype="notice"> - 개</span></div>
              <table class="clickable list" id="report">
                     <thead>
                 <tr>
@@ -173,26 +149,26 @@ input[name="keyword"]{
         </div>
         <hr>
         <div class="listarea notice">
-            <h2>사이트 전체 공지사항</h2>
+            <h2 id="noticeheader">사이트 전체 공지사항</h2>
             <button type="button" id="write">글작성</button>
             <div class="search">
                 <form action="" id="notice-search" method="post" data-boardtype='notice'>
                     작성자: 
                     <select name="memberId">
                         <option value="">전체</option>
-                        <option value="">사이트관리자</option>
+                        <option value="3">사이트관리자</option>
                         <option value="">서버관리자</option>
                         <option value="">......</option>
                     </select>
-                    검색키워드: 
+                    <span class="indent">검색키워드:</span> 
                     <input type="search" name="keyword">
                     <input type="button" class="searchbtn" value="검색" data-boardtype="notice">
                   	<input type="button" class="reset" value="초기화">
                     <label for="tempsave">임시저장</label>
-                    <input type="checkbox" id="tempsave" value="1">
+                    <input type="checkbox" id="tempsave" name="status" value="1">
                 </form>
                 </div>
-            <div class="listcnt"><span>전체: </span><span id="itemcnt">${noticePageResult.count}개</span></div>
+            <div class="listcnt"><span>전체: </span><span class="itemcnt" data-boardtype="notice">${noticePageResult.count}개</span></div>
              <table class="clickable list" id="notice">
                 <thead>
                 <tr>
@@ -249,16 +225,17 @@ input[name="keyword"]{
         </div>
         <hr>
         <div class="listarea member">
-            <h2>회원관리(검색)</h2>
+            <h2 id="memberheader">회원관리(검색)</h2>
             <div class="search">
             <form action="" id="member-search" method="post" data-boardtype='member'>
                 회원구분: 
                 <select name="memberType">
                     <option value="">전체</option>
-                    <option value="admin">관리자</option>
-                    <option value="general">일반회원</option>
-                    <option value="vet">수의사</option>
-                    <option value="staff">병원관계자</option>
+                    <option value="A">관리자</option>
+                    <option value="U">일반회원</option>
+                    <option value="V">수의사</option>
+                    <option value="S">병원관계자</option>
+                    <option value="P">수의사대기</option>
                 </select>
                 회원상태: 
                 <select name="status">
@@ -279,7 +256,7 @@ input[name="keyword"]{
                 <input type="button" class="reset" value="초기화">
             </form>
             </div>
-            <div class="listcnt"><span>전체: </span><span id="itemcnt">123</span></div>
+            <div class="listcnt"><span>전체: </span><span class="itemcnt" data-boardtype="member"> - 개</span></div>
              <table class="clickable list" id="member">
                 <thead>
                 <tr>
@@ -292,10 +269,15 @@ input[name="keyword"]{
                     <th class="status">회원 상태</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr><td class="listno">3</td><td>hong@hongvet.com</td><td class="nickname">서버관리자</td><td class="category">a</td><td class="name">조용제</td><td class="petcnt">3</td><td class="status">정상</td></tr>
+                <tbody id="memberlist">
+                <tr class="focus-search"><td colspan="7">검색하여 조회</td><tr>
                 </tbody>
             </table>
+            	<nav class="pagination" aria-label="Pagination">
+			        <ul class="pagination" data-boardtype='member'>
+			           
+			        </ul>
+			    </nav>
         </div>
     </div>
 
@@ -305,6 +287,7 @@ input[name="keyword"]{
 var pageNo;
 var boardType;
 var formData;
+
 
 /* Popup Size and Location */
 var w = 1000;
@@ -317,7 +300,7 @@ console.log("screenTop: ", topx);
 console.log("screenLeft: ", left);
 
 /* Reset Button */
-$(".reset").click(function(){
+$(".reset").click(function(e){
 	location.reload();
 })
 
@@ -334,7 +317,7 @@ $(".clickable").on("click", "tr", function(e){
 	console.log("Clicked: ", $(this).data("boardtype"));
 	console.log("Clicked: ", $(this).data("itemno"));
 	
-    window.open("<c:url value='/admin/detail.do?boardType="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
+	if($(this).data("boardtype")) window.open("<c:url value='/admin/detail.do?boardType="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
 })
 
 /* Notice Board Write Form Popup */
@@ -349,52 +332,32 @@ $("nav.pagination").on("click","a.nostyle", function(e) {
 	var selectedLn = $(this);
 	pageNo = $(this).attr("href")
 	boardType = $(this).data("boardtype");
-	console.log(boardType);
-	formData="";
+	
+	
+	console.log("Selected Page:",selectedLn.parentsUntil("div.listarea."+boardType).siblings("h2"));
+	console.log("Selected Page.closest:",selectedLn.closest("div.listarea").children("h2"));
+	console.log("Paging boardType:",boardType);
+	console.log("Paging Param:",formData);
+	
 	if ($(this).hasClass("disabled")) return false;
 
-	sendRetrieveReq(boardType, pageNo, formData);
-	/* 
-	$.ajax({
-		url: boardType +"/" + pageNo +".do",
-		// url: "noticelist.do", 
-		// data: {"boardType":boardType, "pageNo": pageNo}, 
-		method: "post"
-	})
-	.fail(function(jqXHR, textStatus, errorThrown){
-		
-		console.log(jqXHR, textStatus, errorThrown);
-		
-	})
-	.done(function(result){
-		
-		console.dir(result);
-		
-		switch(boardType){
-		case "notice": 	$("tbody#noticelist").html(updateNoticeList(boardType, result.notice));
-						break;
-		
-		
-		}
-		updateCurrPg(boardType, result.noticePageResult);
-		
-		console.dir($(this));
-	}); 
-	*/
-	
+	sendRetrieveReq(boardType, pageNo, formData); 
+
+	location.href="#"+boardType+"header";
 });
+
 
 /* search */
 $(".searchbtn").click(function(e){
 	e.preventDefault();
-	var thisForm = e.target.form;
+	thisForm = e.target.form;
 	pageNo="1";
 	boardType= $(thisForm).data("boardtype"); 
 	
 	console.log("Search Input: ",$(thisForm).find("input[type='search']").val(), " / Search Select: ", $(thisForm).find("select[name='memberId']").val());
 	console.log("Search boardType: ",e.target.dataset.boardtype, " / Search form#: ",thisForm);
 	
-	if($(thisForm).find("input[type='search']").val() && !$(thisForm).find("select[name='memberId']").val()){
+	if( $(thisForm).data("boardtype")!="notice" && $(thisForm).find("input[type='search']").val() && !$(thisForm).find("select[name='memberId']").val()){
 		alert("검색유형을 선택해 주세요.");
 		$(thisForm).find("select[name='memberId']").focus();
 		return false;
@@ -411,12 +374,6 @@ $(".searchbtn").click(function(e){
 
 /* Ajax Send Request */
 function sendRetrieveReq(boardType, pageNo, formData){
-	if(!formData){
-		formData = {
-				memberId : "*"
-		}
-		console.log(formData);
-	}
 	$.ajax({
 		url: boardType +"/" + pageNo +".do",
 		method: "post",
@@ -428,45 +385,69 @@ function sendRetrieveReq(boardType, pageNo, formData){
 		
 	})
 	.done(function(result){
-		
+		console.log("Ajax Response Result");
 		console.dir(result);
 		
 		switch(boardType){
-		case "notice": 	console.dir(result);
-						$("tbody#noticelist").html(updateNoticeList(boardType, result.notice));
+		case "notice": 	$("tbody#noticelist").html(updateList(boardType, result.notice));
 					    updateCurrPg(boardType, result.noticePageResult);
 						break;
-		case "member":  console.dir(result);
-						// $("tbody#noticelist").html(updateNoticeList(boardType, result.notice));
-						
+		case "member":  $("tbody#memberlist").html(updateList(boardType, result.member));
+						updateCurrPg(boardType, result.memberPageResult);
 						break;
 		
 		}
 		
 		
 		console.dir($(this));
+		formData="";
+		console.log("formData after AJAX: ", formData);
 	});
 }
 
-/* Update Notice List */
-function updateNoticeList(boardType, resultItems){
+/* Update List */
+function updateList(boardType, resultItems){
+	if(resultItems.length==0) {
+		console.log("Result EMPTY!");
+		return html="<div class='noresult'>검색결과 없음</div>"
+	}
 	var html="";
 	var saveStatus="";
-	for(var item of resultItems){
-		if(item.tempSave===0){
-			saveStatus="완료";
-		} else {
-			saveStatus="임시저장";
-		}
-		html += "<tr class='notice-tr' data-boardtype='"+boardType+"' data-itemno='"+item.noticeNo+"'><td class='listno'>"+item.noticeNo+
-			   "</td><td class='category'>"+saveStatus+
-			   "</td><td class='notice-title'>"+item.noticeTitle+
-			   "</td><td class='nickname'>"+item.member.memberNickname+
-			   "</td><td class='datetime notice-reg-date'>"+$.format.date(item.noticeRegDate,'yyyy-MM-dd HH:mm:ss')+
-			   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
-			   "</td></tr>"
-	};
-	return html;
+	switch(boardType){
+	case "notice":	for(var item of resultItems){
+						if(item.tempSave===0){
+							saveStatus="완료";
+						} else {
+							saveStatus="임시저장";
+						}
+						html += "<tr class='notice-tr' data-boardtype='"+boardType+"' data-itemno='"+item.noticeNo+"'><td class='listno'>"+item.noticeNo+
+							   "</td><td class='category'>"+saveStatus+
+							   "</td><td class='notice-title'>"+item.noticeTitle+
+							   "</td><td class='nickname'>"+item.member.memberNickname+
+							   "</td><td class='datetime notice-reg-date'>"+$.format.date(item.noticeRegDate,'yyyy-MM-dd HH:mm:ss')+
+							   "</td><td class='notice-view-cnt'>"+item.noticeViewCnt+
+							   "</td></tr>"
+					};
+					return html;
+					break;
+	case "member": for(var item of resultItems){
+						if(item.tempSave===0){
+							saveStatus="완료";
+						} else {
+							saveStatus="임시저장";
+						}
+						html += "<tr class='member-tr' data-boardtype='"+boardType+"' data-itemno='"+item.memberNo+"'><td class='listno'>"+item.memberNo+
+							   "</td><td class='memberEmail'>"+item.memberEmail+
+							   "</td><td class='nickname'>"+item.memberNickname+
+							   "</td><td class='memberGrade'>"+item.memberGrade+
+							   "</td><td class='name'>"+item.memberName+
+							   "</td><td class='petcnt'>"+item.petCnt+
+							   "</td><td class='status'>"+item.memberStatus+
+							   "</td></tr>"
+					};
+					return html;
+					break;
+	}
 }	
 
 /* Paging Function */
@@ -475,17 +456,20 @@ function updateCurrPg(boardType, pageResult){
 		console.dir(pageResult);
 		console.log(boardType);
 		
+		$("span.itemcnt[data-boardtype='"+boardType+"']").text(pageResult.count+"개");
+		
 		var html = "<li ><a class='nostyle firstpage' data-boardtype='"+boardType+
 				   "' href='1'>&laquo;First</a></li>"+
             	   "<li ><a class='nostyle previouspage' data-boardtype='"+boardType+"' href='"+(pageResult.pageNo-1)+
-            	   "'>&laquo;Previous</a></li>"
+            	   "'>&laquo;Previous</a></li>";
+        
 		for(var i=pageResult.beginPage; i<=pageResult.endPage; i++){
 			html += "<li><a href='"+i+"' class='nostyle' data-boardtype='"+boardType+"'>"+i+"</a></li>"
 		}
             html += "<li><a href='"+(pageResult.endPage+1)+"' class='nostyle nextpage' data-boardtype='"+boardType+"'>Next&raquo;</a></li>"+
 	                "<li><a href='"+pageResult.lastPage+"' class='nostyle lastpage' data-boardtype='"+boardType+"'>End&raquo;</a>"
-        	$("ul.pagination").data("boardtype",boardType).html(html);
-  			$("a[href="+pageResult.pageNo+"]").not(".firstpage, .previouspage, .nextpage, .lastpage").parent().addClass("current");
+        	$("ul.pagination[data-boardtype='"+boardType+"']").html(html);
+  			$("a[href='"+pageResult.pageNo+"'][data-boardtype='"+boardType+"']").not(".firstpage, .previouspage, .nextpage, .lastpage").parent().addClass("current");
   			$("a[href=0]").addClass("disabled");
   			$("a[href='"+(pageResult.lastPage+1)+"']").addClass("disabled");
   			

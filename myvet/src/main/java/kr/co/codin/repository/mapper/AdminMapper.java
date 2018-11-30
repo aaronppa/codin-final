@@ -9,9 +9,9 @@ import kr.co.codin.repository.domain.Search;
 public interface AdminMapper {
 	List<Notice> noticeList(Search search);
 	Notice noticeDetail(int no);
-	int noticeCount();
+	int noticeCount(Search search);
 	void insertNotice(Notice notice);
 	void insertNoticeSave(Notice notice);
 	List<Member> memberList(Search search);
-	int memberCount();
+	int memberCount(Search search);
 }

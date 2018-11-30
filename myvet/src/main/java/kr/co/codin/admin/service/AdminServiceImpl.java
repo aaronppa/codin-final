@@ -44,8 +44,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int noticeCount() {
-		return mapper.noticeCount();
+	public int noticeCount(Search search) {
+		return mapper.noticeCount(search);
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int memberCount() {
-		return mapper.memberCount();
+	public int memberCount(Search search) {
+		return mapper.memberCount(search);
 	}
 
 }

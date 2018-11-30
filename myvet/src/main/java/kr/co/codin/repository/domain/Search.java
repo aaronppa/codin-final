@@ -62,8 +62,12 @@ public class Search extends Page{
 	public String toString() {
 		return "Search [memberId=" + memberId + ", keyword=" + keyword + ", board=" + board + ", contentType="
 				+ contentType + ", memberType=" + memberType + ", reportType=" + reportType + ", status=" + status
-				+ "]";
+				+ ", pageNo=" + pageNo + ", pageNum=" + pageNum + "]";
 	}
+	
+	
+	
+	
 	
 	
 }

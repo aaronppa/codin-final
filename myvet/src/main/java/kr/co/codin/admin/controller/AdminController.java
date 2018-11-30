@@ -27,7 +27,7 @@ public class AdminController {
 	public void main(Model model) throws Exception{
 		Search search = new Search(1);
 		model.addAttribute("notice", service.noticeList(search));
-		model.addAttribute("noticePageResult", new PageResult(1, service.noticeCount()));
+		model.addAttribute("noticePageResult", new PageResult(1, service.noticeCount(search)));
 	}
 	
 	@RequestMapping("detail.do")
@@ -62,12 +62,13 @@ public class AdminController {
 		service.save(notice);     
 	}
 	
+	// 목록 조회 
 	@RequestMapping(value="/{boardType}/{pageNo}.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> boardPage(@PathVariable String boardType, @PathVariable int pageNo, Search search) throws Exception{
-		System.out.println("들어옴");
-		System.out.println(search.toString());
+		System.out.println("목록 조회 들어옴");
 		search.setPageNo(pageNo);
+		System.out.println(search.toString());
 		switch(boardType) {
 			case "notice": 
 				System.out.println("Notice List 불러오기 Request 들어옴.");
@@ -85,14 +86,14 @@ public class AdminController {
 	public Map<String, Object> noticeList(Search search) throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		map.put("notice", service.noticeList(search));
-		map.put("noticePageResult", new PageResult(search.getPageNo(), service.noticeCount()));
+		map.put("noticePageResult", new PageResult(search.getPageNo(), service.noticeCount(search)));
 		return map;
 	}
 	
 	public Map<String, Object> memberList(Search search) throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		map.put("member", service.memberList(search));
-		map.put("memberPageResult", new PageResult(search.getPageNo(), service.memberCount()));
+		map.put("memberPageResult", new PageResult(search.getPageNo(), service.memberCount(search)));
 		return map;
 	}
 	

@@ -34,6 +34,17 @@
 	<select id="noticeList" parameterType="Search" resultMap="noticeMap">
 		select *
 		from notice
+		<where>
+			<if test="memberId!=null and memberId!=''">
+				notice_writer = #{memberId}
+			</if>
+			<if test="keyword!=null">
+				and concat(notice_title, notice_content) like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="status==1">
+				and temp_save = #{status}
+			</if>
+		</where>
 		order by notice_no desc
 		limit #{begin}, #{pageNum}
 	</select>
@@ -41,6 +52,22 @@
 	<select id="memberList" parameterType="Search" resultMap="memberMap">
 		select *
 		from member
+		<where>
+			<if test="memberType!=null and memberType!=''">
+				member_grade = #{memberType}
+			</if>
+			<choose>
+			<when test="memberId=='account'">
+				and member_email like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="memberId=='nickname'">
+				and member_nickname like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="memberId=='name'">
+				and member_name like CONCAT('%',#{keyword},'%')
+			</when>
+			</choose>
+		</where>
 		order by member_no desc
 		limit #{begin}, #{pageNum}
 	</select>
@@ -51,14 +78,41 @@
 		where notice_no = #{no}
 	</select>
 	
-	<select id="noticeCount" resultType="int">
+	<select id="noticeCount" parameterType="Search" resultType="int">
 		select count(*)
 		from notice
+		<where>
+			<if test="memberId!=null and memberId!=''">
+				notice_writer = #{memberId}
+			</if>
+			<if test="keyword!=null">
+				and concat(notice_title, notice_content) like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="status==1">
+				and temp_save = #{status}
+			</if>
+		</where>
 	</select>
 	
-	<select id="memberCount" resultType="int">
+	<select id="memberCount" parameterType="Search" resultType="int">
 		select count(*)
 		from member
+		<where>
+			<if test="memberType!=null and memberType!=''">
+				member_grade = #{memberType}
+			</if>
+			<choose>
+			<when test="memberId=='account'">
+				and member_email like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="memberId=='nickname'">
+				and member_nickname like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="memberId=='name'">
+				and member_name like CONCAT('%',#{keyword},'%')
+			</when>
+			</choose>
+		</where>
 	</select>
 	
 	<select id="selectMemberByNo" parameterType="int" resultMap="memberMap">

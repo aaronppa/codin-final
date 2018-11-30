@@ -2607,6 +2607,7 @@ h2{
 
 table.list{
 	clear: right;
+
 }
 
 .listarea:nth-of-type(3) > h2 {
@@ -2631,7 +2632,7 @@ button, input[type="button"]{
     cursor: pointer;
 }
 
-tbody > tr:hover{
+tbody > tr:not(.focus-search):hover{
     background-color: #f4e8e6 !important;
     font-weight: 500;
     cursor: pointer;
@@ -2653,7 +2654,7 @@ tbody > tr:hover{
 }
 
 
-.category, .listno{
+.category, .listno, .memberGrade, .petcnt{
     width: 90px;
 
 }
@@ -2661,4 +2662,40 @@ tbody > tr:hover{
 hr{
     margin-top: 40px;
     margin-bottom: 30px;
+}
+
+select {
+    width: auto;
+}
+
+a.nostyle{
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.nostyle:hover{
+	cursor: pointer;
+}
+
+select, .indent{
+	margin-right: 15px;
+}
+
+input[name="keyword"]{
+	margin-left: -15px;
+}
+
+.noresult{
+	margin: 0px;
+	width: 990px;
+	border: 1px solid black;
+	padding: 10px;
+	font-weight: 500;
 }
