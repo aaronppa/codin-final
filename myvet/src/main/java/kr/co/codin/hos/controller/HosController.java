@@ -1,27 +1,42 @@
 package kr.co.codin.hos.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
 import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
+import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.Hospital;
+import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.SearchPlace;
 import kr.co.codin.repository.domain.TestHospital;
+import kr.co.codin.repository.domain.HosPage;
 
 @Controller
 @RequestMapping("hos")
@@ -30,9 +45,52 @@ public class HosController {
 	@Autowired
 	HosService service = new HosServiceImpl();
 	
+	@Autowired 
+	private ServletContext servletContext;
+
+	@RequestMapping("reception.do")
+	public void reception(String petCode) {
+		if (petCode == null) return;
+	}
+
+	@RequestMapping("chartHos.do")
+	public void chartHos() {
+		
+	}
+	
 	@RequestMapping("search.do")
 	public void search() {
 		
+	}
+
+	@RequestMapping("searchReg.do")
+	@ResponseBody
+	public Map<String, Object> regSearch(String keyWord, int pageNo) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		HosPage page = new HosPage(pageNo, 5);
+		page.setKeyWord(keyWord);
+		
+		map.put("list", service.searchReg(page));
+		map.put("listCount", service.regCount(keyWord));
+		
+		return map;
+	}
+	
+	@RequestMapping("searchNor.do")
+	@ResponseBody
+	public Map<String, Object> norSearch(String keyWord, int pageNo) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		HosPage page = new HosPage(pageNo, 4);
+		page.setKeyWord(keyWord);
+		
+		map.put("list", service.searchNor(page));
+		map.put("listCount", service.norCount(keyWord));
+		
+		return map;
 	}
 	
 	@RequestMapping("register.do")
@@ -45,28 +103,29 @@ public class HosController {
 	public void registerHos(
 					int hosCode, 
 					int[] hosFacility, 
-					int[] dayoff, 
+					int[] dayoff,
 					String hosHomePage,
-					String hosComment
-					) {
-//		System.out.println("hosCode : " + hosCode);
-//		System.out.println("hosFacility : " + hosFacility);
-//		System.out.println("dayoff : " + dayoff);
-//		System.out.println("hosHomepage : " + hosHomePage);
-//		System.out.println("hosContent : " + hosComment);
+					String hosComment,
+					List<MultipartFile> hosImg,
+					HttpServletRequest request
+					) throws IllegalStateException, IOException {
 		
-		for (int i = 0; i < hosFacility.length; i++) {
-			HosFacility facility = new HosFacility();
-			facility.setHosCode(hosCode);
-			facility.setFacilityCode(hosFacility[i]);
-			service.insertFacility(facility);
+		if (hosFacility != null) {
+			for (int i = 0; i < hosFacility.length; i++) {
+				HosFacility facility = new HosFacility();
+				facility.setHosCode(hosCode);
+				facility.setFacilityCode(hosFacility[i]);
+				service.insertFacility(facility);
+			}
 		}
 		
-		for (int i =0; i < dayoff.length; i++) {
-			HosHours hours = new HosHours();
-			hours.setHosCode(hosCode);
-			hours.setOpenDay(dayoff[i]);
-			service.insertDayoff(hours);
+		if (dayoff != null) {
+			for (int i = 0; i < dayoff.length; i++) {
+				HosHours hours = new HosHours();
+				hours.setHosCode(hosCode);
+				hours.setOpenDay(dayoff[i]);
+				service.insertDayoff(hours);
+			}
 		}
 		
 		Hospital hospital = new Hospital();
@@ -74,100 +133,79 @@ public class HosController {
 		hospital.setHosComment(hosComment);
 		service.registerUpdate(hospital);
 		
+		if (hosImg.isEmpty()) return;
+		
+		for (MultipartFile img : hosImg) {
+			
+			if(img.isEmpty()) continue;
+			
+			boolean run = true;
+			int no = 0;
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String filePath = servletContext.getRealPath("/")+"/upload/hospital/" + sdf.format(date);
+			String sysName = img.getOriginalFilename();
+			
+			File file = new File(filePath, sysName);
+			
+			while(run) {
+				if (!file.exists()) break;
+				sysName = sysName + no++;
+				file = new File(filePath, sysName);
+				continue;
+			}
+			file.mkdirs();
+			img.transferTo(file);
+			
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setBoardNo(hosCode);
+			fileInfo.setFilePath("/hospital/"+ sdf.format(date));
+			fileInfo.setOriName(img.getOriginalFilename());
+			fileInfo.setSysName(sysName);
+			fileInfo.setFileSize(img.getSize());
+			
+			service.insertFileInfo(fileInfo);
+		}
 		
 	}
 	
 	@RequestMapping("hosList.do")
-	public void hosList(Model model) {}
+	public void hosList() {}
 		
+	
+	@RequestMapping("petSearch.do")
+	@ResponseBody
+	public Map<String, Object> petSearch(String keyWord, int pageNo) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		HosPage page = new HosPage(pageNo, 5);
+		page.setKeyWord(keyWord);
+		
+		map.put("list", service.searchPet(page));
+		map.put("listCount", service.petCount(keyWord));
+		
+		return map;
+	}
 	
 	@RequestMapping("hosSearch.do")
 	@ResponseBody
-	public List<Hospital> hosSearch(String keyWord) {
+	public Map<String, Object> hosSearch(String keyWord, int pageNo) {
 		
-		System.out.println("keyWord : " + keyWord);
-		List<Hospital> list = service.searchHos(keyWord);
-		System.out.println(list);
-		return list;
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		HosPage page = new HosPage(pageNo, 5);
+		page.setKeyWord(keyWord);
+		
+		map.put("list", service.searchHos(page));
+		map.put("listCount", service.hosCount(keyWord));
+		
+		return map;
 	}
 	
-	@RequestMapping("insert.do")
-	public void insertHos() throws Exception {
-		
-		Gson gson = new Gson();
-		
-		SearchPlace place = gson.fromJson(searchPlaceApi(), SearchPlace.class);
-		
-		List<TestHospital> list = place.getPlaces();
-		
-		for (TestHospital test : list) {
-			Hospital hospital = new Hospital();
-			
-			hospital.setTitle(test.getName());
-			hospital.setAddress(test.getJibun_address());
-			hospital.setRoadAddress(test.getRoad_address());
-			hospital.setTelephone(test.getPhone_number());
-			hospital.setMapx(test.getX());
-			hospital.setMapy(test.getY());
-			
-			System.out.println(hospital.toString());
-			service.insertHospital(hospital);
-		}
+	@RequestMapping("hosListPage.do")
+	public void hosListPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int ListCount) {
+		model.addAttribute("pageResult", new PageResult(pageNo, ListCount, 5, 5));
 	}
-	
-	public String searchPlaceApi() throws Exception {
-		String blogUrl = "https://naveropenapi.apigw.ntruss.com/map-place/v1/search";
-		String json = "";
 
-		String parameter = "?";
-		String query = "query=" + URLEncoder.encode("동물병원", "utf-8");
-		String coordinate = "coordinate=" + "127.115514,37.398564";
-		parameter = parameter + query + "&" + coordinate;
-
-		System.out.println(parameter);
-		URL url = new URL(blogUrl + parameter);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-		// GET 방식 설정
-		conn.setRequestMethod("GET");
-
-		// 헤더값 설정
-		//			Content-Type: application/x-www-form-urlencoded; charset=UTF-8
-		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-		conn.setRequestProperty("X-NCP-APIGW-API-KEY-ID", "kxd0pvbof9");
-		conn.setRequestProperty("X-NCP-APIGW-API-KEY", "16Bj01IPAzD7ais0Wy4N9e9htXinledDgasWKWCt");
-
-		// 응답 코드 처리
-		int code = conn.getResponseCode();
-		System.out.println("Connection ResponseCode : " + code);
-
-		// 응답 데이터 추출하기
-
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-			while (true) {
-				String line = br.readLine();
-				if (line == null) break;
-				json = json + line;
-				// 서버에서 보내준 응답데이터			
-				System.out.println(line);
-			}
-			
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"));
-
-			while (true) {
-				String line = br.readLine();
-				if (line == null) break;
-
-				// 서버에서 보내준 응답데이터			
-				System.out.println(line);
-			}
-
-		}
-
-		return json;
-	}
 }

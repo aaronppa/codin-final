@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="body">
-	    <form id="form">
+	    <form id="form" method="POST" enctype="multipart/form-data">
 	    <h1>병원 등록</h1>
 	    <table>
 	        <tr>
@@ -116,6 +116,7 @@
 	    </form>
 	    <div>
 		    <button type="button" id="submit">등록</button>
+		    <button type="button" id="debug">검사</button>
 	    </div>
     </div>
     <script>
@@ -150,9 +151,11 @@
    			console.log($("#form").serialize())
             $.ajax({
             	url: "<c:url value='/hos/registerHos.do'/>",
+            	processData: false,
+                contentType: false,
             	type: 'POST',
             	beforeSend: emptyCheck,
-            	data: $("#form").serialize()
+            	data: new FormData($("#form")[0])
             }).done(function(){
             	swal({
 					  type: 'success',
@@ -161,6 +164,10 @@
 				})
             })
         })
+        
+        $("#debug").click(function() {
+	        console.dir(new FormData($("#form")[0]));
+    	})
         
         function emptyCheck() {
         	console.dir($("#hos-code").val());

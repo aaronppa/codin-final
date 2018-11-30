@@ -1,5 +1,9 @@
 package kr.co.codin.repository.domain;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class FileInfo {
 
 	private int fileId;
@@ -8,8 +12,11 @@ public class FileInfo {
 	private String oriName;
 	private String sysName;
 	private String filePath;
-	private int fileSize;
+	private long fileSize;
 	private String url;
+	
+	@Autowired
+	private ServletContext servletContext;
 	
 	public int getFileId() {
 		return fileId;
@@ -47,17 +54,18 @@ public class FileInfo {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	public int getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
-	public void setFileSize(int fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 	public String getUrl() {
+		url = servletContext.getRealPath("/") + "/upload" + filePath + sysName;
 		return url;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public ServletContext getServletContext() {
+		return servletContext;
 	}
 	
 }

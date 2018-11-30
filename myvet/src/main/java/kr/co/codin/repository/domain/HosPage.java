@@ -1,14 +1,14 @@
 package kr.co.codin.repository.domain;
 
-public class hosPage extends Page{
+public class HosPage extends Page{
 
 	private String keyWord;
 
-	public hosPage (int pageNo) {
+	public HosPage (int pageNo) {
 		this(pageNo, 10);
 	}
 
-	public hosPage (int pageNo, int pageNum) {
+	public HosPage (int pageNo, int pageNum) {
 		super(pageNo, pageNum);
 	}
 	

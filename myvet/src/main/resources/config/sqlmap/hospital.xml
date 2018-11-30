@@ -3,6 +3,43 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.codin.repository.mapper.HosMapper">
 
+	<resultMap type="Member" id="memberMap">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_email" property="memberEmail"/>
+		<result column="password" property="password"/>
+		<result column="member_grade" property="memberGrade"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="member_career" property="memberCareer"/>
+		<result column="mailing_opt" property="mailingOpt"/>
+		<result column="member_ori_name" property="memberOriName"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="member_file_size" property="memberFileSize"/>
+		<result column="member_file_reg_date" property="memberFileRegDate"/>
+	</resultMap>
+
+	<resultMap type="Pet" id="petMap">
+		<result column="pet_no" property="petNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="pet_name" property="petName"/>
+		<result column="pet_reg_no" property="petRegNo"/>
+		<result column="species" property="species"/>
+		<result column="breed" property="breed"/>
+		<result column="size" property="size"/>
+		<result column="pet_gender" property="petGender"/>
+		<result column="pet_age" property="petAge"/>
+		<result column="weight" property="weight"/>
+		<result column="remark" property="remark"/>
+		<result column="pet_ori_name" property="petOriName"/>
+		<result column="pet_sys_name" property="petSysName"/>
+		<result column="pet_file_path" property="petFilePath"/>
+		<result column="pet_file_size" property="petFileSize"/>
+		<association property="petOwner" column="member_no" select="selectMember"></association>
+	</resultMap>
+
 	<resultMap type="Hospital" id="hospitalMap">
 		<result column="hos_code" property="hosCode"/>
 		<result column="title" property="title"/>
@@ -41,6 +78,25 @@
 		<result column="close_time" property="closeTime"/>		
 		<result column="dayoff" property="dayoff"/>		
 	</resultMap>
+	
+	<select id="selectMember" parameterType="int" resultMap="memberMap">
+		select *
+		from member
+		where member_no = #{no}
+	</select>
+	
+	<select id="searchPet" parameterType="HosPage" resultMap="petMap">
+		select *
+		from pet
+		where pet_name like CONCAT('%',#{keyWord},'%')
+		limit #{begin}, #{pageNum}
+	</select>
+	
+	<select id="petCount" parameterType="string" resultType="int">
+		select count(*)
+		from pet
+		where pet_name like CONCAT('%',#{keyWord},'%')
+	</select>
 
 	<insert id="insertHospital" parameterType="Hospital">
 		insert into hos_basic
@@ -55,8 +111,45 @@
 		order by facility_code
 	</select>
 	
-	<select id="searchHos" parameterType="string" resultMap="hospitalMap">
+	<select id="searchReg" parameterType="HosPage" resultMap="hospitalMap">
 		select *
+		from hos_basic
+		where title like CONCAT('%',#{keyWord},'%') and
+			  hos_register = 'Y'
+		limit #{begin}, #{pageNum}	
+	</select>
+
+	<select id="regCount" parameterType="string" resultType="int">
+		select count(*)
+		from hos_basic
+		where title like CONCAT('%',#{keyWord},'%') and
+		      hos_register = 'Y'
+	</select>
+	
+	<select id="searchNor" parameterType="HosPage" resultMap="hospitalMap">
+		select *
+		from hos_basic
+		where title like CONCAT('%',#{keyWord},'%') and
+			  hos_register = 'N'
+		limit #{begin}, #{pageNum}	
+	</select>
+
+	<select id="norCount" parameterType="string" resultType="int">
+		select count(*)
+		from hos_basic
+		where title like CONCAT('%',#{keyWord},'%') and
+		      hos_register = 'N'
+	</select>
+	
+	<select id="searchHos" parameterType="HosPage" resultMap="hospitalMap">
+		select *
+		from hos_basic
+		where title like CONCAT('%',#{keyWord},'%')
+		limit #{begin}, #{pageNum}
+	</select>
+	
+	<select id="hosCount" parameterType="string" resultType="int">
+		select count(*)
 		from hos_basic
 		where title like CONCAT('%',#{keyWord},'%')
 	</select>
@@ -81,5 +174,12 @@
 			hos_comment = #{hosComment}
 		where hos_code = #{hosCode}
 	</update>
+	
+	<insert id="insertFileInfo" parameterType="FileInfo">
+		insert into file_info
+		(board_code, board_no, ori_name, sys_name, file_path, file_size)
+		values
+		(30, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize})
+	</insert>
 	
 </mapper>

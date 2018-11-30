@@ -31,6 +31,7 @@
         }
     </style>
 <link rel="stylesheet" href="<c:url value='/resources/css/hos/register.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
 <script src="<c:url value='/resources/js/vendor/jquery.js'/>"></script>
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 </head>
@@ -69,6 +70,11 @@
 	        <tr class="hosEmpty disable">
 				<th>검색결과가 존재하지 않습니다.</th>
 	        </tr>
+	        <tr class="hosPaging disable">
+	        	<td colspan="3">
+		        	<div id="pageing"></div>
+	        	</td>
+	        </tr>
 	    </table>
 	    <div id="submitContainer">
 		    <button type="button" id="submit">등록</button>
@@ -77,20 +83,27 @@
     <script>
     	var $hosRow = $(".hosRow").clone().removeClass("disable");
     	var $hosEmpty = $(".hosEmpty").clone().removeClass("disable");	
-    	
+    	var $hosPaging = $(".hosPaging").clone().removeClass("disable");	
+
     	$("#search-hos").click(function(){
     		$.ajax({
     			url: "<c:url value='/hos/hosSearch.do'/>",
-    			data: {keyWord : $("#search-name").val()}
-    		}).done(function(hosList) {
-    			console.dir(hosList);
+    			data: {
+    				keyWord : $("#search-name").val(),
+    				pageNo : "1"
+    					}
+    		}).done(function(hosMap) {
 				$("#resultTable").empty();
+				
+				console.dir(hosMap)
+				var hosList = hosMap.list;
 				
 				if (hosList.length == 0) {
 					$("#resultTable").append($hosEmpty.clone());
+					return;
 				}
 				
-    			for(let i = 0; i < hosList.length; i++) {
+				for(let i = 0; i < hosList.length; i++) {
 	    			var $newRow = $hosRow.clone();
 	    			$newRow.find(".radio").attr("id", "hosList"+i);
 	    			$newRow.find(".label").attr("for", "hosList"+i);
@@ -102,6 +115,10 @@
 	    			$newRow.find(".hos-phone").html(hosList[i].telephone);
 	    			$("#resultTable").append($newRow);
 				}
+				
+    			$("#resultTable").append($hosPaging.clone());
+				$("#pageing").load("hosListPage.do?pageNo="+1+"&ListCount="+hosMap.listCount);
+
     		})
     	})
     	
@@ -135,7 +152,7 @@
 	    			$resultRow.find(".hos-addr1").html(),
 	    			$resultRow.find(".hos-addr2").html()
     		)
-// 			window.close();			
+			window.close();			
     	}) 
     	
     </script>

@@ -53,9 +53,6 @@ section {
      * Correct the font size and margin on `h1` elements within `section` and
      * `article` contexts in Chrome, Firefox, and Safari.
      */
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0; }
 
 /* Grouping content
        ========================================================================== */
@@ -512,7 +509,6 @@ dd,
 ul,
 ol,
 li,
-h1,
 h2,
 h3,
 h4,
@@ -547,7 +543,6 @@ small {
   font-size: 80%;
   line-height: inherit; }
 
-h1, .h1,
 h2, .h2,
 h3, .h3,
 h4, .h4,
@@ -558,7 +553,6 @@ h6, .h6 {
   font-weight: normal;
   color: inherit;
   text-rendering: optimizeLegibility; }
-  h1 small, .h1 small,
   h2 small, .h2 small,
   h3 small, .h3 small,
   h4 small, .h4 small,
@@ -567,11 +561,6 @@ h6, .h6 {
     line-height: 0;
     color: #cacaca; }
 
-h1, .h1 {
-  font-size: 1.5rem;
-  line-height: 1.4;
-  margin-top: 0;
-  margin-bottom: 0.5rem; }
 
 h2, .h2 {
   font-size: 1.25rem;
@@ -604,8 +593,6 @@ h6, .h6 {
   margin-bottom: 0.5rem; }
 
 @media print, screen and (min-width: 40em) {
-  h1, .h1 {
-    font-size: 3rem; }
   h2, .h2 {
     font-size: 2.5rem; }
   h3, .h3 {
