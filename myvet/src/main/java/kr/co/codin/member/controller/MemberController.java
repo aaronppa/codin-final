@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -100,32 +101,8 @@ public class MemberController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
 	}
 	
-//	@RequestMapping("/vetAuth.do")
-//	public String vetAuth(MultipartFile fileV, VetAuth vetFile, String memberEmail) throws Exception {
-////		System.out.println(fileV.isEmpty());
-//		if (fileV.isEmpty() == true)
-//			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "vetAuthForm.do";
-//		
-//		String vetOriName = fileV.getOriginalFilename();
-//		vetFile.setVetOriName(vetOriName);
-//		
-//		int vetFileSize = (int)fileV.getSize();
-//		vetFile.setVetFileSize(vetFileSize);
-//		
-//		vetFile.setVetFilePath(context.getRealPath("/vetAuth"));
-//		
-//		UUID uid = UUID.randomUUID();
-//		String vetSysName = uid.toString() + "_" + vetOriName;
-//		vetFile.setVetSysName(vetSysName);
-//		
-//		// selectPasswordById 메서드가 memberEmail로 member 테이블을 조회하여 Member 객체를 리턴
-//		int memberNo = mapper.selectPasswordById(memberEmail).getMemberNo();
-//		vetFile.setMemberNo(memberNo);
-//		
-//		service.uploadVetAuth(vetFile);
-//		
-//		fileV.transferTo(new File(context.getRealPath("/vetAuth"), vetSysName + ".jpg"));
-//				
-//		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
-//	}
+	@RequestMapping("/findEmail.do")
+	public void findEmail(Member member, Model model) {
+		model.addAttribute("member", service.findEmail(member));
+	}
 }

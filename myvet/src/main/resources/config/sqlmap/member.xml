@@ -54,4 +54,11 @@
 			#{vetOriName}, #{vetSysName}, #{vetFilePath}, #{vetFileSize}, #{memberNo}
 		)		  
 	</insert>
+	
+	<select id="selectIdByName" parameterType="Member" resultMap="MemberMap">
+		select *
+		  from member
+		 where member_name = #{memberName}
+		   and member_phone = #{memberPhone}
+	</select>
 </mapper>

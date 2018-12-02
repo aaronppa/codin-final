@@ -51,4 +51,9 @@ public class MemberServiceImpl implements MemberService {
 	public void uploadVetAuth(VetAuth file) {
 		mapper.insertVetAuth(file);
 	}
+
+	@Override
+	public Member findEmail(Member member) {
+		return mapper.selectIdByName(member);
+	}
 }

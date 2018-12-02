@@ -10,6 +10,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<style>
+	a {
+		text-decoration: none;
+		color: #dc3545;
+	}
+	a:hover {
+		text-decoration: none;
+		color: white;
+	}
+	#find-email:mouseover {
+		color: white;
+	}
+</style>
 </head>
 <body>
 	<!-- Button trigger modal -->
@@ -46,7 +59,9 @@
 	                </div>
 	                <div class="modal-footer">
 	                    <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">cancel</button>
-	                    <button type="button" class="btn btn-outline-danger">이메일 찾기</button>
+	                    <button type="button" class="btn btn-outline-danger" id="find-email">
+	                    	<a href="findEmailForm.do">이메일 찾기</a>
+	                    </button>
 	                    <button type="submit" class="btn btn-outline-success">OK</button>
 	                </div>
                 </form>

@@ -21,7 +21,7 @@ public interface MemberService {
 	int idCheck(String memberEmail);
 	
 	/**
-	 * 회원 가입에 대한 비즈니스 로직 처리
+	 * 로그인에 대한 비즈니스 로직 처리
 	 * @param member
 	 * @return member
 	 */
@@ -32,4 +32,11 @@ public interface MemberService {
 	 * @param file
 	 */
 	void uploadVetAuth(VetAuth file);
+	
+	/**
+	 * 이메일 찾기에 대한 비즈니스 로직 처리
+	 * @param member
+	 * @return member
+	 */
+	Member findEmail(Member member);
 }
