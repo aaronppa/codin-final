@@ -226,14 +226,10 @@ svg:not(:root) {
 /**
      * Show the overflow in IE.
      */
-button {
-  overflow: visible; }
-
 /**
      * Remove the inheritance of text transform in Edge, Firefox, and IE.
      * 1. Remove the inheritance of text transform in Firefox.
      */
-button,
 select {
   /* 1 */
   text-transform: none; }
@@ -243,23 +239,12 @@ select {
      *    controls in Android 4.
      * 2. Correct the inability to style clickable types in iOS and Safari.
      */
-button,
 html [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
   /* 2 */ }
 
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  /**
-       * Remove the inner border and padding in Firefox.
-       */
-  /**
-       * Restore the focus styles unset by the previous rule.
-       */ }
   button::-moz-focus-inner,
   [type="button"]::-moz-focus-inner,
   [type="reset"]::-moz-focus-inner,
@@ -332,23 +317,9 @@ textarea {
 .mqa-display object {
   max-width: none !important; }
 
-button {
-  padding: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border: 0;
-  border-radius: 3px;
-  background: transparent;
-  line-height: 1;
-  cursor: auto; }
-  [data-whatinput='mouse'] button {
-    outline: 0; }
-
 pre {
   overflow: auto; }
 
-button,
 input,
 optgroup,
 select,
