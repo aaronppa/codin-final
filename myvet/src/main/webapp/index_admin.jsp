@@ -13,5 +13,12 @@
 	<a href="<c:url value='/admin/main.do'/>">관리자페이지</a>
 	<br>
 	<a href="<c:url value='/notice/list.do'/>">공지사항</a>
+	<br>
+	<a href="<c:url value='/msg/main.do'/>">메신저</a>
+	<br>
+	<a href="<c:url value='member/signupForm.do'/>">회원가입</a>
+	<br>
+	<a href="<c:url value='member/loginForm.do'/>">로그인</a>
+	
 </body>
 </html>

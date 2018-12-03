@@ -101,6 +101,12 @@ public class MemberController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
 	}
 	
+	@RequestMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
+	}
+	
 	@RequestMapping("/findEmail.do")
 	public void findEmail(Member member, Model model) {
 		model.addAttribute("member", service.findEmail(member));
