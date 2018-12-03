@@ -57,7 +57,7 @@
                 <li><a href="#">즐겨찾는 병원</a></li>
                 <li><a href="<c:url value='/member/login.do'/>">로그인</a></li>
                 <li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
-                <li><a href="#">회원가입</a></li>
+                <li><a href="<c:url value='/member/signup.do'/>">회원가입</a></li>
                 <li><a href="<c:url value='/admin/main.do'/>">관리자</a></li>
             </ul>
         </div>
