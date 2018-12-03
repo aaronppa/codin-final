@@ -55,7 +55,7 @@
                 <li><a href="<c:url value='/msg/main.do'/>">메신저</a></li>
                 <li><a href="#">마이페이지</a></li>
                 <li><a href="#">즐겨찾는 병원</a></li>
-                <li><a href="<c:url value='/member/login.do'/>">로그인</a></li>
+                <li><a href="<c:url value='/member/loginForm.do'/>">로그인</a></li>
                 <li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
                 <li><a href="<c:url value='/member/signup.do'/>">회원가입</a></li>
                 <li><a href="<c:url value='/admin/main.do'/>">관리자</a></li>

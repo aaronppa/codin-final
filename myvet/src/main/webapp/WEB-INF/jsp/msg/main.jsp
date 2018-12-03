@@ -13,8 +13,8 @@ body{
 	margin: 0;
 }
 .main-container{
-    width: 1100px;
-    height: 670px;
+    width: 1050px;
+    height: 620px;
     margin: auto;
     display: flex;
     box-shadow:
@@ -37,19 +37,19 @@ body{
 }
 
 .side-subcontainer{
-    width: 300px;
+    width: 275px;
     border:1px solid #8b787a;
 }
 
 .main-subcontainer{
-    width: 800px;
+    width: 775px;
     border:1px solid #8b787a;
 }
 
 h3{
     display: inline-block;
-    margin-left: 22%;
-    margin-right: 22%;
+    margin-left: 50px;
+    margin-right: 50px;
     margin-top: 0px;
     margin-bottom: 0px;
     color: #412427;
