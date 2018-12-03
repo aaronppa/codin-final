@@ -34,12 +34,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member login(Member member) {
 		String rawPassword = member.getPassword();
-		System.out.println("입력한 비밀번호 : " + rawPassword);
+//		System.out.println("입력한 비밀번호 : " + rawPassword);
 		String encPassword = mapper.selectPasswordById(member.getMemberEmail()).getPassword();
-		System.out.println("저장된 비밀번호 : " + encPassword);
+//		System.out.println("저장된 비밀번호 : " + encPassword);
 		
 		if (passwordEncoder.matches(rawPassword, encPassword)) {
-			System.out.println("비밀번호 일치");
+//			System.out.println("비밀번호 일치");
 			member.setPassword(encPassword);
 		} else {
 			System.out.println("비밀번호 불일치");

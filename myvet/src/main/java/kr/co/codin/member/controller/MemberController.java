@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.member.service.MemberService;
+import kr.co.codin.pet.service.PetService;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.VetAuth;
 import kr.co.codin.repository.mapper.MemberMapper;
@@ -29,6 +30,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private PetService pService;
 	
 	@Autowired
 	private ServletContext context;
@@ -117,5 +121,7 @@ public class MemberController {
 		Member member = (Member) session.getAttribute("user");
 		int memberNo = member.getMemberNo();
 		model.addAttribute("member", service.myPage(memberNo));
+//		System.out.println(pService.myPet(memberNo));
+		model.addAttribute("pet", pService.myPet(memberNo));
 	}
 }

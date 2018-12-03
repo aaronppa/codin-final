@@ -135,6 +135,8 @@
     	border: 1px solid black;
     	float: left;
     	margin: 50px;
+    	text-align: center;
+    	padding-top: 90px;
     }
     #show-password {
     	width: 150px;
@@ -209,16 +211,15 @@
     	<c:forEach var="pet" items="${pet}">
 			<div class="pet-info">
 				<img alt="강아지 사진" src="">
+				<div>${pet.petName}</div>
 			</div>
 		</c:forEach>
 		<div class="pet-info">
 			<img alt="고양이 사진" src="">
 		</div>
-		<div class="pet-info">
+		<div class="pet-info" id="pet-add">
+			반려동물 정보 추가
 		</div>
-		<div class="pet-info">
-		</div>
-		
 	</div>
     
 <!-- 	Swiper -->

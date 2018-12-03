@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.PetMapper">
+	<resultMap type="Pet" id="PetMap">
+		<result column="pet_no" property="petNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="pet_name" property="petName"/>
+		<result column="pet_reg_no" property="petRegNo"/>
+		<result column="species" property="species"/>
+		<result column="breed" property="breed"/>
+		<result column="size" property="size"/>
+		<result column="pet_gender" property="petGender"/>
+		<result column="pet_age" property="petAge"/>
+		<result column="weight" property="weight"/>
+		<result column="remark" property="remark"/>
+		<result column="pet_ori_name" property="petOriName"/>
+		<result column="pet_sys_name" property="petSysName"/>
+		<result column="pet_file_path" property="petFilePath"/>
+		<result column="pet_file_size" property="petFileSize"/>
+		<result column="pet_file_reg_date" property="petFileRegDate"/>
+	</resultMap>
+	
+	<select id="selectPetByMemberNo" parameterType="int" resultMap="PetMap">
+		select *
+		  from pet
+		 where member_no = #{memberNo}
+	</select>
+</mapper>
