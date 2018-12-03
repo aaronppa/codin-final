@@ -76,8 +76,8 @@ public class HosServiceImpl implements HosService{
 	}
 
 	@Override
-	public int regCount(String keyWord) {
-		return mapper.regCount(keyWord);
+	public int regCount(HosPage page) {
+		return mapper.regCount(page);
 	}
 
 	@Override
@@ -86,7 +86,17 @@ public class HosServiceImpl implements HosService{
 	}
 
 	@Override
-	public int norCount(String keyWord) {
-		return mapper.norCount(keyWord);
+	public int norCount(HosPage page) {
+		return mapper.norCount(page);
+	}
+
+	@Override
+	public Hospital selectHospitalByNo(int hosCode) {
+		return mapper.selectHospitalByNo(hosCode);
+	}
+
+	@Override
+	public FileInfo selectFileInfo(int fileId) {
+		return mapper.selectFileInfo(fileId);
 	}
 }

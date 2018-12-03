@@ -8,19 +8,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>동물병원 찾기 - MyVet</title>
 <link rel="stylesheet" href="<c:url value='/resources/css/hos/register.css'/>"/>
-<script src="<c:url value='/resources/js/vendor/jquery.js'/>"></script>
+ <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
     <style>
-    	tr:nth-child(2n-1) {
+    	.registerHos:nth-child(2n-1) {
     		background: #f5e9c3;
     	}
     	
-    	tr:nth-child(2n-1):hover {
+    	.registerHos:hover,
+    	.registerHos:nth-child(2n-1):hover {
     		background: #f4e8e6;
     	}
     	
-    	tr:hover {
-    		background: #f4e8e6;
+   	 	.registerPaging {
+   	 		height: 20px;
     	}
     	
         #body {
@@ -52,10 +57,6 @@
 			left: 500px;
         }
         
-       .disable {
-        	display:none;
-        }
-        
         .nomalHos{
         	display: inline-block;
         	width: 300px;
@@ -63,6 +64,12 @@
         	overflow: hidden;
         	position: relative;
         }
+        
+       .disable {
+        	display:none;
+        }
+        
+        
     </style>
 </head>
 <body>
@@ -95,9 +102,9 @@
         <tr class="hosEmpty disable">
 			<th>검색결과가 존재하지 않습니다.</th>
         </tr>
-        <tr class="hosPaging disable">
+        <tr class="registerPaging disable">
         	<td colspan="3">
-	        	<div id="pageing"></div>
+	        	<div id="regPageing"></div>
         	</td>
         </tr>
         
@@ -122,77 +129,87 @@
     <script>
 	var $registerHos = $(".registerHos").clone().removeClass("disable");
 	var $hosEmpty = $(".hosEmpty").clone().removeClass("disable");	
-	var $hosPaging = $(".hosPaging").clone().removeClass("disable");	
 	var $nomalHos = $(".nomalHos").clone().removeClass("disable");
+	var $registerPaging = $(".registerPaging").clone().removeClass("disable");	
+
+	
     
-    	$("#search").click(function(){
-    		$.ajax({
-    			url:"<c:url value='/hos/searchReg.do'/>",
-    			data:{
-    				keyWord : $("#key-word").val(),
-    				pageNo : "1"},
-    		}).done(function(hosMap){
-    			
-				$("#resultRegister").empty();
-				
-				console.dir(hosMap)
-				var hosList = hosMap.list;
-				
-				if (hosList.length == 0) {
-					$("#resultTable").append($hosEmpty.clone());
-					return;
-				}
-				
-				for(let i = 0; i < hosList.length; i++) {
-					var $newRow = $registerHos.clone();
-	    			$newRow.find(".hos-name").attr("href", hosList[i].hosCode);
-	    			$newRow.find(".hos-name").html(hosList[i].title);
-	    			$newRow.find(".hos-addr1").html(hosList[i].roadAddress);
-	    			$newRow.find(".hos-addr2").html(hosList[i].address);
-	    			$newRow.find(".hos-phone").html(hosList[i].telephone);
+   	$("#search").click(function(){
+   		$.ajax({
+   			url:"<c:url value='/hos/searchReg.do'/>",
+   			data:{
+   				keyWord : $("#key-word").val(),
+   				searchType : $("input[name='searchType']:checked").val(),
+   				pageNo : "1"},
+   		}).done(function(hosMap){
+   			
+			$("#resultRegister").empty();
+			
+			console.dir(hosMap)
+			var hosList = hosMap.list;
+			
+			if (hosList.length == 0) {
+				$("#resultRegister").append($hosEmpty.clone());
+				return;
+			}
+			
+			for(let i = 0; i < hosList.length; i++) {
+				var $newRow = $registerHos.clone();
+    			$newRow.find(".hos-name").attr("href", hosList[i].hosCode);
+    			$newRow.find(".hos-name").html(hosList[i].title);
+    			$newRow.find(".hos-addr1").html(hosList[i].roadAddress);
+    			$newRow.find(".hos-addr2").html(hosList[i].address);
+    			$newRow.find(".hos-phone").html(hosList[i].telephone);
 
-	    			$("#resultRegister").append($newRow);
-				}
-				
-				$("#norPageing").load("hosListPage.do?pageNo="+1+"&ListCount="+hosMap.listCount);
+    			$("#resultRegister").append($newRow);
+			}
 
-    		})
+   			$("#resultRegister").append($registerPaging.clone());
+			$("#regPageing").load("regHosPage.do?pageNo="+1+"&ListCount="+hosMap.listCount);
+			
+	   		$(".hos-name").click(function(e){
+	   			e.preventDefault();
+	   					
+	   	 		window.location.href = "hospital.do?hosCode="+$(this).attr("href");
+	   		})
+
+   		})
+   		
+   		$.ajax({
+   			url:"<c:url value='/hos/searchNor.do'/>",
+   			data:{
+   				keyWord : $("#key-word").val(),
+   				searchType : $("input[name='searchType']:checked").val(),
+   				pageNo : "1"},
+   		}).done(function(hosMap){
+
+   			$("#norPaging").empty();
+			$(".nomalHos").remove();
+			
+			console.dir(hosMap)
+			var hosList = hosMap.list;
+			
+			if (hosList.length == 0) {
+				$("#resultTable").append($hosEmpty.clone());
+				return;
+			}
+			
+			for(let i = 0; i < hosList.length; i++) {
+				var $newRow = $nomalHos.clone();
+    			$newRow.find(".hos-name").html(hosList[i].title);
+    			$newRow.find(".hos-addr1").html(hosList[i].roadAddress);
+    			if(hosList[i].roadAddress == null) {
+	    			$newRow.find(".hos-addr1").html(hosList[i].address);
+    			}
+    			$newRow.find(".hos-phone").html(hosList[i].telephone);
+
+    			$("#resultNormal").append($newRow);
+			}
+			$("#norPaging").load("norHosPage.do?pageNo="+1+"&ListCount="+hosMap.listCount);
+   		})
+   		
+   	})
     		
-    		$.ajax({
-    			url:"<c:url value='/hos/searchNor.do'/>",
-    			data:{
-    				keyWord : $("#key-word").val(),
-    				pageNo : "1"},
-    		}).done(function(hosMap){
-    			
-				$(".nomalHos").remove();
-				
-				console.dir(hosMap)
-				var hosList = hosMap.list;
-				
-				if (hosList.length == 0) {
-					$("#resultTable").append($hosEmpty.clone());
-					return;
-				}
-				
-				for(let i = 0; i < hosList.length; i++) {
-					var $newRow = $nomalHos.clone();
-	    			$newRow.find(".hos-name").html(hosList[i].title);
-	    			$newRow.find(".hos-addr1").html(hosList[i].roadAddress);
-	    			if(hosList[i].roadAddress == null) {
-		    			$newRow.find(".hos-addr1").html(hosList[i].address);
-	    			}
-	    			$newRow.find(".hos-phone").html(hosList[i].telephone);
-
-	    			$("#resultNormal").append($newRow);
-				}
-				
-    			$("#resultTable").append($hosPaging.clone());
-				$("#pageing").load("hosListPage.do?pageNo="+1+"&ListCount="+hosMap.listCount);
-
-    		})
-    		
-    	})
     </script>
 </body>
 </html>

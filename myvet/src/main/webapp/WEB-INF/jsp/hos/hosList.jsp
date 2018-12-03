@@ -8,6 +8,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>병원 검색 - MyVet</title>
     <style>
+    
+       	.hosRow:nth-child(2n-1) {
+    		background: #f5e9c3;
+    	}
+    	
+    	.hosRow:nth-child(2n-1):hover,
+    	.hosRow:hover {
+    		background: #f4e8e6;
+    	}
+    
         #body {
             width: 80%;
             margin: auto;
@@ -18,7 +28,7 @@
         }
         .td2 {
             text-align: center;
-            width: 35%;
+            width: 40%;
         }
         .disable {
         	display:none;

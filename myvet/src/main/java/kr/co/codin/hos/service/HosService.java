@@ -23,7 +23,10 @@ public interface HosService {
 	List<Pet> searchPet(HosPage page);
 	int petCount(String keyWord);
 	List<Hospital> searchReg(HosPage page);
-	int regCount(String keyWord);
+	int regCount(HosPage page);
 	List<Hospital> searchNor(HosPage page);
-	int norCount(String keyWord);
+	int norCount(HosPage page);
+	Hospital selectHospitalByNo (int hosCode);
+	FileInfo selectFileInfo (int fileId);
+
 }

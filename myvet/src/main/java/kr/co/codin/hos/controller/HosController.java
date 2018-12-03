@@ -1,14 +1,8 @@
 package kr.co.codin.hos.controller;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,12 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.gson.Gson;
 
 import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
@@ -34,8 +27,6 @@ import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.PageResult;
-import kr.co.codin.repository.domain.SearchPlace;
-import kr.co.codin.repository.domain.TestHospital;
 import kr.co.codin.repository.domain.HosPage;
 
 @Controller
@@ -47,7 +38,12 @@ public class HosController {
 	
 	@Autowired 
 	private ServletContext servletContext;
-
+	
+	@RequestMapping("hospital.do")
+	public void hospital(Model model, int hosCode) {
+		model.addAttribute("hos", service.selectHospitalByNo(hosCode));
+	}
+	
 	@RequestMapping("reception.do")
 	public void reception(String petCode) {
 		if (petCode == null) return;
@@ -65,30 +61,40 @@ public class HosController {
 
 	@RequestMapping("searchReg.do")
 	@ResponseBody
-	public Map<String, Object> regSearch(String keyWord, int pageNo) {
+	public Map<String, Object> regSearch(
+				String keyWord, 
+				@RequestParam(value="pageNo", defaultValue="1")int pageNo, 
+				@RequestParam(value="searchType", defaultValue="1")int searchType
+			) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		HosPage page = new HosPage(pageNo, 5);
 		page.setKeyWord(keyWord);
+		page.setSearchType(searchType);
 		
 		map.put("list", service.searchReg(page));
-		map.put("listCount", service.regCount(keyWord));
+		map.put("listCount", service.regCount(page));
 		
 		return map;
 	}
 	
 	@RequestMapping("searchNor.do")
 	@ResponseBody
-	public Map<String, Object> norSearch(String keyWord, int pageNo) {
+	public Map<String, Object> norSearch(
+				String keyWord, 
+				@RequestParam(value="pageNo", defaultValue="1")int pageNo, 
+				@RequestParam(value="searchType", defaultValue="1")int searchType
+			) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		HosPage page = new HosPage(pageNo, 4);
 		page.setKeyWord(keyWord);
+		page.setSearchType(searchType);
 		
 		map.put("list", service.searchNor(page));
-		map.put("listCount", service.norCount(keyWord));
+		map.put("listCount", service.norCount(page));
 		
 		return map;
 	}
@@ -109,6 +115,7 @@ public class HosController {
 					List<MultipartFile> hosImg,
 					HttpServletRequest request
 					) throws IllegalStateException, IOException {
+		
 		
 		if (hosFacility != null) {
 			for (int i = 0; i < hosFacility.length; i++) {
@@ -206,6 +213,16 @@ public class HosController {
 	@RequestMapping("hosListPage.do")
 	public void hosListPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int ListCount) {
 		model.addAttribute("pageResult", new PageResult(pageNo, ListCount, 5, 5));
+	}
+	
+	@RequestMapping("regHosPage.do")
+	public void registHosPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int ListCount) {
+		model.addAttribute("pageResult", new PageResult(pageNo, ListCount, 5, 5));
+	}
+	
+	@RequestMapping("norHosPage.do")
+	public void normalHosPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int ListCount) {
+		model.addAttribute("pageResult", new PageResult(pageNo, ListCount, 4, 5));
 	}
 
 }

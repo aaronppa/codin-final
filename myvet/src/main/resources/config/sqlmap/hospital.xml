@@ -79,6 +79,28 @@
 		<result column="dayoff" property="dayoff"/>		
 	</resultMap>
 	
+	<resultMap type="FileInfo" id="fileInfoMap">
+		<result column="file_id" property="fileId"/>
+		<result column="board_code" property="boardCode"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="ori_name" property="oriName"/>
+		<result column="sys_name" property="sysName"/>
+		<result column="file_path" property="filePath"/>
+		<result column="file_size" property="fileSize"/>
+	</resultMap>
+	
+	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
+		select *
+		from file_info
+		where file_id = #{fileId}
+	</select>
+	
+	<select id="selectHospitalByNo" parameterType="int" resultMap="hospitalMap">
+		select *
+		from hos_basic
+		where hos_code = #{hosCode}
+	</select>
+	
 	<select id="selectMember" parameterType="int" resultMap="memberMap">
 		select *
 		from member
@@ -114,31 +136,59 @@
 	<select id="searchReg" parameterType="HosPage" resultMap="hospitalMap">
 		select *
 		from hos_basic
-		where title like CONCAT('%',#{keyWord},'%') and
-			  hos_register = 'Y'
+		where (
+			<if test="searchType == 1">
+				title like CONCAT('%',#{keyWord},'%')
+			</if>
+			<if test="searchType == 2">
+				roadAddress like CONCAT('%',#{keyWord},'%') or
+				address like CONCAT('%',#{keyWord},'%') 
+			</if>
+		) and hos_register = 'Y'
 		limit #{begin}, #{pageNum}	
 	</select>
 
-	<select id="regCount" parameterType="string" resultType="int">
+	<select id="regCount" parameterType="HosPage" resultType="int">
 		select count(*)
 		from hos_basic
-		where title like CONCAT('%',#{keyWord},'%') and
-		      hos_register = 'Y'
+		where (
+			<if test="searchType == 1">
+				title like CONCAT('%',#{keyWord},'%')
+			</if>
+			<if test="searchType == 2">
+				roadAddress like CONCAT('%',#{keyWord},'%') or
+				address like CONCAT('%',#{keyWord},'%') 
+			</if>
+		) and hos_register = 'Y'
 	</select>
 	
 	<select id="searchNor" parameterType="HosPage" resultMap="hospitalMap">
 		select *
 		from hos_basic
-		where title like CONCAT('%',#{keyWord},'%') and
-			  hos_register = 'N'
+		where (
+			<if test="searchType == 1">
+				title like CONCAT('%',#{keyWord},'%')
+			</if>
+			<if test="searchType == 2">
+				roadAddress like CONCAT('%',#{keyWord},'%') or
+				address like CONCAT('%',#{keyWord},'%') 
+			</if>
+		) and hos_register = 'N'
 		limit #{begin}, #{pageNum}	
 	</select>
 
-	<select id="norCount" parameterType="string" resultType="int">
+	<select id="norCount" parameterType="HosPage" resultType="int">
 		select count(*)
 		from hos_basic
-		where title like CONCAT('%',#{keyWord},'%') and
-		      hos_register = 'N'
+		where (
+			<if test="searchType == 1">
+				title like CONCAT('%',#{keyWord},'%')
+			</if>
+			<if test="searchType == 2">
+				roadAddress like CONCAT('%',#{keyWord},'%') or
+				address like CONCAT('%',#{keyWord},'%') 
+			</if>
+		) and hos_register = 'N'
 	</select>
 	
 	<select id="searchHos" parameterType="HosPage" resultMap="hospitalMap">

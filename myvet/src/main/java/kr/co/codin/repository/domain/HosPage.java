@@ -3,6 +3,7 @@ package kr.co.codin.repository.domain;
 public class HosPage extends Page{
 
 	private String keyWord;
+	private int searchType;
 
 	public HosPage (int pageNo) {
 		this(pageNo, 10);
@@ -20,5 +21,14 @@ public class HosPage extends Page{
 		this.keyWord = keyWord;
 	}
 
+	public int getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(int searchType) {
+		this.searchType = searchType;
+	}
+
+	
 	
 }
