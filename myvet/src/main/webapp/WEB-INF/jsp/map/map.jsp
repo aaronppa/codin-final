@@ -41,6 +41,7 @@
 	postion:absolute;
 	width:100%;
 }
+
 </style>
 
 <script
@@ -60,45 +61,7 @@
 				<div id="MapSearchlist">
 					<table>
 						<tbody>
-						<!-- 	<tr>
-								<td>sd0sdf0    </td>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							
-							<tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr><tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							<tr>
-								<td>sd00</td>
-							</tr>
-							
- -->
+					
 						</tbody>
 					</table>
 				</div>
@@ -109,6 +72,8 @@
 		<div id="map" class="map"></div>
 	</div>
 	<script>
+		let centerPositionX=null;
+		let centerPositionY=null;
 		var mapx;
 		var mapy;
 		var position;
@@ -118,6 +83,7 @@
 		let xx=null;
 		let yy=null;
 		let centerXY;
+		let marker=null;
 		$("#button").click(function() {
 			
 			$.ajax({
@@ -145,6 +111,8 @@
 					//console.log(position.coords.latitude+"  "+position.coords.longitude);
 					//		console.log("허용");
 					//		console.log(x,y);
+					console.log("센터 x"+x);
+					console.log("센터 y"+y);
 					$.ajax({
 						url : "<c:url value='/map/mainajax.do'/>",
 						type : "post",
@@ -174,7 +142,9 @@
 							positionData.push(data);
 						}
 						jsondata = positionData;
-						MainMap(x, y, result);//넘어온 병원 정보를 지도 api에 넘겼음
+						centerPositionX=x;
+						centerPositionY=y;
+						MainMap(data.x, data.y, result,x,y);//넘어온 병원 정보를 지도 api에 넘겼음
 					}).fail(function(result) {
 						//	console.log("안됨");
 						//	console.log(result);
@@ -205,10 +175,19 @@
 								positionData.push(data);
 
 							}
-							MainMap(result[0].mapx, result[0].mapy, result);//첫번째 매개변수 x값 두번째 매개변수 y값 , --> 중심좌표 , result 데이터의 갯수
+							
+							
+							
+							
+							// 아 왜 안되는거야 ㅡㅡ^;
+							$("#gotoCenter").css("visibility","hidden");
+							
+							
+							// 아 왜 안되는거야 ㅡㅡ^;
+							MainMap(result[0].mapx, result[0].mapy, result,null,null);//첫번째 매개변수 x값 두번째 매개변수 y값 , --> 중심좌표 , result 데이터의 갯수
 							//    	console.log("성공"+result);
 							
-							
+						
 						}).fail(function(result) {
 							//    	console.log("실패"+result);//여기서 막힘 하아
 						});
@@ -228,31 +207,63 @@
 				console.log('위치정보 접근 불가');
 			}
 		}
-
+		
+		
+		
+		let myaddr=null;
+	
 		function MainMap(x, y, jsondata,xx,yy) {//x,y는 중심점 , jsondata는 병원 좌표
 			
+			console.log("x:"+x);
+			console.log("y:"+y);
+			console.log("xx:"+xx);
+			console.log("yy:"+yy);
+		
 			
 			
-			
+	
+		
 			$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
 			for(let k = 0 ;  k < jsondata.length; k ++){
-				$("#MapSearchlist >table > tbody").append(
-				"<tr><td class='"+(k+1)+"td'>"+(k+1)+":"+jsondata[k].title +"</td></tr>"		
-				)
-				$("#MapSearchlist > table > tbody> tr > ."+(k+1)+"td").on("click",function(e){
+				if(jsondata[k].hosRegister == 'N'){
+					$("#MapSearchlist >table > tbody").append(
+						
+							"<tr class='mapSearchResult'><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/RedFolder/redMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong></td><tr/><tr><td class='"+(k+1)+"td'>"+jsondata[k].roadAddress+"</td></tr>"		
+							)
+							$("#MapSearchlist > table > tbody> tr > ."+(k+1)+"td").on("click",function(e){
+				
+						
+						//alert("클릭");
+						xx=jsondata[k].mapx;
+						yy=jsondata[k].mapy;
+						MainMap(xx, yy, jsondata);
+					})
 					
 					
-					//alert("클릭");
-					xx=jsondata[k].mapx;
-					yy=jsondata[k].mapy;
-					MainMap(xx, yy, jsondata);
-					
-					
-					
-				})
+				}else{
+					$("#MapSearchlist >table > tbody").append(
+							
+							"<tr class='mapSearchResult'><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong></td><tr/><tr><td class='"+(k+1)+"td'>"+jsondata[k].roadAddress+"</td></tr>"		
+							)
+							$("#MapSearchlist > table > tbody> tr > ."+(k+1)+"td").on("click",function(e){
+				
+						
+						//alert("클릭");
+						xx=jsondata[k].mapx;
+						yy=jsondata[k].mapy;
+						MainMap(xx, yy, jsondata);
+						
+						
+						
+					})
+				}
 			}
 			
 			
+			
+			
+			
+		
 			
 			//console.log(jsondata.length);
 			var map = new naver.maps.Map('map');
@@ -272,24 +283,60 @@
 								// 첫번째 결과 결과 주소: result.items[0].address
 								// 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
 								//  var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
-								let myaddr = new naver.maps.Point(x, y);//마커중심 좌표 설정(현재위치)
-								console.log(x);
-								console.log(y);
-								console.log("273:"+xx);
-								console.log(yy)
-								if(xx==null && yy==null){
+								
+										
+								
+			
+		
+								
+								 myaddr = new naver.maps.Point(xx, yy);//마커중심 좌표 설정(현재위치)
+							//	console.log(x);
+							//	console.log(y);
+							//	console.log("273:"+xx);
+						//		console.log(yy);
+								
+							
+
+							
+								
+
+							
+								
+								
+
+							//	if (xx == null && yy == null) {
 									console.log("if")
-									 centerXY = new naver.maps.Point(x, y);//중심점으로 이동
-								}else{
+									centerXY = new naver.maps.Point(x, y);//중심점으로 이동
+							/* 	} else {
 									console.log("else");
-									 centerXY = new naver.maps.Point(xx, yy);
-								}
+									centerXY = new naver.maps.Point(xx, yy);
+								} */
+								$("#gotoCenter").on("click", function(e) {
+									console.log("ㅇ의느일ㄴㅇ르");
+									  centerPositionX;
+									 centerPositionY;
+									 console.log(centerPositionX);
+									 console.log(centerPositionY);
+									 
+									 //centerXY = new naver.maps.Point(centerPositionX, centerPositionY);
+									// MainMap(centerPositionX, centerPositionY, jsondata);
+									 myaddr = new naver.maps.Point(centerPositionX, centerPositionY);
+									 //centerXY=new naver.maps.Point(centerPositionX, centerPositionY, jsondata); 
+										//xx=centerPositionX;
+										//yy=centerPositionY;
+									
+								
+								})
+								
+								
+							
 								map.setCenter(centerXY); // 검색된 좌표로 지도 이동
 
 								//    console.log(myaddr);
 
 								// 마커 표시
-								let marker = new naver.maps.Marker(
+								
+								 marker = new naver.maps.Marker(
 										{
 											position : myaddr,
 											icon : {
@@ -300,117 +347,133 @@
 										});
 								naver.maps.Event.addListener(marker, "click",
 										function(e) {
-										/* 	if (infowindow.getMap()) {
-												infowindow.close();
-											} else {
-												infowindow.open(map, marker);
-											} */
+											/* 	if (infowindow.getMap()) {
+													infowindow.close();
+												} else {
+													infowindow.open(map, marker);
+												} */
 											alert("중심좌표입니다");
 										});
 
 								let MarkerClicklist = new Array();
-						
+
 								//병원의 마크점 생성
 								for (let k = 0; k < jsondata.length; k++) {
+
+								/* 	console
+											.log("ddd:::"
+													+ '/myvet/resources/img/mapmark/blueFolder/blueMarker'
+													+ String
+															.fromCharCode(65 + k) */	
+											//	+ '.png');
 									//if(jsondata[k] == null)continue;//서강대로 검색시 null값이 있음
 									//console.dir(jsondata[k]);
 
 									//console.dir("ddd:"
 									//		+ jsondata[k].hosRegister);
-									let hosmarker=null;
-									let hosaddr =null;
+									let hosmarker = null;
+									let hosaddr = null;
 									if (jsondata[k].hosRegister == "N") { //if 조건에 따른 마크점 분기 완료
-										 // MarkLog(jsondata[k]);
-										//console.log("ddㅇㅇㅇㄹ널이");
-										//console.log(jsondata[k].title,
-												/* jsondata[/* k].mapx,
-												jsondata[k].mapy,
-												
-												
-												
-												jsondata[k].address); */ 
-									//	console.log("sldjfslkdjfsldj");
 
-										 hosaddr = new naver.maps.Point(
+										hosaddr = new naver.maps.Point(
 												jsondata[k].mapx,
 												jsondata[k].mapy);
-										 hosmarker = new naver.maps.Marker(
+										hosmarker = new naver.maps.Marker(
 												{
 													position : hosaddr,
 													map : map,
 													title : jsondata[k].title,
 													icon : {
-														url : '/myvet/resources/img/mapmark/KakaoTalk20181125194810379.gif'
+														url : '/myvet/resources/img/mapmark/RedFolder/redMarker'
+																+ String
+																		.fromCharCode(65 + k)
+																+ '.png'
 													}
 												});
 									} else {
-										 hosaddr = new naver.maps.Point(
+										hosaddr = new naver.maps.Point(
 												jsondata[k].mapx,
 												jsondata[k].mapy);
-										 hosmarker = new naver.maps.Marker(
+										hosmarker = new naver.maps.Marker(
 												{
 													position : hosaddr,
 													map : map,
 													title : jsondata[k].title,
 													icon : {
-														url : '/myvet/resources/img/mapmark/blueIcon.gif'
+														url : '/myvet/resources/img/mapmark/blueFolder/blueMarker'
+																+ String
+																		.fromCharCode(65 + k)
+																+ '.png'
 													}
 												});
 
 									}//if-else
 									MarkerClicklist[k] = hosmarker;
-									
-								//	console.log(jsondata[k].title);
-									
-									
-									
-									
-									let infowindow = new naver.maps.InfoWindow({
 
-										content : '<p>중심점'+jsondata[k].title+"</p>'+<a href='#'>"+"임의적 이동버튼"+"</a>"
-									});
-									
-									
+									//	console.log(jsondata[k].title);
+
+									let infowindow = new naver.maps.InfoWindow(
+											{
+
+												content : '<p>중심점'
+														+ jsondata[k].title
+														+ "</p>'+<a href='#'>"
+														+ "임의적 이동버튼" + "</a>"
+											});
+
 									//마크점 클릭시 나오는 action의 분기
 									if (jsondata[k].hosRegister == "N") {
-										naver.maps.Event.addListener(MarkerClicklist[k],
-												"click", function(e) {
+										naver.maps.Event
+												.addListener(
+														MarkerClicklist[k],
+														"click",
+														function(e) {
 
-													alert("병원 이름:"+jsondata[k].title+"은 등록되지 않은 병원입니다.");
-												});
-									}else{
-										naver.maps.Event.addListener(MarkerClicklist[k],
-												"click", function(e) {
+															alert("병원 이름:"
+																	+ jsondata[k].title
+																	+ "은 등록되지 않은 병원입니다.");
+														});
+									} else {
+										naver.maps.Event
+												.addListener(
+														MarkerClicklist[k],
+														"click",
+														function(e) {
 
-													if (infowindow.getMap()) {
-														infowindow.close();
-													} else {
-														infowindow.open(map,
-																MarkerClicklist[k]);
-													}
-												});
+															if (infowindow
+																	.getMap()) {
+																infowindow
+																		.close();
+															} else {
+																infowindow
+																		.open(
+																				map,
+																				MarkerClicklist[k]);
+															}
+														});
 									}
-									
-									
 
 									let hosInfo = new naver.maps.InfoWindow({
-										content : '<p>등록되지 않은 병원입니다.</p>'+hosmarker
+										content : '<p>등록되지 않은 병원입니다.</p>'
+												+ hosmarker
 
 									});
 
-									
-						
 								}//for
-								
-								console.log("374번 줄 "+ jsondata);
-								console.log(jsondata);
-							/* 	
-									 
-								}*/			
+
+							//	console.log("374번 줄 " + jsondata);
+							//	console.log(jsondata);
+								/* 	
+										 
+									}*/
 							});
 
 		}
-		</script>
+
+		$("#map").append(
+						"<div id='gotoCenter' style='position:absolute;z-index:100;margin-top:0px; margin-left:0px;'><button><img src='/myvet/resources/img/mapmark/goToCenTer.png'/></button>"
+								+ "</div>")
+	</script>
 </body>
 
 </html>
