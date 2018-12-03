@@ -61,7 +61,7 @@
     <form action="<c:url value='/tip/update.do' />" method="post">
     <br>
     <input name="tipNo" value="${tip.tipNo }" type="hidden">
-    <input name="boardCode" type="hidden" value="10">
+    <input name="boardCode" type="hidden" value="11">
 <!--     <input name="categoryCode" type="hidden" value="1"> -->
     <input name="memberNo" type="hidden" value="33">
     

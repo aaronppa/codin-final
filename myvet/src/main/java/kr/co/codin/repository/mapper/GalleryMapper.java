@@ -4,10 +4,11 @@ import java.util.List;
 
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.Page;
 
 
 public interface GalleryMapper {
-	List<Gallery> selectGallery();
+	List<Gallery> selectGallery(Page page);
 	Gallery selectGalleryByNo(int galleryNo);
 	void insertGallery(Gallery gallery);
 	void updateGallery(Gallery gallery);
@@ -17,7 +18,7 @@ public interface GalleryMapper {
 	
 //	//댓글
 	void insertComment(GalleryComment galleryComment);
-//	List<galleryComment> selectComment(int galleryNo);
+	List<GalleryComment> selectComment(int galleryNo);
 //	void deleteComment(galleryComment galleryComment);
 //	void updateComment(galleryComment galleryComment);
 //	int countComment(int galleryNo);

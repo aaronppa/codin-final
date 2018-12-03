@@ -4,9 +4,10 @@ import java.util.List;
 
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.Page;
 
 public interface GalleryService {
-	List<Gallery> galleryList();
+	List<Gallery> galleryList(Page page);
 	
 	Gallery detailGallery(int galleryNo);
 	
@@ -23,9 +24,9 @@ public interface GalleryService {
 	int countGallery();
 	
 	//댓글
-//	void insertComment(GalleryComment galleryComment);
+	void insertComment(GalleryComment galleryComment);
 //	
-//	List<GalleryComment> commentList(int galleryNo);
+	List<GalleryComment> commentList(int galleryNo);
 //	
 //	void deleteComment(GalleryComment galleryComment);
 //	

@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- page -->
+        <link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
+<%--     <script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script> --%>
+<%-- 	<script src="<c:url value='/resources/js/waitme/common-waitme.js'/>"></script> --%>
+       <link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
+    
     <!---->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -199,6 +205,9 @@
             width: 50px;
             height: 50px;
         }
+        td{
+        	padding-left: 10px;
+        }
 
 
         
@@ -210,26 +219,26 @@
        	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
     
         <!--검색-->
-        <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Title</button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Title</a>
-                    <a class="dropdown-item" href="#">Content</a>
-                    <div role="separator" class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Title + Content</a>
-                  </div>
-                </div>
-                <input type="text" class="input-search" placeholder="search">
-                <button type="button" class="btn btn-outline">검색</button>
-        </div>
+     <div class="input-group mb-3">
+             <div class="input-group-prepend">
+               <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Title</button>
+               <div class="dropdown-menu">
+                 <a class="dropdown-item" href="#">Title</a>
+                 <a class="dropdown-item" href="#">Content</a>
+                 <div role="separator" class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="#">Title + Content</a>
+               </div>
+             </div>
+             <input type="text" class="input-search" placeholder="search">
+             <button type="button" class="btn btn-outline">검색</button>
+     </div>
     <div id="galleryCount" style="float:right;">전체 ${count } 개</div>
     <br>
     
     <table>
             <!-- 게시글-->
     <c:forEach var="g" items="${gallery}" varStatus="loop">
-    <c:if test="${loop.count % 3 == 1}">
+    <c:if test="${loop.count % 4 == 1}">
     	<tr>
     </c:if>
         <td>
@@ -237,7 +246,7 @@
             <div class="card" style="width: 18rem;">
                     <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
                     <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}'/>">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval='false'>
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -245,13 +254,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="../images/test2.jpg" alt="First slide">
+                                    <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test2.jpg" alt="First slide">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block w-100" src="../images/test1.jpg" alt="Second slide">
+                                    <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test1.jpg" alt="Second slide">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block w-100" src="../images/test4.jpg" alt="Third slide">
+                                    <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test4.jpg" alt="Third slide">
                                 </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -281,13 +290,14 @@
                                 </div>
                             </div>
                         </div>
+                       </div>
                     </div>
                 </td>
-             <c:if test="${loop.count % 3 == 0}">
+             <c:if test="${loop.count % 4 == 0}">
              </tr>
            	</c:if>
            </c:forEach>
-           <c:if test="${gall.size() % 3 != 0}">
+           <c:if test="${gall.size() % 4 != 0}">
            </tr>
            </c:if>
 <!--                 <td> -->
@@ -304,13 +314,13 @@
 <!--                                 </ol> -->
 <!--                                 <div class="carousel-inner"> -->
 <!--                                     <div class="carousel-item active"> -->
-<!--                                         <img class="d-block w-100" src="../images/test2.jpg" alt="First slide"> -->
+<!--                                         <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test2.jpg" alt="First slide"> -->
 <!--                                     </div> -->
 <!--                                     <div class="carousel-item"> -->
-<!--                                         <img class="d-block w-100" src="../images/test1.jpg" alt="Second slide"> -->
+<!--                                         <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test1.jpg" alt="Second slide"> -->
 <!--                                     </div> -->
 <!--                                     <div class="carousel-item"> -->
-<!--                                         <img class="d-block w-100" src="../images/test4.jpg" alt="Third slide"> -->
+<!--                                         <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test4.jpg" alt="Third slide"> -->
 <!--                                     </div> -->
 <!--                                 </div> -->
 <!--                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> -->
@@ -337,25 +347,27 @@
         <br>
         
         <!--페이징-->
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-
+<!--     <nav aria-label="Page navigation example"> -->
+<!--         <ul class="pagination justify-content-center"> -->
+<!--             <li class="page-item disabled"> -->
+<!--             <a class="page-link" href="#" tabindex="-1">Previous</a> -->
+<!--             </li> -->
+<!--             <li class="page-item"><a class="page-link" href="#">1</a></li> -->
+<!--             <li class="page-item"><a class="page-link" href="#">2</a></li> -->
+<!--             <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+<!--             <li class="page-item"> -->
+<!--             <a class="page-link" href="#">Next</a> -->
+<!--             </li> -->
+<!--         </ul> -->
+<!--     </nav> -->
+    <div id="pagination">
+   		 <c:import url="page.jsp"></c:import>
+    </div>
     <script>
     //carousel interval
-    $('.carousel').carousel({
-        interval : 0
-    })
+	   $('.carousel').carousel({
+	  interval: 0
+	})
     $("#carouselExampleIndicators").hover(function (e) {
          $(".emo").toggle();
              //TransitionEvent("1s")

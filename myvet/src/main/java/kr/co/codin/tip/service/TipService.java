@@ -3,6 +3,7 @@ package kr.co.codin.tip.service;
 import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
+import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
 import kr.co.codin.repository.domain.TipCommentRecommend;
@@ -11,7 +12,7 @@ import kr.co.codin.repository.domain.TipRecommend;
 
 public interface TipService {
 	
-	List<Tip> tipList();
+	List<Tip> tipList(Page page);
 	
 	Tip detailTip(int tipNo);
 	

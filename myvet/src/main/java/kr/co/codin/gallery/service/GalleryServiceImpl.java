@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.mapper.GalleryMapper;
 
 
@@ -15,9 +16,11 @@ public class GalleryServiceImpl implements GalleryService{
 	@Autowired 
 	private GalleryMapper mapper;
 
+	
+
 	@Override
-	public List<Gallery> galleryList() {
-		return mapper.selectGallery();
+	public List<Gallery> galleryList(Page page) {
+		return mapper.selectGallery(page);
 	}
 
 	@Override
@@ -54,16 +57,24 @@ public class GalleryServiceImpl implements GalleryService{
 
 	@Override
 	public int countGallery() {
-		// TODO Auto-generated method stub
 		return mapper.countGallery();
 	}
 
 	//댓글
 
-//	@Override
-//	public void insertComment(GalleryComment galleryComment) {
-//		mapper.insertComment(galleryComment);
-//	}
+	@Override
+	public void insertComment(GalleryComment galleryComment) {
+		mapper.insertComment(galleryComment);
+	}
+
+	@Override
+	public List<GalleryComment> commentList(int galleryNo) {
+		return mapper.selectComment(galleryNo);
+	}
+	
+
+
+	
 	
 	
 	

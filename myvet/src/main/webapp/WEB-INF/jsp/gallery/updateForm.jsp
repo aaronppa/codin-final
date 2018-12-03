@@ -142,10 +142,10 @@
                 <!-- Swiper -->
                 <div class="swiper-container gallery-top">
                         <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic1.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic2.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic3.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic4.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next swiper-button-white"></div>
@@ -153,10 +153,10 @@
                     </div>
                     <div class="swiper-container gallery-thumbs">
                         <div class="swiper-wrapper">
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic1.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic2.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic3.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic4.jpg"></div>
+                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
+                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
+                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
+                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
                         </div>
                     </div>
                     <!--file-->
@@ -172,7 +172,7 @@
                     <div class="pet-add">
                         <i class="fas fa-plus" style="width:50px;height:50px;text-align: center;"></i>
                         <span data-toggle="tooltip" title="PONY">
-                          <img src="../images/pony01.jpg" class="rounded-circle" style="width:60px;height:60px;">
+                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle" style="width:60px;height:60px;">
                         </span>
                     </div>
 
@@ -180,7 +180,7 @@
             <div class="col-sm-5" > 
                 <div class="detail-content" >
                     <br>
-                    <img src="../images/pic2.jpg" class="rounded-circle" id="writer-img">
+                    <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                     <span style="font-weight:bolder">복순이</span>
                     <hr>
                     <br>

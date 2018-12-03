@@ -166,7 +166,7 @@
                     <div class="pet-add">
                         <i class="fas fa-plus" style="width:50px;height:50px;text-align: center;"></i>
                         <span data-toggle="tooltip" title="PONY">
-                          <img src="../images/pony01.jpg" class="rounded-circle" style="width:60px;height:60px;">
+                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle" style="width:60px;height:60px;">
                         </span>
                     </div>
 
@@ -174,7 +174,7 @@
             <div class="col-sm-5" > 
                 <div class="detail-content" >
                     <br>
-                    <img src="../images/pic2.jpg" class="rounded-circle" id="writer-img">
+                    <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                     <input type="hidden" name="writerNo" value="12">
                     <input type="hidden" name="boardCode" value="2">
                     <span style="font-weight:bolder">복순이</span>

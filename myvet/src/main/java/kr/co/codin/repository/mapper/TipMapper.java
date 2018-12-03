@@ -3,6 +3,7 @@ package kr.co.codin.repository.mapper;
 import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
+import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
 import kr.co.codin.repository.domain.TipCommentRecommend;
@@ -10,7 +11,7 @@ import kr.co.codin.repository.domain.TipRecommend;
 
 public interface TipMapper {
 
-	List<Tip> selectTip();
+	List<Tip> selectTip(Page page);
 	Tip selectTipByNo(int tipNo);
 	void insertTip(Tip tip);
 	void updateTip(Tip tip);

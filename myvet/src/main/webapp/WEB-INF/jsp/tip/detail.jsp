@@ -440,7 +440,7 @@ p {
                 <div class="rest" contenteditable="false"></div>
             </div>
             <div class="writer" aria-placeholder="writer..">
-                <img src="/myvet/images/pony01.jpg" class="rounded-circle">&nbsp;PONY
+                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;PONY
             </div>
             <div class="information" style="font-size: 20px;">
            		<c:if test="${tip.categoryCode eq 1 }">
@@ -720,7 +720,7 @@ p {
             		   dislikeRecommend = "comActive";
 		     	   }
                 $(".comment-list").append(
-                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
+                "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
               	+"<button class='com-like "+likeRecommend+"' style='margin-left:65%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up' style='font-size:25px;'></i>"+"</button><button class='com-dislike "+dislikeRecommend+"' style='margin-left:5%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down' style='font-size:25px;'></i>"+"</button>"	
             	+"<i class='fas fa-heart' style='margin-left: 5%;color:red;'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
                 
@@ -755,6 +755,10 @@ p {
        		var isActive = $(this).hasClass('active');
        		$("#tipRecomCnt").remove();
        		detail();
+       		if($('#dislike').hasClass('active')){
+       			alert('이미 싫어요를 눌렀어요')
+       			return false;
+       		}
        		if(isActive == true){
        			insertRecommend(0, $('#tipNo').val());
        		}else{
@@ -776,8 +780,9 @@ p {
         	var isActive = $(this).hasClass('active');
         	$("#tipRecomCnt").remove();
        		detail();
-       		if($(this).prev().hasClass('active')){
-       			alert('이미 좋아요를 누르셨습니다.')
+       		if($('#like').hasClass('active')){
+       			alert('이미 좋아요를 눌렀어요')
+       			return false;
        		}
 //         	alert(isActive);
         	if(isActive == true){

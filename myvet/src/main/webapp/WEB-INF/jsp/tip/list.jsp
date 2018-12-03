@@ -13,11 +13,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
+    <script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
+	<script src="<c:url value='/resources/js/waitme/common-waitme.js'/>"></script>
     <!--bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
+   
     <style>
 /*         body { */
 /*             padding:30px 30px; */
@@ -124,7 +129,9 @@
             width:15%;
         }
         /*pagenation*/
-   
+   		#pagination{
+   			vertical-align: middle;
+   		}
 
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
@@ -196,9 +203,14 @@
         </a>
     </div>
     <!--pagenation-->
-    <c:import url="page.jsp"></c:import>
+    <div id="pagination">
+   		 <c:import url="page.jsp"></c:import>
+    </div>
 </body>
 <script>
+
+
+
 /*category*/
 function chainSelect(current, target){
   var value1 = $(current).on('change', function(){

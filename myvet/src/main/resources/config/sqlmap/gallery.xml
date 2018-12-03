@@ -12,13 +12,13 @@
 		<result column="reg_date" property="regDate"/>		
 		<result column="view_cnt" property="viewCnt"/>
 	</resultMap>
-<!-- 	<resultMap type="galleryComment" id="galleryCommentMap"> -->
-<!-- 		<result column="comment_no" property="commentNo"/> -->
-<!-- 		<result column="gallery_no" property="galleryNo"/>		 -->
-<!-- 		<result column="commenter_no" property="commenterNo"/>		 -->
-<!-- 		<result column="comment" property="comment"/>		 -->
-<!-- 		<result column="reg_date" property="regDate"/> -->
-<!-- 	</resultMap> -->
+	<resultMap type="galleryComment" id="galleryCommentMap">
+		<result column="comment_no" property="commentNo"/>
+		<result column="gallery_no" property="galleryNo"/>		
+		<result column="commenter_no" property="commenterNo"/>		
+		<result column="comment" property="comment"/>		
+		<result column="reg_date" property="regDate"/>
+	</resultMap>
 <!-- 	<resultMap type="galleryRecommend" id="galleryRecommendMap"> -->
 <!-- 		<result column="no" property="no"/> -->
 <!-- 		<result column="gallery_no" property="galleryNo"/>		 -->
@@ -40,6 +40,7 @@
 		select *
 		  from gallery
 		 order by gallery_no desc		
+		 limit #{begin}, #{pageNum}
 	</select>
 	<select id="selectGalleryByNo" parameterType="int" resultMap="galleryMap">
 		select *
@@ -77,19 +78,19 @@
 	</select>
 	
 <!-- 	댓글 --> 
-<!-- 	<insert id="insertComment" parameterType="galleryComment"> -->
-<!-- 		insert into gallery_comment( -->
-<!-- 			gallery_no, commenter_no, comment  -->
-<!-- 		) values( -->
-<!-- 			#{galleryNo}, #{commenterNo}, #{comment} -->
-<!-- 		) -->
-<!-- 	</insert> -->
-<!-- 	<select id="selectComment" parameterType="int" resultMap="galleryCommentMap"> -->
-<!-- 		select * -->
-<!-- 		  from gallery_comment -->
-<!-- 		 where gallery_no=#{galleryNo} -->
-<!-- 		 order by comment_no desc -->
-<!-- 	</select> -->
+	<insert id="insertComment" parameterType="galleryComment">
+		insert into gallery_comment(
+			gallery_no, commenter_no, comment 
+		) values(
+			#{galleryNo}, #{commenterNo}, #{comment}
+		)
+	</insert>
+	<select id="selectComment" parameterType="int" resultMap="galleryCommentMap">
+		select *
+		  from gallery_comment
+		 where gallery_no=#{galleryNo}
+		 order by comment_no desc
+	</select>
 <!-- 	<delete id="deleteComment" parameterType="galleryComment"> -->
 <!-- 		delete  -->
 <!-- 		  from gallery_comment -->

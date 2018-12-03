@@ -8,7 +8,6 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +17,8 @@ import kr.co.codin.gallery.service.GalleryService;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.PageResult;
 
 @Controller
 @RequestMapping("gallery")
@@ -31,10 +32,13 @@ public class GalleryController{
 	private GalleryService service;
 	
 	@RequestMapping("list.do")
-	public void list(Model model) throws Exception{
+	public void list(Model model, @RequestParam(value="pageNo",defaultValue="1") int pageNo) throws Exception{
+		Page page = new Page(pageNo);
+		
 		System.out.println("list");
-		model.addAttribute("gallery", service.galleryList());
+		model.addAttribute("gallery", service.galleryList(page));
 		model.addAttribute("count",service.countGallery());
+		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery()));
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countgallery()));
 	}
 	
@@ -55,6 +59,8 @@ public class GalleryController{
 		System.out.println("detail");
 		service.updateViewCnt(galleryNo);
 		model.addAttribute("gallery",service.detailGallery(galleryNo));
+//		model.addAttribute("gallery", service.commentList(galleryNo));
+//		System.out.println("댓글조회");
 	}
 	
 	@RequestMapping("updateForm.do")
@@ -76,13 +82,21 @@ public class GalleryController{
 
 	}
 	
-//	@RequestMapping("writeComment")
-//	@ResponseBody
-//	public String writeComment(GalleryComment galleryComment,int galleryNo) throws Exception{
-//		System.out.println("writeComment");
-//		service.insertComment(galleryComment);
-//		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"detail.do?tipNo="+galleryNo;
-//	}
+	@RequestMapping("writeComment.do")
+	@ResponseBody
+	public String writeComment(GalleryComment galleryComment,int galleryNo) throws Exception{
+		System.out.println("writeComment");
+		service.insertComment(galleryComment);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"detail.do?tipNo="+galleryNo;
+	}
+	
+	@RequestMapping("commentList.do")
+	@ResponseBody
+	public List<GalleryComment> commentList(int galleryNo) throws Exception{
+		System.out.println("댓글조회 Controller");
+		
+		return service.commentList(galleryNo);
+	}
 	
 	
 }

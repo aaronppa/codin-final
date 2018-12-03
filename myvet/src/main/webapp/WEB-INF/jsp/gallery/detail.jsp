@@ -77,17 +77,17 @@
     }
 
     /*swiper*/
-    html, body {
-      position: relative;
-      height: 100%;
-    }
-    body {
-      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      color:#000;
-      margin: 0;
-      padding: 0;
-    }
+/*     html, body { */
+/*       position: relative; */
+/*       height: 100%; */
+/*     } */
+/*     body { */
+/*       font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */
+/*       font-size: 14px; */
+/*       color:#000; */
+/*       margin: 0; */
+/*       padding: 0; */
+/*     } */
     .swiper-container {
       width: 100%;
       height: 300px;
@@ -242,6 +242,9 @@
     .comment-actions li:hover {
     color: #0095ff;
     }
+    .active{
+    	color: red;
+    }
 
 
     </style>
@@ -257,10 +260,10 @@
                 <!-- Swiper -->
                 <div class=" swiper-container gallery-top">
                         <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic1.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic2.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic3.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic4.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
 
                         </div>
                         <!-- Add Arrows -->
@@ -269,18 +272,18 @@
                     </div>
                     <div class="swiper-container gallery-thumbs">
                         <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic1.jpg"></div>
-                                <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic2.jpg"></div>
-                                <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic3.jpg"></div>
-                                <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic4.jpg"></div>
+                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
+                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
+                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
+                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
                         </div>
                     </div>
                     <div class="pet" style="margin-left: 10%; text-align: center;">
                         <span data-toggle="tooltip" title="PONY">
-                            <img src="../images/pony01.jpg" id="pet-img" class="rounded-circle" style="width:80px;height:80px;margin-right: 10px;">
+                            <img src="/myvet/resources/img/gall&tip/pony01.jpg" id="pet-img" class="rounded-circle" style="width:80px;height:80px;margin-right: 10px;">
                         </span>
                         <span data-toggle="tooltip" title="PODOL">
-                            <img src="../images/pony02.jpg" id="pet-img" class="rounded-circle" style="width:80px;height:80px;">
+                            <img src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img" class="rounded-circle" style="width:80px;height:80px;">
                         </span>
                     </div>
                 </div>
@@ -288,7 +291,7 @@
                 <div class="col-md-6" id="comment"> 
                         <div class="detail-content"  >
                             <br>
-                            <img src="../images/pic2.jpg" class="rounded-circle" id="writer-img">
+                            <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                             
                             <span style="font-weight:bolder">복순이</span>
                             <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall" style="font-size:20px;float:right;margin-right:2%;cursor:pointer;">삭제</a>
@@ -309,7 +312,7 @@
                             <div id="content">${gallery.content}</div>
                             <br>
                             <!--유저 댓글-->
-                            <!-- <img src="../images/pic3.jpg" class="rounded-circle" id="user-img">
+                            <!-- <img src="/myvet/resources/img/gall&tip/pic3.jpg" class="rounded-circle" id="user-img">
                             <span style="font-weight:bolder">복돌이</span>
                             <br>
                             <br>
@@ -317,37 +320,42 @@
                             <hr> -->
                             <div class="comment">
                                     <div class="comments">
-                                        <div class="comment-wrap">
+                                        <div class="comment-wrap writeComment">
                                             <div class="photo">
-                                                    <img src="../images/pic2.jpg" id="writer-pic" class="rounded-circle" >
+                                                    <img src="/myvet/resources/img/gall&tip/pic2.jpg" id="writer-pic" class="rounded-circle" >
                                                 </div>
-                                            <div class="comment-block">
-                                                <form action="">
-                                                    <textarea name="" id="" cols="30" rows="3" placeholder="Add comment..."></textarea>
-                                                </form>
+                                                <!-- 댓글 등록 -->
+                                            	<div class="comment-block">
+                                                <input type="hidden" id="commenterNo" name="commenterNo" value="8">
+                                                <input type="hidden" id="galleryNo" name="galleryNo" value="${gallery.galleryNo}">
+                                                    <textarea name="comment" id="input-comment" cols="30" rows="3" placeholder="Add comment..."></textarea>
+                                                	<span id="counter">###</span>
                                                 </div>
                                             </div>
                                             <ul class="comment-actions">
                                                 <li class="registration">등록</li>
                                             </ul>
-                                    <!-- 댓글 목록-->
+									<!-- 댓글 수 -->
                                     <i class="far fa-comments" style="margin-left: 5%; font-size: 20px;">&nbsp;458</i>
-                                        <div class="comment-wrap">
-                                            <div class="photo">
-                                                <!-- <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')"></div> -->
-                                                <img src="../images/pony01.jpg" id="user-pic" class="rounded-circle" >
-                                            </div>
-                                            <div class="comment-block">
-                                                <p class="comment-text">개같네여</p>
-                                                <div class="bottom-comment">
-                                                    <div class="comment-date">2018-08-12 18:32:09</div>
-                                                    <ul class="comment-actions">
-                                                        <li class="complain">삭제</li>
-                                                        <li class="reply">신고</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <!-- 댓글 목록-->
+                                     
+                                        <div class="comment-wrap comment-list" id="comment-list">
+<!--                                             <div class="photo"> -->
+<!--                                                 <img src="/myvet/resources/img/gall&tip/pony01.jpg" id="user-pic" class="rounded-circle" > -->
+<!--                                             </div> -->
+<!--                                             <div class="comment-block"> -->
+<!--                                                 <p class="comment-text">개같네여</p> -->
+<!--                                                 <div class="bottom-comment"> -->
+<!--                                                     <div class="comment-date">2018-08-12 18:32:09</div> -->
+<!--                                                     <ul class="comment-actions"> -->
+<!--                                                         <li class="complain">삭제</li> -->
+<!--                                                         <li class="reply">신고</li> -->
+<!--                                                     </ul> -->
+<!--                                                 </div> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+                                        
+                                        <!-- 댓글목록 끝 -->
                                     </div>
                                 </div>
                         </div>
@@ -390,9 +398,70 @@
         swiper: galleryThumbs,
       },
     });
+    
+	$(function typing() {
+	      $('#input-comment').keyup(function (e){
+	          var content = $(this).val();
+	          $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
+	          $('#counter').html(content.length + '/300');
+	      });
+	      $('#input-comment').keyup();
+	});
+    
+    //댓글 글자 입력수 끝
 
+    //댓글 등록
+    $('.registration').click(function(){
+    	
+    	$.ajax({
+    		url : '/myvet/gallery/writeComment.do',	
+    		data : "galleryNo="+$('#galleryNo').val()+"&commenterNo="+$('#commenterNo').val()+"&comment="+$('#input-comment').val()
+    	}).done(function(){
+    		console.log('댓글 등록!')
+    		$('#input-comment').val('');
+    	})
+    })
+    
+    //댓글 조회
+    function list(){	
+	    $.ajax({
+	    	url : '/myvet/gallery/commentList.do',
+	    	type : 'post',
+	    	data: {galleryNo : $('#galleryNo').val()},
+	    	dataType : 'json'
+	    }).done(function(result){
+	    	console.log('댓글 불러오기')
+	    	for(let i=0; i < result.length; i++){
+	    		let likeRecommend = "", dislikeRecommend = "";
+			$('#comment-list').append(
+				//작성자 이미지
+				"<div class='photo'>"
+				+"<div class='commenter-pic'><img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle' width='60px' height='60px'></div>"
+				+"<div class='comment-block'/>"
+				//댓글내용
+				+"<p class='comment-text'>"+result[i].comment+"</p>"
+				//댓글 정보 폼
+				+"<div class='bottom-comment'>"
+				//댓글 작성일
+				+"<div class='comment-date'>"+result[i].regDate+"</div>"
+				//댓글 삭제, 신고
+				+"<ul class='comment-actions'>"
+				+"<li class='delete-comment'>삭제</li>"
+				+"<li class='report-comment'>신고</li>"
+				+"</ul>"
+				+"</div>"
+				+"</div>"
+			);
+	    	}
+	    })
+    }
+    
+    
+    
+    
+    
     //tooltip
-    $('[data-toggle="tooltip"]').tooltip()
+//     $('[data-toggle="tooltip"]').tooltip()
 
     </script>
 </body>

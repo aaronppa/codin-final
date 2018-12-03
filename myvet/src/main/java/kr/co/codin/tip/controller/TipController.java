@@ -1,7 +1,6 @@
 package kr.co.codin.tip.controller;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,23 +8,19 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.repository.domain.FileInfo;
-import kr.co.codin.repository.domain.Member;
+import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
@@ -46,9 +41,12 @@ public class TipController {
 	
 	@RequestMapping("list.do")
 	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) throws Exception{
+		Page page = new Page(pageNo);
+		
 		System.out.println("list");
-		model.addAttribute("tip", service.tipList());
+		model.addAttribute("tip", service.tipList(page));
 		model.addAttribute("count",service.countTip());
+		model.addAttribute("pageResult", new PageResult(pageNo,service.countTip()));
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countTip()));
 	}
 	

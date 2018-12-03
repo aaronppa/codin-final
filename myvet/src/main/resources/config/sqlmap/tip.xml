@@ -53,7 +53,8 @@
 	<select id="selectTip" resultMap="tipMap">
 		select *
 		  from tip
-		 order by tip_no desc		
+		 order by tip_no desc
+		 limit #{begin}, #{pageNum}		
 	</select>
 	<select id="selectTipByNo" parameterType="int" resultMap="tipMap">
 		select *
