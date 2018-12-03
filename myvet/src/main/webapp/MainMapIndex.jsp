@@ -10,5 +10,7 @@
 <body>
 	Main 지도 접속확인
 	<a href="<c:url value='/map/map.do'/>">공지사항</a>
+	
+	<a href="<c:url value='/qna/list.do'/>">qnaList</a>
 </body>
 </html>

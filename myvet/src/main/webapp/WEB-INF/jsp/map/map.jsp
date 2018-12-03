@@ -223,6 +223,8 @@
 			
 	
 		
+			
+			
 			$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
 			for(let k = 0 ;  k < jsondata.length; k ++){
 				if(jsondata[k].hosRegister == 'N'){
@@ -251,11 +253,13 @@
 						//alert("클릭");
 						xx=jsondata[k].mapx;
 						yy=jsondata[k].mapy;
+						
+						
 						MainMap(xx, yy, jsondata);
 						
-						
-						
 					})
+				
+					
 				}
 			}
 			
@@ -289,7 +293,7 @@
 			
 		
 								
-								 myaddr = new naver.maps.Point(xx, yy);//마커중심 좌표 설정(현재위치)
+							
 							//	console.log(x);
 							//	console.log(y);
 							//	console.log("273:"+xx);
@@ -305,38 +309,28 @@
 								
 
 							//	if (xx == null && yy == null) {
-									console.log("if")
+									//console.log("sdfghif")
 									centerXY = new naver.maps.Point(x, y);//중심점으로 이동
 							/* 	} else {
 									console.log("else");
 									centerXY = new naver.maps.Point(xx, yy);
 								} */
-								$("#gotoCenter").on("click", function(e) {
-									console.log("ㅇ의느일ㄴㅇ르");
-									  centerPositionX;
-									 centerPositionY;
-									 console.log(centerPositionX);
-									 console.log(centerPositionY);
-									 
-									 //centerXY = new naver.maps.Point(centerPositionX, centerPositionY);
-									// MainMap(centerPositionX, centerPositionY, jsondata);
-									 myaddr = new naver.maps.Point(centerPositionX, centerPositionY);
-									 //centerXY=new naver.maps.Point(centerPositionX, centerPositionY, jsondata); 
-										//xx=centerPositionX;
-										//yy=centerPositionY;
-									
-								
-								})
-								
-								
 							
+								
+								//-----------------------------------------------------------------------------
+								
+								//여기서부터 작업핡서
+							if(centerPositionX != null && centerPositionY != null){
+								console.log("fififififififi")
 								map.setCenter(centerXY); // 검색된 좌표로 지도 이동
 
 								//    console.log(myaddr);
 
 								// 마커 표시
 								
-								 marker = new naver.maps.Marker(
+								myaddr = new naver.maps.Point(centerPositionX, centerPositionY);//마커중심 좌표 설정(현재위치)
+								
+								marker = new naver.maps.Marker(
 										{
 											position : myaddr,
 											icon : {
@@ -354,7 +348,25 @@
 												} */
 											alert("중심좌표입니다");
 										});
+							}else{
+								console.log("elelelelelelele")
+								map.setCenter(centerXY); // 검색된 좌표로 지도 이동
 
+								//    console.log(myaddr);
+
+								// 마커 표시
+								
+								hosaddr = new naver.maps.Point(x, y);//마커중심 좌표 설정(현재위치)
+								
+							
+							}
+								
+								
+								
+								
+								
+								
+								
 								let MarkerClicklist = new Array();
 
 								//병원의 마크점 생성
