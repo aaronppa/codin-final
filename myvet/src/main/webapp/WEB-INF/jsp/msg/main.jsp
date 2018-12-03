@@ -8,6 +8,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Messenger</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script
+src="https://code.jquery.com/jquery-3.3.1.js"
+integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+crossorigin="anonymous"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/admin/table.css"/>">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
+<script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
+<script src="<c:url value='/resources/js/waitme/common-waitme.js'/>"></script>
 <style>
 body{
 	margin: 0;
@@ -29,10 +39,10 @@ body{
 }
 
 .headerblock{
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding-top: 11px;
+    padding-bottom: 11px;
     margin: auto;
-    width: 280px;
+    width: 273px;
     text-align: center;
 }
 
@@ -79,7 +89,7 @@ ul{
                 <div class="headerblock">
                     <i class="fas fa-cog fa-lg"></i>
                     <h3>Messenger</h2>
-                    <i class="far fa-edit fa-lg"></i>
+                    <i class="far fa-edit fa-lg" id="writemsgbtn"></i>
                 </div>
             </div>
             <div class="left-panel">
@@ -93,8 +103,18 @@ ul{
         </div>
         <div class="main-subcontainer">
             <div class="top-main header"></div>
+            <div class="recipients-input">
+            	<form action="">
+            		
+            	</form>
+            </div>
             <div class="main-panel"></div>
         </div>
     </div>
+<script>
+$("#writemsgbtn").on("click", function(){
+	
+})
+</script>
 </body>
 </html>

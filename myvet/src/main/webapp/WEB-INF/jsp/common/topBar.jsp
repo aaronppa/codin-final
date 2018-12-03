@@ -41,24 +41,29 @@
                 <li>
                     <a href="#">커뮤니티</a>
                     <ul class="menu vertical">
-                    <li><a href="<c:url value='/tip/list.do'/>">개꿀팁이냥</a></li>
-                    <li><a href="#">5959 내시끼</a></li>
-                    <li><a href="#">QnA 게시판</a></li>
-                    <li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
+	                    <li><a href="<c:url value='/tip/list.do'/>">개꿀팁이냥</a></li>
+	                    <li><a href="#">5959 내시끼</a></li>
+	                    <li><a href="#">QnA 게시판</a></li>
+	                    <li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
                     </ul>
                 </li>
                 <!-- <li><a href="#">Three</a></li> -->
             </ul>
         </div>
         <div class="top-bar-right">
-            <ul class="menu">
+            <ul class="dropdown menu" data-dropdown-menu>
                 <li><a href="<c:url value='/msg/main.do'/>">메신저</a></li>
-                <li><a href="#">마이페이지</a></li>
                 <li><a href="#">즐겨찾는 병원</a></li>
                 <li><a href="<c:url value='/member/loginForm.do'/>">로그인</a></li>
                 <li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
                 <li><a href="<c:url value='/member/signup.do'/>">회원가입</a></li>
                 <li><a href="<c:url value='/admin/main.do'/>">관리자</a></li>
+                <li>
+                <a href="#">${user.memberNickname}</a>
+                 <ul class="menu vertical">
+	                    <li><a href="#">마이페이지</a></li>
+	             </ul>
+                </li>
             </ul>
         </div>
     </div>
