@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -133,6 +134,8 @@
     </style>
 </head>
 <body>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<form action="<c:url value='/gallery/update.do'/>" method="post">
     <div class="container">
         <div class="row">
             <div class="col-sm-7" >
@@ -182,21 +185,28 @@
                     <hr>
                     <br>
                     <!--제목-->
-                    <textarea cols="50" rows="1" placeholder="제목을 입력..."></textarea>
+                    <textarea cols="50" rows="1" name="title" placeholder="제목을 입력...">${gallery.title}</textarea>
                     <br>
                     <br>
                     <!--내용-->
-                    <textarea cols="50" rows="5" placeholder="내용을 입력..."></textarea>
+                    <textarea cols="50" rows="5" name="content" placeholder="내용을 입력...">${gallery.content}</textarea>
                 </div>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <a href="./list.html">
-                    <button type="button" class="btn btn-secondary">목록</button>
+                <br>
+<!--                 <div class="btn-group" role="group" aria-label="Basic example"> -->
+				<div style="margin-left:32%;">
+                  <a href="<c:url value='/gallery/list.do'/>">
+                    <button type="button" class="btn btn-secondary" style="margin-right:3%;">목록</button>
                   </a>
-                    <button type="button" class="btn btn-secondary">제출</button>
-                </div>
+                  <a href="<c:url value='/gallery/detail.do?galleryNo=${gallery.galleryNo}'/>">
+                    <button type="button" class="btn btn-secondary" style="margin-right:3%;">수정취소</button>
+                  </a>
+                    <input class="btn btn-primary" type="submit" value="제출">
+				</div>
+<!--                 </div> -->
             </div>
         </div>
     </div>
+</form>
 
   <!-- Swiper JS -->
   <script src="../dist/js/swiper.min.js"></script>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.GalleryMapper">
+	<resultMap type="gallery" id="galleryMap">
+		<result column="gallery_no" property="galleryNo"/>		
+		<result column="board_code" property="boardCode"/>
+		<!-- 작성자 -->		
+		<result column="writer_no" property="writerNo"/>		
+		<result column="title" property="title"/>		
+		<result column="content" property="content"/>		
+		<result column="reg_date" property="regDate"/>		
+		<result column="view_cnt" property="viewCnt"/>
+	</resultMap>
+<!-- 	<resultMap type="galleryComment" id="galleryCommentMap"> -->
+<!-- 		<result column="comment_no" property="commentNo"/> -->
+<!-- 		<result column="gallery_no" property="galleryNo"/>		 -->
+<!-- 		<result column="commenter_no" property="commenterNo"/>		 -->
+<!-- 		<result column="comment" property="comment"/>		 -->
+<!-- 		<result column="reg_date" property="regDate"/> -->
+<!-- 	</resultMap> -->
+<!-- 	<resultMap type="galleryRecommend" id="galleryRecommendMap"> -->
+<!-- 		<result column="no" property="no"/> -->
+<!-- 		<result column="gallery_no" property="galleryNo"/>		 -->
+<!-- 		<result column="member_no" property="memberNo"/>		 -->
+<!-- 		<result column="recommend" property="recommend"/> -->
+<!-- 	</resultMap> -->
+<!-- 	<resultMap id="fileMap" type="fileInfo"> -->
+<!-- 		<result column="file_id" property="fileId"/>파일번호(auto) -->
+<!-- 		<result column="board_code" property="boardCode"/>게시판 테이블 고유 번호(FK(code_list(board_code))) -->
+<!-- 		<result column="board_no" property="boardNo"/>각 테이블 라인 아이템 번호 -->
+<!-- 		<result column="ori_name" property="oriName"/> -->
+<!-- 		<result column="sys_name" property="sysName"/> -->
+<!-- 		<result column="file_path" property="filePath"/> -->
+<!-- 		<result column="file_size" property="fileSize"/> -->
+<!-- 	</resultMap> -->
+
+	
+	<select id="selectGallery" resultMap="galleryMap">
+		select *
+		  from gallery
+		 order by gallery_no desc		
+	</select>
+	<select id="selectGalleryByNo" parameterType="int" resultMap="galleryMap">
+		select *
+		  from gallery
+		 where gallery_no = #{galleryNo}
+	</select>
+	<insert id="insertGallery" parameterType="gallery">
+		insert into gallery(
+		board_code, writer_no, title, content
+			)values(
+		#{boardCode}, #{writerNo}, #{title}, #{content}
+		)
+	</insert>
+	<update id="updateGallery" parameterType="gallery">
+		update gallery
+		   set title = #{title},
+		       content = #{content}
+		 where gallery_no = #{galleryNo}
+	</update>
+	<delete id="deleteGallery" parameterType="int">
+		delete 
+		  from gallery
+		 where gallery_no=#{galleryNo}
+	</delete>
+	
+	<update id="updateViewCnt" parameterType="int">
+		update gallery
+		   set view_cnt = view_cnt+1
+		 where gallery_no = #{galleryNo}
+	</update>
+	
+	<select id="countGallery" resultType="int">
+		select count(*)
+		  from gallery
+	</select>
+	
+<!-- 	댓글 --> 
+<!-- 	<insert id="insertComment" parameterType="galleryComment"> -->
+<!-- 		insert into gallery_comment( -->
+<!-- 			gallery_no, commenter_no, comment  -->
+<!-- 		) values( -->
+<!-- 			#{galleryNo}, #{commenterNo}, #{comment} -->
+<!-- 		) -->
+<!-- 	</insert> -->
+<!-- 	<select id="selectComment" parameterType="int" resultMap="galleryCommentMap"> -->
+<!-- 		select * -->
+<!-- 		  from gallery_comment -->
+<!-- 		 where gallery_no=#{galleryNo} -->
+<!-- 		 order by comment_no desc -->
+<!-- 	</select> -->
+<!-- 	<delete id="deleteComment" parameterType="galleryComment"> -->
+<!-- 		delete  -->
+<!-- 		  from gallery_comment -->
+<!-- 		 where commenter_no = #{commenterNo} -->
+<!-- 		   and comment_no = #{commentNo} -->
+<!-- 	</delete> -->
+<!-- 	<update id="updateComment" parameterType="galleryComment"> -->
+<!-- 		update gallery_comment  -->
+<!-- 		   set comment = #{comment}   -->
+<!-- 		 where commenter_no = #{commenterNo} -->
+<!-- 		   and comment_no = #{commentNo} -->
+<!-- 	</update> -->
+<!-- 	<select id="countComment" parameterType="int" resultType="int"> -->
+<!-- 		select count(*) -->
+<!-- 		  from gallery_comment -->
+<!-- 		 where gallery_no=#{galleryNo} -->
+<!-- 	</select> -->
+	<!-- 추천 -->
+<!-- 	<select id="selectRecommend" parameterType="galleryRecommend" resultMap="galleryRecommendMap"> -->
+<!-- 		select * -->
+<!-- 		  from gallery_recommend -->
+<!-- 		 where gallery_no = #{galleryNo} -->
+<!-- 	</select> -->
+<!-- 	<insert id="insertRecommend" parameterType="galleryRecommend" > -->
+<!-- 		insert into gallery_recommend( -->
+<!-- 			gallery_no, member_no, recommend -->
+<!-- 		)values( -->
+<!-- 			#{galleryNo}, #{memberNo}, #{recommend} -->
+<!-- 		) -->
+<!-- 	</insert> -->
+<!-- 	<delete id="deleteRecommend" parameterType="galleryRecommend"> -->
+<!-- 		delete  -->
+<!-- 		  from gallery_recommend -->
+<!-- 		 where gallery_no = #{galleryNo} -->
+<!-- 		 	   member_no = #{memberNo} -->
+<!-- 	</delete> -->
+	
+	
+<!-- 	file -->
+<!-- 	<insert id="uploadFile" parameterType="fileInfo"> -->
+<!-- 		insert into file_info( -->
+<!-- 			board_code, board_no, ori_name, sys_name, file_path, file_size -->
+<!-- 		)values( -->
+<!-- 			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize} -->
+<!-- 		) -->
+<!-- 	</insert> -->
+<!-- 	<delete id="deleteFile" parameterType="file"> -->
+<!-- 		delete  -->
+<!-- 		  from file -->
+<!-- 		 where sys_name = #{sysName} -->
+<!-- 		 	   file_path = #{filePath} -->
+<!-- 	</delete>   -->
+	  
+</mapper>

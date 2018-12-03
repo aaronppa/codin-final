@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -245,6 +247,8 @@
     </style>
 </head>
 <body>
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+
     <div class="container-fluid">
         <div class="row">
          
@@ -287,16 +291,23 @@
                             <img src="../images/pic2.jpg" class="rounded-circle" id="writer-img">
                             
                             <span style="font-weight:bolder">복순이</span>
+                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall" style="font-size:20px;float:right;margin-right:2%;cursor:pointer;">삭제</a>
+                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall" style="font-size:20px;float:right;margin-right:5%;cursor:pointer;">수정</a>
                             <br>
                             <br>
                             <i class="fas fa-heart" style="color:red;">&nbsp;123</i> 
+                            <span style="margin-left:10px;">view : ${gallery.viewCnt}</span>
                             <!-- <i class="far fa-comments" style="margin-left: 5%;">&nbsp;458</i> -->
-                            <i class="far fa-clock"style="margin-left: 70%;">&nbsp;2018-08-12 14:52:34</i>
+                            <i class="far fa-clock"style="margin-left: 70%;">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
                             <hr>
                             <i class="fas fa-exclamation-triangle" style="margin-left: 88%;">신고하기</i>
                             <br>
                             <br>
-                            상쾌한 오후
+                            <div id="title" style="font-size:20px;"><strong>${gallery.title}</strong></div>
+                            <br>
+                            <br>
+                            <div id="content">${gallery.content}</div>
+                            <br>
                             <!--유저 댓글-->
                             <!-- <img src="../images/pic3.jpg" class="rounded-circle" id="user-img">
                             <span style="font-weight:bolder">복돌이</span>
@@ -337,27 +348,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
-                                        <div class="comment-wrap">
-                                            <div class="photo">
-                                                    <img src="../images/free.jpg" id="user-pic" class="rounded-circle" >
-                                                </div>
-                                            <div class="comment-block">
-                                                <p class="comment-text">읭읭</p>
-                                                <div class="bottom-comment">
-                                                    <div class="comment-date">2018-08-12 12:32:09</div>
-                                                    <ul class="comment-actions">
-                                                        <li class="complain">삭제</li>
-                                                        <li class="reply">신고</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                         </div>
                     </div>
-                </div>      
+                </div>
+             <a href="<c:url value='/gallery/list.do'/>">
+             <button style="float:right;">목록</button>
+             </a>         
         </div>
     </div>
 

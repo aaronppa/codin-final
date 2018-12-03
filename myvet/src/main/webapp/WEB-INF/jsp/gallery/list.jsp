@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,6 +207,8 @@
 
     </style>
     <body>
+       	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+    
         <!--검색-->
         <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -220,37 +223,20 @@
                 <input type="text" class="input-search" placeholder="search">
                 <button type="button" class="btn btn-outline">검색</button>
         </div>
+    <div id="galleryCount" style="float:right;">전체 ${count } 개</div>
     <br>
+    
     <table>
-    <tr>
-        <td>
-            <!--공지-->
-            <!-- <div class="post-it">
-                <a class="sticky taped">
-                    <strong>PET공지사항</strong><br>
-                    요즘 날씨가 많이 춥습니다. <br>
-                    내 마음도 춥습니다.
-                </a>   
-            </div>  
-        </td>
-            <td>
-                <div class="post-it">
-                    <a class="sticky taped">
-                        <strong>PET공지사항</strong><br>
-                        요즘 날씨가 많이 춥습니다. <br>
-                        내 마음도 춥습니다.
-                    </a>
-                </div> -->
-            </td>
-    </tr>
-    <tr>
-        <td>
             <!-- 게시글-->
+    <c:forEach var="g" items="${gallery}" varStatus="loop">
+    <c:if test="${loop.count % 3 == 1}">
+    	<tr>
+    </c:if>
+        <td>
             <br>
-            
             <div class="card" style="width: 18rem;">
                     <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                    <a href="./detail.html">
+                    <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}'/>">
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -283,9 +269,10 @@
                             <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
                                     <i class="fas fa-heart">123</i>
                                     <i class="fas fa-comments">54</i>
+                                    
                                 </div>
                                 <div class="card-content" >
-                                    <p class="card-title">CuteDog </p>
+                                    <p class="card-title">${g.title } </p>
                                     <span data-toggle="tooltip" title="포니, 포돌이">
                                         <i class="fas fa-dog" style="font-size: 20px;"></i>
                                     </span>
@@ -296,66 +283,57 @@
                         </div>
                     </div>
                 </td>
-                <td>
+             <c:if test="${loop.count % 3 == 0}">
+             </tr>
+           	</c:if>
+           </c:forEach>
+           <c:if test="${gall.size() % 3 != 0}">
+           </tr>
+           </c:if>
+<!--                 <td> -->
                 <!-- 게시글-->
-                <br>
-                <div class="card" style="width: 18rem;">
-                        <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                        <a href="./detail.html">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img class="d-block w-100" src="../images/test2.jpg" alt="First slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="../images/test1.jpg" alt="Second slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="../images/test4.jpg" alt="Third slide">
-                                    </div>
-                                </div>
-                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-                        </a>
-                    <div class="card-body">
-                        <div class="etc">
-                            <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
-                                    <i class="fas fa-heart">123</i>
-                                    <i class="fas fa-comments">54</i>
-                                </div>
-                                <div class="card-content" >
-                                    <p class="card-title">CuteDog </p>
-                                    <span data-toggle="tooltip" title="포니, 포돌이">
-                                        <i class="fas fa-dog" style="font-size: 20px;"></i>
-                                    </span>
-                                    <p class="card-writer">by Pony</p>
-                                    <p class="card-reg-date">2018-12-26</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<!--                 <br> -->
+<!--                 <div class="card" style="width: 18rem;"> -->
+<!--                         <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> -->
+<!--                         <a href="./detail.html"> -->
+<!--                             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> -->
+<!--                                 <ol class="carousel-indicators"> -->
+<!--                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li> -->
+<!--                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li> -->
+<!--                                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> -->
+<!--                                 </ol> -->
+<!--                                 <div class="carousel-inner"> -->
+<!--                                     <div class="carousel-item active"> -->
+<!--                                         <img class="d-block w-100" src="../images/test2.jpg" alt="First slide"> -->
+<!--                                     </div> -->
+<!--                                     <div class="carousel-item"> -->
+<!--                                         <img class="d-block w-100" src="../images/test1.jpg" alt="Second slide"> -->
+<!--                                     </div> -->
+<!--                                     <div class="carousel-item"> -->
+<!--                                         <img class="d-block w-100" src="../images/test4.jpg" alt="Third slide"> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> -->
+<!--                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+<!--                                     <span class="sr-only">Previous</span> -->
+<!--                                 </a> -->
+<!--                                 <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> -->
+<!--                                     <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+<!--                                     <span class="sr-only">Next</span> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </a> -->
+<!--                     </div> -->
                 </td>
             </tr>
         </table>
     <br><br><br>
         <!-- 글쓰기 -->
-        <a href="./write.html">
             <div class="write-btn-form">
-                <button type="button" class="btn btn-outline write-btn">글쓰기</button>
+            <a href="<c:url value='/gallery/writeForm.do'/>">
+           	    <button type="button" class="btn btn-outline write-btn">글쓰기</button>
+            </a>
             </div>
-        </a>
         <br>
         
         <!--페이징-->

@@ -19,9 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <style>
-        body {
-            padding:30px 30px;
-        }
+/*         body { */
+/*             padding:30px 30px; */
+/*         } */
 
         /*category*/
         @import "compass/css3";
@@ -170,7 +170,7 @@
 	            <tr style="text-align: center;">
 	                <th scope="row"> ${t.tipNo} </th>
 	                <td>Mark</td>
-	                <td><a href="<c:url value='/tip/detail.do?tipNo=${t.tipNo}'/>">${t.title }</a></td>
+	                <td><a href="<c:url value='/tip/detail.do?tipNo=${t.tipNo}'/>">${t.title }</a><span id="countComment"></span></td>
 					<c:if test="${t.categoryCode eq 1}">
 		                <td>건강</td>
 					</c:if>
@@ -215,6 +215,17 @@ function chainSelect(current, target){
 size = chainSelect('select#size', '#color');
 color = chainSelect('select#color', '#qty');
 qty = chainSelect('select#qty', '#submit');
+
+
+// $.ajax({
+// 	url : "/myvet/tip/countComment.do",
+// 	type : "post",
+// 	data : {tipNo : $("#tipNo").val()}
+// }).done(function(result){
+// 	console.log("countComment-success : "+ $("#tipNo").val())
+// 	$("#countComment").show(result)
+// })
+
 
 $('#addToCart').submit(function(){
   event.preventDefault();

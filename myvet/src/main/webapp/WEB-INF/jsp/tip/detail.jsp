@@ -27,6 +27,9 @@
     
 
     <style>
+    .container{
+    	background:white;
+    }
     .notes-wrapper .saver-wrap {
 	  display: flex;
 	  align-items: center;
@@ -44,31 +47,31 @@
   outline: none;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  padding: 10px 0;
-  margin: 0;
-  background-color: #eee;
-  /* background-color: none; */
-  font-family: 'Source Sans Pro';
-  padding-bottom: 50px;
-  overflow: none;
+/* html, body { */
+/*   width: 100%; */
+/*   height: 100%; */
+/*   padding: 10px 0; */
+/*   margin: 0; */
+/*   background-color: #eee; */
+/*   /* background-color: none; */ */
+/*   font-family: 'Source Sans Pro'; */
+/*   padding-bottom: 50px; */
+/*   overflow: none; */
   
-}
+/* } */
 
 .notes-wrapper {
-  max-width: 1000px;
-  width: 100%;
-  margin: 0 auto;
-  height: 700px;
-  background-color: #fff; 
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  position: relative;
-  z-index: 999;
-  overflow-y: scroll;
-  overflow-x:hidden;
+/*   max-width: 1400px; */
+/*   width: 100%; */
+/*   margin: 0 auto; */
+/*   height: 700px; */
+/*   background-color: #fff;  */
+/*   border-radius: 5px; */
+/*   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
+/*   position: relative; */
+/*   z-index: 999; */
+/*   overflow-y: scroll; */
+/*   overflow-x:hidden; */
 }
 
 .notes-wrapper .saver-wrap {
@@ -81,12 +84,12 @@ html, body {
 .notes-wrapper .saver-wrap .notes-dot {
   width: 10px;
   height: 10px;
-  background-color: #D1D3D6;
+/*   background-color: #D1D3D6; */
   border-radius: 50px;
   transition: .1s ease-in-out;
 }
 .notes-wrapper .saver-wrap .notes-dot.saved {
-  background-color: #66cc8f;
+/*   background-color: #66cc8f; */
   transition: .1s ease-in-out;
   transition-delay: 2.10s;
 }
@@ -154,7 +157,7 @@ html, body {
   margin: 15px 5%;
 }
 .notes-wrapper .comment {
-  height: 60px;
+/*   height: 60px; */
   line-height: 60px;
   text-align: left;
   font-size: 13px;
@@ -185,7 +188,7 @@ html, body {
   text-align: center;
   
   height: auto;
-  background-color: #fff;
+/*   background-color: #fff; */
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   /* position: relative; */
@@ -253,12 +256,12 @@ html, body {
 }
 
 /*Comment*/
-html, body {
-  background-color: #f0f2fa;
-  font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-  color: #555f77;
-  -webkit-font-smoothing: antialiased;
-}
+/* html, body { */
+/* /*   background-color: #f0f2fa; */ */
+/*   font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; */
+/*   color: #555f77; */
+/*   -webkit-font-smoothing: antialiased; */
+/* } */
 
 input, textarea {
   outline: none;
@@ -403,11 +406,34 @@ p {
 .active {
   color: red;
 }
+
+.comActive{
+	color: red;
+	transition:.5s;
+}
+<!--신고-->
+
+.report{
+}
+.report:hover{
+	color:red;
+}
+
+#delete-update{
+	text-align: right;
+	padding-right: 30px;
+}
+
+#delete-update > span > a {
+	width: 100px;
+}
+
     </style>
 </head>
    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 
-<body style="overflow-y:hidden; overflow-y:hidden;">
+<body>
+	<div class="container">
     <div class="notes-wrapper">
             <div class="saver-wrap" contenteditable="false">
                 <div class="notes-dot" contenteditable="false"></div>
@@ -426,13 +452,34 @@ p {
            		<c:if test="${tip.categoryCode eq 3 }">
            			<i style="margin-left:5%;">category : 용품</i>
            		</c:if>
-                <i class="fas fa-heart" style="margin-left: 5%;color:red;">&nbsp;123</i> 
+                <i class="fas fa-heart" id="tipRecomCnt" style="margin-left: 5%;color:red;">&nbsp;${countRecomment}</i> 
                 <i class="far fa-eye" style="margin-left: 5%;">&nbsp; ${tip.viewCnt}</i>
-                <i class="far fa-clock"style="margin-left: 34%;">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
+                <i class="far fa-clock"style="margin-left: 5%;">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
               </div>
-		  <div class="report" style="text-align: right; font-size: 15px;">
-               <i class="fas fa-exclamation-triangle" >신고하기</i>
-		  </div>          
+		  <div class="report" data-toggle="modal" data-target="#exampleModal" style="text-align: right;font-size: 15px; padding-right: 30px">
+               <i class="fas fa-exclamation-triangle" id="tipReport" style="cursor:pointer">신고하기</i>
+		  </div>
+		  <!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		  <!-- End Madal -->          
             <div class="title" aria-placeholder="title..">
 				${tip.title }
             </div>
@@ -443,31 +490,34 @@ p {
             </span>
           <!-- 좋아요,싫어요 -->
 			 <div class="rating" style="text-align: center;">
+			 <input type="hidden" name="memberNo" id="memberNo" value="8">
+			 <input type="hidden" name="recommend" id="recommend" value="${recom}">
 			  <!-- Thumbs up -->
 			  <div class="like grow">
-			    <i class="fa fa-thumbs-up fa-3x like" aria-hidden="true"></i>
+			    <i id="like" class="fa fa-thumbs-up fa-3x like <c:if test='${recom == 1}'>active</c:if>"
+			     aria-hidden="true" data-like=""></i>
 			  </div>
 			  <!-- Thumbs down -->
 			  <div class="dislike grow">
-			    <i class="fa fa-thumbs-down fa-3x like" aria-hidden="true"></i>
+			    <i id="dislike" class="fa fa-thumbs-down fa-3x dislike <c:if test='${recom == -1}'>active</c:if>" aria-hidden="true" data-dislike=""></i>
 			  </div>
 			</div>
 		  
           <!-- 삭제, 수정 -->
-            <div id="delete-update" style="text-align: center;">
-                <span data-toggle="tooltip" title="LIST" style="margin-left: 60px;">
-	                <a href="<c:url value='/tip/list.do'/>">
-	                  <i class="fas fa-list"></i>
+            <div id="delete-update">
+                <span id="list" data-toggle="tooltip" title="LIST">
+	                <a href="<c:url value='/tip/list.do'/>" class="btn btn-primary">
+	                  <strong>List</strong>
 	                </a>
                 </span>
-                <span data-toggle="tooltip" title="UPDATE" style="margin-left: 60px;">
-                   <a href="<c:url value='/tip/updateForm.do?tipNo=${tip.tipNo }'/>">
-                    <i class="fas fa-pencil-alt"></i>
+                <span id="update" data-toggle="tooltip" title="UPDATE">
+                   <a href="<c:url value='/tip/updateForm.do?tipNo=${tip.tipNo }'/>" class="btn btn-primary">
+                   		<strong>Update</strong>
                    </a>
                 </span>
-                <span data-toggle="tooltip" title="DELETE" style="margin-left: 60px;">
-	                <a href="<c:url value='/tip/delete.do?tipNo=${tip.tipNo }'/>">
-	                  <i class="fas fa-trash-alt"></i>
+                <span id="delete" data-toggle="tooltip" title="DELETE">
+	                <a href="<c:url value='/tip/delete.do?tipNo=${tip.tipNo }'/>" class="btn btn-danger">
+						<strong>Delete</strong>
 	                </a>
                 </span>
             </div>
@@ -499,19 +549,13 @@ p {
                 </div>
                 
             </div> 
+    </div>  
+     
             <br>   
   		  
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
-        //좋아요, 싫어요 토글
-		    $('.like, .dislike').on('click', function() {
-			    event.preventDefault();
-			    $('.active').removeClass('active');
-			    $(this).addClass('active');
-			});
-        
-        
-        
+
         //댓글 글자 입력수
 		$(function typing() {
 		      $('#comment').keyup(function (e){
@@ -568,7 +612,7 @@ p {
 
             reader.onloadend = function () {
                 reader.result;
-                console.log(reader.result)
+                console.log(reader.result);
                 $('.content').append('<img src="' + reader.result + '" />');
             }
 
@@ -602,8 +646,30 @@ p {
             }
         }
         
-        
+        //게시물 신고모달
+		    $(".report").click(function(){
+		        $("#exampleModal").on('hidden.bs.modal', function (e) {
+		        	  // do something...
+		        })
+	        })
+	        $(function(){
+			    $("#popbutton").click(function(){
+			        $('div.modal').modal({
+			                      remote : 'layer.html'
+			                });
+			    })
+			})
 
+
+
+
+        
+        
+        $('.report').on('click', function(){
+        	
+        })
+        
+        
         
         //댓글 등록
         	$(".commentSubmit").click(function(){
@@ -628,8 +694,10 @@ p {
 			});
 		});
 	
-        //댓글 목록
         
+        
+        
+        //댓글 목록
         
         $(function(){
         	list();
@@ -645,15 +713,24 @@ p {
         		console.log("성공 tipNo"+result);
 //         		console.log(result[1].comment)
                for (let i = 0; i < result.length; i++) {
+            	   let likeRecommend = "", dislikeRecommend = "";
+            	   if(result[i].recommend == 1){
+            		   likeRecommend = "comActive";
+            	   }else if(result[i].recommend == -1){
+            		   dislikeRecommend = "comActive";
+		     	   }
                 $(".comment-list").append(
                 "<img src='/myvet/images/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
-                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
+              	+"<button class='com-like "+likeRecommend+"' style='margin-left:65%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up' style='font-size:25px;'></i>"+"</button><button class='com-dislike "+dislikeRecommend+"' style='margin-left:5%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down' style='font-size:25px;'></i>"+"</button>"	
+            	+"<i class='fas fa-heart' style='margin-left: 5%;color:red;'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+                
+            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
                 +"<div class='comment-content'>" 
 	                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].comment+"'/>"
-	                +"<div class='comment' style='width:400px;font-size:20px;font-style:italic;' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
+	                +"<div class='comment' style='width:400px;height:auto;font-size:20px;font-style:italic;' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
               	+"</div>"
               	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
-              		+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
+              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
               	+"<hr>"
                 );
 			}
@@ -663,6 +740,114 @@ p {
         
         }
         	
+        function detail(){
+        	$.ajax({
+        		url:"/myvet/tip/detail.do",
+        		data:"tipNo=${tip.tipNo}"
+        	}).done(function(){
+        		console.log("detail!");
+        	})
+        }
+        //추천
+        
+       	$("#like").on('click',function(){
+       		
+       		var isActive = $(this).hasClass('active');
+       		$("#tipRecomCnt").remove();
+       		detail();
+       		if(isActive == true){
+       			insertRecommend(0, $('#tipNo').val());
+       		}else{
+       			insertRecommend(1, $('#tipNo').val());
+       		}
+       		$(this).toggleClass('active')
+       	})
+        
+       function insertRecommend(recommend){
+        	$.ajax({
+        		url:"/myvet/tip/insertRecommend.do",
+        		data:"tipNo=${tip.tipNo}&recommend="+recommend
+        	}).done(function(){
+        		console.log("insertRecommend-success")
+        	})
+        }
+        
+        $('#dislike').on('click',function(){
+        	var isActive = $(this).hasClass('active');
+        	$("#tipRecomCnt").remove();
+       		detail();
+       		if($(this).prev().hasClass('active')){
+       			alert('이미 좋아요를 누르셨습니다.')
+       		}
+//         	alert(isActive);
+        	if(isActive == true){
+        		insertRecommend(0, $('#tipNo').val());
+        	}else{
+        		insertRecommend(-1, $('#tipNo').val());
+        	}
+        	$(this).toggleClass('active')
+        })
+       	//댓글 추천
+       	//댓글 좋아요
+    	$('.comment-list').on('click', '.com-like', function(){
+//     		alert('com-like!')
+			var recomCnt = $('#recommendCnt'+$(this).data('comno'));
+       		var isActive = $(this).hasClass('comActive');
+//        		alert(recomCnt);
+//        		if($('.com-dislike').hasClass('comActive')){
+//        			if($(this).data('comno') == $('.com-dislike').data('comno')){       				
+//        			alert('이미 싫어요를 누르셨잖아여')
+// 				return false;
+//        			}
+// 				console.log($(this).next())
+       			if($(this).next().hasClass('comActive')){       				
+       			alert('이미 싫어요를 누르셨잖아여')
+				return false;
+       			
+			}
+       		if(isActive == true){
+       			recomCnt.text(parseInt(recomCnt.text()) - 1) ;
+       			insertCommentRecommend(0, $(this).data('comno'));
+       		}else{
+       			recomCnt.text(parseInt(recomCnt.text()) + 1) ;
+       			insertCommentRecommend(1, $(this).data('comno'));
+       		}
+       		$(this).toggleClass('comActive')
+    		
+    	})
+    	//댓글 싫어요
+       	$('.comment-list').on('click', '.com-dislike', function(){
+//     		alert('com-like!')
+			var recomCnt = $('#recommendCnt'+$(this).data('comno'));
+       		var isActive = $(this).hasClass('comActive');
+//        		alert(isActive);
+       		if($(this).prev().hasClass('comActive')){       				
+       			alert('이미 좋아요를 누르셨잖아여')
+				return false;
+       			}
+			
+			//싫어요 취소
+       		if(isActive == true){
+       			recomCnt.text(parseInt(recomCnt.text()) + 1) ;
+       			insertCommentRecommend(0, $(this).data('comno'));
+       		}else{//싫어요
+       			recomCnt.text(parseInt(recomCnt.text()) - 1) ;
+       			insertCommentRecommend(-1, $(this).data('comno'));
+       		}
+       		$(this).toggleClass('comActive')
+    		
+    	})
+	 	function insertCommentRecommend(recommend, commentNo){
+	       		console.log(recommend, commentNo)
+	    	$.ajax({
+	    		url:"/myvet/tip/insertCommentRecommend.do",
+	    		data:"commentNo="+commentNo+"&recommend="+recommend
+	    	}).done(function(){
+	    		console.log("insertCommentRecommend-success")
+	    	})
+	    }
+    
+    
         	
         	//댓글 삭제
         	$(".comment-list").on("click", ".deleteCommentBtn", function(){
@@ -688,7 +873,7 @@ p {
         		})
         	});
         
-       
+       	
         
         
        		 //수정 폼

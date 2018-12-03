@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <!--     include libraries(jQuery, bootstrap) -->
@@ -21,6 +21,12 @@
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
     <style>
+    	html,body{
+        	width:80%;
+        	margin-left: auto;
+        	margin-right: auto;
+        	background-color: none;
+    	}
         /*글제목*/
         .title{
             font:bolder;
@@ -49,7 +55,7 @@
     </style>
 </head>
 <body>
-   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+<%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
 
 
     <form action="<c:url value='/tip/update.do' />" method="post">
@@ -66,15 +72,14 @@
     <div class="information">
         <img id="writer-img" src="/myvet/images/pony01.jpg" class="rounded-circle">
         <span>PONY</span>
-        <div class="recommend">
-        </div>
     </div>
     <!-- 제목 -->
-	<div class="input-group mb-3" style="margin-left: 41%;">
+    <br>
+	<div class="input-group mb-3" style="width:60%; margin-left: 23%;">
 	  <div class="input-group-prepend">
 	    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
 	  </div>
-	  <input name="title" id="title" type="text" style="width:300px"class="form-control" aria-label="Sizing example input" value="${tip.title}" aria-describedby="inputGroup-sizing-default">
+	  <input name="title" id="title" type="text" class="form-control" aria-label="Sizing example input" value="${tip.title}" aria-describedby="inputGroup-sizing-default">
 		<select name="categoryCode" class="categoryCode">
 			<option selected value="">Category</option>
 			<option value="1">건강</option>
@@ -85,10 +90,11 @@
 	<!-- 카테고리 -->
 	
     <hr>
-        <div style="margin-left:26%;">
+        <div style="margin-left:8%;">
           <textarea name="content" id="summernote">${tip.content }</textarea>
         </div>
-    <div style="text-align: center;">
+        <br>
+    <div style="text-align: center;margin-left: 5%;">
 		<input class="btn btn-primary" id="updateSubmit" type="submit" value="Update">
 		<a href="<c:url value='/tip/list.do'/>">
 			<button type="button" class="btn btn-outline-primary">List</button>			
@@ -99,16 +105,43 @@
     </form>
 	<script>
     
-$(document).ready(function() {
-     $('#summernote').summernote({
-            
-             width: 800,
-             height: 300,                 // set editor height
-             minHeight: null,             // set minimum height of editor
-             maxHeight: null,             // set maximum height of editor
-             focus: true                  // set focus to editable area after initializing summernote
-     });
-});
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            height: 330,                 // set editor height
+            placeholder: "내용을 입력해주세요",
+            focus: true,                  // set focus to editable area after initializing summernote
+            callbacks: {
+                onImageUpload: function(files, editor, welEditable) {
+                  for (var i = files.length - 1; i >= 0; i--) {
+                    sendFile(files[i], this);
+                  }
+                }
+              } // callbacks
+        });
+    });
+    
+    function sendFile(file, ele) {
+    	var form_data = new FormData();
+    	console.log("form_data", form_data)
+    	form_data.append('file', file);
+    	console.log(file)
+    	console.log(ele)
+    	$.ajax({
+    		data : form_data, 
+    		type : "POST",
+    		url : "/myvet/tip/uploadFile.do",
+    		cache : false,
+    		contentType : false,
+    		enctype : "multipart/form_data",
+    		processData : false,
+    		//매개변수가 파일경로
+    		success : function(file) {
+    			console.log(file.url);
+    			$(ele).summernote("editor.insertImage", file.url);
+    		}
+    	})//ajax
+    }
+
 
 $("#updateSubmit").click(function(){
 	console.log("updateSubmit!")

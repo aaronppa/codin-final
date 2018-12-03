@@ -1,5 +1,32 @@
 package kr.co.codin.repository.mapper;
 
-public interface GalleryMapper {
+import java.util.List;
 
+import kr.co.codin.repository.domain.Gallery;
+import kr.co.codin.repository.domain.GalleryComment;
+
+
+public interface GalleryMapper {
+	List<Gallery> selectGallery();
+	Gallery selectGalleryByNo(int galleryNo);
+	void insertGallery(Gallery gallery);
+	void updateGallery(Gallery gallery);
+	void deleteGallery(int galleryNo);
+	void updateViewCnt(int galleryNo);
+	int countGallery();
+	
+//	//댓글
+	void insertComment(GalleryComment galleryComment);
+//	List<galleryComment> selectComment(int galleryNo);
+//	void deleteComment(galleryComment galleryComment);
+//	void updateComment(galleryComment galleryComment);
+//	int countComment(int galleryNo);
+//	//추천
+//	galleryRecommend selectRecommend(int galleryNo);
+//	int insertRecommend(galleryRecommend galleryRecommend);
+//	void deleteRecommend(galleryRecommend galleryRecommend);
+	
+	//파일
+//	void uploadFile(FileInfo fileInfo);
+//	void deleteFile(FileInfo fileInfo);
 }

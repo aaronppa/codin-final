@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -133,29 +134,25 @@
     </style>
 </head>
 <body>
+<form action="<c:url value='/gallery/write.do'/>" method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
             <div class="col-sm-7" >
-                <!-- Swiper -->
                 <div class="swiper-container gallery-top">
                         <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic1.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic2.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic3.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="../images/pic4.jpg"></div>
+                        <div class="swiper-slide"><img class = "top-img" src=""></div>
                         </div>
-                        <!-- Add Arrows -->
                         <div class="swiper-button-next swiper-button-white"></div>
                         <div class="swiper-button-prev swiper-button-white"></div>
                     </div>
                     <div class="swiper-container gallery-thumbs">
                         <div class="swiper-wrapper">
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic1.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic2.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic3.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="../images/pic4.jpg"></div>
+                              <div class="swiper-slide"><img class = "thumbs-img" src=""></div>
                         </div>
                     </div>
+<!-- 		<div id="imgprev"> -->
+<!-- 			<img type="hidden"id="prev" src=''/> -->
+<!-- 		</div> -->
                     <!--file-->
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -178,30 +175,57 @@
                 <div class="detail-content" >
                     <br>
                     <img src="../images/pic2.jpg" class="rounded-circle" id="writer-img">
+                    <input type="hidden" name="writerNo" value="12">
+                    <input type="hidden" name="boardCode" value="2">
                     <span style="font-weight:bolder">복순이</span>
                     <hr>
                     <br>
                     <!--제목-->
-                    <textarea cols="50" rows="1" placeholder="제목을 입력..."></textarea>
+                    <textarea cols="50" rows="1" name="title" placeholder="제목을 입력..."></textarea>
                     <br>
                     <br>
                     <!--내용-->
-                    <textarea cols="50" rows="5" placeholder="내용을 입력..."></textarea>
+                    <textarea cols="50" rows="5" name="content" placeholder="내용을 입력..."></textarea>
                 </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                  <a href="./list.html">
+                  <a href="<c:url value='/gallery/list.do'/>">
                     <button type="button" class="btn btn-secondary">목록</button>
                   </a>
-                    <button type="button" class="btn btn-secondary">제출</button>
+                    <input type="submit" class="btn btn-secondary">
                 </div>
             </div>
         </div>
     </div>
+</form>
 
   <!-- Swiper JS -->
   <script src="../dist/js/swiper.min.js"></script>
 
     <script>
+    //슬라이드 사진첨부
+    var file = document.querySelector('#inputGroupFile01');
+    
+    file.onchange = function(){
+    	var fileList = file.files;
+    	
+    	var reader = new FileReader();
+    	reader.readAsDataURL(fileList[0])
+    	
+	    reader.onload = function  () {
+    		document.querySelector('.thumbs-img').src = reader.result ;
+// 	        $("#prev").css("width","400px");
+// 	    	$("#prev").css("height","300px");
+	    }; 
+// 	    reader.onload = function  () {
+// 	        document.querySelector('.top-img').src = reader.result ;
+// // 	        $("#preview1").css("width","400px");
+// // 	    	$("#preview1").css("height","300px");
+// 	    }; 
+    }
+    
+    
+    //슬라이드 사진첨부 끝
+    
         $('#thumbs img').click(function(){
         $('#largeImage').attr('src',$(this).attr('src').replace('thumb','large'));
         $('#description').html($(this).attr('alt'));
