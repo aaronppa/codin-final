@@ -3,6 +3,7 @@ package kr.co.codin.hos.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,9 +25,9 @@ import kr.co.codin.hos.service.HosServiceImpl;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosHours;
+import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.PageResult;
-import kr.co.codin.repository.domain.HosPage;
 
 @Controller
 @RequestMapping("hos")
@@ -42,6 +42,15 @@ public class HosController {
 	@RequestMapping("hospital.do")
 	public void hospital(Model model, int hosCode) {
 		model.addAttribute("hos", service.selectHospitalByNo(hosCode));
+	}
+	
+	@RequestMapping("bookingBlock.do")
+	public void bookingBlock(Model model) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		
+		model.addAttribute("monday", cal);
+		
 	}
 	
 	@RequestMapping("reception.do")

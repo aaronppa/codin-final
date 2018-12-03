@@ -15,10 +15,16 @@
 
 <title>MyVet :: 괜찮🐈-건강하🐕</title>
     <style>
-        div {
+        .relative {
             /* border: 1px solid black; */
             position: relative;
         }    
+        
+        #mapArea {
+        	width: 500px;
+        	height: 500px;
+        }
+        
         #bodyContainer {
             margin: auto;
             margin-top: 10px;
@@ -50,10 +56,6 @@
             width: 24%;
         }
         
-        #map {
-            height:550px;
-        }
-        
         #hospitalContainer {
             height:230px
         }
@@ -77,7 +79,7 @@
                 <span>[공지] 여기는 뉴스스크롤 자리입니다.</span>
             </div>
             <div class="relative" id="mapContainer">
-                <div class="relative" id="map"><span>지도영역</span></div>
+                <div class="relative" id="mapArea"><span>지도영역</span></div>
             </div>
         </div>
         <div class="relative" id="rightContainer">
@@ -87,5 +89,9 @@
         </div>
     </div>
 </body>
+
+<script>
+	$("#mapArea").load("/myvet/map/map.do")
+</script>
 
 </html>

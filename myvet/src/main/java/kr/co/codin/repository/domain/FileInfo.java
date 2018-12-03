@@ -13,11 +13,7 @@ public class FileInfo {
 	private String sysName;
 	private String filePath;
 	private long fileSize;
-	private String url;
-	
-	@Autowired
-	private ServletContext servletContext;
-	
+
 	public int getFileId() {
 		return fileId;
 	}
@@ -59,13 +55,6 @@ public class FileInfo {
 	}
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
-	}
-	public String getUrl() {
-		url = servletContext.getRealPath("/") + "/upload" + filePath + sysName;
-		return url;
-	}
-	public ServletContext getServletContext() {
-		return servletContext;
 	}
 	
 }

@@ -12,10 +12,10 @@
 }
 
 .map {
-	width: 500px;
+	width: 620px;
 	height: 500px;
 	margin-left: 300px;
-	margin-top: 150px;
+/* 	margin-top: 150px; */
 }
 
 #addr {
@@ -31,8 +31,9 @@
 
 #mapsearchdiv {
 	position: absolute;
-	top: 150px;
+/* 	top: 150px; */
 }
+
 #MapSearchlist{
 	postion:absolute;
 }
