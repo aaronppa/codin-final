@@ -216,7 +216,7 @@ ul.pagination{
 					    	<li <c:if test="${i eq noticePageResult.pageNo }">class="current"</c:if> ><a href="${i}" class="nostyle" data-boardtype="notice">${i}</a></li>
 						</c:forEach>
 			            
-			            <li><a class='<c:if test="${noticePageResult.pageNo == noticePageResult.lastPage}">disabled </c:if>nostyle nextpage' data-boardtype="notice" href="${noticePageResult.endPage+1 }">Next&raquo;</a></li>
+			            <li><a class='<c:if test="${noticePageResult.pageNo == noticePageResult.lastPage}">disabled </c:if>nostyle nextpage' data-boardtype="notice" href="${noticePageResult.pageNo+1 }">Next&raquo;</a></li>
 			            <li><a class='<c:if test="${noticePageResult.pageNo + 10 > noticePageResult.lastPage}">disabled </c:if>nostyle endpage' data-boardtype="notice" href="${noticePageResult.lastPage }">End&raquo;</a>
 			            </li>
 			        </ul>
@@ -294,6 +294,8 @@ var w = 1000;
 var h = 600;
 var left = Math.round((screen.width/2)-(w/2));
 var topx = Math.round((screen.height/2)-(h/2));
+console.log("Screen Height:",screen.height);
+console.log("Screen width:",screen.width);
 console.log(topx);
 console.log(left);
 console.log("screenTop: ", topx);
@@ -332,7 +334,6 @@ $("nav.pagination").on("click","a.nostyle", function(e) {
 	var selectedLn = $(this);
 	pageNo = $(this).attr("href")
 	boardType = $(this).data("boardtype");
-	
 	
 	console.log("Selected Page:",selectedLn.parentsUntil("div.listarea."+boardType).siblings("h2"));
 	console.log("Selected Page.closest:",selectedLn.closest("div.listarea").children("h2"));
@@ -466,19 +467,25 @@ function updateCurrPg(boardType, pageResult){
 		for(var i=pageResult.beginPage; i<=pageResult.endPage; i++){
 			html += "<li><a href='"+i+"' class='nostyle' data-boardtype='"+boardType+"'>"+i+"</a></li>"
 		}
-            html += "<li><a href='"+(pageResult.endPage+1)+"' class='nostyle nextpage' data-boardtype='"+boardType+"'>Next&raquo;</a></li>"+
+            html += "<li><a href='"+(pageResult.pageNo+1)+"' class='nostyle nextpage' data-boardtype='"+boardType+"'>Next&raquo;</a></li>"+
 	                "<li><a href='"+pageResult.lastPage+"' class='nostyle lastpage' data-boardtype='"+boardType+"'>End&raquo;</a>"
-        	$("ul.pagination[data-boardtype='"+boardType+"']").html(html);
+        	
+	        $("ul.pagination[data-boardtype='"+boardType+"']").html(html);
+	                
   			$("a[href='"+pageResult.pageNo+"'][data-boardtype='"+boardType+"']").not(".firstpage, .previouspage, .nextpage, .lastpage").parent().addClass("current");
-  			$("a[href=0]").addClass("disabled");
-  			$("a[href='"+(pageResult.lastPage+1)+"']").addClass("disabled");
+  			$("a[href=0][data-boardtype='"+boardType+"']").addClass("disabled");
+  			$("a[href='"+(pageResult.lastPage+1)+"'][data-boardtype='"+boardType+"']").addClass("disabled");
   			
   			if(pageResult.pageNo===1){
-  				$("a.firstpage").addClass("disabled");
+  				$("a.firstpage [data-boardtype='"+boardType+"']").addClass("disabled");
+  			}
+  			
+  			if(pageResult.pageNo===pageResult.lastPage){
+  				$("a.lastpage[data-boardtype='"+boardType+"']").addClass("disabled");
   			}
   			
   			if(pageResult.pageNo + 10 > pageResult.lastPage){
-  				$("a.lastpage").addClass("disabled");
+  				$("a.lastpage[data-boardtype='"+boardType+"']").addClass("disabled");
   			}
     			
 }
