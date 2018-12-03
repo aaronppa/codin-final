@@ -105,4 +105,11 @@ public class MemberController {
 	public void findEmail(Member member, Model model) {
 		model.addAttribute("member", service.findEmail(member));
 	}
+	
+	@RequestMapping("/myPage.do")
+	public void myPage(HttpSession session, Model model) {
+		Member member = (Member) session.getAttribute("user");
+		int memberNo = member.getMemberNo();
+		model.addAttribute("member", service.myPage(memberNo));
+	}
 }

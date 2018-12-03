@@ -51,6 +51,7 @@
 
 	<mvc:view-controller path="/member/signupForm.do" view-name="member/signupForm"/>
 	<mvc:view-controller path="/member/loginForm.do" view-name="member/loginForm"/>
+	<mvc:view-controller path="/member/findEmailForm.do" view-name="member/findEmailForm"/>
 
 	<mvc:view-resolvers>
 		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp"/>

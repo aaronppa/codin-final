@@ -10,4 +10,5 @@ public interface MemberMapper {
 	Member selectPasswordById(String memberEmail);
 	void insertVetAuth(VetAuth file);
 	Member selectIdByName(Member member);
+	Member selectMemberByNo(int memberNo);
 }

@@ -39,4 +39,11 @@ public interface MemberService {
 	 * @return member
 	 */
 	Member findEmail(Member member);
+	
+	/**
+	 * 회원 상세 정보 본인 확인에 대한 비즈니스 로직 처리
+	 * @param memberNo
+	 * @return member
+	 */
+	Member myPage(int memberNo);
 }

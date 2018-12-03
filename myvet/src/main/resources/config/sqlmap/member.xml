@@ -61,4 +61,10 @@
 		 where member_name = #{memberName}
 		   and member_phone = #{memberPhone}
 	</select>
+	
+	<select id="selectMemberByNo" parameterType="int" resultMap="MemberMap">
+		select *
+		  from member
+		 where member_no = #{memberNo}
+	</select>
 </mapper>

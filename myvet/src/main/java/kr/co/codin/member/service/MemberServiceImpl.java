@@ -56,4 +56,9 @@ public class MemberServiceImpl implements MemberService {
 	public Member findEmail(Member member) {
 		return mapper.selectIdByName(member);
 	}
+
+	@Override
+	public Member myPage(int memberNo) {
+		return mapper.selectMemberByNo(memberNo);
+	}
 }
