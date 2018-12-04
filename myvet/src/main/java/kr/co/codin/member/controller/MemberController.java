@@ -55,7 +55,7 @@ public class MemberController {
 		int vetFileSize = (int)fileV.getSize();
 		vetFile.setVetFileSize(vetFileSize);
 		
-		vetFile.setVetFilePath("/vetAuth");
+		vetFile.setVetFilePath("/vetAuth/" + memberNo);
 		
 		UUID uid = UUID.randomUUID();
 		String vetSysName = uid.toString() + "_" + vetOriName;
@@ -66,12 +66,18 @@ public class MemberController {
 		
 		service.uploadVetAuth(vetFile);
 		
-		fileV.transferTo(new File(context.getRealPath("/upload/vetAuth"), vetSysName));
+//		fileV.transferTo(new File(context.getRealPath("/upload/vetAuth"), vetSysName));
+		File fileN = new File(context.getRealPath("/upload/vetAuth/" + memberNo), vetSysName);
+		if (fileN.exists() == false) {
+			fileN.mkdirs();
+		}
+		fileV.transferTo(fileN);
 		
 //		System.out.println(!(member.getMemberGrade().equals("U")));
 //		if (!(member.getMemberGrade().equals("U"))){
 //			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "vetAuthForm.do";
 //		}
+		
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
@@ -124,4 +130,11 @@ public class MemberController {
 //		System.out.println(pService.myPet(memberNo));
 		model.addAttribute("pet", pService.myPet(memberNo));
 	}
+	
+//	@RequestMapping("/nickChange.do")
+//	@ResponseBody
+//	public void nickChange(@RequestBody int myNo) {
+//		Member member = mapper.selectMemberByNo(myNo);
+//		service.nickChange(member);
+//	}
 }
