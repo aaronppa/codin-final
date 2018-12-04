@@ -2,6 +2,7 @@ package kr.co.codin.hos.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,6 +29,7 @@ import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.PageResult;
+import kr.co.codin.repository.domain.TempBooking;
 
 @Controller
 @RequestMapping("hos")
@@ -45,12 +47,23 @@ public class HosController {
 	}
 	
 	@RequestMapping("bookingBlock.do")
-	public void bookingBlock(Model model) {
+	public void bookingBlock(HttpServletRequest request, @RequestParam(value="date", defaultValue="null") String date) {
 		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		
-		model.addAttribute("monday", cal);
-		
+		if(date != "null") {
+			try {
+				cal.setTime(new SimpleDateFormat("yyyy/MM/dd").parse(date));
+			} catch (ParseException e) {
+				;;
+			}
+		}
+		request.setAttribute("cal", cal);
+	}
+	
+	@RequestMapping("createBlock.do")
+	@ResponseBody
+	public void createBlock(TempBooking booking) {
+		System.out.println(booking);
 	}
 	
 	@RequestMapping("reception.do")

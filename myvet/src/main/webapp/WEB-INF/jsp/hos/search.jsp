@@ -33,13 +33,9 @@
             margin: auto;
         }
         
-        a {
+        .hos-name,
+        .hos-name:hover {
 			color: #412427;
-        }
-        
-        th {
-            text-align: center;
-            width: 30%;
         }
         
         #search{
@@ -48,7 +44,7 @@
         
         .margin {
         	margin-left: 20px;
-        	margin-bottom: 10px;
+        	margin-bottom: 40px;
         }
 
         #searchDiv {
@@ -69,6 +65,12 @@
         	display:none;
         }
         
+        #resultRegister th {
+        	text-align: center;
+        	margin: auto;
+        	width: 35%;
+        	height: 60px;
+        }
         
     </style>
 </head>
@@ -89,7 +91,7 @@
     <table id="resultRegister">
         <tr class="disable registerHos">
             <th>
-                <h3><a href="#" class="hos-name">aaa 동물병원</a></h3>
+                <h4><a href="#" class="hos-name">aaa 동물병원</a></h4>
             </th>
             <td>
                 <span class="hos-addr1">경기도 성남시 분당구 어쩌고 저쩌고</span><br>
@@ -115,7 +117,7 @@
     	<div class="disable nomalHos">
 	       <tr>
 	           <th>
-	               <h4 class="hos-name">bbb 동물병원</h4>
+	               <h5 class="hos-name">bbb 동물병원</h5>
 	           </th>
 	           <td>
 	               <span class="hos-addr1">경기도 성남시 분당구 어쩌고 저쩌고</span><br>
@@ -131,7 +133,8 @@
 	var $hosEmpty = $(".hosEmpty").clone().removeClass("disable");	
 	var $nomalHos = $(".nomalHos").clone().removeClass("disable");
 	var $registerPaging = $(".registerPaging").clone().removeClass("disable");	
-
+	$("#regPageing").load("regHosPage.do?pageNo="+1+"&ListCount="+0);
+	$("#norPaging").load("norHosPage.do?pageNo="+1+"&ListCount="+0);
 	
     
    	$("#search").click(function(){
