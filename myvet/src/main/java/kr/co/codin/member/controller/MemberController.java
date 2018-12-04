@@ -43,6 +43,7 @@ public class MemberController {
 	@RequestMapping("/signup.do")
 	public String signup(Member member, MultipartFile fileV, VetAuth vetFile) throws Exception {
 		service.signup(member);
+		int memberNo = member.getMemberNo();
 		
 //		System.out.println(fileV.isEmpty());
 		if (fileV.isEmpty() == true)
@@ -54,13 +55,12 @@ public class MemberController {
 		int vetFileSize = (int)fileV.getSize();
 		vetFile.setVetFileSize(vetFileSize);
 		
-		vetFile.setVetFilePath("/upload/vetAuth");
+		vetFile.setVetFilePath("/vetAuth");
 		
 		UUID uid = UUID.randomUUID();
 		String vetSysName = uid.toString() + "_" + vetOriName;
 		vetFile.setVetSysName(vetSysName);
 		
-		int memberNo = member.getMemberNo();
 //		System.out.println(memberNo);
 		vetFile.setMemberNo(memberNo);
 		
@@ -73,7 +73,7 @@ public class MemberController {
 //			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "vetAuthForm.do";
 //		}
 		
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
 	
 	@RequestMapping("/idCheck.do")
@@ -100,7 +100,7 @@ public class MemberController {
 //				
 //			}
 			
-			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "myPage.do";
+			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 		}
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
 	}
@@ -108,7 +108,7 @@ public class MemberController {
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
 	
 	@RequestMapping("/findEmail.do")

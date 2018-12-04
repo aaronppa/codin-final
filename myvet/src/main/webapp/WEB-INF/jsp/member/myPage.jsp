@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -14,20 +14,6 @@
 <title>반려인의 개인 페이지입니다.</title>
 
 <link rel="stylesheet" type="text/css" href="/codin_mini/resources/css/top.css" />
-
-<!-- Link Swiper's CSS -->
-<link rel="stylesheet" href="../dist/css/swiper.min.css">
-
-<!-- swiper -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script>
-
-<!-- Swiper JS -->
-<script src="../dist/js/swiper.min.js"></script>
 
 <!-- fontawesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -88,47 +74,18 @@
     	text-align: right;
     }
     
-    body {
-    	font-size: 18px;
-    }
-    
     #container {
+    	margin-top: 50px;
     	margin-left: 50px;
     	margin-right: 50px;
     	margin-bottom: 50px;
+    	font-size: 18px;
     }
     
     #top-menu {
     	height: 50px;
     }
     
-	.swiper-container {
-		width: 100%;
-		height: 30%;
-    }
-    
-    .swiper-slide {
-		text-align: center;
-		font-size: 18px;
-		background: #fff;
-		/* Center slide text vertically */
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		-webkit-box-pack: center;
-		-ms-flex-pack: center;
-		-webkit-justify-content: center;
-		justify-content: center;
-		-webkit-box-align: center;
-		-ms-flex-align: center;
-		-webkit-align-items: center;
-		align-items: center;
-		
-		border: 1px solid black;
-		width: 10%;
-		height: 200px;
-    }
     .pet-info {
     	width: 200px;
     	height: 200px;
@@ -137,9 +94,6 @@
     	margin: 50px;
     	text-align: center;
     	padding-top: 90px;
-    }
-    #show-password {
-    	width: 150px;
     }
 </style>
 <script
@@ -159,7 +113,7 @@
             <tr>
                 <td rowspan="4" class="imgTd">
                     <img src="../../../../app/myVet/profile.jpg" width="150px" height="150px" id="profile" />
-                    <i class="fas fa-camera"></i>
+                    <button type="button" class="btn btn-default"><i class="fas fa-camera"></i></button>
                 </td>
                 <th>이메일</th>
                 <td>${member.memberEmail}</td>
@@ -222,31 +176,11 @@
 		</div>
 	</div>
     
-<!-- 	Swiper -->
-<!-- 	<div class="swiper-container"> -->
-<!--     	<div class="swiper-wrapper"> -->
-<!-- 			<div class="swiper-slide">Slide 1</div> -->
-<!-- 			<div class="swiper-slide">Slide 2</div> -->
-<!-- 			<div class="swiper-slide">Slide 3</div> -->
-<!-- 			<div class="swiper-slide">Slide 4</div> -->
-<!-- 			<div class="swiper-slide">Slide 5</div> -->
-<!-- 	    </div> -->
-<!-- 		Add Pagination -->
-<!-- 		<div class="swiper-pagination"></div> -->
-<!-- 	</div> -->
-	
 <%--    	<button class="btn btn-primary col-md-offset-10"><a href="<c:url value='/member/insertCareerForm.do' />">추가</a></button> --%>
    	
 
     <script>
-// 		var swiper = new Swiper('.swiper-container', {
-// 			slidesPerView: 3,
-// 			spaceBetween: 30,
-// 			pagination: {
-//  			el: '.swiper-pagination',
-// 			clickable: true,
-// 			},
-// 		});
+    	
     </script>
 </body>
 </html>

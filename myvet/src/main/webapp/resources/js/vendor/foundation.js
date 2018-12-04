@@ -9056,21 +9056,6 @@ var Reveal = function (_Plugin) {
     }
 
     /**
-     * Handles modal methods on back/forward button clicks or any other event that triggers popstate.
-     * @private
-     */
-
-  }, {
-    key: '_handleState',
-    value: function _handleState(e) {
-      if (window.location.hash === '#' + this.id && !this.isActive) {
-        this.open();
-      } else {
-        this.close();
-      }
-    }
-
-    /**
      * Opens the modal controlled by `this.$anchor`, and closes all others by default.
      * @function
      * @fires Reveal#closeme
@@ -9119,12 +9104,6 @@ var Reveal = function (_Plugin) {
       }
 
       if (!this.options.multipleOpened) {
-        /**
-         * Fires immediately before the modal opens.
-         * Closes any other modals that are currently open
-         * @event Reveal#closeme
-         */
-        this.$element.trigger('closeme.zf.reveal', this.id);
       }
 
       var _this = this;

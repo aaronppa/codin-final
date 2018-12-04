@@ -32,17 +32,17 @@
 </head>
 <body>
 	<!-- Button trigger modal -->
-    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong">
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#signupModal">
         회원가입
     </button>
       
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form action="signup.do" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">회원가입</h5>
+                        <h5 class="modal-title" id="signupModalTitle">회원가입</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
