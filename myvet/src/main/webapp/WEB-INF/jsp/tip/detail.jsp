@@ -400,7 +400,7 @@ p {
 
 .dislike:hover,
 .like:hover {
-  color:red;
+  color:blue;
   transition: all .2s ease-in-out;
   transform: scale(1.1);
 }
@@ -440,6 +440,7 @@ p {
 <body>
 	<div class="container">
     <div class="notes-wrapper">
+<!--     <input type="hidden" name="boardCode" id="boardCode" value="11"> -->
             <div class="saver-wrap" contenteditable="false">
                 <div class="notes-dot" contenteditable="false"></div>
                 <div class="rest" contenteditable="false"></div>
@@ -465,7 +466,9 @@ p {
                 <i class="far fa-clock"style="margin-left: 5%;">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
               </div>
 		  <div class="report" data-toggle="modal" data-target="#exampleModal" style="text-align: right;font-size: 15px; padding-right: 30px">
-               <i class="fas fa-exclamation-triangle" id="tipReport" style="cursor:pointer">신고하기</i>
+               <a href="<c:url value='/report/reportForm.do?boardCode=11&contentNo=${tip.tipNo}&reportMemberNo=7&targetMemberNo=8'/>"/>
+               		<i class="fas fa-exclamation-triangle" id="tipReport" style="cursor:pointer">신고하기</i>
+               </a>
 		  </div>
 		  <!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

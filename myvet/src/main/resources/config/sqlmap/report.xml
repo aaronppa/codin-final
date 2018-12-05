@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.ReportMapper">
+	<resultMap type="report" id="reportMap">
+		<result column="report_no" property="reportNo"/>		
+		<result column="board_code" property="boardCode"/>		
+		<result column="content_no" property="contentNo"/>		
+		<result column="comment_no" property="commentNo"/>		
+		<result column="report_member_no" property="reportMemberNo"/>		
+		<result column="target_member_no" property="targetMemberNo"/>		
+		<result column="report_code" property="reportCode"/>		
+		<result column="report_date" property="reportDate"/>		
+		<result column="process_result" property="processResult"/>		
+		<result column="report_content" property="reportContent"/>		
+	</resultMap>
+		
+	<select id="selectByReport" parameterType="report" resultMap="reportMap">
+		select * 
+		  from report_list
+		 where board_code = #{boardCode}
+		   and content_no = #{contentNo}
+		   and comment_no = #{commentNo}
+		   and report_member_no = #{reportMemberNo}
+		   and target_member_no = #{targetMemberNo}
+	</select>	
+	
+	<insert id="insertReport" parameterType="report">
+		insert into report_list(
+			board_code, content_no, comment_no, report_member_no, target_member_no, report_code, process_result, report_content 
+		)values(
+			#{boardCode},#{contentNo},#{commentNo},#{reportMemberNo},#{targetMemberNo},#{reportCode}, #{processResult},#{reportContent}
+		)
+	</insert>	
+
+</mapper>
+	
