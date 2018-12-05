@@ -72,22 +72,32 @@
 		                <li><a id="login" href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
                 	</c:when>
                 	<c:otherwise>
-                		<li><a href="<c:url value='/msg/main.do'/>">메신저</a></li>
-                		<li><a href="#">즐겨찾는 병원</a></li>
-		                <li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
 		                <li>
-							<ul class="menu vertical">
-								<li><a href="#">마이페이지</a></li>
-							</ul>
+			                <c:choose>
+			                	<c:when test="${user.memberGrade == 'A'}">
+					                <li>
+					                	<a href="<c:url value='/admin/main.do'/>">관리자</a>
+					                	<ul class="menu vertical">
+											<li><a href="<c:url value='/member/myPage.do'/>">마이페이지</a></li>
+											<li><a href="<c:url value='/msg/main.do'/>">메신저</a></li>
+                							<li><a href="#">즐겨찾는 병원</a></li>
+											<li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
+										</ul>
+					                </li>
+			                	</c:when>
+			                	<c:otherwise>
+					                <li>
+						                <a href="#">${user.memberNickname}</a>                	
+										<ul class="menu vertical">
+											<li><a href="<c:url value='/member/myPage.do'/>">마이페이지</a></li>
+											<li><a href="<c:url value='/msg/main.do'/>">메신저</a></li>
+                							<li><a href="#">즐겨찾는 병원</a></li>
+											<li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
+										</ul>
+									</li>
+			                	</c:otherwise>
+			                </c:choose>
 		                </li>
-                	</c:otherwise>
-                </c:choose>
-                <c:choose>
-                	<c:when test="${user.memberGrade == 'A'}">
-		                <li><a href="<c:url value='/admin/main.do'/>">관리자</a></li>
-                	</c:when>
-                	<c:otherwise>
-		                <a href="<c:url value='/member/myPage.do'/>">${user.memberNickname}</a>                	
                 	</c:otherwise>
                 </c:choose>
             </ul>
