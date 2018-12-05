@@ -103,8 +103,8 @@ public class MainMapController {
 		
 		try {
 		//	try {
-				String clientId = "ZOkOJ2shguhudlHkiOL9";//애플리케이션 클라이언트 아이디값";
-				String clientSecret = "tibcZC2qX9";//애플리케이션 클라이언트 시크릿값";
+				String clientId = "S_tAkybRyVr0rREE6Wvr";//애플리케이션 클라이언트 아이디값";
+				String clientSecret = "op3D_FbX_y";//애플리케이션 클라이언트 시크릿값";
 				String text = URLEncoder.encode(data, "UTF-8");
 				String apiURL = "https://openapi.naver.com/v1/search/local.json?query="+ text; // json 결과
 				//String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
@@ -228,7 +228,7 @@ public class MainMapController {
 			
 			} catch (JSONException e) {
 				//System.err.println(e.toString());
-				System.out.println("에러 터진 캐치");//서강대로 검색시 3번째 인덱스 값이 널이 나와서 에러 발생...때문에 jsp의 루프에도 null에 대한 처리를 진행하였음
+				System.out.println("에러 캐치");//서강대로 검색시 3번째 인덱스 값이 널이 나와서 에러 발생...때문에 jsp의 루프에도 null에 대한 처리를 진행하였음
 			}//추가
 		} catch (Exception e) {
 
@@ -236,4 +236,6 @@ public class MainMapController {
 		}
 		return null;
 	}
+	
+
 }

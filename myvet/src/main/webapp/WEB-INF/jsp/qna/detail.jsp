@@ -423,7 +423,7 @@ p {
                 <div class="rest" contenteditable="false"></div>
             </div>
             <div class="writer" aria-placeholder="writer..">
-                <img src="/myvet/images/pony01.jpg" class="rounded-circle">&nbsp;PONY
+                <img src="/myvet/images/pony01.jpg" class="rounded-circle">&nbsp;${user.memberNickname}
             </div>
             <div class="information" style="font-size: 20px;">
            		<c:if test="${qna.categoryCode eq 1 }">
@@ -493,7 +493,7 @@ p {
                             <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
                         </div>
                         <input type="hidden" name="qnaNo" id="qnaNo" value="${qna.qnaNo}">
-                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="1">
+                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="${user.memberNo}">
                         <div class="comment-block" style="-ms-overflow-style: none;">                            
                            <textarea name="comment" id="comment" cols="30" rows="4" placeholder="300자 이내..." ></textarea>
                            <span id="counter">###</span>
@@ -647,7 +647,10 @@ p {
 					{qnaNo : $("#qnaNo").val(), commenterNo: $("#commenterNo").val(),content:$("#comment").val()}
 			}).done(function(result){
 				console.log("성공:"+result);
-				console.log(result.length)
+				console.log(result.length);
+				
+				
+			
 				list();
 			/* 	typing();
 				list(); */
@@ -673,8 +676,11 @@ p {
         		data: {qnaNo : $("#qnaNo").val()},
         		datatype:"json"
         	}).done(function(result){
-        		console.log("성공 tipNo"+result);
-         		console.log(result[1])
+        		console.log("코멘트 엠프티 1");
+        		$("#comment").val("");
+        		console.log("코멘트 엠프티2");
+        		//console.log("성공 tipNo"+result);
+         		//console.log(result[1])
                 for (let i = 0; i < result.length; i++) {
             	   let likeRecommend = "", dislikeRecommend = "";
             	   if(result[i].recommend == 1){
@@ -683,16 +689,16 @@ p {
             		   dislikeRecommend = "comActive";
 		     	   }
             	   
-            	   
+            	   console.log(result);
             	   
                 $(".comment-list").append(
-                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
+                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;${user.memberNickname}"
               	+"<button class='com-like "+likeRecommend+"' style='margin-left:65%;cursor:pointer;' data-comno='"+result[i].commenterNo+"'>"+"<i class='far fa-thumbs-up' style='font-size:25px;'></i>"+"</button><button class='com-dislike "+dislikeRecommend+"' style='margin-left:5%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down' style='font-size:25px;'></i>"+"</button>"	
             	+"<i class='fas fa-heart' style='margin-left: 5%;color:red;'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
                 +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
                 +"<div class='comment-content'>" 
 	                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
-	                +"<div class='comment' style='width:400px;height:auto;font-size:20px;font-style:italic;' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].comment+"</div>"
+	                +"<div class='comment' style='width:400px;height:auto;font-size:20px;font-style:italic;' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
               	+"</div>"
               	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
               	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
@@ -723,17 +729,21 @@ p {
        		}else{
        			insertRecommend(1, $('#tipNo').val());
        		}
-       		$("#tipRecomCnt").val().remove();
-       		detail();
+       		$("#tipRecomCnt").val();
        		$(this).toggleClass('active')
        	})
         
-       function insertRecommend(recommend){
+       function insertRecommend(recommend ){
+        	console.log("insertRecome:"+$(commenterNo).val());
         	$.ajax({
-        		url:"/myvet/tip/insertRecommend.do",
-        		data:"tipNo=${tip.tipNo}&recommend="+recommend
-        	}).done(function(){
+        		url:"/myvet/qna/insertRecommend.do",
+        		data:"qnaNo=${qna.qnaNo}&recommend="+recommend+"&commenterNo=${commenterNo}.val()",
+        		type:"post",
+        		dataType:"json"
+        	}).done(function(result){
         		console.log("insertRecommend-success")
+        	}).fail(function(result){
+        		console.log("ㅇㅇ");
         	})
         }
         
@@ -798,7 +808,7 @@ p {
 	 	function insertCommentRecommend(recommend, commentNo){
 	       		console.log(recommend, commentNo)
 	    	$.ajax({
-	    		url:"/myvet/tip/insertCommentRecommend.do",
+	    		url:"/myvet/qna/insertCommentRecommend.do",
 	    		data:"commentNo="+commentNo+"&recommend="+recommend
 	    	}).done(function(){
 	    		console.log("insertCommentRecommend-success")

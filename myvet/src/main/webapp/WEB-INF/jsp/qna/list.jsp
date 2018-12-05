@@ -147,7 +147,7 @@
             <button type="button" class="btn btn-outline">검색</button>
     </div>
     <!--count-->
-    
+     <div id="memberNickname" style="visibility:hidden;">${user.memberNickname}</div> 
     <!--list-->
     <table class="table">
             <div style="text-align: right;">전체 ${count} 개</div>
@@ -198,6 +198,20 @@
 </body>
 <script>
 /*category*/
+ 
+ 
+ 
+ 
+
+ let memberNickname = '${user.memberNickname}';
+ 
+ id(memberNickname);
+ 
+ function id(memberNickname){
+	 console.log($("#memberNickname"));
+	 console.log(memberNickname);
+	 console.log("-------------")
+ }
 function chainSelect(current, target){
   var value1 = $(current).on('change', function(){
     if($(this).find(':selected').val() != ''){

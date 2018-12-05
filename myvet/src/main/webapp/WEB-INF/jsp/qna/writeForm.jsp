@@ -19,12 +19,12 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
         <style>
-        html,body{
+ /*        html,body{
         	width:80%;
         	margin-left: auto;
         	margin-right: auto;
         	background-color: none;
-        }
+        } */
         
         /*글제목*/
         .title{
@@ -49,18 +49,20 @@
             text-align: center; 
         }
 
-
+	/* 	.summernote{
+			maring-left:20%;
+		} */
        
     </style>
 </head>
 <body>
 <%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
-
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />  
     <form action="<c:url value='/qna/write.do' />" method="post">
     <br>
     <input name="boardCode" type="hidden" value="10">
 <!--     <input name="categoryCode" type="hidden" value="1"> -->
-    <input name="memberNo" class="memberNo" type="hidden" value="33">
+    <input name="writerNo" class="writerNo" type="hidden" value="${user.memberNo}">
     
 <!--     <div id="titleForm" style="text-align:center;"> -->
 <!-- 	    <input name="title" type="text" style="width:500px;"> -->
@@ -76,6 +78,7 @@
 	  <div class="input-group-prepend">
 	    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
 	  </div>
+	 <%-- // <input name="writer">${user.memberNickname}</input> --%>
 	  <input name="title" id="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 		<select name="categoryCode" class="categoryCode">
 			<option selected value="">Category</option>
@@ -99,7 +102,7 @@
 	
 	
     <hr>
-        <div style="margin-left: 8%;">
+        <div style="margin-left: 20%;">
           <textarea name="content" class="content" id="summernote" value="" cols="100" rows="15">
           </textarea>
         </div>

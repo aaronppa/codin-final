@@ -2,6 +2,9 @@ package kr.co.codin.qna.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.qna.service.QnaService;
+import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaComment;
 
@@ -19,41 +23,58 @@ import kr.co.codin.repository.domain.QnaComment;
 @Controller
 @RequestMapping("qna")
 public class QnaController {
-
+	
+	
+	@Autowired
+	private ServletContext context;
+	
 	@Autowired
 	private QnaService service;
 	
 	
-	@RequestMapping("list.do")
-	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) throws Exception{
-		System.out.println("list");
-		model.addAttribute("qna", service.SelectList());
+
 	
+	
+	@RequestMapping("list.do")
+	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo,Member member) throws Exception{
+		System.out.println("list");
+		System.out.println((String)member.getMemberNickname());
+		System.out.println((String)context.getAttribute("memberNo"));
+		//int memberdd =member.getMemberNo();
+		System.out.println("--dsldjfs");
+		//System.out.println(memberdd);
+		System.out.println("----------------------");
+		model.addAttribute("qna", service.SelectList());
+		
+		//System.out.println(memberNickname);
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countTip()));
 	}
 	
 	
 	
 	@RequestMapping("writeForm.do")
-	public void writeForm(Model model ) {
-		
+	public void writeForm(Model model,String memberNickname ,HttpSession session) {
+		System.out.println("라이트폼");
+		//System.out.println(memberNickname);
+		System.out.println("dd:"+session.toString());
 	}
 	
 	@RequestMapping("write.do")
-	public String write(Model model,Qna qna) {
+	public String write(Model model,Qna qna,HttpSession session) {
 		service.InsertQna(qna);
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
 	@RequestMapping("detail.do")
-	public void detail(Model model, int qnaNo) {
+	public void detail(Model model, int qnaNo,HttpSession session) {
 		service.selectQnaByNo(qnaNo);
+		//model.addAttribute()
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
 	}
 	
 	@RequestMapping("updateForm.do")
-	public void updateForm(Model model, int qnaNo) {
+	public void updateForm(Model model, int qnaNo,HttpSession session) {
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
 		
 		
@@ -94,7 +115,15 @@ public class QnaController {
 		return service.selectCombyNo(qnaNo);
 	}
 	
-	
+	@RequestMapping("insertRecommend.do")
+	@ResponseBody
+	public void insertRecommend(int qnaNo, int recommend, int commenterNo) {
+		System.out.println("insertRecommend 왔음");
+		System.out.println(qnaNo);
+		System.out.println(recommend);
+		System.out.println(commenterNo);
+		
+	}
 	
 	
 }

@@ -47,8 +47,13 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=S_tAkybRyVr0rREE6Wvr&submodules=geocoder"></script>
+	
+	
+	
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=S_tAkybRyVr0rREE6Wvr&submodules=geocoder"></script> 
+<!-- <script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=omim5fmof6&submodules=geocoder"></script> -->
+	
 </head>
 <body>
 	<div>
@@ -219,13 +224,7 @@
 			console.log("y:"+y);
 			console.log("xx:"+xx);
 			console.log("yy:"+yy);
-		
-			
-			
-	
-		
-			
-			
+			console.log(jsondata);
 			$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
 			for(let k = 0 ;  k < jsondata.length; k ++){
 				if(jsondata[k].hosRegister == 'N'){
