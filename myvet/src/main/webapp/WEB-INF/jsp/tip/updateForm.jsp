@@ -85,6 +85,7 @@
 			<option value="1">건강</option>
 			<option value="2">생활</option>
 			<option value="3">용품</option>
+			<option value="4">기타</option>
 		</select>
 	</div>
 	<!-- 카테고리 -->
@@ -105,43 +106,51 @@
     </form>
 	<script>
     
-    $(document).ready(function () {
-        $('#summernote').summernote({
-            height: 330,                 // set editor height
-            placeholder: "내용을 입력해주세요",
-            focus: true,                  // set focus to editable area after initializing summernote
-            callbacks: {
-                onImageUpload: function(files, editor, welEditable) {
-                  for (var i = files.length - 1; i >= 0; i--) {
-                    sendFile(files[i], this);
-                  }
-                }
-              } // callbacks
-        });
+    $('#summernote').summernote({
+        width: 1000,
+    	height: 500,                 // set editor height
+        placeholder: "내용을 입력해주세요",
+        focus: true,                  // set focus to editable area after initializing summernote
+        callbacks: {
+            onImageUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+                sendFile(files[i], this);
+              }
+            }
+          } // callbacks
     });
-    
-    function sendFile(file, ele) {
-    	var form_data = new FormData();
-    	console.log("form_data", form_data)
-    	form_data.append('file', file);
-    	console.log(file)
-    	console.log(ele)
-    	$.ajax({
-    		data : form_data, 
-    		type : "POST",
-    		url : "/myvet/tip/uploadFile.do",
-    		cache : false,
-    		contentType : false,
-    		enctype : "multipart/form_data",
-    		processData : false,
-    		//매개변수가 파일경로
-    		success : function(file) {
-    			console.log(file.url);
-    			$(ele).summernote("editor.insertImage", file.url);
-    		}
-    	})//ajax
-    }
+// });
 
+function sendFile(file, ele) {
+	var formData = new FormData();
+	console.log("formData", formData)
+	formData.append('file', file);
+	console.log(file)
+	console.log(ele)
+	$.ajax({
+		data : formData, 
+		type : "POST",
+		url : "/myvet/tip/uploadFile.do",
+		cache : false,
+		contentType : false,
+		enctype : "multipart/form-data",
+		processData : false,
+		//매개변수가 파일경로
+		success : function(file) {
+			console.log($(ele))
+			console.log("upload-success");
+			console.log("file.url : "+ '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
+			$("input#url").val('${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
+			$("input#oriName").val(file.oriName)
+			$("input#sysName").val(file.sysName)
+			$("input#filePath").val(file.filePath)
+			$("input#fileSize").val(file.fileSize)
+			$(ele).summernote("editor.insertImage", '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName);
+		
+		
+		}
+	})//ajax
+}
 
 $("#updateSubmit").click(function(){
 	console.log("updateSubmit!")

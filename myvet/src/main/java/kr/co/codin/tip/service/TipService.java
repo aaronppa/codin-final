@@ -3,7 +3,7 @@ package kr.co.codin.tip.service;
 import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
-import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.SearchTip;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
 import kr.co.codin.repository.domain.TipCommentRecommend;
@@ -12,7 +12,7 @@ import kr.co.codin.repository.domain.TipRecommend;
 
 public interface TipService {
 	
-	List<Tip> tipList(Page page);
+	List<Tip> tipList(SearchTip searchTip);
 	
 	Tip detailTip(int tipNo);
 	
@@ -26,7 +26,7 @@ public interface TipService {
 	
 	void updateViewCnt(int tipNo);
 	
-	int countTip();
+	int countTip(SearchTip searchTip);
 	
 	//댓글
 	void insertComment(TipComment tipComment);

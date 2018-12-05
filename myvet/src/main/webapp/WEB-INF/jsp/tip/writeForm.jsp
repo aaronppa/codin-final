@@ -82,6 +82,7 @@
 			<option value="1">건강</option>
 			<option value="2">생활</option>
 			<option value="3">용품</option>
+			<option value="4">기타</option>
 		</select>
 	</div>
 	<!-- 카테고리 -->

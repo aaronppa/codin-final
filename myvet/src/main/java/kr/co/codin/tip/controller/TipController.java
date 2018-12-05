@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.repository.domain.FileInfo;
-import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
+import kr.co.codin.repository.domain.SearchTip;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
 import kr.co.codin.repository.domain.TipCommentRecommend;
@@ -39,16 +41,27 @@ public class TipController {
 	@Autowired
 	private TipService service; 
 	
+	//value의 변수명
 	@RequestMapping("list.do")
-	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) throws Exception{
-		Page page = new Page(pageNo);
-		
+	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="") String keyword,@RequestParam(value="sort", defaultValue="0") int sort, @RequestParam(value="category", defaultValue="0") int category) throws Exception{
+
+		SearchTip searchTip = new SearchTip(pageNo);
+		searchTip.setKeyword(keyword);
+		searchTip.setSort(sort);
+		searchTip.setCategory(category);
+		model.addAttribute("sort",sort);
+		model.addAttribute("category", category);
+		model.addAttribute("keyword",keyword);
 		System.out.println("list");
-		model.addAttribute("tip", service.tipList(page));
-		model.addAttribute("count",service.countTip());
-		model.addAttribute("pageResult", new PageResult(pageNo,service.countTip()));
-//		model.addAttribute("pageResult", new PageResult(pageNo, service.countTip()));
+		model.addAttribute("tip", service.tipList(searchTip));
+		System.out.println("list"+service.tipList(searchTip));
+		model.addAttribute("count",service.countTip(searchTip));
+		model.addAttribute("pageResult", new PageResult(pageNo,service.countTip(searchTip)));
 	}
+	
+	
+
+	
 	
 	@RequestMapping("detail.do")
 	public void detail(Model model,int tipNo, HttpSession session, TipRecommend tipRecommend,TipCommentRecommend tipCommentRecommend) throws Exception{
@@ -130,7 +143,6 @@ public class TipController {
 		
 		tip.setMemberNo(7);
 		return service.commentList(tip);
-		
 	}
 	
 	@RequestMapping("deleteComment.do")
@@ -167,7 +179,7 @@ public class TipController {
 		String datePath = sdf.format(new Date());
 		FileInfo fileInfo = new FileInfo();
 		
-		int boardCode = 1;
+		int boardCode = 11;
 		int boardNo = 0;
 		
 		String newName = UUID.randomUUID().toString();

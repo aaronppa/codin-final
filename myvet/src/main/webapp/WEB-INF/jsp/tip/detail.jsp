@@ -28,7 +28,9 @@
 
     <style>
     .container{
-    	background:white;
+	    width:1100px;
+       	margin-left: auto;
+       	margin-right: auto;
     }
     .notes-wrapper .saver-wrap {
 	  display: flex;
@@ -452,7 +454,10 @@ p {
            		<c:if test="${tip.categoryCode eq 3 }">
            			<i style="margin-left:5%;">category : 용품</i>
            		</c:if>
-                <i class="fas fa-heart" id="tipRecomCnt" style="margin-left: 5%;color:red;">&nbsp;${countRecomment}</i> 
+           		<c:if test="${tip.categoryCode eq 4 }">
+           			<i style="margin-left:5%;">category : 기타</i>
+           		</c:if>
+                <i class="fas fa-heart" id="tipRecomHeart"style="margin-left: 5%;color:red;">&nbsp;</i><span id="tipRecomCnt">${countRecomment}</span>
                 <i class="far fa-eye" style="margin-left: 5%;">&nbsp; ${tip.viewCnt}</i>
                 <i class="far fa-clock"style="margin-left: 5%;">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
               </div>
@@ -505,10 +510,8 @@ p {
 		  
           <!-- 삭제, 수정 -->
             <div id="delete-update">
-                <span id="list" data-toggle="tooltip" title="LIST">
-	                <a href="<c:url value='/tip/list.do'/>" class="btn btn-primary">
+                <span id="list" data-toggle="tooltip" title="LIST" class="btn btn-primary">
 	                  <strong>List</strong>
-	                </a>
                 </span>
                 <span id="update" data-toggle="tooltip" title="UPDATE">
                    <a href="<c:url value='/tip/updateForm.do?tipNo=${tip.tipNo }'/>" class="btn btn-primary">
@@ -531,7 +534,7 @@ p {
                             <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
                         </div>
                         <input type="hidden" name="tipNo" id="tipNo" value="${tip.tipNo}">
-                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="1">
+                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="7">
                         <div class="comment-block" style="-ms-overflow-style: none;">                            
                            <textarea name="comment" id="comment" cols="30" rows="4" placeholder="300자 이내..." ></textarea>
                            <span id="counter">###</span>
@@ -555,7 +558,12 @@ p {
   		  
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
-
+	
+        //리스트 이전
+        $('.btn-primary').click(function(){
+        	window.history.back();
+        })
+        
         //댓글 글자 입력수
 		$(function typing() {
 		      $('#comment').keyup(function (e){
@@ -646,30 +654,6 @@ p {
             }
         }
         
-        //게시물 신고모달
-		    $(".report").click(function(){
-		        $("#exampleModal").on('hidden.bs.modal', function (e) {
-		        	  // do something...
-		        })
-	        })
-	        $(function(){
-			    $("#popbutton").click(function(){
-			        $('div.modal').modal({
-			                      remote : 'layer.html'
-			                });
-			    })
-			})
-
-
-
-
-        
-        
-        $('.report').on('click', function(){
-        	
-        })
-        
-        
         
         //댓글 등록
         	$(".commentSubmit").click(function(){
@@ -753,7 +737,8 @@ p {
        	$("#like").on('click',function(){
        		
        		var isActive = $(this).hasClass('active');
-       		$("#tipRecomCnt").remove();
+       		//$("#tipRecomCnt").remove();
+       		var tipRecomCnt = 
        		detail();
        		if($('#dislike').hasClass('active')){
        			alert('이미 싫어요를 눌렀어요')
@@ -761,6 +746,9 @@ p {
        		}
        		if(isActive == true){
        			insertRecommend(0, $('#tipNo').val());
+//        			$("#tipRecomCnt").remove();
+//        			$("#tipRecomHeart").next().append("<span id='tipRecomCnt'>${countRecomment}</span>")  ;    			
+// 					insertRecommend(0, $('#tipNo').val());
        		}else{
        			insertRecommend(1, $('#tipNo').val());
        		}
@@ -778,15 +766,19 @@ p {
         
         $('#dislike').on('click',function(){
         	var isActive = $(this).hasClass('active');
-        	$("#tipRecomCnt").remove();
+//         	$("#tipRecomCnt").remove();
+//         	$("#tipRecomCnt").text(parseInt(recomCnt.text()) + 1) ;
+        	
        		detail();
        		if($('#like').hasClass('active')){
        			alert('이미 좋아요를 눌렀어요')
        			return false;
        		}
 //         	alert(isActive);
+			//싫어요
         	if(isActive == true){
         		insertRecommend(0, $('#tipNo').val());
+   			//싫어요 취소
         	}else{
         		insertRecommend(-1, $('#tipNo').val());
         	}
@@ -810,9 +802,11 @@ p {
 				return false;
        			
 			}
+			//좋아요 
        		if(isActive == true){
        			recomCnt.text(parseInt(recomCnt.text()) - 1) ;
        			insertCommentRecommend(0, $(this).data('comno'));
+       		//좋아요 취소
        		}else{
        			recomCnt.text(parseInt(recomCnt.text()) + 1) ;
        			insertCommentRecommend(1, $(this).data('comno'));

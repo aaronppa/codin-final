@@ -4,6 +4,8 @@ import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.Search;
+import kr.co.codin.repository.domain.SearchTip;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
 import kr.co.codin.repository.domain.TipCommentRecommend;
@@ -11,13 +13,13 @@ import kr.co.codin.repository.domain.TipRecommend;
 
 public interface TipMapper {
 
-	List<Tip> selectTip(Page page);
+	List<Tip> selectTip(SearchTip searchTip);
 	Tip selectTipByNo(int tipNo);
 	void insertTip(Tip tip);
 	void updateTip(Tip tip);
 	void deleteTip(int tipNo);
 	void updateViewCnt(int tipNo);
-	int countTip();
+	int countTip(SearchTip searchTip);
 	
 	//댓글
 	void insertComment(TipComment tipComment);

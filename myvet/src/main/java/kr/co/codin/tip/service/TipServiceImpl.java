@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.FileInfo;
-import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.SearchTip;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
 import kr.co.codin.repository.domain.TipCommentRecommend;
@@ -20,8 +20,8 @@ public class TipServiceImpl implements TipService{
 	private TipMapper mapper;
 
 	@Override
-	public List<Tip> tipList(Page page) {
-		return mapper.selectTip(page);
+	public List<Tip> tipList(SearchTip searchTip) {
+		return mapper.selectTip(searchTip);
 	}
 	
 
@@ -57,8 +57,8 @@ public class TipServiceImpl implements TipService{
 
 
 	@Override
-	public int countTip() {
-		return mapper.countTip();
+	public int countTip(SearchTip searchTip) {
+		return mapper.countTip(searchTip);
 	}
 
 	//댓글

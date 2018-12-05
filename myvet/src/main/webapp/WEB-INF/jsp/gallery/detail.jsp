@@ -422,35 +422,53 @@
     	})
     })
     
+    $(function(){
+    	list();
+    })
+    
     //댓글 조회
     function list(){	
 	    $.ajax({
 	    	url : '/myvet/gallery/commentList.do',
 	    	type : 'post',
-	    	data: {galleryNo : $('#galleryNo').val()},
-	    	dataType : 'json'
+	    	data: {galleryNo : $('#galleryNo').val()}
+// 	    	dataType : 'json'
 	    }).done(function(result){
 	    	console.log('댓글 불러오기')
 	    	for(let i=0; i < result.length; i++){
 	    		let likeRecommend = "", dislikeRecommend = "";
 			$('#comment-list').append(
 				//작성자 이미지
-				"<div class='photo'>"
-				+"<div class='commenter-pic'><img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle' width='60px' height='60px'></div>"
-				+"<div class='comment-block'/>"
-				//댓글내용
-				+"<p class='comment-text'>"+result[i].comment+"</p>"
-				//댓글 정보 폼
-				+"<div class='bottom-comment'>"
-				//댓글 작성일
-				+"<div class='comment-date'>"+result[i].regDate+"</div>"
-				//댓글 삭제, 신고
-				+"<ul class='comment-actions'>"
-				+"<li class='delete-comment'>삭제</li>"
-				+"<li class='report-comment'>신고</li>"
-				+"</ul>"
-				+"</div>"
-				+"</div>"
+// 				"<div class='photo'>"
+// 				+"<div class='commenter-pic' ><img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle' width='60px' height='60px'></div>"
+// 				+"<div class='comment-block'/>"
+// 				//댓글내용
+// 				+"<p class='comment-text'>"+result[i].comment+"</p>"
+// 				//댓글 정보 폼
+// 				+"<div class='bottom-comment'>"
+// 				//댓글 작성일
+// 				+"<div class='comment-date'>"+result[i].regDate+"</div>"
+// 				//댓글 삭제, 신고
+// 				+"<ul class='comment-actions'>"
+// 				+"<li class='delete-comment'>삭제</li>"
+// 				+"<li class='report-comment'>신고</li>"
+// 				+"</ul>"
+// 				+"</div>"
+// 				+"</div>"
+	                "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
+	              	+"<button class='com-like "+likeRecommend+"' style='background:none; border:none; margin-left:55%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up' style='font-size:25px;'></i>"+"</button><button class='com-dislike "+dislikeRecommend+"' style='background:none; border:none; margin-left:5%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down' style='font-size:25px;'></i>"+"</button>"	
+	            	+"<i class='fas fa-heart' style='margin-left: 5%;color:red;'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+	                
+	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
+	                +"<div class='comment-content'>" 
+		                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].comment+"'/>"
+		                +"<div class='comment' style='width:400px;height:auto;font-size:20px;font-style:normal;' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
+	              	+"</div>"
+// 	              	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
+// 	              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
+	              	+"<button type='button' class='btn btn-outline-success' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' style='margin-left:70%;'>UPDATE</button>"
+	              	+"<button type='button' class='btn btn-outline-danger' data-deletecombtn='"+result[i].commentNo+"' style='margin-left:5%;'>DELETE</button>"
+	              	+"<hr>"
 			);
 	    	}
 	    })

@@ -62,5 +62,13 @@ public class Tip {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "Tip [tipNo=" + tipNo + ", boardCode=" + boardCode + ", title=" + title + ", memberNo=" + memberNo
+				+ ", content=" + content + ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", categoryCode="
+				+ categoryCode + "]";
+	}
+	
+	
 	
 }

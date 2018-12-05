@@ -27,10 +27,14 @@
 /*         body { */
 /*             padding:30px 30px; */
 /*         } */
-
+		
         /*category*/
         @import "compass/css3";
-        
+        .container{
+        	width:1100px;
+        	margin-left: auto;
+        	margin-right: auto;
+        }
         select[disabled]{
         color:#aaa;
         }
@@ -39,7 +43,7 @@
 
         /*search*/
         .mb-3{
-            margin-left: 70%;
+            margin-left: 65%;
         }
         .dropdown-toggle{
             background: none;
@@ -51,7 +55,7 @@
         /*검색입력창*/
         .input-search{
             border:none;
-            width: 280px;
+            width: 18%;
             color: saddlebrown;
         }
         /*검색버튼*/
@@ -62,46 +66,6 @@
         .btn-outline:hover{
             border:none;
             opacity: 0.5;
-        }
-
-        input#search-bar {
-        margin: 0 auto;
-        width: 100%;
-        height: 45px;
-        padding: 0 20px;
-        font-size: 1rem;
-        border: 1px solid #D0CFCE;
-        outline: none;
-        }
-        input#search-bar:focus {
-        border: 1px solid #008ABF;
-        transition: 0.20s ease;
-        color: #008ABF;
-        }
-        input#search-bar:focus::-webkit-input-placeholder {
-        transition: opacity 0.45s ease;
-        opacity: 0;
-        }
-        input#search-bar:focus::-moz-placeholder {
-        transition: opacity 0.45s ease;
-        opacity: 0;
-        }
-        input#search-bar:focus:-ms-placeholder {
-        transition: opacity 0.45s ease;
-        opacity: 0;
-        }
-
-        .search-icon {
-        position: relative;
-        float: right;
-        width: 75px;
-        height: 75px;
-        top: -62px;
-        right: -10px;
-        }
-        .search-icon:hover{
-            transform: scale(1.5);
-            transition: 0.5s;
         }
         
         /*writeBtn*/
@@ -136,25 +100,34 @@
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
     
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 </head>
 <body>
-   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
-    
+    <div class="container">
     <!--search-->
     <!--category-->
-    <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Title</button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Title</a>
-                <a class="dropdown-item" href="#">Content</a>
-                <div role="separator" class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Title + Content</a>
-              </div>
-            </div>
-            <input type="text" class="input-search" placeholder="search">
-            <button type="button" class="btn btn-outline">검색</button>
-    </div>
+    <form action="<c:url value='/tip/list.do'/>" method="get">
+	    <div class="input-group mb-3">
+	      		<select name="sort" id="sort" class="sort">
+					<option selected value="0">검색조건</option>
+					<option value="1">제목</option>
+					<option value="2">내용</option>
+					<option value="3">작성자</option>
+					<option value="4">제목+내용</option>
+				</select>
+	      		<select name="category" id="category" class="category">
+					<!--<option selected value="">Category</option>  -->
+					<option selected value="0">카테고리 전체</option>
+					<option value="1">건강</option>
+					<option value="2">생활</option>
+					<option value="3">용품</option>
+					<option value="4">기타</option>
+				</select>
+				
+	            <input type="text" name="keyword" id="keyword" class="input-search" placeholder="search">
+	            <input type="submit" class="btn btn-outline" value="검색"></input>
+	    </div>
+    </form>
     <!--count-->
     
     <!--list-->
@@ -187,6 +160,9 @@
 					<c:if test="${t.categoryCode eq 3}">
 		                <td>용품</td>
 					</c:if>
+					<c:if test="${t.categoryCode eq 4}">
+		                <td>기타</td>
+					</c:if>
 	                <td><fmt:formatDate value="${t.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	                <td>${t.viewCnt}</td>
 	                <td><i class="fas fa-heart" style="color:red;">&nbsp;123</i> 
@@ -206,9 +182,22 @@
     <div id="pagination">
    		 <c:import url="page.jsp"></c:import>
     </div>
+    </div>
 </body>
 <script>
 
+//search
+// function search(){
+// 	$('.input-search').click(function(){
+// 		$.ajax({
+// 			url:'/myvet/tip/list.do',
+// 			type:'post',
+// 			data:{sort : $('#sort').val(), category:$('#category').val(), keyword:$('keyword').val()}
+// 		}).done(function(result){
+// 			console.log('검색 성고옹')
+// 		})
+// 	})
+// }
 
 
 /*category*/
@@ -229,30 +218,12 @@ color = chainSelect('select#color', '#qty');
 qty = chainSelect('select#qty', '#submit');
 
 
-// $.ajax({
-// 	url : "/myvet/tip/countComment.do",
-// 	type : "post",
-// 	data : {tipNo : $("#tipNo").val()}
-// }).done(function(result){
-// 	console.log("countComment-success : "+ $("#tipNo").val())
-// 	$("#countComment").show(result)
-// })
-
 
 $('#addToCart').submit(function(){
   event.preventDefault();
   alert('Size: ' + size + '\nColor: ' + color + '\nQuantity: ' + qty);
 });
-//count
-// $ajax({
-// 	url: "<c:url value='/tip/countTip.do'/>",
-// 	type: "post",
-// 	data:{tipNo:$("#tipNo").val()}
-// }).done(function(result){
-// 	console("countAjax")
-// });
 
-//pagenation
 
 
 

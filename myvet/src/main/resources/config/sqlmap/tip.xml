@@ -44,15 +44,43 @@
 		<result column="file_path" property="filePath"/>
 		<result column="file_size" property="fileSize"/>
 	</resultMap>
-<!-- 	<resultMap id="reportCodeListMap" type="reportCodeList"> -->
-<!-- 		<result column="report_code" property="reportCode"/> -->
-<!-- 		<result column="report_type" property="reportType"/> -->
-<!-- 	</resultMap> -->
 
 	
-	<select id="selectTip" resultMap="tipMap">
+	<select id="selectTip" parameterType='SearchTip' resultMap="tipMap">
 		select *
 		  from tip
+		<choose>
+  			<when test="sort == 0">
+  				where title like CONCAT('%',#{keyword},'%') or content like CONCAT('%',#{keyword},'%') or member_no like CONCAT('%',#{keyword},'%')
+  			</when>
+  			<when test="sort == 1">
+  				where title like CONCAT('%',#{keyword},'%')
+  			</when>
+  			<when test="sort == 2">
+  				where content like CONCAT('%',#{keyword},'%')
+  			</when>
+  			<when test="sort == 3">
+  				where member_no like CONCAT('%', #{keyword},'%')
+  			</when>
+  			<when test="sort == 4">
+  				where title like CONCAT('%', #{keyword},'%') or content like CONCAT('%', #{keyword},'%')
+  			</when>
+  			<when test="category == 0">
+  				and category_code = 1 or 2 or 3 or 4
+  			</when>
+  			<when test="category == 1">
+  				and category_code = 1
+  			</when>
+  			<when test="category == 2">
+  				and category_code = 2
+  			</when>
+  			<when test="category == 3">
+  				and category_code = 3
+  			</when>
+  			<when test="category == 4">
+  				and category_code = 4
+  			</when>
+  		</choose> 
 		 order by tip_no desc
 		 limit #{begin}, #{pageNum}		
 	</select>
@@ -87,15 +115,58 @@
 		 where tip_no = #{tipNo}
 	</update>
 	<select id="countRecommend" resultType="int">
-		select count(recommend)
+		select count(*)
 		  from tip_recommend
+		 where tip_no=#{tipNo}
 	</select>
 	
-	<select id="countTip" resultType="int">
+	<select id="countTip" parameterType="SearchTip" resultType="int">
 		select count(*)
 		  from tip
+		  		<choose>
+  			<when test="sort == 0">
+  				where title like CONCAT('%',#{keyword},'%') or content like CONCAT('%',#{keyword},'%') or member_no like CONCAT('%',#{keyword},'%')
+  			</when>
+  			<when test="sort == 1">
+  				where title like CONCAT('%',#{keyword},'%')
+  			</when>
+  			<when test="sort == 2">
+  				where content like CONCAT('%',#{keyword},'%')
+  			</when>
+  			<when test="sort == 3">
+  				where member_no like CONCAT('%', #{keyword},'%')
+  			</when>
+  			<when test="sort == 4">
+  				where title like CONCAT('%', #{keyword},'%') or content like CONCAT('%', #{keyword},'%')
+  			</when>
+  			<when test="category == 0">
+  				and category_code = 1 or 2 or 3 or 4
+  			</when>
+  			<when test="category == 1">
+  				and category_code = 1
+  			</when>
+  			<when test="category == 2">
+  				and category_code = 2
+  			</when>
+  			<when test="category == 3">
+  				and category_code = 3
+  			</when>
+  			<when test="category == 4">
+  				and category_code = 4
+  			</when>
+  		</choose> 
+		  
 	</select>
-	
+<!-- 		<select id="selectRecomment" parameterType="tip" resultMap="tipCommentMap"> -->
+<!-- 		select a.recommend,  -->
+<!-- 				(select count(*) from tip_recommend where recommend = 1 and tip_no = a.tip_no) -->
+<!-- 		        - -->
+<!-- 		        (select count(*) from tip_recommend where recommend = -1 and tip_no =  a.tip_no) as recommendCnt, -->
+<!-- 			   (select recommend from tip_recommend where tip_no = a.tip_no and member_no=#{memberNo}) as recommend -->
+<!-- 		  from tip a -->
+<!-- 		 where a.tip_no=#{tipNo} -->
+<!-- 		 order by a.tip_no desc -->
+<!-- 	</select> -->
 	<!-- 댓글 -->
 	<insert id="insertComment" parameterType="tipComment">
 		insert into tip_comment(
@@ -105,14 +176,14 @@
 		)
 	</insert>
 	<select id="selectComment" parameterType="tip" resultMap="tipCommentMap">
-		select a.*, 
-				(select count(*) from tip_comment_recommend where recommend = 1 and comment_no = a.comment_no)
-		        -
-		        (select count(*) from tip_comment_recommend where recommend = -1 and comment_no =  a.comment_no) as recommendCnt,
-			   (select recommend from tip_comment_recommend where comment_no = a.comment_no and member_no=#{memberNo}) as recommend
-		  from tip_comment a
-		 where a.tip_no=#{tipNo}
-		 order by a.comment_no desc
+			select a.*,
+			(select count(*) from tip_comment_recommend where recommend = 1 and comment_no = a.comment_no) 
+			- 
+			(select count(*) from tip_comment_recommend where recommend = -1 and comment_no = a.comment_no) as recommendCnt,
+			(select recommend from tip_comment_recommend where comment_no = a.comment_no and member_no=#{memberNo}) as recommend
+			from tip_comment a 
+			where a.tip_no=#{tipNo}
+			order by a.comment_no desc
 	</select>
 	<delete id="deleteComment" parameterType="tipComment">
 		delete 
