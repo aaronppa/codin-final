@@ -2412,4 +2412,5 @@ textarea {
 /*  */
 .pagination {
   text-align: center;
+  display: block !important;
 }

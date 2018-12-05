@@ -15,9 +15,9 @@ crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/admin/table.css"/>">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
-<link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
-<script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
-<script src="<c:url value='/resources/js/waitme/common-waitme.js'/>"></script>
+<%-- <link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
+<script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script> --%>
+<%-- <script src="<c:url value='/resources/js/waitme/admin-waitme.js'/>"></script> --%>
 <style>
 ul.pagination{
 	padding: 0px;
@@ -29,7 +29,7 @@ ul.pagination{
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
     <div class="admin main container">
         <div class="listarea vetauth">
-            <h2 id="vetauthheader">수의사 인증 요청 리스트</h2>
+            <h2><a id="vetauthheader">수의사 인증 요청 리스트</a></h2>
             <div class="search">
                 <form action="" id="vetAuth-search" method="post"> 
                     상태:
@@ -68,7 +68,7 @@ ul.pagination{
         </div>
         <hr>
         <div class="listarea report">
-            <h2 id="reportheader">신고 접수 리스트</h2>
+            <h2><a id="reportheader">신고 접수 리스트</a></h2>
             <div class="search">
                 <form action="" id="report-search" method="post" data-boardtype='report'>
                     상태:
@@ -149,7 +149,7 @@ ul.pagination{
         </div>
         <hr>
         <div class="listarea notice">
-            <h2 id="noticeheader">사이트 전체 공지사항</h2>
+            <h2><a id="noticeheader">사이트 전체 공지사항</a></h2>
             <button type="button" id="write">글작성</button>
             <div class="search">
                 <form action="" id="notice-search" method="post" data-boardtype='notice'>
@@ -225,7 +225,7 @@ ul.pagination{
         </div>
         <hr>
         <div class="listarea member">
-            <h2 id="memberheader">회원관리(검색)</h2>
+            <h2><a id="memberheader">회원관리(검색)</a></h2>
             <div class="search">
             <form action="" id="member-search" method="post" data-boardtype='member'>
                 회원구분: 
@@ -280,9 +280,9 @@ ul.pagination{
 			    </nav>
         </div>
     </div>
-
 <script src="<c:url value='/resources/js/datetime/jquery-dateformat.js'/>"></script>
 <script>
+
 /* Global Variables */
 var pageNo;
 var boardType;
@@ -342,9 +342,7 @@ $("nav.pagination").on("click","a.nostyle", function(e) {
 	
 	if ($(this).hasClass("disabled")) return false;
 
-	sendRetrieveReq(boardType, pageNo, formData); 
-
-	location.href="#"+boardType+"header";
+	sendRetrieveReq(boardType, pageNo, formData);
 });
 
 
@@ -370,7 +368,6 @@ $(".searchbtn").click(function(e){
 	console.log(formData);
 	
 	sendRetrieveReq(boardType, pageNo, formData);
-
 });
 
 /* Ajax Send Request */
@@ -394,7 +391,7 @@ function sendRetrieveReq(boardType, pageNo, formData){
 					    updateCurrPg(boardType, result.noticePageResult);
 						break;
 		case "member":  $("tbody#memberlist").html(updateList(boardType, result.member));
-						updateCurrPg(boardType, result.memberPageResult);
+						 updateCurrPg(boardType, result.memberPageResult); 
 						break;
 		
 		}
@@ -403,6 +400,8 @@ function sendRetrieveReq(boardType, pageNo, formData){
 		console.dir($(this));
 		formData="";
 		console.log("formData after AJAX: ", formData);
+		
+		location.href="#"+boardType+"header";
 	});
 }
 

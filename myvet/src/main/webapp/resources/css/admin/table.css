@@ -264,16 +264,6 @@ html [type="button"],
   -webkit-appearance: button;
   /* 2 */ }
 
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  /**
-       * Remove the inner border and padding in Firefox.
-       */
-  /**
-       * Restore the focus styles unset by the previous rule.
-       */ }
   button::-moz-focus-inner,
   [type="button"]::-moz-focus-inner,
   [type="reset"]::-moz-focus-inner,
@@ -315,13 +305,15 @@ input {
      * 2. Correct the outline style in Safari.
      */
 [type="search"] {
-  -webkit-appearance: textfield;
+  -webkit-appearance: textfield !important;
   /* 1 */
-  outline-offset: -2px;
+  outline-offset: -2px !important;
   /* 2 */
   /**
        * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
-       */ }
+       */ 
+  border-radius: 5px;     
+  }
   [type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none; }
 
@@ -2575,9 +2567,9 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
 .admin.main.container{
     width: 1100px;
     margin: auto;
-    border: 1px solid skyblue;
     font-size: 13px;
     padding-bottom: 50px;
+    padding-top: 25px;
 }
 
 table, tr, th, td{
@@ -2592,12 +2584,12 @@ table{
     table-layout: fixed;
 }
 h2, .search{
-	margin-left: 55px;
+	margin-left: 40px !important;
 }
 
 h2{
-    font-size: initial-scale;
-    margin-bottom: -10px;;
+    font-size: 25px !important;
+    margin-bottom: -10px !important;
 }
 
 .search{
@@ -2616,12 +2608,11 @@ table.list{
 
 .listcnt{
     clear:left;
-    margin-right: 55px;
+    margin-right: 40px;
     float:right;
 }
 
 button#write{
-    margin-top: 1.5em;
     margin-left: 20px;
     border-radius: 5px;
     padding: 5px;
@@ -2630,6 +2621,7 @@ button#write{
 }
 button, input[type="button"]{
     cursor: pointer;
+    border-radius: 5px;
 }
 
 tbody > tr:not(.focus-search):hover{
@@ -2639,7 +2631,7 @@ tbody > tr:not(.focus-search):hover{
 }
 
 .datetime{
-    width: 160px;
+    width: 166px;
 
 }
 
@@ -2652,7 +2644,6 @@ tbody > tr:not(.focus-search):hover{
     width: 150px;
 
 }
-
 
 .category, .listno, .memberGrade, .petcnt{
     width: 90px;
@@ -2685,7 +2676,7 @@ a.nostyle:hover{
 }
 
 select, .indent{
-	margin-right: 15px;
+	margin-right: 15px !important;
 }
 
 input[name="keyword"]{

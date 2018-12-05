@@ -38,7 +38,7 @@
 			<if test="memberId!=null and memberId!=''">
 				notice_writer = #{memberId}
 			</if>
-			<if test="keyword!=null">
+			<if test="keyword!=null and keyword!=''">
 				and concat(notice_title, notice_content) like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="status==1">
@@ -85,7 +85,7 @@
 			<if test="memberId!=null and memberId!=''">
 				notice_writer = #{memberId}
 			</if>
-			<if test="keyword!=null">
+			<if test="keyword!=null and keyword!=''">
 				and concat(notice_title, notice_content) like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="status==1">

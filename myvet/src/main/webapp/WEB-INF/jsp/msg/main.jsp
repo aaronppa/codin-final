@@ -22,7 +22,7 @@ body{
 .main-container{
     width: 1050px;
     height: 620px;
-    margin: auto;
+    margin: 30px auto;
     display: flex;
     position:relative;
     -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -30,6 +30,7 @@ body{
             box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
   	margin-top: 10px auto;
   	background:#FFF;
+  	border-radius: 5px;
 }
 
 .main-container:before, .main-container:after
@@ -72,13 +73,25 @@ body{
 }
 
 .side-subcontainer{
-    width: 275px;
+    width: 272px;
     border-right:1px solid #8b787a;
 }
 
 .main-subcontainer{
     width: 775px;
-    
+}
+
+.left-panel, .main-panel{
+	overflow-y: auto;
+	height: 570px;
+}
+
+.scrollable::-webkit-scrollbar{
+	width: 2px;
+}
+.scrollable::-webkit-scrollbar-thumb{
+	background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 
 h5{
@@ -99,10 +112,11 @@ h5{
     cursor: pointer;
 }
 
-ul{
+#chatroomlist{
     list-style-type: none;
     margin: 0;
     padding: 0;
+    height: auto;
 }
 
 .rounded-circle{
@@ -135,13 +149,14 @@ ul{
 }
 .chat-info{
 	height: inherit;
-	width: 209px;
+	width: 204px;
+	padding-top: 10px;
 }
 .recipients,.lastmsg.brief{
 	position: relative;
-	height: 32px;
-	width: 209px;
-	line-height: 1.75em;
+	height: 22px;
+	width: 204px;
+	line-height: 20px;;
 }
 
 .nodisplay{
@@ -164,6 +179,19 @@ input.recipient{
 .recipients-input > div:first-child{
 	line-height: 27px;
 }
+
+.recipientSearchLayer{
+	position: absolute;
+	left: 527px;
+	top: 150px;
+	width: 300px;
+	min-height: 200px;
+	max-height: 400px;
+	border: 1px solid grey;
+	border-radius: 5px;
+	background: #fff;
+}
+
 </style>
 </head>
 <body>
@@ -177,38 +205,51 @@ input.recipient{
                     <i class="far fa-edit fa-lg" id="writemsgbtn"></i>
                 </div>
             </div>
-            <div class="left-panel">
+            <div class="left-panel scrollable">
                 <ul class="conversation list" id="chatroomlist">
-                    <%-- <li class="converstaion-chatroom">
+                <c:forEach begin="0" end="20" step="1" var="hi">
+                    <li class="converstaion-chatroom">
                        <div class='chatroom'>
                        	<div class='profile'>
                        	<img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle">
                        	</div>
                        	<div class='chat-info'>
 	                   		<div class='recipients'>
-	                   		신규 대화방
+	                   		원래 있는 대화방
 	                   		</div>
 	                   		<div class='lastmsg brief'>
 	                   		</div>
                    		</div>
                    		</div>
-                    </li> --%>
+                    </li>
+                   </c:forEach>
                 </ul>
             </div>
         </div>
         <div class="main-subcontainer">
             <div class="top-main header">
            	 <div class="recipients-input">
-            	<div>수신자: </div>
-            	<div>
-            		<input autocomplete="off" class="recipient" placeholder="수신자 닉네임 또는 수신단체명을 입력해주세요" spellcheck="false" type="text">
-           	 	</div>
+            	
             </div>
             </div>
-            <div class="main-panel"></div>
+            <div class="main-panel scrollable">
+            </div>
         </div>
     </div>
+    
+    <div class="recipientSearchLayer nodisplay">
+    	<div class="recipientSearchBox scrollable">
+    		<div class="recipientResultType">
+    		<ul class="recipientSearchList">
+    		</ul>
+    		</div>
+  			<div class="recipientResultType">
+  			</div>
+    	</div>
+    </div>
 <script>
+
+/* Write Button Action */
 /* 신규메세지 버튼 한번만 작동시키기 위한 스위치 */
 var newMsgSwitch = false;
 
@@ -228,12 +269,35 @@ $("#writemsgbtn").on("click", function(){
 					   		</div>
 					   		</div>
 					   		 </li>`;
-		$("#chatroomlist").append(chatRoomHtml);
-		newMsgSwitch = true;
+		$("#chatroomlist").prepend(chatRoomHtml);
 		
+		var recipientInputHtml = ` <div class="recipients-input">
+							        	<div>수신자:&nbsp;</div>
+							        	<div>
+							        		<input autocomplete="off" id="recipientSearch" class="recipient" placeholder="수신자 닉네임 또는 수신단체명을 입력해주세요" spellcheck="false" type="text">
+							       	 	</div>
+							        </div>`;
+		
+		$(".top-main.header").html(recipientInputHtml);
+		
+		newMsgSwitch = true;
 	}
 })
 
+/* 수신자 검색 */
+$(".top-main.header").on("keyup","#recipientSearch",function(){
+	$(".recipientSearchLayer.nodisplay").removeClass("nodisplay");
+	console.log("Recipient Search Input Keyup this:",$(this).val());
+	
+	$.post({
+		
+	});
+	
+});
+
+$(".top-main.header").on("blur","#recipientSearch",function(){
+	$(".recipientSearchLayer").addClass("nodisplay");
+});
 </script>
 </body>
 </html>
