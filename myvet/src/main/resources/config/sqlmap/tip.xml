@@ -13,7 +13,9 @@
 		<result column="reg_date" property="regDate"/>		
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="category_code" property="categoryCode"/>
+		<association property="recomCnt" column="tip_no" select="countRecommend"></association>
 	</resultMap>
+	
 	<resultMap type="tipComment" id="tipCommentMap">
 		<result column="comment_no" property="commentNo"/>
 		<result column="tip_no" property="tipNo"/>		
@@ -23,18 +25,21 @@
 		<result column="recommend" property="recommend"/>		
 		<result column="recommendCnt" property="recommendCnt"/>		
 	</resultMap>
+	
 	<resultMap type="tipRecommend" id="tipRecommendMap">
 		<result column="no" property="no"/>
 		<result column="tip_no" property="tipNo"/>		
 		<result column="member_no" property="memberNo"/>		
 		<result column="recommend" property="recommend"/>
 	</resultMap>
+	
 	<resultMap type="tipCommentRecommend" id="tipCommentRecommendMap">
 		<result column="no" property="no"/>
 		<result column="comment_no" property="commentNo"/>		
 		<result column="member_no" property="memberNo"/>		
 		<result column="recommend" property="recommend"/>
 	</resultMap>
+	
 	<resultMap id="fileMap" type="fileInfo">
 		<result column="file_id" property="fileId"/><!-- 파일번호(auto) -->
 		<result column="board_code" property="boardCode"/><!-- 게시판 테이블 고유 번호(FK(code_list(board_code))) -->
@@ -45,6 +50,11 @@
 		<result column="file_size" property="fileSize"/>
 	</resultMap>
 
+	<select id="countRecommend" parameterType="int" resultType="int">
+		select count(*)
+		from tip_recommend
+		where tip_no = #{tipNo}
+	</select>
 	
 	<select id="selectTip" parameterType='SearchTip' resultMap="tipMap">
 		select *
@@ -114,10 +124,19 @@
 		   set view_cnt = view_cnt+1
 		 where tip_no = #{tipNo}
 	</update>
-	<select id="countRecommend" resultType="int">
-		select count(*)
+	<select id="sumRecommend" parameterType="int" resultType="Integer">
+		select sum(recommend) as recommend
 		  from tip_recommend
 		 where tip_no=#{tipNo}
+		 
+<!-- 		select  -->
+<!-- 		(select count(*) from tip_recommend where recommend = 1 and tip_no = a.tip_no) -->
+<!-- 		- -->
+<!-- 		(select count(*) frin tip_recommend where recommend =-1 and tip_no= a.tip_no) as recommendCnt, -->
+<!-- 		(select recommend from tip_recommend where tip_no = a.tip_no and member_no=#{memberNo}) as recommend -->
+<!-- 		from tip_recommend a -->
+<!-- 		where a.tip_no=#{tipNo} -->
+<!-- 		order by a.tip_no desc -->
 	</select>
 	
 	<select id="countTip" parameterType="SearchTip" resultType="int">

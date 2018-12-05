@@ -11,6 +11,7 @@ public class Tip {
 	private Date regDate;
 	private int viewCnt;
 	private int categoryCode;
+	private int recomCnt;
 	
 	public int getTipNo() {
 		return tipNo;
@@ -60,15 +61,17 @@ public class Tip {
 	public void setCategoryCode(int categoryCode) {
 		this.categoryCode = categoryCode;
 	}
-	
+	public int getRecomCnt() {
+		return recomCnt;
+	}
+	public void setRecomCnt(int recomCnt) {
+		this.recomCnt = recomCnt;
+	}
 	
 	@Override
 	public String toString() {
 		return "Tip [tipNo=" + tipNo + ", boardCode=" + boardCode + ", title=" + title + ", memberNo=" + memberNo
 				+ ", content=" + content + ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", categoryCode="
-				+ categoryCode + "]";
+				+ categoryCode + ", recomCnt=" + recomCnt + "]";
 	}
-	
-	
-	
 }

@@ -43,7 +43,7 @@ public interface TipService {
 	Integer selectRecommend(TipRecommend tipRecommend);
 	void insertRecommend(TipRecommend tipRecommend);
 	void deleteRecommend(TipRecommend tipRecommend);
-	int countRecommend(int tipNo);
+	Integer sumRecommend(int tipNo);
 	
 	//댓글 추천
 	Integer selectCommentRecommend(TipCommentRecommend tipCommentRecommend);

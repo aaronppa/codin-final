@@ -124,8 +124,10 @@ public class TipServiceImpl implements TipService{
 	//댓글 추천
 
 	@Override
-	public int countRecommend(int tipNo) {
-		return mapper.countRecommend(tipNo);
+	public Integer sumRecommend(int tipNo) {
+		System.out.println("impl");
+		System.out.println(mapper.sumRecommend(tipNo));
+		return mapper.sumRecommend(tipNo);
 	}
 
 

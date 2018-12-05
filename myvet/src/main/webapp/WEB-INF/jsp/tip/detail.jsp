@@ -406,11 +406,11 @@ p {
 }
 
 .active {
-  color: red;
+  color: blue;
 }
 
 .comActive{
-	color: red;
+	color: blue;
 	transition:.5s;
 }
 <!--신고-->
@@ -428,6 +428,9 @@ p {
 
 #delete-update > span > a {
 	width: 100px;
+}
+.grow{
+	font-size: 10px;
 }
 
     </style>
@@ -457,7 +460,7 @@ p {
            		<c:if test="${tip.categoryCode eq 4 }">
            			<i style="margin-left:5%;">category : 기타</i>
            		</c:if>
-                <i class="fas fa-heart" id="tipRecomHeart"style="margin-left: 5%;color:red;">&nbsp;</i><span id="tipRecomCnt">${countRecomment}</span>
+               <i class="fas fa-heart" id="tipRecomHeart"style="margin-left: 5%;color:red;">&nbsp;</i><span id="tipRecomCnt">${sumRecommend}</span> 
                 <i class="far fa-eye" style="margin-left: 5%;">&nbsp; ${tip.viewCnt}</i>
                 <i class="far fa-clock"style="margin-left: 5%;">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
               </div>
@@ -735,22 +738,24 @@ p {
         //추천
         
        	$("#like").on('click',function(){
-       		
        		var isActive = $(this).hasClass('active');
        		//$("#tipRecomCnt").remove();
-       		var tipRecomCnt = 
+       		var tipRecomCnt = $('#tipRecomCnt');
+       		console.log(tipRecomCnt.text());
+       		
        		detail();
        		if($('#dislike').hasClass('active')){
        			alert('이미 싫어요를 눌렀어요')
        			return false;
        		}
        		if(isActive == true){
-       			insertRecommend(0, $('#tipNo').val());
-//        			$("#tipRecomCnt").remove();
-//        			$("#tipRecomHeart").next().append("<span id='tipRecomCnt'>${countRecomment}</span>")  ;    			
-// 					insertRecommend(0, $('#tipNo').val());
+       			tipRecomCnt.text(parseInt(tipRecomCnt.text()) - 1) ;
+       			insertRecommend(0);
        		}else{
-       			insertRecommend(1, $('#tipNo').val());
+       			tipRecomCnt.text(parseInt(tipRecomCnt.text()) + 1) ;
+       			
+       			insertRecommend(1);
+
        		}
        		$(this).toggleClass('active')
        	})
@@ -766,21 +771,23 @@ p {
         
         $('#dislike').on('click',function(){
         	var isActive = $(this).hasClass('active');
-//         	$("#tipRecomCnt").remove();
-//         	$("#tipRecomCnt").text(parseInt(recomCnt.text()) + 1) ;
-        	
+        	var tipRecomCnt = $('#tipRecomCnt');
        		detail();
        		if($('#like').hasClass('active')){
        			alert('이미 좋아요를 눌렀어요')
        			return false;
        		}
 //         	alert(isActive);
-			//싫어요
+			//싫어요 취소
         	if(isActive == true){
-        		insertRecommend(0, $('#tipNo').val());
-   			//싫어요 취소
+        		insertRecommend(0);
+       			tipRecomCnt.text(parseInt(tipRecomCnt.text()) + 1) ;
+
+   			//싫어요 
         	}else{
-        		insertRecommend(-1, $('#tipNo').val());
+        		insertRecommend(-1);
+       			tipRecomCnt.text(parseInt(tipRecomCnt.text()) - 1) ;
+
         	}
         	$(this).toggleClass('active')
         })

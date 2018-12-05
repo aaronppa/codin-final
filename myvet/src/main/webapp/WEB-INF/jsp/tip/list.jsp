@@ -106,7 +106,7 @@
     <div class="container">
     <!--search-->
     <!--category-->
-    <form action="<c:url value='/tip/list.do'/>" method="get">
+    <form action="<c:url value='/tip/list.do'/>" method="post">
 	    <div class="input-group mb-3">
 	      		<select name="sort" id="sort" class="sort">
 					<option selected value="0">검색조건</option>
@@ -165,7 +165,7 @@
 					</c:if>
 	                <td><fmt:formatDate value="${t.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	                <td>${t.viewCnt}</td>
-	                <td><i class="fas fa-heart" style="color:red;">&nbsp;123</i> 
+	                <td><i class="fas fa-heart" style="color:red;">&nbsp;${t.recomCnt }</i> 
 	                </td>
 	           	</tr>
      		</c:forEach>   	

@@ -59,10 +59,6 @@ public class TipController {
 		model.addAttribute("pageResult", new PageResult(pageNo,service.countTip(searchTip)));
 	}
 	
-	
-
-	
-	
 	@RequestMapping("detail.do")
 	public void detail(Model model,int tipNo, HttpSession session, TipRecommend tipRecommend,TipCommentRecommend tipCommentRecommend) throws Exception{
 		
@@ -71,6 +67,12 @@ public class TipController {
 //		tipRecommend.setMemberNo(memberNo);
 		
 		tipRecommend.setMemberNo(7);
+		int sumRecommend = 0;
+		try {
+		sumRecommend = service.sumRecommend(tipNo);
+		} catch(Exception e) {
+			;;
+		}
 		
 		System.out.println("detail");
 		System.out.println(tipNo);
@@ -79,7 +81,8 @@ public class TipController {
 		model.addAttribute("tip", service.detailTip(tipNo));
 		model.addAttribute("recom",service.selectRecommend(tipRecommend));
 		model.addAttribute("comRecom",service.selectCommentRecommend(tipCommentRecommend));
-		model.addAttribute("countRecomment", service.countRecommend(tipNo));
+		model.addAttribute("sumRecommend", sumRecommend);
+		System.out.println("cnt:"+ service.sumRecommend(tipNo));
 		
 	}
 	
