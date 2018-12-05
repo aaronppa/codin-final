@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Notice;
 import kr.co.codin.repository.domain.Search;
+import kr.co.codin.repository.domain.VetAuth;
 
 public interface AdminMapper {
 	List<Notice> noticeList(Search search);

@@ -16,7 +16,6 @@
 	<resultMap type="Member" id="memberMap">
 		<result column="member_no" property="memberNo"/>
 		<result column="member_email" property="memberEmail"/>
-		<result column="password" property="password"/>
 		<result column="member_grade" property="memberGrade"/>
 		<result column="member_name" property="memberName"/>
 		<result column="member_phone" property="memberPhone"/>
@@ -29,6 +28,17 @@
 		<result column="member_file_path" property="memberFilePath"/>
 		<result column="member_file_size" property="memberFileSize"/>
 		<result column="member_file_reg_date" property="memberFileRegDate"/>
+		<collection column="member_no" property="vetAuth" select="selectVetAuthByNo"></collection>
+	</resultMap>
+	
+	<resultMap type="VetAuth" id="vetAuthMap">
+		<result column="vet_file_no" property="vetFileNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="vet_ori_name" property="vetOriName" />
+		<result column="vet_sys_name" property="vetSysName" />
+		<result column="vet_file_path" property="vetFilePath" />
+		<result column="vet_file_size" property="vetFileSize" />
+		<result column="vet_file_reg_date" property="vetFileRegDate" />		
 	</resultMap>
 	
 	<select id="noticeList" parameterType="Search" resultMap="noticeMap">
@@ -65,6 +75,12 @@
 			</when>
 			<when test="memberId=='name'">
 				and member_name like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="memberId=='email'">
+				and member_email like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="memberId=='nickname'">
+				and member_nickname like CONCAT('%',#{keyword},'%')
 			</when>
 			</choose>
 		</where>
@@ -113,6 +129,12 @@
 			</when>
 			</choose>
 		</where>
+	</select>
+	
+	<select id="selectVetAuthByNo" parameterType="int" resultMap="vetAuthMap">
+		select *
+		from vet_auth 
+		where member_no = #{memberNo}
 	</select>
 	
 	<select id="selectMemberByNo" parameterType="int" resultMap="memberMap">

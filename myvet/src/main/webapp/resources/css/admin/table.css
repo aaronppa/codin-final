@@ -29,7 +29,9 @@ html {
      * Remove the margin in all browsers (opinionated).
      */
 body {
-  margin: 0; }
+  margin: 0; 
+  overflow: hidden;
+}
 
 /**
      * Add the correct display in IE 9-.
@@ -2564,6 +2566,12 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
 .long-delay {
   animation-delay: 700ms !important; }
 
+.scroll-container{
+	width: auto;
+	height: 680px;
+	overflow-y: auto;
+}
+
 .admin.main.container{
     width: 1100px;
     margin: auto;
@@ -2645,7 +2653,7 @@ tbody > tr:not(.focus-search):hover{
 
 }
 
-.category, .listno, .memberGrade, .petcnt{
+.category, .listno, .memberGrade, .petcnt, .memberno{
     width: 90px;
 
 }

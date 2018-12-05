@@ -77,6 +77,8 @@ public class VetAuth {
 				+ ", vetSysName=" + vetSysName + ", vetFilePath=" + vetFilePath + ", vetFileSize=" + vetFileSize
 				+ ", vetFileRegDate=" + vetFileRegDate + "]";
 	}
+
+	
 	
 	
 }

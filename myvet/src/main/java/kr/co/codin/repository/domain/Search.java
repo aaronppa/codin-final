@@ -8,6 +8,13 @@ public class Search extends Page{
 	public Search(int pageNo) {
 		super(pageNo);
 	}
+	
+	public Search(int pageNo, String memberType) {
+		super(pageNo);
+		this.memberType=memberType;
+		System.out.println("memberType incoming:"+memberType);
+	}
+	
 	private String memberId;
 	private String keyword;
 	private String board;

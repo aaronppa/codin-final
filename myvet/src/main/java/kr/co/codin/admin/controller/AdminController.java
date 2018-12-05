@@ -25,9 +25,20 @@ public class AdminController {
 	
 	@RequestMapping("main.do")
 	public void main(Model model) throws Exception{
-		Search search = new Search(1);
-		model.addAttribute("notice", service.noticeList(search));
-		model.addAttribute("noticePageResult", new PageResult(1, service.noticeCount(search)));
+		// Notice First Page
+		Search noticeSearch = new Search(1);
+		PageResult noticePageResult = new PageResult(1, service.noticeCount(noticeSearch));
+		model.addAttribute("notice", service.noticeList(noticeSearch));
+		model.addAttribute("noticePageResult", noticePageResult);
+		
+		// Vet Auth First Page
+		Search vetSearch = new Search(1, "P");
+		PageResult memberVetPageResult = new PageResult(1, service.memberCount(vetSearch));
+		System.out.println("vetAuth Search Param: "+vetSearch);
+		model.addAttribute("memberVet", service.memberList(vetSearch));
+		System.out.println("Main.do memberCount: "+service.memberCount(vetSearch));
+		model.addAttribute("memberVetPageResult", memberVetPageResult);
+		System.out.println("vet First Page: "+model);
 	}
 	
 	@RequestMapping("detail.do")
@@ -76,6 +87,10 @@ public class AdminController {
 				return noticeList(search);
 			case "member":
 				System.out.println("Member List 불러오기 Request 들어옴.");
+				System.out.println(memberList(search));
+				return memberList(search);
+			case "vetAuth":
+				System.out.println("MemberVet List 불러오기 Request 들어옴."+search);
 				System.out.println(memberList(search));
 				return memberList(search);
 			default: return null;

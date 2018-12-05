@@ -4,8 +4,8 @@ import java.util.List;
 
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Notice;
-import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.Search;
+import kr.co.codin.repository.domain.VetAuth;
 
 public interface AdminService {
 	List<Notice> noticeList(Search search);
@@ -13,7 +13,6 @@ public interface AdminService {
 	int noticeCount(Search search);
 	void write(Notice notice);
 	void save(Notice notice);
-	List<Member> vetList(Search search);
 	List<Member> memberList(Search search);
 	int memberCount(Search search);
 }

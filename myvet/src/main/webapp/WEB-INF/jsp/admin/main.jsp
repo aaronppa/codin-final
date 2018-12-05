@@ -27,50 +27,79 @@ ul.pagination{
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+	<div class="scroll-container">
     <div class="admin main container">
-        <div class="listarea vetauth">
+        <div class="listarea vetAuth">
             <h2><a id="vetauthheader">수의사 인증 요청 리스트</a></h2>
             <div class="search">
-                <form action="" id="vetAuth-search" method="post"> 
+                <form action="#" id="vetAuth-search" method="post" data-boardtype='vetAuth'> 
                     상태:
-                    <select name="status">
+                    <select name="memberType">
                         <option value="">전체</option>
-                        <option value="">승인</option>
-                        <option value="">보류</option>
-                        <option value="">반려</option>
+                        <option value="V">승인</option>
+                        <option value="P" selected="selected">보류</option>
+                        <option value="R">반려</option>
                     </select>
                     요청검색: 
                     <select name="memberId">
                         <option value="">=검색유형선택=</option>
-                        <option value="">요청자 이름</option>
-                        <option value="">요청자 계정</option>
+                        <option value="name">요청자 이름</option>
+                        <option value="email">요청자 계정</option>
+                        <option value="nickname">요청자 닉네임</option>
                     </select>
                     <input type="search" name="keyword">
                     <input type="button" class="searchbtn" value="검색" data-boardtype="vetAuth">
                     <input type="button" class="reset" value="초기화">
                 </form>
             </div>
-            <div class="listcnt"><span>전체: </span><span class="itemcnt" data-boardtype="vetAuth"> - 개</span></div>
+            <div class="listcnt"><span>전체: </span><span class="itemcnt" data-boardtype="vetAuth">${memberVetPageResult.count}개</span></div>
              <table class="clickable list" id="vetauth">
                 <thead>
                 <tr>
-                    <th class="listno">요청 번호</th>
+                    <th class="memberno">요청자 번호</th>
                     <th class="datetime">요청 날짜</th>
                     <th class="name">요청자 이름</th>
-                    <th>요청자 계정</th>
+                    <th class="account">요청자 계정</th>
+                    <th class="nickname">요청자 닉네임</th>
                     <th class="status">상태</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr><td class="listno">1</td><td class="datetime">2018-11-28 HH:mm:SS</td><td class="name">홍길동</td><td>hong@hongvet.com</td><td class="status">신규</td></tr>
+                <tbody id="vetauthlist">
+                <c:forEach var="memberVet" items="${memberVet}">
+	        		<tr class="vetAuth-tr" data-boardtype="vetAuth" data-itemno='${memberVet.memberNo}'>
+	        			<td class="memberno">${memberVet.memberNo}</td>
+	        			<td class="datetime vetAuth-req-date"><fmt:formatDate value="${memberVet.vetAuth[0].vetFileRegDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	        			<td class="name">${memberVet.memberName}</td>
+	        			<td class="account">${memberVet.memberEmail}</td>
+	        			<td calss="nickname">${memberVet.memberNickname}</td>
+	        			<td class="status">${memberVet.memberGrade}</td>
+	        		</tr>
+        		</c:forEach>
                 </tbody>
             </table>
+                <c:if test="${memberVetPageResult.count != 0}">
+			    <nav class="pagination" aria-label="Pagination">
+			        <ul class="pagination" data-boardtype="vetAuth">
+			            <li><a class='disabled nostyle firstpage' data-boardtype='vetAuth' id="first" href="1">&laquo;First</a></li>
+			            <li><a class='disabled nostyle previouspage' data-boardtype='vetAuth' href=${memberVetPageResult.beginPage-1 }>&laquo;Previous</a></li>
+			            
+						<c:forEach var="i" begin="${memberVetPageResult.beginPage}" end="${memberVetPageResult.endPage}">
+					    	<li <c:if test="${i eq memberVetPageResult.pageNo }">class="current"</c:if> ><a href="${i}" class="nostyle" data-boardtype="vetAuth">${i}</a></li>
+						</c:forEach>
+			            
+			            <li><a class='<c:if test="${memberVetPageResult.pageNo == memberVetPageResult.lastPage}">disabled </c:if>nostyle nextpage' data-boardtype="vetAuth" href="${memberVetPageResult.pageNo+1 }">Next&raquo;</a></li>
+			            <li><a class='<c:if test="${memberVetPageResult.pageNo + 10 > memberVetPageResult.lastPage}">disabled </c:if>nostyle endpage' data-boardtype="vetAuth" href="${memberVetPageResult.lastPage }">End&raquo;</a>
+			            </li>
+			        </ul>
+			    </nav>
+		    </c:if>
+             
         </div>
         <hr>
         <div class="listarea report">
             <h2><a id="reportheader">신고 접수 리스트</a></h2>
             <div class="search">
-                <form action="" id="report-search" method="post" data-boardtype='report'>
+                <form action="#" id="report-search" method="post" data-boardtype="report">
                     상태:
                     <select name="status">
                         <option value="">전체</option>
@@ -152,7 +181,7 @@ ul.pagination{
             <h2><a id="noticeheader">사이트 전체 공지사항</a></h2>
             <button type="button" id="write">글작성</button>
             <div class="search">
-                <form action="" id="notice-search" method="post" data-boardtype='notice'>
+                <form action="#" id="notice-search" method="post" data-boardtype="notice">
                     작성자: 
                     <select name="memberId">
                         <option value="">전체</option>
@@ -173,7 +202,7 @@ ul.pagination{
                 <thead>
                 <tr>
                     <th class="listno">공지글 번호</th>
-                    <th class="category">임시저장</th>
+                    <th class="status">임시저장</th>
                     <th class="notice-title">제목</th>
                     <th class="nickname">작성자 닉네임</th>
                     <th class="datetime">작성날짜</th>
@@ -186,10 +215,10 @@ ul.pagination{
 	        			<td class="listno">${notice.noticeNo}</td>
 	        			<c:choose>
 	        			<c:when test="${notice.tempSave == 1}">
-	        			<td class="category">임시저장</td>
+	        			<td class="status">임시저장</td>
 	        			</c:when>
 	        			<c:otherwise>
-	        			<td class="category">완료</td>
+	        			<td class="status">완료</td>
 	        			</c:otherwise>
 	        			</c:choose>
 	        			<td class="notice-title">
@@ -227,7 +256,7 @@ ul.pagination{
         <div class="listarea member">
             <h2><a id="memberheader">회원관리(검색)</a></h2>
             <div class="search">
-            <form action="" id="member-search" method="post" data-boardtype='member'>
+            <form action="#" id="member-search" method="post" data-boardtype='member'>
                 회원구분: 
                 <select name="memberType">
                     <option value="">전체</option>
@@ -260,8 +289,8 @@ ul.pagination{
              <table class="clickable list" id="member">
                 <thead>
                 <tr>
-                    <th class="listno">회원 번호</th>
-                    <th>회원 계정</th>
+                    <th class="memberno">회원 번호</th>
+                    <th class="account">회원 계정</th>
                     <th class="nickname">회원 닉네임</th>
                     <th class="category">회원 구분</th>
                     <th class="name">회원 이름</th>
@@ -279,6 +308,7 @@ ul.pagination{
 			        </ul>
 			    </nav>
         </div>
+    </div>
     </div>
 <script src="<c:url value='/resources/js/datetime/jquery-dateformat.js'/>"></script>
 <script>
@@ -332,17 +362,17 @@ $("button#write").on("click",function(){
 $("nav.pagination").on("click","a.nostyle", function(e) {
 	e.preventDefault();
 	var selectedLn = $(this);
-	pageNo = $(this).attr("href")
-	boardType = $(this).data("boardtype");
+	pageNo = selectedLn.attr("href")
+	boardType = selectedLn.data("boardtype");
+	formData = selectedLn.closest("div.listarea."+boardType).find("form[data-boardtype='"+boardType+"']").serialize();
 	
-	console.log("Selected Page:",selectedLn.parentsUntil("div.listarea."+boardType).siblings("h2"));
-	console.log("Selected Page.closest:",selectedLn.closest("div.listarea").children("h2"));
+	console.log("Selected Page.closest Search Param:",formData);
 	console.log("Paging boardType:",boardType);
-	console.log("Paging Param:",formData);
 	
 	if ($(this).hasClass("disabled")) return false;
 
 	sendRetrieveReq(boardType, pageNo, formData);
+	formData="";
 });
 
 
@@ -368,6 +398,7 @@ $(".searchbtn").click(function(e){
 	console.log(formData);
 	
 	sendRetrieveReq(boardType, pageNo, formData);
+	formData="";
 });
 
 /* Ajax Send Request */
@@ -393,14 +424,15 @@ function sendRetrieveReq(boardType, pageNo, formData){
 		case "member":  $("tbody#memberlist").html(updateList(boardType, result.member));
 						 updateCurrPg(boardType, result.memberPageResult); 
 						break;
-		
+		case "vetAuth": $("tbody#vetauthlist").html(updateList(boardType, result.member));
+						 updateCurrPg(boardType, result.memberPageResult); 
+						break;
 		}
 		
 		
 		console.dir($(this));
 		formData="";
 		console.log("formData after AJAX: ", formData);
-		
 		location.href="#"+boardType+"header";
 	});
 }
@@ -412,9 +444,9 @@ function updateList(boardType, resultItems){
 		return html="<div class='noresult'>검색결과 없음</div>"
 	}
 	var html="";
-	var saveStatus="";
 	switch(boardType){
 	case "notice":	for(var item of resultItems){
+					var saveStatus="";
 						if(item.tempSave===0){
 							saveStatus="완료";
 						} else {
@@ -431,12 +463,7 @@ function updateList(boardType, resultItems){
 					return html;
 					break;
 	case "member": for(var item of resultItems){
-						if(item.tempSave===0){
-							saveStatus="완료";
-						} else {
-							saveStatus="임시저장";
-						}
-						html += "<tr class='member-tr' data-boardtype='"+boardType+"' data-itemno='"+item.memberNo+"'><td class='listno'>"+item.memberNo+
+						html += "<tr class='member-tr' data-boardtype='"+boardType+"' data-itemno='"+item.memberNo+"'><td class='memberno'>"+item.memberNo+
 							   "</td><td class='memberEmail'>"+item.memberEmail+
 							   "</td><td class='nickname'>"+item.memberNickname+
 							   "</td><td class='memberGrade'>"+item.memberGrade+
@@ -447,6 +474,24 @@ function updateList(boardType, resultItems){
 					};
 					return html;
 					break;
+	case "vetAuth": for(var item of resultItems){
+					var reqDate;
+					if(item.vetAuth.length===0){
+						reqDate="";
+					} else {
+						reqDate=$.format.date(item.vetAuth[0].vetFileRegDate,'yyyy-MM-dd HH:mm:ss');
+					}
+					html += "<tr class='vetAuth-tr' data-boardtype='"+boardType+"' data-itemno='"+item.memberNo+"'><td class='memberno'>"+item.memberNo+
+ 						    "</td><td class='datetime vetAuth-req-date'>"+reqDate+
+						    "</td><td class='name'>"+item.memberName+
+							"</td><td class='memberEmail'>"+item.memberEmail+
+						    "</td><td class='nickname'>"+item.memberNickname+
+						    "</td><td class='status'>"+item.memberGrade+
+						    "</td></tr>"
+					};
+					return html;
+					break;
+	        		
 	}
 }	
 
@@ -476,7 +521,7 @@ function updateCurrPg(boardType, pageResult){
   			$("a[href='"+(pageResult.lastPage+1)+"'][data-boardtype='"+boardType+"']").addClass("disabled");
   			
   			if(pageResult.pageNo===1){
-  				$("a.firstpage [data-boardtype='"+boardType+"']").addClass("disabled");
+  				$("a.firstpage[data-boardtype='"+boardType+"']").addClass("disabled");
   			}
   			
   			if(pageResult.pageNo===pageResult.lastPage){

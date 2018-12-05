@@ -39,5 +39,11 @@ public class PageResult {
 	public int getEndPage() 	{return endPage;}
 	public boolean isPrev()	{return prev;}
 	public boolean isNext()	{return next;}
+
+	@Override
+	public String toString() {
+		return "PageResult [count=" + count + ", lastPage=" + lastPage + ", pageNo=" + pageNo + ", beginPage="
+				+ beginPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next + "]";
+	}
 	
 }
