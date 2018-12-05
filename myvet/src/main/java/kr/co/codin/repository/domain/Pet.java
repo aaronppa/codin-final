@@ -8,7 +8,7 @@ public class Pet {
 	private int petNo;
 	private int memberNo;
 	private String petName;
-	private int petRegNo;
+	private long petRegNo;
 	private String species;
 	private String breed;
 	private String size;
@@ -49,11 +49,11 @@ public class Pet {
 		this.petName = petName;
 	}
 
-	public int getPetRegNo() {
+	public long getPetRegNo() {
 		return petRegNo;
 	}
 
-	public void setPetRegNo(int petRegNo) {
+	public void setPetRegNo(long petRegNo) {
 		this.petRegNo = petRegNo;
 	}
 

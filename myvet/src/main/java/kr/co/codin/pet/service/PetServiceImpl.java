@@ -18,4 +18,9 @@ public class PetServiceImpl implements PetService {
 	public List<Pet> myPet(int memberNo) {
 		return mapper.selectPetByMemberNo(memberNo);
 	}
+
+	@Override
+	public void addPet(Pet pet) {
+		mapper.insertPet(pet);
+	}
 }

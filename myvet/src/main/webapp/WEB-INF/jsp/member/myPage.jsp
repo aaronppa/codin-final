@@ -94,6 +94,11 @@
     	margin: 50px;
     	text-align: center;
     	padding-top: 90px;
+    	background-color: white;
+    }
+    
+    #pet-add {
+    	padding-top: 0;
     }
 </style>
 <script
@@ -142,8 +147,8 @@
                 <td>${member.memberName}</td>
                 <th>닉네임</th>
                 <td>
-                    ${member.memberNickname}
-                    <button class="btn btn-default">변경</button>
+                    <span id="my-nickname">${member.memberNickname}</span>
+                    <button class="btn btn-default" id="nick-change">변경</button>
                 </td>
             </tr>
             <tr>
@@ -155,13 +160,14 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-offset-10">
-    	<button class="btn btn-primary"><a href="<c:url value='/member/updateForm.do' />">수정</a></button>
-    	<button class="btn btn-primary"><a href="<c:url value='/member/deleteAccount.do?memberNo=' />${member.memberNo}">탈퇴</a></button>
-    </div>
+<!--     <div class="col-md-offset-10"> -->
+<%--     	<button class="btn btn-primary"><a href="<c:url value='/member/updateForm.do' />">수정</a></button> --%>
+<%--     	<button class="btn btn-primary"><a href="<c:url value='/member/deleteAccount.do?memberNo=' />${member.memberNo}">탈퇴</a></button> --%>
+<!--     </div> -->
     <h2>반려동물</h2>
     <hr>
     <div id="pet-container">
+<%--     :${pet }: --%>
     	<c:forEach var="pet" items="${pet}">
 			<div class="pet-info">
 				<img alt="강아지 사진" src="">
@@ -171,16 +177,31 @@
 		<div class="pet-info">
 			<img alt="고양이 사진" src="">
 		</div>
-		<div class="pet-info" id="pet-add">
+		<button class="pet-info" id="pet-add">
 			반려동물 정보 추가
-		</div>
+		</button>
 	</div>
     
 <%--    	<button class="btn btn-primary col-md-offset-10"><a href="<c:url value='/member/insertCareerForm.do' />">추가</a></button> --%>
-   	
 
     <script>
-    	
+//     	var myNo = ${user.memberNo};
+//     	$("#nick-change").on("click", function () {
+// //     		alert(myNo);
+//     		$.ajax({
+//     			data: myNo,
+//     			url: "nickChange.do",
+//     			dataType: "json",
+//     			method: "POST",
+//     			contentType: "application/json; charset=UTF-8"
+//     		}).done(function () {
+//     			alert("성공");
+//     		});
+//     	});
+
+		$("#pet-add").click(function () {
+			location.href = "<c:url value='/pet/petAddForm.do'/>";
+		});
     </script>
 </body>
 </html>

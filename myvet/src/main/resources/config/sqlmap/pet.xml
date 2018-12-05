@@ -26,4 +26,13 @@
 		  from pet
 		 where member_no = #{memberNo}
 	</select>
+	
+	<insert id="insertPet" parameterType="Pet">
+		insert into pet(
+			member_no, pet_name, pet_reg_no, species, breed, size, pet_gender, pet_age, weight, remark
+		) values (
+			#{memberNo}, #{petName}, #{petRegNo}, #{species}, #{breed}, #{size}, #{petGender}, #{petAge}, #{weight}, #{remark}
+		)
+	</insert>
+	
 </mapper>

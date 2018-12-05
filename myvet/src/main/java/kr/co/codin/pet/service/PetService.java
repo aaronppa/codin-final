@@ -14,4 +14,10 @@ public interface PetService {
 	 * @return List<Pet>
 	 */
 	List<Pet> myPet(int memberNo);
+	
+	/**
+	 * 회원의 반려동물 등록에 대한 비즈니스 로직 처리
+	 * @param pet
+	 */
+	void addPet(Pet pet);
 }
