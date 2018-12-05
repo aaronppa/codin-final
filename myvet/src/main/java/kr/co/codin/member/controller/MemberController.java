@@ -108,7 +108,7 @@ public class MemberController {
 			
 			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 		}
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "loginForm.do";
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
 	
 	@RequestMapping("/logout.do")
