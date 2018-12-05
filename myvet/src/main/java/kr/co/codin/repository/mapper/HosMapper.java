@@ -3,13 +3,14 @@ package kr.co.codin.repository.mapper;
 import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
+import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
+import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.Pet;
-import kr.co.codin.repository.domain.HosPage;
 
 public interface HosMapper {
 	void insertHospital(Hospital hospital);
@@ -28,4 +29,7 @@ public interface HosMapper {
 	int norCount(HosPage page);
 	Hospital selectHospitalByNo (int hosCode);
 	FileInfo selectFileInfo (int fileId);
+	int nextBlockNo(int hosCode);
+	void createBlock(HosBlock block);
+	int isCreateBlock (HosBlock block);
 }

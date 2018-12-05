@@ -19,7 +19,7 @@
     	}
     
         #body {
-            width: 80%;
+            width: 1100px;
             margin: auto;
         }
         .td1 {

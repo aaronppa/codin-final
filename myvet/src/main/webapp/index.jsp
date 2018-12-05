@@ -29,7 +29,7 @@
         #bodyContainer {
             margin: auto;
             margin-top: 10px;
-            width: 80%;
+            width: 1100px;
             text-align: center;
             padding: 5px;
 

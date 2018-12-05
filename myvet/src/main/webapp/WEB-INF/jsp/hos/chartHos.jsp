@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="<c:url value='../resources/css/common/foundation.css'/>"/>
     <style>
         #body {
-            width:80%;
+            width:1100px;
             margin: auto;
         }
         #chartList {

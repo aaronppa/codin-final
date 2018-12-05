@@ -8,11 +8,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>예약 블럭 관리 - MyVet</title>
+<title>예약 블럭 만들기 - MyVet</title>
     <style>
     #bodyContainer {
-        width: 80%;
+        width: 1100px;
         margin: auto;
+        margin-top: 30px;
     }
 
     .inline {
@@ -37,6 +38,7 @@
     }
 
     #blockTable th {
+        text-align: center;
 		height: 40px;    
     }
     
@@ -104,15 +106,17 @@
 	
 </head>
 <body>
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
     <div id="bodyContainer">
         <div>
-            <h1 class="inline">예약 블럭 관리</h1>
-            <span class="marginLeft">ooo동물병원</span>
+            <h1 class="inline">예약 블럭 만들기</h1>
+            <span class="marginLeft">${hospital.title }</span>
+            <input type="hidden" id="hosCode" name="hosCode" value="${hospital.hosCode }">
         </div>
         <div>
-            <input type="checkbox" name="blockType" id="medical" value="1">
+            <input type="checkbox" name="medical" id="medical" value="on">
             <label for="medical">진료</label>
-            <input type="checkbox" name="blockType" id="beauty" value="1">
+            <input type="checkbox" name="beauty" id="beauty" value="on">
             <label for="beauty">미용</label>
         </div>
         
@@ -177,8 +181,8 @@
                 </th>
                 <c:forEach var="i" begin="0" end="6" >
 	                <td>
-	                    <input class="picker" type="text" name="openTime" data-date="${i }"> ~ 
-	                    <input class="picker" type="text" name="closeTime" data-date="${i }">
+	                    <input class="picker" type="text" name="openTime" data-date="${i }" value="09:00"> ~ 
+	                    <input class="picker" type="text" name="closeTime" data-date="${i }" value="18:00">
 	                </td>
                 </c:forEach>
             </tr>
@@ -198,13 +202,14 @@
             </tr>
             <tr class="breakTime">
                 <th id="breakTime-th" rowspan="1">
-                    휴게시간<br>
-                    <button class="margin-top" id="addBreak">추가</button>
+                    휴게시간
+<!--                     <br> -->
+<!--                     <button class="margin-top" id="addBreak">추가</button> -->
                 </th>
                 <c:forEach var="i" begin="0" end="6" >
 	                <td>
-	                    <input class="picker" type="text" name="breakStart" data-date="${i }"> ~ 
-	                    <input class="picker" type="text" name="breakEnd" data-date="${i }">
+	                    <input class="picker" type="text" name="breakStart" data-date="${i }" value="13:00"> ~ 
+	                    <input class="picker" type="text" name="breakEnd" data-date="${i }"  value="14:00">
 	                </td>
 	            </c:forEach>
             </tr>
@@ -236,9 +241,10 @@
         </div>
     </div>
     <script>
+    	var errMessage = "";
     	var $breakTime = $(".breakTime").clone();
     	$breakTime.find("th").remove();
-    
+
         $('.picker').timepicker({'timeFormat' : 'H:i'})
         
         $('#addBreak').click(function(){
@@ -257,6 +263,9 @@
         	disable(dayoff);
         })
         
+		$(".big-checkbox[data-dayoff="+5+"]").click();
+		$(".big-checkbox[data-dayoff="+6+"]").click();
+        
         $('.weekday').click(function() {
         	var date = $(this).data("date");
         	dataCopy(date, 0, 4)
@@ -264,11 +273,20 @@
         
         $('.weekend').click(function() {
         	var date = $(this).data("date");
+			
+        	dayOpen(5);
+        	dayOpen(6);
+        	
         	dataCopy(date, 5, 6)
         })
         
         $('.dayall').click(function() {
         	var date = $(this).data("date");
+        	
+        	for(let i = 0; i < 7; i++) {
+        		dayOpen(i);
+        	}
+
         	dataCopy(date, 0, 7)
         })
         
@@ -289,10 +307,11 @@
         })
 
         $('#submit').click(function(){
-        	for (let i = 0; i < 1; i++) {							// 우선 월요일만 테스트 시행
+        	for (let i = 0; i < 7; i++) {
             	if ($(".big-checkbox[data-dayoff="+i+"]").is(":checked")) {
             		continue;
             	}
+        	
 	        	var $sendDate = $("#blockTable").find("[data-date="+i+"]");
 	        	console.dir($sendDate);
         		var booking = new Object();
@@ -300,13 +319,25 @@
 					booking[$sendDate[l].name] = $sendDate[l].value;
         		}
         		
+        		if ($("#medical").is(":checked")) booking.medical = "on";
+        		if ($("#beauty").is(":checked")) booking.beauty = "on";
+        		booking.hosCode = $("#hosCode").val();
+        		
+        		console.dir(booking);
 				$.ajax({
 					url:"/myvet/hos/createBlock.do",
 					method: "post",
-					data: booking
-				})
+					data: booking,
+					async: false, 
+					error: function() {
+						alert("이미 등록된 날짜입니다. " + booking.date)
+						}
+					}
+				)
         	}
+        	
         })
+        
         
         function disable(dayoff) {
         	if ($(".big-checkbox[data-dayoff="+dayoff+"]").is(":checked")) {
@@ -327,9 +358,17 @@
         		}
         	}
         	$("[disabled=disabled]").val("");
+        }        
+        
+        function dayOpen(date) {
+        	if ($(".big-checkbox[data-dayoff="+date+"]").is(":checked")) {
+        		$(".big-checkbox[data-dayoff="+date+"]").click();
+        	}
         }
         
-        
+        function blockError(request,status,error) {
+        	errMessage = errMessage + request.responseText + "/n";
+        }
     </script>
 </body>
 </html>

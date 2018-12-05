@@ -29,7 +29,7 @@
     	}
     	
         #body {
-            width: 80%;
+            width: 1100px;
             margin: auto;
         }
         
@@ -50,7 +50,7 @@
         #searchDiv {
 			display: inline-block;
 			position: relative;
-			left: 500px;
+			left: 370px;
         }
         
         .nomalHos{

@@ -9,7 +9,7 @@
 <title>현장접수 - MyVet</title>
     <style>
         #body {
-            width: 80%;
+            width: 1100px;
             margin: auto;
         }
         .td1 {

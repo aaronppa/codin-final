@@ -89,6 +89,17 @@
 		<result column="file_size" property="fileSize"/>
 	</resultMap>
 	
+	<resultMap type="HosBlock" id="blockMap">
+		<result column="block_code" property="blockCode"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="block_day" property="blockDay"/>
+		<result column="block_no" property="blockNo"/>
+		<result column="block_start" property="blockStart"/>
+		<result column="block_end" property="blockEnd"/>
+		<result column="max_booking" property="maxBooking"/>
+	</resultMap>
+	
+	
 	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
 		select *
 		from file_info
@@ -230,6 +241,27 @@
 		(board_code, board_no, ori_name, sys_name, file_path, file_size)
 		values
 		(30, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize})
+	</insert>
+	
+	<select id="nextBlockNo" parameterType="int" resultType="int">
+		select max(block_no)
+		from hos_block
+		where hos_code = #{hosCode}
+	</select>
+	
+	<select id="isCreateBlock" parameterType="HosBlock" resultType="int">
+		select count(*)
+		from hos_block
+		where hos_code = #{hosCode} and
+			  block_day = #{blockDay}
+	</select>
+	
+	
+	<insert id="createBlock" parameterType="HosBlock">
+		insert into hos_block
+		(hos_code, block_day, block_no, block_start, block_end, facility_no, max_booking)
+		values
+		(#{hosCode}, #{blockDay}, #{blockNo}, #{blockStart}, #{blockEnd}, #{facilityNo}, #{maxBooking})
 	</insert>
 	
 </mapper>

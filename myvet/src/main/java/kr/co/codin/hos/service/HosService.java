@@ -3,6 +3,7 @@ package kr.co.codin.hos.service;
 import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
+import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
@@ -28,5 +29,7 @@ public interface HosService {
 	int norCount(HosPage page);
 	Hospital selectHospitalByNo (int hosCode);
 	FileInfo selectFileInfo (int fileId);
-
+	int nextBlockNo(int hosCode);
+	void createBlock(HosBlock block);
+	int isCreateBlock (HosBlock block);
 }

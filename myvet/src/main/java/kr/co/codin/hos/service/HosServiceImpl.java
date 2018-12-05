@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.FileInfo;
+import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
@@ -98,5 +99,20 @@ public class HosServiceImpl implements HosService{
 	@Override
 	public FileInfo selectFileInfo(int fileId) {
 		return mapper.selectFileInfo(fileId);
+	}
+
+	@Override
+	public int nextBlockNo(int hosCode) {
+		return mapper.nextBlockNo(hosCode);
+	}
+	
+	@Override
+	public void createBlock(HosBlock block) {
+		mapper.createBlock(block);
+	}
+	
+	@Override
+	public int isCreateBlock(HosBlock block) {
+		return mapper.isCreateBlock(block);
 	}
 }

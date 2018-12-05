@@ -29,6 +29,22 @@ html {
 /**
      * Add the correct display in IE 9-.
      */
+     
+button {
+  padding: 3px;
+  background-color: #8b787a;
+  color: white;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 1px solid black;
+  border-radius: 3px;
+  line-height: 1;
+  cursor: auto; }
+  [data-whatinput='mouse'] button {
+    outline: 0; }
+}
+     
 article,
 aside,
 footer,

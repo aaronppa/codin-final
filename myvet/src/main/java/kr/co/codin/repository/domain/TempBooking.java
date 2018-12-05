@@ -1,7 +1,10 @@
 package kr.co.codin.repository.domain;
 
+import java.util.List;
+
 public class TempBooking {
 
+	private int hosCode;
 	private String date;
 	private String openTime;
 	private String closeTime;
@@ -9,7 +12,15 @@ public class TempBooking {
 	private String breakStart;
 	private String breakEnd;
 	private int maxBook;
+	private String medical;
+	private String beauty;
 	
+	public int getHosCode() {
+		return hosCode;
+	}
+	public void setHosCode(int hosCode) {
+		this.hosCode = hosCode;
+	}
 	public String getDate() {
 		return date;
 	}
@@ -52,10 +63,23 @@ public class TempBooking {
 	public void setMaxBook(int maxBook) {
 		this.maxBook = maxBook;
 	}
-	
+	public String getMedical() {
+		return medical;
+	}
+	public void setMedical(String medical) {
+		this.medical = medical;
+	}
+	public String getBeauty() {
+		return beauty;
+	}
+	public void setBeauty(String beauty) {
+		this.beauty = beauty;
+	}
 	@Override
 	public String toString() {
-		return "TempBooking [date=" + date + ", openTime=" + openTime + ", closeTime=" + closeTime + ", bookInterval="
-				+ bookInterval + ", breakStart=" + breakStart + ", breakEnd=" + breakEnd + ", maxBook=" + maxBook + "]";
+		return "TempBooking [hosCode=" + hosCode + ", date=" + date + ", openTime=" + openTime + ", closeTime="
+				+ closeTime + ", bookInterval=" + bookInterval + ", breakStart=" + breakStart + ", breakEnd=" + breakEnd
+				+ ", maxBook=" + maxBook + ", medical=" + medical + ", beauty=" + beauty + "]";
 	}
+
 }

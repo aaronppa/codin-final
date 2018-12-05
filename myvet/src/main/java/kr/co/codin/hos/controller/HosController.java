@@ -2,6 +2,7 @@ package kr.co.codin.hos.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,10 +10,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
 import kr.co.codin.repository.domain.FileInfo;
+import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.HosPage;
@@ -46,8 +50,19 @@ public class HosController {
 		model.addAttribute("hos", service.selectHospitalByNo(hosCode));
 	}
 	
-	@RequestMapping("bookingBlock.do")
-	public void bookingBlock(HttpServletRequest request, @RequestParam(value="date", defaultValue="null") String date) {
+	@RequestMapping("bookingManager.do")
+	public void bookingManager() {
+		
+	}
+	
+	@RequestMapping("blockMaking.do")
+	public void bookingBlock(
+					HttpServletRequest request, 
+					@RequestParam(value="date", defaultValue="null") 
+					String date,
+					@RequestParam(value="hosCode", defaultValue="519")
+					int hosCode
+					) {
 		Calendar cal = Calendar.getInstance();
 		
 		if(date != "null") {
@@ -57,13 +72,78 @@ public class HosController {
 				;;
 			}
 		}
+		
 		request.setAttribute("cal", cal);
+		request.setAttribute("hospital", service.selectHospitalByNo(hosCode));
 	}
 	
 	@RequestMapping("createBlock.do")
 	@ResponseBody
-	public void createBlock(TempBooking booking) {
-		System.out.println(booking);
+	public void createBlock(TempBooking booking) throws Exception {
+		System.out.println(booking.toString());
+		
+		HosBlock block = new HosBlock();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar cal = Calendar.getInstance();
+		Date date = null;
+		block.setHosCode(booking.getHosCode());
+		block.setBlockNo(0);
+		try {
+			date = sdf.parse(booking.getDate());
+		} catch (ParseException e) {
+			;;
+		}
+		cal.setTime(date);
+		
+		System.out.println(cal.getTime());
+		
+		block.setBlockDay(sdf.format(date));
+		
+		if (service.isCreateBlock(block) > 0) {
+			throw new Exception("이미 등록된 날짜입니다." + sdf.format(date));
+		}
+		
+		Date breakStart = setTimeToCal(cal, new StringTokenizer(booking.getBreakStart(), ":"));
+		Date breakEnd = setTimeToCal(cal, new StringTokenizer(booking.getBreakEnd(), ":"));
+		Date closeTime = setTimeToCal(cal, new StringTokenizer(booking.getCloseTime(), ":"));
+		Date openTime = setTimeToCal(cal, new StringTokenizer(booking.getOpenTime(), ":"));
+
+		int blockNo = 0;
+		try {
+			blockNo = service.nextBlockNo(booking.getHosCode());
+		} catch (BindingException e) {
+			;;
+		}
+		System.out.println("blockNo : " + blockNo);
+		while (true) {
+			if ((cal.getTime().after(breakStart) || (cal.getTime().equals(breakStart))) && 
+				(cal.getTime().before(breakEnd))
+				){
+				cal.add(Calendar.MINUTE, booking.getBookInterval());
+				continue;
+			}
+			
+			if (cal.getTime().equals(closeTime)) break;
+			
+			block.setBlockStart(calToTime(cal));
+			cal.add(Calendar.MINUTE, booking.getBookInterval());
+			block.setBlockEnd(calToTime(cal));
+			
+			if (booking.getMedical()!=null) {
+				block.setFacilityNo(1);
+				block.setBlockNo(++blockNo);
+				System.out.println(block);
+				service.createBlock(block);
+			}
+			
+			if (booking.getBeauty()!=null) {
+				block.setFacilityNo(2);
+				block.setBlockNo(++blockNo);
+				System.out.println(block);
+				service.createBlock(block);
+			}
+		}
+		
 	}
 	
 	@RequestMapping("reception.do")
@@ -246,5 +326,15 @@ public class HosController {
 	public void normalHosPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int ListCount) {
 		model.addAttribute("pageResult", new PageResult(pageNo, ListCount, 4, 5));
 	}
+	
+	public Date setTimeToCal(Calendar cal, StringTokenizer st) {
+		cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(st.nextToken()));
+		cal.set(Calendar.MINUTE, Integer.parseInt(st.nextToken()));
 
+		return cal.getTime();
+	}
+
+	public Time calToTime(Calendar cal) {
+		return new Time(cal.getTime().getTime());
+	}
 }

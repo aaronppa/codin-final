@@ -31,7 +31,7 @@
        font-size: 2em;
    }
    table {
-       width: 80%;
+       width: 1100px;
        margin-top:20px;
        margin-right: auto;
        margin-left: auto;
@@ -147,6 +147,7 @@
                     <td>불가</td>
                 </tr>
             </table>
+            <div><button id="bookingManager">예약관리</button></div>
         </div>
     </div>
     <div id="bottomContainer">
@@ -162,12 +163,9 @@
     </div>
     <script>
     
-    	$.ajax({
-    		url:,
-    		data:
+    	$("#bookingManager").click(function(){
+    		window.location.href = "/myvet/hos/bookingManager.do"
     	})
-    
-    	$("#facilityContainer")
     </script>
 </body>
 </html>
