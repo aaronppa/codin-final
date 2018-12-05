@@ -15,4 +15,5 @@ public interface AdminMapper {
 	void insertNoticeSave(Notice notice);
 	List<Member> memberList(Search search);
 	int memberCount(Search search);
+	Member selectMemberByNo(int no);
 }

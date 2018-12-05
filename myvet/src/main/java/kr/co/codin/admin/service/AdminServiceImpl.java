@@ -53,5 +53,15 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.memberCount(search);
 	}
 
+	@Override
+	public Member memberDetail(int no) {
+		return mapper.selectMemberByNo(no);
+	}
+
+	@Override
+	public Member vetAuthDetail(int no) {
+		return mapper.selectMemberByNo(no);
+	}
+
 
 }

@@ -63,10 +63,13 @@
 		select *
 		from member
 		<where>
-			<if test="memberType!=null and memberType!=''">
-				member_grade = #{memberType}
-			</if>
 			<choose>
+			<when test="memberType!=null and memberType!='' and memberType!='VP'">
+				member_grade = #{memberType}
+			</when>
+			<when test="memberType=='VP'">
+				member_grade = 'V' or member_grade = 'P'
+			</when>			
 			<when test="memberId=='account'">
 				and member_email like CONCAT('%',#{keyword},'%')
 			</when>
@@ -114,10 +117,13 @@
 		select count(*)
 		from member
 		<where>
-			<if test="memberType!=null and memberType!=''">
-				member_grade = #{memberType}
-			</if>
 			<choose>
+			<when test="memberType!=null and memberType!='' and memberType!='VP'">
+				member_grade = #{memberType}
+			</when>
+			<when test="memberType=='VP'">
+				member_grade = 'V' or member_grade = 'P'
+			</when>	
 			<when test="memberId=='account'">
 				and member_email like CONCAT('%',#{keyword},'%')
 			</when>
@@ -134,13 +140,13 @@
 	<select id="selectVetAuthByNo" parameterType="int" resultMap="vetAuthMap">
 		select *
 		from vet_auth 
-		where member_no = #{memberNo}
+		where member_no = #{no}
 	</select>
 	
 	<select id="selectMemberByNo" parameterType="int" resultMap="memberMap">
 		select *
 		from member
-		where member_no=#{noticeWriter}
+		where member_no=#{no}
 	</select>
 	
 	<insert id="insertNotice" parameterType="Notice">

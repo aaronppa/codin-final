@@ -46,9 +46,20 @@ public class AdminController {
 		String url = null;
 		switch(boardType) {
 			case "notice": 
-				System.out.println("Detail Request 들어옴");
+				System.out.println("Notice Detail Request 들어옴");
 				model.addAttribute("detail", service.noticeDetail(itemno));
 				url="admin/noticedetail";
+				break;
+			case "member": 
+				System.out.println("Member Detail Request 들어옴");
+				model.addAttribute("detail", service.memberDetail(itemno));
+				url="admin/memberdetail";
+				break;
+			case "vetAuth":
+				System.out.println("VetAuth Detail Request 들어옴");
+				model.addAttribute("detail", service.vetAuthDetail(itemno));
+				url="admin/vetauthdetail";
+				break;
 		}
 		
 		return url;

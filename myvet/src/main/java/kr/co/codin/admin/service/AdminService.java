@@ -15,5 +15,7 @@ public interface AdminService {
 	void save(Notice notice);
 	List<Member> memberList(Search search);
 	int memberCount(Search search);
+	Member memberDetail(int itemno);
+	Member vetAuthDetail(int itemno);
 }
 

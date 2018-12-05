@@ -482,8 +482,8 @@ table {
   table thead,
   table tbody,
   table tfoot {
-    border: 1px solid #f1f1f1;
-    background-color: #fefefe; }
+   /*  border: 1px solid #f1f1f1; */
+    /* background-color: #fefefe; */ }
   table caption {
     padding: 0.5rem 0.625rem 0.625rem;
     font-weight: bold; }
@@ -2580,11 +2580,14 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
     padding-top: 25px;
 }
 
-table, tr, th, td{
-    border: 1px solid black;
+tr, th, td{
+    /* border: 1px solid black; */
+    border-bottom: 1px solid grey;
     text-align: center;
 }
-
+tbody{
+	border: none;
+}
 table{
     width: 990px;
     margin: auto;
@@ -2697,4 +2700,5 @@ input[name="keyword"]{
 	border: 1px solid black;
 	padding: 10px;
 	font-weight: 500;
+	text-align: center;
 }

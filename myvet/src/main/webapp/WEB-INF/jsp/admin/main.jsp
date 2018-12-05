@@ -35,7 +35,7 @@ ul.pagination{
                 <form action="#" id="vetAuth-search" method="post" data-boardtype='vetAuth'> 
                     상태:
                     <select name="memberType">
-                        <option value="">전체</option>
+                        <option value="VP">전체</option>
                         <option value="V">승인</option>
                         <option value="P" selected="selected">보류</option>
                         <option value="R">반려</option>
