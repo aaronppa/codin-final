@@ -29,9 +29,9 @@
 	
 	<insert id="insertPet" parameterType="Pet">
 		insert into pet(
-			member_no, pet_name, pet_reg_no, species, breed, size, pet_gender, pet_age, weight, remark
+			member_no, pet_name, pet_reg_no, species, breed, size, pet_gender, pet_age, weight, remark, pet_ori_name, pet_sys_name, pet_file_path, pet_file_size, pet_file_reg_date
 		) values (
-			#{memberNo}, #{petName}, #{petRegNo}, #{species}, #{breed}, #{size}, #{petGender}, #{petAge}, #{weight}, #{remark}
+			#{memberNo}, #{petName}, #{petRegNo}, #{species}, #{breed}, #{size}, #{petGender}, #{petAge}, #{weight}, #{remark}, #{petOriName}, #{petSysName}, #{petFilePath}, #{petFileSize}, #{petFileRegDate}
 		)
 	</insert>
 	

@@ -100,7 +100,7 @@
 		        <table class="info basics">
 		            <tr>
 		                <td rowspan="4" class="imgTd">
-<!-- 		                    <input type="file" name="fileP" style="width:150px; height:150px" /> -->
+		                    <input type="file" name="fileP" style="width:150px; height:150px" />
 		                </td>
 		                <th>등록번호</th>
 		                <td colspan="3"><input type="text" name="petRegNo" id="petRegNo" /></td>
