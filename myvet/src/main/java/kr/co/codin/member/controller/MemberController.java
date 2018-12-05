@@ -47,7 +47,7 @@ public class MemberController {
 		
 //		System.out.println(fileV.isEmpty());
 		if (fileV.isEmpty() == true)
-			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "signupForm.do";
+			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 		
 		String vetOriName = fileV.getOriginalFilename();
 		vetFile.setVetOriName(vetOriName);
