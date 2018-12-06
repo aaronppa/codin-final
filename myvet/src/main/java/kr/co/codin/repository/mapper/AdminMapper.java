@@ -13,8 +13,10 @@ public interface AdminMapper {
 	int noticeCount(Search search);
 	void insertNotice(Notice notice);
 	void insertNoticeSave(Notice notice);
+	void updateNoticeSave(Notice notice);
 	List<Member> memberList(Search search);
 	int memberCount(Search search);
 	Member selectMemberByNo(int no);
 	void updateApproval(Member vetApproval);
+	void updateNoticePublish(int noticeNo);
 }

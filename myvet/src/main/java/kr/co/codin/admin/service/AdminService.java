@@ -11,12 +11,14 @@ public interface AdminService {
 	List<Notice> noticeList(Search search);
 	Notice noticeDetail(int no);
 	int noticeCount(Search search);
-	void write(Notice notice);
-	void save(Notice notice);
+	void writeNew(Notice notice);
+	void saveNew(Notice notice);
+	void saveTemp(Notice notice);
 	List<Member> memberList(Search search);
 	int memberCount(Search search);
 	Member memberDetail(int itemno);
 	Member vetAuthDetail(int itemno);
 	void updateStatus(Member vetApproval);
+	void writeTemp(int noticeNo);
 }
 

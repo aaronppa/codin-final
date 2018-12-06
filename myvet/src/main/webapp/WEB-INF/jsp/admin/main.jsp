@@ -216,7 +216,7 @@ ul.pagination{
 	        			<td class="listno">${notice.noticeNo}</td>
 	        			<c:choose>
 	        			<c:when test="${notice.tempSave == 1}">
-	        			<td class="status">임시저장</td>
+	        			<td class="status" data-tempsave="1">임시저장</td>
 	        			</c:when>
 	        			<c:otherwise>
 	        			<td class="status">완료</td>
@@ -400,7 +400,6 @@ $(".searchbtn").click(function(e){
 	formData = $(thisForm).serialize();
 	
 	console.log("pageNo: ",pageNo,"boardType: ",boardType, "formData: ",formData);
-	console.log(formData);
 	
 	sendRetrieveReq(boardType, pageNo, formData);
 	formData="";

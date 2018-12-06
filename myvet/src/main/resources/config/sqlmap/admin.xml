@@ -184,9 +184,21 @@
 			)
 	</insert>
 	
+	<update id="updateNoticePublish" parameterType="int">
+		update notice
+		   set temp_save = 0
+		 where notice_no = #{noticeNo}
+	</update>
+	
+	<update id="updateNoticeSave" parameterType="Notice">
+		update notice
+		   set notice_content = #{noticeContent}
+		 where notice_no = #{noticeNo}
+	</update>
+	
 	<update id="updateApproval" parameterType="Member">
 		update member
-		set member_grade = #{memberGrade}
+		   set member_grade = #{memberGrade}
 		where member_no = #{memberNo}
 	</update>
 </mapper>

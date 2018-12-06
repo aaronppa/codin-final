@@ -10,5 +10,15 @@
 </head>
 <body>
 ${detail }
+<script>
+/* ESC 버튼 Keydown시 창 닫힘 */
+$(document).keydown(function(e) {
+    // ESCAPE key pressed
+    if (e.key == 'Escape') {
+    	console.log( 'escape pressed' );
+        window.close();
+    };
+});
+</script>
 </body>
 </html>

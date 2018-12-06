@@ -202,6 +202,7 @@ img:hover{
 		</div>
 	</div>
 <script>
+/* ESC 버튼 Keydown시 창 닫힘 */
 $(document).keydown(function(e) {
     // ESCAPE key pressed
     if (e.key == 'Escape') {

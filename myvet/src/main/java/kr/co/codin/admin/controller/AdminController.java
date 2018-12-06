@@ -24,6 +24,7 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
+	// 처음 관리자 페이지 로딩시 Share 방식으로 JSTL 처리 
 	@RequestMapping("main.do")
 	public void main(Model model) throws Exception{
 		// Notice First Page
@@ -33,6 +34,7 @@ public class AdminController {
 		model.addAttribute("noticePageResult", noticePageResult);
 		
 		// Vet Auth First Page
+		// 첫 로딩시에는 대기("P") 아이템만 조회 
 		Search vetSearch = new Search(1, "P");
 		PageResult memberVetPageResult = new PageResult(1, service.memberCount(vetSearch));
 		System.out.println("vetAuth Search Param: "+vetSearch);
@@ -42,6 +44,7 @@ public class AdminController {
 		System.out.println("vet First Page: "+model);
 	}
 	
+	// 모든 상세조회는 하기 Method를 통해서 처리 
 	@RequestMapping("detail.do")
 	public String detail(String boardType, int itemno, Model model) {
 		String url = null;
@@ -63,34 +66,38 @@ public class AdminController {
 				break;
 		}
 		
+		// 각 detai popup jsp 페이지로 이동  
 		return url;
 	}
 	
-	// 목록 조회 
+	// 검색 및 페이징 목록 조회 
+	// 검색시에는 main.do 페이지에서 최초 pageno=1을 넘겨줌
+	// 검색이후 페이징에서는 각 검색 FormData와 페이지 번호의 URL 값에 따라 페이징 조건 처리 
+	
 	@RequestMapping(value="/{boardType}/{pageNo}.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> boardPage(@PathVariable String boardType, @PathVariable int pageNo, Search search) throws Exception{
-		System.out.println("목록 조회 들어옴");
+		System.out.println("검색/페이징 목록 처리 들어옴");
 		search.setPageNo(pageNo);
 		System.out.println(search.toString());
 		switch(boardType) {
 			case "notice": 
-				System.out.println("Notice List 불러오기 Request 들어옴.");
+				System.out.println("Notice List 불러오기 Request 들어옴."+search);
 				System.out.println(noticeList(search));
 				return noticeList(search);
 			case "member":
-				System.out.println("Member List 불러오기 Request 들어옴.");
+				System.out.println("Member List 불러오기 Request 들어옴."+search);
 				System.out.println(memberList(search));
 				return memberList(search);
 			case "vetAuth":
-				System.out.println("MemberVet List 불러오기 Request 들어옴."+search);
+				System.out.println("Vet List 불러오기 Request 들어옴."+search);
 				System.out.println(memberList(search));
 				return memberList(search);
 			default: return null;
 		}
 	}
 	
-	
+	// 검색/페이징 목록 조회시 사용되는 공통 Method 
 	public Map<String, Object> noticeList(Search search) throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		map.put("notice", service.noticeList(search));
@@ -105,26 +112,43 @@ public class AdminController {
 		return map;
 	}
 	
-	
+	// 공지사항 글쓰기 Form Page 
 	@RequestMapping("writeForm.do")
 	public String writePopup() {
 		return "admin/writeNotice_popup";
 	}
 	
+	// 공지사항 글쓰기 
 	@RequestMapping("write.do")
 	@ResponseBody
 	public void write(Notice notice) throws Exception{
 		System.out.println("Write Notice: "+notice);
-		service.write(notice);
+		if(notice.getNoticeNo()==0) {
+			service.writeNew(notice);
+		} else {
+			service.writeTemp(notice.getNoticeNo());
+		}
 	}
 	
+	// 공지사항 임시저장 
 	@RequestMapping("save.do")
 	@ResponseBody
 	public void save(Notice notice) throws Exception{
 		System.out.println("Save Notice"+notice);
-		service.save(notice);     
+		if(notice.getNoticeNo()==0) {
+			service.saveNew(notice);
+		} else {
+			service.saveTemp(notice);
+		}
 	}
 	
+	@RequestMapping("edit.do")
+	@ResponseBody
+	public void openEdit(Notice notice) throws Exception{
+		System.out.println("Edit Notice"+notice);
+	}
+	
+	// 수의사 인정 처리 
 	@RequestMapping(value="/process/{itemno}.do", method=RequestMethod.GET)
 	@ResponseBody
 	public void processApproval(@PathVariable int itemno, String approval) {

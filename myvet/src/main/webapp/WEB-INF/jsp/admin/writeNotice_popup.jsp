@@ -77,7 +77,7 @@ input#noticeTitle{
     width: 400px;
 }
 
-.submitbtn{
+.btnarea{
 	margin: auto;
 	width: 170px;
 }
@@ -114,7 +114,7 @@ margin-top: 1.5em;
             </table>
             <input type="hidden" id="noticeContent" name="noticeContent">
             <div id="summernote"></div>
-            <div class="submitbtn">
+            <div class="btnarea">
             <input type="button" id="save" value="임시저장">
             <input type="submit" id="publish" value="게시">
             </div>
@@ -140,6 +140,15 @@ margin-top: 1.5em;
 </script>
 <!-- Button Action -->
 <script>
+/* ESC 버튼 Keydown시 창 닫힘 */
+$(document).keydown(function(e) {
+    // ESCAPE key pressed
+    if (e.key == 'Escape') {
+    	console.log( 'escape pressed' );
+        window.close();
+    };
+});
+
 $("#publish").on("click", function(e){
 	e.preventDefault();
 	var post_url = $("form").attr("action");

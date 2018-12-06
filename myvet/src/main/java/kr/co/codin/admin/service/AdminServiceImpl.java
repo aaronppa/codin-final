@@ -17,16 +17,24 @@ public class AdminServiceImpl implements AdminService{
 	AdminMapper mapper;
 	
 	@Override
-	public void write(Notice notice) {
+	public void writeNew(Notice notice) {
 		mapper.insertNotice(notice);
-		
 	}
 
 	@Override
-	public void save(Notice notice) {
-		mapper.insertNoticeSave(notice);
+	public void writeTemp(int noticeNo) {
+		mapper.updateNoticePublish(noticeNo);
 	}
 
+	@Override
+	public void saveNew(Notice notice) {
+		mapper.insertNoticeSave(notice);
+	}
+	
+	@Override
+	public void saveTemp(Notice notice) {
+		mapper.updateNoticeSave(notice);
+	}
 
 	@Override
 	public List<Notice> noticeList(Search search) {
