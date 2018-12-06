@@ -104,8 +104,10 @@
                                 <span class="input-group-text" id="basic-addon6">&nbsp;<i class="fas fa-mobile-alt"></i></span>
                             </div>
                             <input type="text" class="form-control" placeholder="연락처" name="memberPhone" aria-label="phone"
-                            	   onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style='ime-mode:disabled;' />
+                            	   onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style='ime-mode:disabled;'
+                            	   id="memberPhone" />
                         </div>
+                        <span id="checkPhone"><br></span>
                         <br>
                         <div class="input-group file" id="input-file">
 							<div class="input-group-prepend">
@@ -128,9 +130,13 @@
     </div>
     
     <script>
+//     	수의사 인증파일 숨겨놓기
     	$("#input-file").hide();
+    	
+//     	이메일 중복 체크 했는지 확인하는 변수
     	var emailCheck = 0;
     	
+//     	이메일 중복체크
     	$("#EmailCheck").click(function () {
     		var memberEmail = $("#email").val();
     		
@@ -155,6 +161,7 @@
     		});
     	});
     	
+//     	이메일 중복 체크를 했는지 체크
     	$("#formSubmit").click(function (e) {
     		if (emailCheck != 1){
     			e.preventDefault();
@@ -164,6 +171,7 @@
     		}
     	});
     	
+//     	처음 입력한 비밀번호와 같은지 두번째 비밀번호 확인
     	$("#password2").keyup(function (e) {
     		console.dir($("#password1").val()==$("#password2").val());
     		if ($("#password1").val()==$("#password2").val()) {
@@ -175,6 +183,7 @@
     		}
     	});
     	
+//     	전화번호에 숫자만 들어가는지 체크
     	function onlyNumber(event) {
     		event = event || window.event;
     		var keyCode = event.keyCode;
@@ -186,19 +195,25 @@
     		}
     	}
     	
+//     	전화번호에 글자가 입력될 시 제거
     	function removeChar(event) {
     		event = event || window.event;
     		var keyCode = event.keyCode;
     		
     		if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105) || keyCode == 8 || keyCode == 46 || keyCode == 37 || keyCode == 39) {
+    			if ($("#memberphone").val().length == 11){
+    				$("#formSubmit").prop("disabled", false);
+    			} else {
+    				$("#formSubmit").prop("disabled", true);
+    				$("#checkPhone").html("<p style='color:red;'>글자 수를 확인해 주세요.</p>");
+    			}
     			return;
     		} else {
     			event.target.value = event.target.value.replace(/[^0-9]/g, "");
     		}
     	}
-//     	document.querySelector("#option2").addEventListener("click", function () {alert(1)});
-//     	$("#option2").click(function () { alert(1)})
 		
+// 		수의사를 선택하면 인증파일 첨부 가능하도록 입력창 보이기
 		function viewHideFile(radioEleType) {
 			if (radioEleType == 1 || radioEleType == 2) {
 				$("#input-file").hide();

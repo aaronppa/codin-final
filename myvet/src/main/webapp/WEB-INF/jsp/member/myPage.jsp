@@ -140,6 +140,7 @@
                 	</c:choose>
                 </td>
                 <th>가입일</th>
+<!--                 실제 가입일로 수정해야 함 -->
                 <td><fmt:formatDate value="${member.memberFileRegDate}" pattern="yyyy-MM-dd"/></td>
             </tr>
             <tr>
@@ -148,7 +149,7 @@
                 <th>닉네임</th>
                 <td>
                     <span id="my-nickname">${member.memberNickname}</span>
-                    <button class="btn btn-default" id="nick-change">변경</button>
+                    <button class="btn btn-default" id="nickChangeBtn">변경</button>
                 </td>
             </tr>
             <tr>
@@ -160,14 +161,13 @@
             </tr>
         </table>
     </div>
-<!--     <div class="col-md-offset-10"> -->
-<%--     	<button class="btn btn-primary"><a href="<c:url value='/member/updateForm.do' />">수정</a></button> --%>
-<%--     	<button class="btn btn-primary"><a href="<c:url value='/member/deleteAccount.do?memberNo=' />${member.memberNo}">탈퇴</a></button> --%>
-<!--     </div> -->
     <h2>반려동물</h2>
     <hr>
     <div id="pet-container">
+    
+<!-- pet이 잘 들어오는지 확인 -->
 <%--     :${pet }: --%>
+
     	<c:forEach var="pet" items="${pet}">
 			<div class="pet-info">
 				<img alt="강아지 사진" src="">
@@ -182,25 +182,14 @@
 		</button>
 	</div>
     
-<%--    	<button class="btn btn-primary col-md-offset-10"><a href="<c:url value='/member/insertCareerForm.do' />">추가</a></button> --%>
-
     <script>
-//     	var myNo = ${user.memberNo};
-//     	$("#nick-change").on("click", function () {
-// //     		alert(myNo);
-//     		$.ajax({
-//     			data: myNo,
-//     			url: "nickChange.do",
-//     			dataType: "json",
-//     			method: "POST",
-//     			contentType: "application/json; charset=UTF-8"
-//     		}).done(function () {
-//     			alert("성공");
-//     		});
-//     	});
-
+//     	반려동물 추가 버튼을 누르면 반려동물을 추가할 수 있는 폼으로 이동
 		$("#pet-add").click(function () {
 			location.href = "<c:url value='/pet/petAddForm.do'/>";
+		});
+		
+		$("#nickChangeBtn").click(function () {
+			console.dir($(this).prev());
 		});
     </script>
 </body>

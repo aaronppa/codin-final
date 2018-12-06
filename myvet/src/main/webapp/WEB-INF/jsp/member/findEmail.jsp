@@ -17,6 +17,7 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+<!-- 	찾은 아이디 -->
 	<div id="email-contaner">
 		<h3>아이디 찾기</h3>
 		<hr>

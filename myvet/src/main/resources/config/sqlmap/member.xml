@@ -67,4 +67,10 @@
 		  from member
 		 where member_no = #{memberNo}
 	</select>
+	
+	<update id="updateNicknameByNo" parameterType="Member">
+		update member
+		   set member_nickname = #{memberNickname}
+		 where member_no = #{memberNo}
+	</update>
 </mapper>

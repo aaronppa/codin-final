@@ -40,6 +40,14 @@ public class MemberController {
 	@Autowired
 	private MemberMapper mapper;
 	
+	/**
+	 * 회원가입
+	 * @param member
+	 * @param fileV
+	 * @param vetFile
+	 * @return redirect
+	 * @throws Exception
+	 */
 	@RequestMapping("/signup.do")
 	public String signup(Member member, MultipartFile fileV, VetAuth vetFile) throws Exception {
 		service.signup(member);
@@ -82,6 +90,11 @@ public class MemberController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
 	
+	/**
+	 * 이메일 중복 확인
+	 * @param memberEmail
+	 * @return map 데이터베이스의 이메일 갯수
+	 */
 	@RequestMapping("/idCheck.do")
 	@ResponseBody
 	public Map<Object, Object> idCheck(@RequestBody String memberEmail) {
@@ -92,6 +105,12 @@ public class MemberController {
 		return map;
 	}
 	
+	/**
+	 * 로그인
+	 * @param member
+	 * @param session
+	 * @return redirect 메인페이지
+	 */
 	@RequestMapping("/login.do")
 	public String login(Member member, HttpSession session) {
 		Member loginMember = service.login(member);
@@ -111,17 +130,32 @@ public class MemberController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
 	
+	/**
+	 * 로그아웃
+	 * @param session
+	 * @return redirect 메인페이지
+	 */
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
 	
+	/**
+	 * 이메일 찾기
+	 * @param member
+	 * @param model
+	 */
 	@RequestMapping("/findEmail.do")
 	public void findEmail(Member member, Model model) {
 		model.addAttribute("member", service.findEmail(member));
 	}
 	
+	/**
+	 * 본인 페이지 확인
+	 * @param session
+	 * @param model
+	 */
 	@RequestMapping("/myPage.do")
 	public void myPage(HttpSession session, Model model) {
 		Member member = (Member) session.getAttribute("user");

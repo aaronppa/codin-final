@@ -19,6 +19,7 @@
 </style>
 </head>
 <body>
+<!-- 이메일 찾기 폼 -->
 	<div id="find-email-container">
 		<form method="post" action="findEmail.do">
 			<div class="input-group email">

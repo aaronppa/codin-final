@@ -46,4 +46,10 @@ public interface MemberService {
 	 * @return member
 	 */
 	Member myPage(int memberNo);
+	
+	/**
+	 * 회원 닉네임 변경에 대한 비즈니스 로직 처리
+	 * @param memberNo
+	 */
+	void nickChange(Member member);
 }

@@ -61,4 +61,9 @@ public class MemberServiceImpl implements MemberService {
 	public Member myPage(int memberNo) {
 		return mapper.selectMemberByNo(memberNo);
 	}
+
+	@Override
+	public void nickChange(Member member) {
+		mapper.updateNicknameByNo(member);
+	}
 }
