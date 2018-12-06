@@ -1,0 +1,1 @@
+const APPLICATION_PATH = "/myvet";

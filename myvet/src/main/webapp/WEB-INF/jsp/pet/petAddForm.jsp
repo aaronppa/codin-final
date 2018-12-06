@@ -91,7 +91,7 @@
 		<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
 	</div>
 	
-	<form id="petForm" action="petAdd.do" method="post" enctype="multipart/form-data">
+	<form id="petForm" action="petadd.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="memberNo" value="${user.memberNo}" />
 		<div id="container">
 			<h2><input type="text" name="petName" placeholder="아이 이름을 적어주세요." /></h2>
@@ -100,7 +100,7 @@
 		        <table class="info basics">
 		            <tr>
 		                <td rowspan="4" class="imgTd">
-		                    <input type="file" name="fileP" style="width:150px; height:150px" />
+		                    <input type="file" name="attach" style="width:150px; height:150px" />
 		                </td>
 		                <th>등록번호</th>
 		                <td colspan="3"><input type="text" name="petRegNo" id="petRegNo" /></td>
@@ -155,9 +155,10 @@
 		    </div>
 	    </div>
 	    <div class="offset-md-9">
-		    <button type="button" class="btn btn-outline-secondary">취소</button>
+		    <button type="button" id="cancelBtn" class="btn btn-outline-secondary">취소</button>
 	        <button type="submit" class="btn btn-outline-primary">작성 완료</button>
 	    </div>
 	</form>
+	<script src="<c:url value='/resources/js/pet/pet-add-form.js'/>"></script>
 </body>
 </html>

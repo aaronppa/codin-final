@@ -21,17 +21,71 @@
 		<result column="pet_file_reg_date" property="petFileRegDate"/>
 	</resultMap>
 	
+	<resultMap type="HosBookingResult" id="PetBookingMap">
+		<result column="block_code" property="blockNo"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="hos_title" property="hosTitle"/>
+		<result column="block_day" property="blockDay"/>
+		<result column="block_start" property="blockStart"/>
+		<result column="block_end" property="blockEnd"/>
+		<result column="facility_no" property="facilityNo"/>
+		<result column="confirm" property="confirm"/>
+		<result column="finish" property="finish"/>
+	</resultMap>
+	
 	<select id="selectPetByMemberNo" parameterType="int" resultMap="PetMap">
 		select *
 		  from pet
 		 where member_no = #{memberNo}
 	</select>
 	
+	<select id="selectPetInfo" parameterType="int" resultMap="PetMap">
+		select *
+		  from pet
+		 where pet_no = #{petNo}
+	</select>
+	
+	<select id="selectPetBooking" parameterType="int" resultMap="PetBookingMap">
+		select a.*, b.confirm, b.finish, (select title from hos_basic where hos_code = a.hos_code) as hos_title
+		  from hos_block a 
+         inner join hos_booking b
+            on a.block_code = b.block_code
+		 where b.booking_pet = #{petNo}		 
+	</select>
+	
 	<insert id="insertPet" parameterType="Pet">
 		insert into pet(
-			member_no, pet_name, pet_reg_no, species, breed, size, pet_gender, pet_age, weight, remark, pet_ori_name, pet_sys_name, pet_file_path, pet_file_size, pet_file_reg_date
+			member_no, 
+			pet_name, 
+			pet_reg_no, 
+			species, 
+			breed, 
+			size, 
+			pet_gender, 
+			pet_age, 
+			weight, 
+			remark, 
+			pet_ori_name, 
+			pet_sys_name, 
+			pet_file_path, 
+			pet_file_size, 
+			pet_file_reg_date
 		) values (
-			#{memberNo}, #{petName}, #{petRegNo}, #{species}, #{breed}, #{size}, #{petGender}, #{petAge}, #{weight}, #{remark}, #{petOriName}, #{petSysName}, #{petFilePath}, #{petFileSize}, #{petFileRegDate}
+			#{memberNo}, 
+			#{petName}, 
+			#{petRegNo}, 
+			#{species}, 
+			#{breed}, 
+			#{size}, 
+			#{petGender}, 
+			#{petAge}, 
+			#{weight}, 
+			#{remark}, 
+			#{petOriName}, 
+			#{petSysName}, 
+			#{petFilePath}, 
+			#{petFileSize}, 
+			#{petFileRegDate}
 		)
 	</insert>
 	

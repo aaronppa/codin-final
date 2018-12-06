@@ -88,13 +88,15 @@
     
     .pet-info {
     	width: 200px;
-    	height: 200px;
+    	height: 160px;
     	border: 1px solid black;
     	float: left;
     	margin: 50px;
     	text-align: center;
-    	padding-top: 90px;
-    	background-color: white;
+    }
+    
+    .pet-info > img {
+    	width: 100%;
     }
     
     #pet-add {
@@ -124,7 +126,7 @@
                 <td>${member.memberEmail}</td>
                 <th>비밀번호</th>
                 <td>
-                	<input id="password" type="password" value="${member.password}" style="width:100px;" readOnly/>
+                	<input type="password" value="${member.password}" style="width:100px;" readOnly/>
                 	<button class="btn btn-default">변경</button>
                 </td>
             </tr>
@@ -167,30 +169,15 @@
     
 <!-- pet이 잘 들어오는지 확인 -->
 <%--     :${pet }: --%>
-
+		
     	<c:forEach var="pet" items="${pet}">
-			<div class="pet-info">
-				<img alt="강아지 사진" src="">
+			<div class="pet-info" data-pet-no="${pet.petNo}">
+				<img alt="강아지 사진" src="<c:url value='${pet.petFilePath}/${pet.petSysName}' />">
 				<div>${pet.petName}</div>
 			</div>
 		</c:forEach>
-		<div class="pet-info">
-			<img alt="고양이 사진" src="">
-		</div>
-		<button class="pet-info" id="pet-add">
-			반려동물 정보 추가
-		</button>
+		<button class="pet-info" id="pet-add">반려동물 정보 추가</button>
 	</div>
-    
-    <script>
-//     	반려동물 추가 버튼을 누르면 반려동물을 추가할 수 있는 폼으로 이동
-		$("#pet-add").click(function () {
-			location.href = "<c:url value='/pet/petAddForm.do'/>";
-		});
-		
-		$("#nickChangeBtn").click(function () {
-			console.dir($(this).prev());
-		});
-    </script>
+	<script src="<c:url value='/resources/js/member/mypage.js'/>"></script>
 </body>
 </html>

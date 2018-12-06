@@ -1,6 +1,7 @@
 package kr.co.codin.pet.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -20,4 +21,11 @@ public interface PetService {
 	 * @param pet
 	 */
 	void addPet(Pet pet);
+	
+	/**
+	 * 반려동물의 상세 정보 조회
+	 * @param petNo
+	 * @return
+	 */
+	Map<String, Object> detailPet(int petNo);
 }
