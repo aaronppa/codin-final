@@ -30,15 +30,16 @@ ul.pagination{
 	<div class="scroll-container">
     <div class="admin main container">
         <div class="listarea vetAuth">
-            <h2><a id="vetauthheader">수의사 인증 요청 리스트</a></h2>
+            <h2><a id="vetAuthheader">수의사 인증 요청 리스트</a></h2>
             <div class="search">
                 <form action="#" id="vetAuth-search" method="post" data-boardtype='vetAuth'> 
                     상태:
                     <select name="memberType">
-                        <option value="VP">전체</option>
+                        <option value="VPH">전체</option>
                         <option value="V">승인</option>
-                        <option value="P" selected="selected">보류</option>
+                        <option value="P" selected="selected">대기</option>
                         <option value="R">반려</option>
+                        <option value="H">보류</option>
                     </select>
                     요청검색: 
                     <select name="memberId">
@@ -77,9 +78,9 @@ ul.pagination{
         		</c:forEach>
                 </tbody>
             </table>
-                <c:if test="${memberVetPageResult.count != 0}">
 			    <nav class="pagination" aria-label="Pagination">
 			        <ul class="pagination" data-boardtype="vetAuth">
+	                <c:if test="${memberVetPageResult.count != 0}">
 			            <li><a class='disabled nostyle firstpage' data-boardtype='vetAuth' id="first" href="1">&laquo;First</a></li>
 			            <li><a class='disabled nostyle previouspage' data-boardtype='vetAuth' href=${memberVetPageResult.beginPage-1 }>&laquo;Previous</a></li>
 			            
@@ -90,9 +91,9 @@ ul.pagination{
 			            <li><a class='<c:if test="${memberVetPageResult.pageNo == memberVetPageResult.lastPage}">disabled </c:if>nostyle nextpage' data-boardtype="vetAuth" href="${memberVetPageResult.pageNo+1 }">Next&raquo;</a></li>
 			            <li><a class='<c:if test="${memberVetPageResult.pageNo + 10 > memberVetPageResult.lastPage}">disabled </c:if>nostyle endpage' data-boardtype="vetAuth" href="${memberVetPageResult.lastPage }">End&raquo;</a>
 			            </li>
+				    </c:if>
 			        </ul>
 			    </nav>
-		    </c:if>
              
         </div>
         <hr>
@@ -349,12 +350,16 @@ $(".clickable").on("click", "tr", function(e){
 	console.log("Clicked: ", $(this).data("boardtype"));
 	console.log("Clicked: ", $(this).data("itemno"));
 	
-	if($(this).data("boardtype")) window.open("<c:url value='/admin/detail.do?boardType="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
+	if($(this).data("boardtype")) window.open("<c:url value='/admin/detail.do?boardType="+$(this).data("boardtype")+"&itemno="+$(this).data("itemno")+"'/>",'_blank', "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
+	left+=20;
+	topx+=20;
 })
 
 /* Notice Board Write Form Popup */
 $("button#write").on("click",function(){
     window.open("<c:url value='/admin/writeForm.do'/>","공지사항 작성 Form", "status=yes,toolbar=no,menubar=no,width="+w+", height="+h+", top="+topx+", left="+left);
+    left+=20;
+	topx+=20;
 })
 
    
@@ -495,7 +500,7 @@ function updateList(boardType, resultItems){
 	}
 }	
 
-/* Paging Function */
+/* Paging AJAX Result */
 function updateCurrPg(boardType, pageResult){
 	
 		console.dir(pageResult);

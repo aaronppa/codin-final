@@ -41,14 +41,27 @@
 		<result column="vet_file_reg_date" property="vetFileRegDate" />		
 	</resultMap>
 	
+	<!-- 
+		분명 문자열 비교 구문인데 NumberFormatException이 발생하는 상황이다.
+		결론적으로 위 현상은 myBatis 문제는 아니고 OGNL(Object Graph Navigation Language) 의 문제이다.
+		OGNL 인터프리터에서는 위 구문의 ‘Y’를 char 형으로 인식하고, ‘YY’나 “Y”는 String으로 인식한다. (따옴표를 잘보자)
+		그래서 <if test=”stringValue == ‘Y’”> 이와 같은 구문을 비교할 때  NumberFormat으로 비교를 시도하여 Exception이 발생한다.
+		이유는 java의 char형은 실제로 문자의 코드값을 저장하기 때문이다. 그래서 아래와 같은 형변환이 가능하다. 
+		1. <if test=’stringValue == “Y”‘> – 쌍따옴표와 홑따옴표의 위치를 변경
+		2. <if test=”stringValue == &quot;Y&quot;”> – 쌍따옴표를 HTML 코드로 변경
+		3. <if test=”stringValue == ‘Y’.toString()”> – toString() 함수를 사용해 String 형으로 변환
+		
+		http://t-ara72.blogspot.com/2013/10/mybatis-numberformatexception.html
+	-->
+	
 	<select id="noticeList" parameterType="Search" resultMap="noticeMap">
 		select *
 		from notice
 		<where>
-			<if test="memberId!=null and memberId!=''">
+			<if test='memberId!=null and memberId!=""'>
 				notice_writer = #{memberId}
 			</if>
-			<if test="keyword!=null and keyword!=''">
+			<if test='keyword!=null and keyword!=""'>
 				and concat(notice_title, notice_content) like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="status==1">
@@ -64,12 +77,15 @@
 		from member
 		<where>
 			<choose>
-			<when test="memberType!=null and memberType!='' and memberType!='VP'">
+			<when test='memberType=="P"'>
+				member_grade = #{memberType} or member_grade = 'H'
+			</when>	
+			<when test='memberType=="VPH"'>
+				member_grade = 'V' or member_grade = 'P' or member_grade = 'H' or member_grade = 'R'
+			</when>	
+			<when test='memberType!=null and memberType!="" and memberType!="VPH" and memberType!="P"'>
 				member_grade = #{memberType}
 			</when>
-			<when test="memberType=='VP'">
-				member_grade = 'V' or member_grade = 'P'
-			</when>			
 			<when test="memberId=='account'">
 				and member_email like CONCAT('%',#{keyword},'%')
 			</when>
@@ -101,10 +117,10 @@
 		select count(*)
 		from notice
 		<where>
-			<if test="memberId!=null and memberId!=''">
+			<if test='memberId!=null and memberId!=""'>
 				notice_writer = #{memberId}
 			</if>
-			<if test="keyword!=null and keyword!=''">
+			<if test='keyword!=null and keyword!=""'>
 				and concat(notice_title, notice_content) like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="status==1">
@@ -118,12 +134,15 @@
 		from member
 		<where>
 			<choose>
-			<when test="memberType!=null and memberType!='' and memberType!='VP'">
+			<when test='memberType=="P"'>
+				member_grade = #{memberType} or member_grade = 'H'
+			</when>	
+			<when test='memberType=="VPH"'>
+				member_grade = 'V' or member_grade = 'P' or member_grade = 'H' or member_grade = 'R'
+			</when>	
+			<when test='memberType!=null and memberType!="" and memberType!="VPH" and memberType!="P"'>
 				member_grade = #{memberType}
 			</when>
-			<when test="memberType=='VP'">
-				member_grade = 'V' or member_grade = 'P'
-			</when>	
 			<when test="memberId=='account'">
 				and member_email like CONCAT('%',#{keyword},'%')
 			</when>
@@ -165,4 +184,9 @@
 			)
 	</insert>
 	
+	<update id="updateApproval" parameterType="Member">
+		update member
+		set member_grade = #{memberGrade}
+		where member_no = #{memberNo}
+	</update>
 </mapper>

@@ -16,4 +16,5 @@ public interface AdminMapper {
 	List<Member> memberList(Search search);
 	int memberCount(Search search);
 	Member selectMemberByNo(int no);
+	void updateApproval(Member vetApproval);
 }

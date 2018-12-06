@@ -12,36 +12,70 @@ src="https://code.jquery.com/jquery-3.3.1.js"
 integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 crossorigin="anonymous"></script>
 <title>Admin - 공지사항 - ${detail.noticeNo }</title>
-	<style>
-        #body {
-        width: 900px;
-        margin: auto;
-        }
-        table > thead > tr > th {
-            font-size: 20px;
-            height: 30;
-        }
-        table > thead > tr > td {
-            background-color: #a56e50;
-            font-size: 12px;
-            height: 15px;
-            padding: 0px;
-        }
-        .empty {
-            width: 50%;
-        }
-        .link {
-        color:#412427;
-        font-size: 15px;
-    }
-        
-/*
-*/    </style>
+<style>
+
+.container {
+	width: 900px;
+	margin: auto;
+}
+
+table>thead>tr>th {
+	font-size: 20px;
+	height: 30;
+}
+
+table>thead>tr>td {
+	background-color: #a56e50;
+	font-size: 12px;
+	height: 15px;
+	padding: 0px;
+}
+
+.empty {
+	width: 50%;
+}
+
+.btnarea{
+	border: 1px solid black;
+	width: 800px;
+	height: auto;
+	text-align: center;
+	margin: auto;
+	
+}
+
+.button{
+	/* display: inline-block; */
+}
+
+.button.update {
+  background-color: #8b787a;  
+  border-radius: 5px;
+  color: black;
+  padding: .5em;
+  text-decoration: none;
+  width: 30px;
+  height: 20px;
+  margin: auto;
+  
+}
+.button.close {
+  background-color: #a56e50;  
+  border-radius: 5px;
+  color: black;
+  padding: .5em;
+  text-decoration: none;
+  width: 30px;
+  height: 20px;
+  margin: auto;
+  
+}
+</style>
 <link rel="stylesheet" href="<c:url value='/resources/css/notice/notice.css'/>"/>
 
 </head>
 <body>
-	<div id="body">
+	<div class="container">
 		<h3>공지사항 상세 - ${detail.noticeNo }</h3>
 		
 		<table>
@@ -69,14 +103,16 @@ crossorigin="anonymous"></script>
 			</thead>
 			<tbody>
                 <tr>
-                    <td id="contnet" colspan="5">
+                    <td id="content" colspan="5">
                         ${detail.noticeContent}
                     </td>
                 </tr>
             </tbody>
          </table>
-         <a class="update link" href="#">수정</a>
-         <a class="close link" href="#">닫기</a>
+         <div class="btnarea">
+         <a class="button update" href="#">수정</a>
+         <a class="button close" href="#">닫기</a>
+         </div>
 	</div>
 <script>
 $(".close").click(function(e){

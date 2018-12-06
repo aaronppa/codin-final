@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.codin.admin.service.AdminService;
+import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Notice;
 import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.Search;
@@ -65,25 +66,6 @@ public class AdminController {
 		return url;
 	}
 	
-	@RequestMapping("writeForm.do")
-	public String writePopup() {
-		return "admin/writeNotice_popup";
-	}
-	
-	@RequestMapping("write.do")
-	@ResponseBody
-	public void write(Notice notice) throws Exception{
-		System.out.println("Write Notice: "+notice);
-		service.write(notice);
-	}
-	
-	@RequestMapping("save.do")
-	@ResponseBody
-	public void save(Notice notice) throws Exception{
-		System.out.println("Save Notice"+notice);
-		service.save(notice);     
-	}
-	
 	// 목록 조회 
 	@RequestMapping(value="/{boardType}/{pageNo}.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -123,4 +105,33 @@ public class AdminController {
 		return map;
 	}
 	
+	
+	@RequestMapping("writeForm.do")
+	public String writePopup() {
+		return "admin/writeNotice_popup";
+	}
+	
+	@RequestMapping("write.do")
+	@ResponseBody
+	public void write(Notice notice) throws Exception{
+		System.out.println("Write Notice: "+notice);
+		service.write(notice);
+	}
+	
+	@RequestMapping("save.do")
+	@ResponseBody
+	public void save(Notice notice) throws Exception{
+		System.out.println("Save Notice"+notice);
+		service.save(notice);     
+	}
+	
+	@RequestMapping(value="/process/{itemno}.do", method=RequestMethod.GET)
+	@ResponseBody
+	public void processApproval(@PathVariable int itemno, String approval) {
+		Member vetApproval = new Member();
+		vetApproval.setMemberNo(itemno);
+		vetApproval.setMemberGrade(approval);
+		service.updateStatus(vetApproval);
+		System.out.println("수의사 인증 요청 처리 완료");
+	}
 }

@@ -17,5 +17,6 @@ public interface AdminService {
 	int memberCount(Search search);
 	Member memberDetail(int itemno);
 	Member vetAuthDetail(int itemno);
+	void updateStatus(Member vetApproval);
 }
 

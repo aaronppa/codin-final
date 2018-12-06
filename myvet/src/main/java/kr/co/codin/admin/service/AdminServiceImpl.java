@@ -63,5 +63,12 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.selectMemberByNo(no);
 	}
 
+	@Override
+	public void updateStatus(Member vetApproval) {
+		mapper.updateApproval(vetApproval);
+		
+	}
+
+
 
 }
