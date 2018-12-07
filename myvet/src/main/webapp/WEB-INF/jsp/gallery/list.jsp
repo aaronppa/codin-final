@@ -22,7 +22,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script></head>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Give+You+Glory|The+Girl+Next+Door|Gloria+Hallelujah|Indie+Flower);
-
+	
+	.container{
+		width:1100px;
+	}
        /*공지*/
        .sticky {
         -webkit-box-shadow: #DDD 0px 1px 2px;
@@ -182,8 +185,8 @@
             color: saddlebrown;
         }
         .btn-outline:hover{
-            border:none;
-            opacity: 0.5;
+            opacity: 0.8;
+            transition:.5s;
             background: saddlebrown;
             color: white;
         }
@@ -209,30 +212,25 @@
         	padding-left: 10px;
         }
 
-
-        
-        
-
-
     </style>
     <body>
-       	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
-    
+    <c:import url="/WEB-INF/jsp/common/topBar.jsp" />    
+    <form action="" method="post">        
+    <div class="container">
         <!--검색-->
      <div class="input-group mb-3">
-             <div class="input-group-prepend">
-               <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Title</button>
-               <div class="dropdown-menu">
-                 <a class="dropdown-item" href="#">Title</a>
-                 <a class="dropdown-item" href="#">Content</a>
-                 <div role="separator" class="dropdown-divider"></div>
-                 <a class="dropdown-item" href="#">Title + Content</a>
-               </div>
-             </div>
-             <input type="text" class="input-search" placeholder="search">
-             <button type="button" class="btn btn-outline">검색</button>
+
+     	<select name="sort" id="sort" class="sort">
+			<option selected value="0">검색조건</option>
+			<option value="1">제목</option>
+			<option value="2">내용</option>
+			<option value="3">작성자</option>
+			<option value="4">제목+내용</option>
+		</select>
+	   <input type="text" name="keyword" id="keyword" class="input-search" placeholder="search">
+	   <input type="submit" class="btn btn-outline" value="검색"></input>
      </div>
-    <div id="galleryCount" style="float:right;">전체 ${count } 개</div>
+    <div id="galleryCount" style="float:right;">전체 ${count} 개</div>
     <br>
     
     <table>
@@ -345,7 +343,8 @@
             </a>
             </div>
         <br>
-        
+       </div>
+      </form>  
         <!--페이징-->
 <!--     <nav aria-label="Page navigation example"> -->
 <!--         <ul class="pagination justify-content-center"> -->

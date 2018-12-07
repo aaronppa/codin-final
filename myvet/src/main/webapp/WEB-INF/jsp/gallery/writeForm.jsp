@@ -139,17 +139,17 @@
         <div class="row">
             <div class="col-sm-7" >
                 <div class="swiper-container gallery-top">
-                        <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img class = "top-img" src=""></div>
-                        </div>
-                        <div class="swiper-button-next swiper-button-white"></div>
-                        <div class="swiper-button-prev swiper-button-white"></div>
-                    </div>
-                    <div class="swiper-container gallery-thumbs">
-                        <div class="swiper-wrapper">
-                              <div class="swiper-slide"><img class = "thumbs-img" src=""></div>
-                        </div>
-                    </div>
+                     <div class="swiper-wrapper">
+                     <div class="swiper-slide"><img class = "top-img" src=""></div>
+                     </div>
+                     <div class="swiper-button-next swiper-button-white"></div>
+                     <div class="swiper-button-prev swiper-button-white"></div>
+                 </div>
+                 <div class="swiper-container gallery-thumbs">
+                     <div class="swiper-wrapper">
+                           <div class="swiper-slide"><img class = "thumbs-img" src=""></div>
+                     </div>
+                 </div>
 <!-- 		<div id="imgprev"> -->
 <!-- 			<img type="hidden"id="prev" src=''/> -->
 <!-- 		</div> -->
@@ -159,7 +159,7 @@
                           <span class="input-group-text" id="inputGroupFileAddon01"><i class="fas fa-camera-retro"></i></span>
                         </div>
                         <div class="custom-file">
-                          <input  type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                          <input  type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                           <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
                     </div>
@@ -221,6 +221,29 @@
 // // 	        $("#preview1").css("width","400px");
 // // 	    	$("#preview1").css("height","300px");
 // 	    }; 
+    }
+    //파일첨부
+    
+     function sendFile(file, ele) {
+    	var formData = new FormData();
+    	console.log("formData", formData)
+    	formData.append('file', file);
+    	console.log(file)
+    	console.log(ele)
+    	$.ajax({
+    		data : formData, 
+    		type : "POST",
+    		url : "/myvet/gallery/uploadFile.do",
+    		cache : false,
+    		contentType : false,
+    		enctype : "multipart/form-data",
+    		processData : false,
+    		//매개변수가 파일경로
+    		success : function(file) {
+    			console.log($(ele))
+    			console.log("upload-success");
+    		}
+    	}
     }
     
     

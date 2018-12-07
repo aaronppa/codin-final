@@ -466,31 +466,9 @@ p {
                 <i class="far fa-clock"style="margin-left: 5%;">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
               </div>
 		  <div class="report" data-toggle="modal" data-target="#exampleModal" style="text-align: right;font-size: 15px; padding-right: 30px">
-               <a href="<c:url value='/report/reportForm.do?boardCode=11&contentNo=${tip.tipNo}&reportMemberNo=7&targetMemberNo=8'/>"/>
                		<i class="fas fa-exclamation-triangle" id="tipReport" style="cursor:pointer">신고하기</i>
-               </a>
+               
 		  </div>
-		  <!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		        ...
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		  <!-- End Madal -->          
             <div class="title" aria-placeholder="title..">
 				${tip.title }
             </div>
@@ -565,6 +543,11 @@ p {
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
 	
+        //신고하기 팝업창
+        $('#tipReport').click(function(){
+        	window.open("/myvet/report/reportTipForm.do?tipNo=${tip.tipNo}","report","width=1000, height=600, left=500, top=10")
+        })
+        
         //리스트 이전
         $('.btn-primary').click(function(){
         	window.history.back();

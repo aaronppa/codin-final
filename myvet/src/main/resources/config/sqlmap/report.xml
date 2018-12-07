@@ -12,20 +12,73 @@
 		<result column="report_code" property="reportCode"/>		
 		<result column="report_date" property="reportDate"/>		
 		<result column="process_result" property="processResult"/>		
-		<result column="report_content" property="reportContent"/>		
+		<result column="report_content" property="reportContent"/>
 	</resultMap>
+	<resultMap type="gallery" id="galleryMap">
+		<result column="gallery_no" property="galleryNo"/>		
+		<result column="board_code" property="boardCode"/>
+		<result column="writer_no" property="writerNo"/>		
+		<result column="title" property="title"/>		
+		<result column="content" property="content"/>		
+		<result column="reg_date" property="regDate"/>		
+		<result column="view_cnt" property="viewCnt"/>
+	</resultMap>
+	<resultMap type="galleryComment" id="galleryCommentMap">
+		<result column="comment_no" property="commentNo"/>
+		<result column="gallery_no" property="galleryNo"/>		
+		<result column="commenter_no" property="commenterNo"/>		
+		<result column="comment" property="comment"/>		
+		<result column="reg_date" property="regDate"/>
+	</resultMap>
+		<resultMap type="tip" id="tipMap">
+		<result column="tip_no" property="tipNo"/>		
+		<result column="board_code" property="boardCode"/>
+		<!-- 작성자 -->		
+		<result column="member_no" property="memberNo"/>		
+		<result column="pet_no" property="petNo"/>		
+		<result column="title" property="title"/>		
+		<result column="content" property="content"/>		
+		<result column="reg_date" property="regDate"/>		
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="category_code" property="categoryCode"/>
+	</resultMap>
+	<resultMap type="tipComment" id="tipCommentMap">
+		<result column="comment_no" property="commentNo"/>
+		<result column="tip_no" property="tipNo"/>		
+		<result column="commenter_no" property="commenterNo"/>		
+		<result column="comment" property="comment"/>		
+		<result column="reg_date" property="regDate"/>
+		<result column="recommend" property="recommend"/>		
+		<result column="recommendCnt" property="recommendCnt"/>		
+	</resultMap>
+	<resultMap type="Qna" id="QnaMap">
+		<result column="qna_no" property="qnaNo"/>
+		<result column="board_code" property="boardCode"/>
+		<result column="title" property="title"/>
+		<result column="writer_no" property="writerNo"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="category_code" property="categoryCode"/>
+		<result column="answered" property="answered"/>
+	</resultMap>
+	<resultMap type="QnaComment" id="QnaCommentMap">
+		<result column="comment_no" property="commentNo"/>
+		<result column="qna_no" property="qnaNo"/>
+		<result column="commenter_no" property="commenterNo"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="pick" property="pick"/>
+	</resultMap>
+
 		
-	<select id="selectByReport" parameterType="report" resultMap="reportMap">
-		select * 
-		  from report_list
-		 where board_code = #{boardCode}
-		   and content_no = #{contentNo}
-		   and comment_no = #{commentNo}
-		   and report_member_no = #{reportMemberNo}
-		   and target_member_no = #{targetMemberNo}
+	<select id="selectByReportTip" parameterType="int" resultMap="tipMap">
+		select *
+		  from tip
+		 where tip_no=#{tipNo}
 	</select>	
 	
-	<insert id="insertReport" parameterType="report">
+	<insert id="insertReportTip" parameterType="report">
 		insert into report_list(
 			board_code, content_no, comment_no, report_member_no, target_member_no, report_code, process_result, report_content 
 		)values(

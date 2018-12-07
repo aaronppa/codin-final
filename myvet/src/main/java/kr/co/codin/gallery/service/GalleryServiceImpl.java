@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
 import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.SearchGallery;
+import kr.co.codin.repository.domain.SearchTip;
 import kr.co.codin.repository.mapper.GalleryMapper;
 
 
@@ -18,9 +21,10 @@ public class GalleryServiceImpl implements GalleryService{
 
 	
 
+	
 	@Override
-	public List<Gallery> galleryList(Page page) {
-		return mapper.selectGallery(page);
+	public List<Gallery> galleryList(SearchGallery searchGallery) {
+		return mapper.selectGallery(searchGallery);
 	}
 
 	@Override
@@ -71,8 +75,13 @@ public class GalleryServiceImpl implements GalleryService{
 	public List<GalleryComment> commentList(int galleryNo) {
 		return mapper.selectComment(galleryNo);
 	}
-	
 
+	@Override
+	public void uploadFile(FileInfo fileInfo) {
+		mapper.uploadFile(fileInfo);
+	}
+	
+	
 
 	
 	

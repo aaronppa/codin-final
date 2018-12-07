@@ -75,12 +75,13 @@ public class Report {
 	public void setReportContent(String reportContent) {
 		this.reportContent = reportContent;
 	}
-	
 	@Override
 	public String toString() {
-		return "Report [reportNo=" + reportNo + ", boardCode=" + boardCode + ", contentNo=" + contentNo
-				+ ", reportMemberNo=" + reportMemberNo + ", targetMemberNo=" + targetMemberNo + ", reportCode="
-				+ reportCode + ", reportDate=" + reportDate + ", processResult=" + processResult + ", reportContent="
-				+ reportContent + "]";
+		return "Report [reportNo=" + reportNo + ", boardCode=" + boardCode + ", contentNo=" + contentNo + ", commentNo="
+				+ commentNo + ", reportMemberNo=" + reportMemberNo + ", targetMemberNo=" + targetMemberNo
+				+ ", reportCode=" + reportCode + ", reportDate=" + reportDate + ", processResult=" + processResult
+				+ ", reportContent=" + reportContent + "]";
 	}
+	
+
 }  

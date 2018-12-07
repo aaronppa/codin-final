@@ -22,19 +22,18 @@
 	<div class="container">
 	<br>
 	<br>
-	        <form action="<c:url value='/report/writeReport.do'/>">
+	        <form action="<c:url value='/report/insertReportTip.do'/>">
             <!--신고자, 신고대상-->
+            <input name="processResult" value="0">
             <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputReportMemberNo">신고자</label>
-                        <c:if test="boardCode == 10"><input type="hidden" name="reportMemberNo" value="${user.memberNo}"></c:if>
-                        <p class="text-justify">${user.memberNickname}</p>
+                        <input type="hidden" name="reportMemberNo" value="${user.memberNo}"><p class="text-justify">${report.memberNo}</p>
+                        <p class="text-justify"></p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">신고대상</label>
-                        <c:if test="${report.boardCode == 10}"><input type="hidden" name="targetMemberNo" value="${report.writerNo}"><p class="text-justify">${report.writerNo}</p></c:if>
-                        <c:if test="${report.boardCode == 11}"><input type="hidden" name="targetMemberNo" value="${report.reportMemberNo}"><p class="text-justify">${report.memberNo}</p></c:if>
-                        <c:if test="${report.boardCode == 20}"><input type="hidden" name="targetMemberNo" value="${report.writerNo}"><p class="text-justify">${report.writerNo}</p></c:if>
+                        <input type="hidden" name="targetMemberNo" value="${report.memberNo}"><p class="text-justify">${report.memberNo}</p>
                     </div>
             </div>
             <!-- 게시판 분류, 게시판 제목-->
@@ -42,27 +41,21 @@
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">게시판 분류</label>
                     <input type="hidden" name="boardCode" value="${report.boardCode}">
-                    <c:if test="${report.boardCode == 10}"><p class="text-justify">5959내시끼</p></c:if>
-                    <c:if test="${report.boardCode == 11}"><p class="text-justify">개꿀팁이냥</p></c:if>
-                    <c:if test="${report.boardCode == 20}"><p class="text-justify">Q&A</p></c:if>
+                    <p class="text-justify">개꿀팁이냥</p>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">게시판 제목</label>
-                    	<c:if test="${report.boardCode == 10}"><input type="hidden" name="contentNo" value="${report.galleryNo}"><p class="text-justify">${report.title}</p></c:if>
-                        <c:if test="${report.boardCode == 11}"><input type="hidden" name="contentNo" value="${report.tipNo}"><p class="text-justify">${report.title}</p></c:if>
-                        <c:if test="${report.boardCode == 20}"><input type="hidden" name="contentNo" value="${report.qnaNo}"><p class="text-justify">${report.title}</p></c:if>
+                    	<input type="hidden" name="contentNo" value="${report.tipNo}"><p class="text-justify">${report.title}</p>
                 </div>
             </div>
             <!-- 댓글 내용-->
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">댓글내용</label>
-               		<c:if test="${report.boardCode != ''}"><input type="hidden" name="conmmentNo" value="${report.commentNo}"><p class="text-justify">${report.comment}</p></c:if>
-                    <c:if test="${report.boardCode != ''}"><input type="hidden" name="conmmentNo" value="${report.commentNo}"><p class="text-justify">${report.comment}</p></c:if>
-                    <c:if test="${report.boardCode != ''}"><input type="hidden" name="conmmentNo" value="${report.commentNo}"><p class="text-justify">${report.content}</p></c:if>
-            </div>
+<!--             <div class="form-group"> -->
+<!--                 <label for="exampleFormControlTextarea1">댓글내용</label> -->
+<!--                		<input type="hidden" name="conmmentNo" value=""><p class="text-justify"></p> -->
+<!--              </div> -->
             <div class="form-group">
                 <label for="exampleFormControlSelect1">신고사유</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select name="reportCode" class="form-control" id="exampleFormControlSelect1">
                         <option value="">신고유형</option>
                         <option value="1">음란성 및 선정성</option>
                         <option value="2">상업적 광고 홍보</option>

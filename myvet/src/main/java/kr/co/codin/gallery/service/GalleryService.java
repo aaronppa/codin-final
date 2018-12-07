@@ -2,12 +2,13 @@ package kr.co.codin.gallery.service;
 
 import java.util.List;
 
+import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
-import kr.co.codin.repository.domain.Page;
+import kr.co.codin.repository.domain.SearchGallery;
 
 public interface GalleryService {
-	List<Gallery> galleryList(Page page);
+	List<Gallery> galleryList(SearchGallery searchGallery);
 	
 	Gallery detailGallery(int galleryNo);
 	
@@ -41,7 +42,7 @@ public interface GalleryService {
 //	
 //	//파일
 //	
-//	void uploadFile(FileInfo fileInfo);
+	void uploadFile(FileInfo fileInfo);
 //	
 //	void deleteFile(FileInfo fileInfo);
 }

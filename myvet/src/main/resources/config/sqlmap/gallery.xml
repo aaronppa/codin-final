@@ -25,20 +25,37 @@
 <!-- 		<result column="member_no" property="memberNo"/>		 -->
 <!-- 		<result column="recommend" property="recommend"/> -->
 <!-- 	</resultMap> -->
-<!-- 	<resultMap id="fileMap" type="fileInfo"> -->
-<!-- 		<result column="file_id" property="fileId"/>파일번호(auto) -->
-<!-- 		<result column="board_code" property="boardCode"/>게시판 테이블 고유 번호(FK(code_list(board_code))) -->
-<!-- 		<result column="board_no" property="boardNo"/>각 테이블 라인 아이템 번호 -->
-<!-- 		<result column="ori_name" property="oriName"/> -->
-<!-- 		<result column="sys_name" property="sysName"/> -->
-<!-- 		<result column="file_path" property="filePath"/> -->
-<!-- 		<result column="file_size" property="fileSize"/> -->
-<!-- 	</resultMap> -->
+	<resultMap id="fileMap" type="fileInfo">
+		<result column="file_id" property="fileId"/><!-- 파일번호(auto) -->
+		<result column="board_code" property="boardCode"/><!-- 게시판 테이블 고유 번호(FK(code_list(board_code))) -->
+		<result column="board_no" property="boardNo"/><!-- 각 테이블 라인 아이템 번호 -->
+		<result column="ori_name" property="oriName"/>
+		<result column="sys_name" property="sysName"/>
+		<result column="file_path" property="filePath"/>
+		<result column="file_size" property="fileSize"/>
+	</resultMap>
 
 	
-	<select id="selectGallery" resultMap="galleryMap">
+	<select id="selectGallery" parameterType="SearchGallery" resultMap="galleryMap">
 		select *
 		  from gallery
+		  	<choose>
+	  			<when test="sort == 0">
+	  				where title like CONCAT('%',#{keyword},'%') or content like CONCAT('%',#{keyword},'%') or writer_no like CONCAT('%',#{keyword},'%')
+	  			</when>
+	  			<when test="sort == 1">
+	  				where title like CONCAT('%',#{keyword},'%')
+	  			</when>
+	  			<when test="sort == 2">
+	  				where content like CONCAT('%',#{keyword},'%')
+	  			</when>
+	  			<when test="sort == 3">
+	  				where writer_no like CONCAT('%', #{keyword},'%')
+	  			</when>
+	  			<when test="sort == 4">
+	  				where title like CONCAT('%', #{keyword},'%') or content like CONCAT('%', #{keyword},'%')
+	  			</when>
+  			</choose>
 		 order by gallery_no desc		
 		 limit #{begin}, #{pageNum}
 	</select>
@@ -129,14 +146,14 @@
 <!-- 	</delete> -->
 	
 	
-<!-- 	file -->
-<!-- 	<insert id="uploadFile" parameterType="fileInfo"> -->
-<!-- 		insert into file_info( -->
-<!-- 			board_code, board_no, ori_name, sys_name, file_path, file_size -->
-<!-- 		)values( -->
-<!-- 			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize} -->
-<!-- 		) -->
-<!-- 	</insert> -->
+<!-- file -->
+	<insert id="uploadFile" parameterType="fileInfo">
+		insert into file_info(
+			board_code, board_no, ori_name, sys_name, file_path, file_size
+		)values(
+			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize}
+		)
+	</insert>
 <!-- 	<delete id="deleteFile" parameterType="file"> -->
 <!-- 		delete  -->
 <!-- 		  from file -->

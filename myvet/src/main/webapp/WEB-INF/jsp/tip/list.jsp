@@ -100,9 +100,9 @@
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
     
-   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 </head>
 <body>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
     <div class="container">
     <!--search-->
     <!--category-->
