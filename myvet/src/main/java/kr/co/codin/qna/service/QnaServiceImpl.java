@@ -31,6 +31,7 @@ public class QnaServiceImpl implements QnaService{
 	public Qna selectQnaByNo(int qnaNo) {
 		// TODO Auto-generated method stub
 		mapper.updateViewCnt(qnaNo);
+		System.out.println("ㅠ_ㅠ");
 		return mapper.selectQnaByNo(qnaNo);
 	}
 	

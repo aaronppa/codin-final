@@ -3,130 +3,155 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.codin.repository.mapper.QnaMapper">
 	<resultMap type="Qna" id="QnaMap">
-		<result column="qna_no" property="qnaNo"/>
-		<result column="board_code" property="boardCode"/>
-		<result column="title" property="title"/>
-		<result column="writer_no" property="writerNo"/>
-		<result column="content" property="content"/>
-		<result column="reg_date" property="regDate"/>
-		<result column="view_cnt" property="viewCnt"/>
-		<result column="category_code" property="categoryCode"/>
-		<result column="answered" property="answered"/>
-		<association property="recomCnt" column="qna_no" select="countRecommend"></association>
+		<result column="qna_no" property="qnaNo" />
+		<result column="board_code" property="boardCode" />
+		<result column="title" property="title" />
+		<result column="writer_no" property="writerNo" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="view_cnt" property="viewCnt" />
+		<result column="category_code" property="categoryCode" />
+		<result column="answered" property="answered" />
+		
+	<!-- 	<association property="recomCnt" column="qna_no" select="countRecommend"></association>
+		<association property="commentCount" column="qna_no"
+			select="countComment"></association>
 		<collection property="member" resultMap="memberMap"></collection>
 		<collection property="category" resultMap="QnaCategoryMap"></collection>
-		
+ -->
 	</resultMap>
-	
-		
+
+
 	<resultMap type="Member" id="memberMap">
-		<result column="member_no" property="memberNo"/>
-		<result column="member_email" property="memberEmail"/>
-		<result column="password" property="password"/>
-		<result column="member_grade" property="memberGrade"/>
-		<result column="member_name" property="memberName"/>
-		<result column="member_phone" property="memberPhone"/>
-		<result column="member_nickname" property="memberNickname"/>
-		<result column="hos_code" property="hosCode"/>
-		<result column="member_career" property="memberCareer"/>
-		<result column="mailing_opt" property="mailingOpt"/>
-		<result column="member_ori_name" property="memberOriName"/>
-		<result column="member_sys_name" property="memberSysName"/>
-		<result column="member_file_path" property="memberFilePath"/>
-		<result column="member_file_size" property="memberFileSize"/>
-		<result column="member_file_reg_date" property="memberFileRegDate"/>
+		<result column="member_no" property="memberNo" />
+		<result column="member_email" property="memberEmail" />
+		<result column="password" property="password" />
+		<result column="member_grade" property="memberGrade" />
+		<result column="member_name" property="memberName" />
+		<result column="member_phone" property="memberPhone" />
+		<result column="member_nickname" property="memberNickname" />
+		<result column="hos_code" property="hosCode" />
+		<result column="member_career" property="memberCareer" />
+		<result column="mailing_opt" property="mailingOpt" />
+		<result column="member_ori_name" property="memberOriName" />
+		<result column="member_sys_name" property="memberSysName" />
+		<result column="member_file_path" property="memberFilePath" />
+		<result column="member_file_size" property="memberFileSize" />
+		<result column="member_file_reg_date" property="memberFileRegDate" />
 	</resultMap>
-	
+
 	<resultMap type="QnaCategoryList" id="QnaCategoryMap">
-		<result column="category_code" property="cateogryCode"/>
-		<result column="category_name" property="categoryName"/>
+		<result column="category_code" property="cateogryCode" />
+		<result column="category_name" property="categoryName" />
 	</resultMap>
-	
+
 	<resultMap type="QnaComment" id="QnaCommentMap">
-		<result column="comment_no" property="commentNo"/>
-		<result column="qna_no" property="qnaNo"/>
-		<result column="commenter_no" property="commenterNo"/>
-		<result column="content" property="content"/>
-		<result column="reg_date" property="regDate"/>
-		<result column="pick" property="pick"/>
+		<result column="comment_no" property="commentNo" />
+		<result column="qna_no" property="qnaNo" />
+		<result column="commenter_no" property="commenterNo" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="pick" property="pick" />
 
 
 	</resultMap>
 	<resultMap type="QnaRecommend" id="QnaRecommendMap">
-		<result column="no" property="no"/>
-		<result column="member_no" property="memberNo"/>
-		<result column="comment_no" property="qndNo"/>
-		<result column="recommend" property="recommend"/>
-	
+		<result column="no" property="no" />
+		<result column="member_no" property="memberNo" />
+		<result column="comment_no" property="qndNo" />
+		<result column="recommend" property="recommend" />
+
 
 	</resultMap>
 	<resultMap type="QnaCommentRecommend" id="QnaCommentRecommendMap">
-		<result column="no" property="no"/>
-		<result column="member_no" property="memberNo"/>
-		<result column="comment_no" property="commentNo"/>
-		<result column="recommend" property="recommend"/>
-	
+		<result column="no" property="no" />
+		<result column="member_no" property="memberNo" />
+		<result column="comment_no" property="commentNo" />
+		<result column="recommend" property="recommend" />
+
 
 	</resultMap>
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	<select id="countRecommend" parameterType="int" resultMap="QnaMap">
 		select sum(recommend)
-			from qna_recommend
-			where qna_no = #{qnaNo}
+		from qna_recommend
+		where qna_no = #{qnaNo}
 	</select>
-	
-	
-	
+
+	<select id="countComment" parameterType="int" resultMap="QnaMap">
+		select
+		count(comment_no)
+		from qna_comment
+		where qna_no = #{qnaNo}
+	</select>
+
 	<select id="qnaList" parameterType="Qna" resultMap="QnaMap">
-		select q.qna_no qna_no, q.title title,q.reg_date reg_date, q.view_cnt view_cnt,m.member_nickname member_nickname, c.category_name category_name, re.recommend recomCnt 
-			from qna q, member m, qna_category_list c ,  (select sum(recommend) recommend, qna_no
-															from qna_recommend) re
-			where q.writer_no = m.member_no and q.category_code =c.category_code 
+		select q.qna_no ,q.title
+				,(select member_nickname from member where member_no = q.writer_no) memberNickname
+				, (select count(qna_no) from qna_comment where qna_no=q.qna_no) 
+				commentCount
+				,(select sum(recommend) from qna_recommend where qna_no = q.qna_no) recomCnt
+				, q.view_cnt
+				,q.reg_date
+				,(select category_name from qna_category_list where category_code=
+				q.category_code) categoryName
+			from qna q
 			order by q.qna_no desc
 	</select>
-	
+
 	<insert id="InsertQna" parameterType="Qna">
-		insert into qna(title,board_code,writer_no,content,category_code) values(#{title},20,#{writerNo},#{content},#{categoryCode})
+		insert into
+		qna(title,board_code,writer_no,content,category_code)
+		values(#{title},20,#{writerNo},#{content},#{categoryCode})
 	</insert>
-	
+
 	<select id="selectQnaByNo" parameterType="Qna" resultMap="QnaMap">
-		select q.qna_no qna_no, q.title title,q.reg_date reg_date, q.view_cnt view_cnt,q.content,m.member_nickname member_nickname, c.category_name category_name, re.recommend recomCnt 
-			from qna q, member m, qna_category_list c ,  (select sum(recommend) recommend, qna_no
-															from qna_recommend) re
-			where q.writer_no = m.member_no and q.category_code =c.category_code and  q.qna_no = #{qnaNo}
-			
-		
+		select
+		q.qna_no qna_no, q.title title,q.reg_date reg_date, q.view_cnt
+		view_cnt,q.content,m.member_nickname member_nickname, c.category_name
+		category_name, re.recommend recomCnt
+		from qna q, member m, qna_category_list c , (select sum(recommend)
+		recommend, qna_no
+		from qna_recommend) re
+		where q.writer_no = m.member_no and q.category_code =c.category_code and
+		q.qna_no = #{qnaNo}
+
+
 	</select>
-	
+
 	<update id="updateViewCnt" parameterType="Qna">
 		update qna
-		set view_cnt=#{viewCnt}+1
+		set
+		view_cnt=#{viewCnt}+1
 		where qna_no = #{qnaNo}
 	</update>
-	
+
 	<update id="updateQna" parameterType="Qna">
-		update qna		
-		set title=#{title} , content= #{content} , category_code = #{categoryCode}
-		where qna_no = #{qnaNo} and writer_no=#{writerNo} 
+		update qna
+		set title=#{title} , content= #{content} , category_code =
+		#{categoryCode}
+		where qna_no = #{qnaNo} and writer_no=#{writerNo}
 	</update>
-	
+
 	<delete id="deleteQna" parameterType="Qna">
-	delete from qna
-	where qna_no =#{qnaNo} and writer_no = #{writerNo}
+		delete from qna
+		where qna_no =#{qnaNo} and writer_no = #{writerNo}
 	</delete>
-	
+
 	<insert id="insertComment" parameterType="QnaComment">
-		insert into qna_comment(qna_no,commenter_no,content) values(#{qnaNo},#{commenterNo},#{content})
+		insert into
+		qna_comment(qna_no,commenter_no,content)
+		values(#{qnaNo},#{commenterNo},#{content})
 	</insert>
-	
+
 	<select id="selectCombyNo" parameterType="QnaComment" resultMap="QnaCommentMap">
 		select *
 		from qna_comment
 		where qna_no = #{qnaNo}
 	</select>
- </mapper>
+</mapper>

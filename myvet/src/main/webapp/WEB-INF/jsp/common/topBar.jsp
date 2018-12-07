@@ -59,7 +59,7 @@
                     <ul class="menu vertical">
 	                    <li><a href="<c:url value='/tip/list.do'/>">개꿀팁이냥</a></li>
 	                    <li><a href="#">5959 내시끼</a></li>
-	                    <li><a href="#">QnA 게시판</a></li>
+	                    <li><a href="<c:url value='/qna/list.do'/>">QnA 게시판</a></li>
 	                    <li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
                     </ul>
                 </li>

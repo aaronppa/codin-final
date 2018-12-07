@@ -13,18 +13,24 @@ public class Qna {
 	private int categoryCode;
 	private char answered;
 	private int recomCnt;
-	
+	private int commentCount;
+	private String categoryName;
 	private Member member;
 	private QnaCategoryList category;
+	private String memberNickname;
+	private QnaComment comment;
 	
-	
-	
-	
-	public int getRecomCnt() {
-		return recomCnt;
+	public QnaComment getComment() {
+		return comment;
 	}
-	public void setRecomCnt(int recomCnt) {
-		this.recomCnt = recomCnt;
+	public void setComment(QnaComment comment) {
+		this.comment = comment;
+	}
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
 	}
 	public QnaCategoryList getCategory() {
 		return category;
@@ -38,6 +44,25 @@ public class Qna {
 	public void setMember(Member member) {
 		this.member = member;
 	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public int getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	public int getRecomCnt() {
+		return recomCnt;
+	}
+	public void setRecomCnt(int recomCnt) {
+		this.recomCnt = recomCnt;
+	}
+
 	public int getQnaNo() {
 		return qnaNo;
 	}

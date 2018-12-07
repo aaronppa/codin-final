@@ -21,12 +21,7 @@
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
     <style>
-    	html,body{
-        	width:80%;
-        	margin-left: auto;
-        	margin-right: auto;
-        	background-color: none;
-    	}
+ 
         /*글제목*/
         .title{
             font:bolder;
@@ -56,7 +51,7 @@
 </head>
 <body>
 <%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
-
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
 
     <form action="<c:url value='/qna/update.do' />" method="post">
     <br>

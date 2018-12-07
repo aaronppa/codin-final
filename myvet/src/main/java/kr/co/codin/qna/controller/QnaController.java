@@ -63,8 +63,7 @@ public class QnaController {
 	
 	@RequestMapping("detail.do")
 	public void detail(Model model, int qnaNo) {
-		service.selectQnaByNo(qnaNo);
-		//model.addAttribute()
+		
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
 	}
 	

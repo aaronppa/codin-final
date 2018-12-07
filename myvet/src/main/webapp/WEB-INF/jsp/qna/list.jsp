@@ -32,7 +32,7 @@
 
         /*search*/
         .mb-3{
-            margin-left: 70%;
+            margin-left: 60%;
         }
         .dropdown-toggle{
             background: none;
@@ -49,7 +49,7 @@
         }
         /*검색버튼*/
         .btn-outline{
-            background: none;
+          
             border:none;
         }
         .btn-outline:hover{
@@ -59,7 +59,7 @@
 
         input#search-bar {
         margin: 0 auto;
-        width: 100%;
+        width: 300px;
         height: 45px;
         padding: 0 20px;
         font-size: 1rem;
@@ -123,7 +123,13 @@
         }
         /*pagenation*/
    
-
+		.bodyContainer{
+			width:1100px;
+			overflow: hidden;
+			margin: auto;
+			margin-top: 30px;
+			
+		}
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
     
@@ -133,6 +139,7 @@
     
     <!--search-->
     <!--category-->
+    <div class="bodyContainer">
     <div class="input-group mb-3">
             <div class="input-group-prepend">
               <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Title</button>
@@ -147,14 +154,14 @@
             <button type="button" class="btn btn-outline">검색</button>
     </div>
     <!--count-->
-     <div id="memberNickname" style="visibility:hidden;">${user.memberNickname}</div> 
+   
     <!--list-->
     <table class="table">
             <div style="text-align: right;">전체 ${count} 개</div>
             <!-- <caption>List of users</caption> -->
             <thead>
                 <tr style="text-align: center;">
-	                <th scope="col" style="width:5%;"class="no">글 번호</th>
+	                <th scope="col" style="width:7%;"class="no">글 번호</th>
 	                <th scope="col" style="width:20%;"class="writer">작성자</th>
 	                <th scope="col" style="width:25%;"class="title">제목</th>
 	                <th scope="col" style="width:10%;"class="category">카테고리</th>
@@ -167,10 +174,10 @@
      		<c:forEach var="q" items="${qna}" varStatus="loop">
 	            <tr style="text-align: center;">
 	                <th scope="row"> ${q.qnaNo} </th>
-	                <td>${q.member.memberNickname}</td>
-	                <td><a href="<c:url value='/qna/detail.do?qnaNo=${q.qnaNo}'/>">${q.title }</a><span id="countComment"></span></td>
+	                <td>${q.memberNickname}</td>
+	                <td><a href="<c:url value='/qna/detail.do?qnaNo=${q.qnaNo}'/>">${q.title }(<strong style="color:brown">${q.commentCount}</strong>) </a><span id="countComment"></span></td>
 					
-		                <td>${q.category.categoryName}</td>
+		                <td>${q.categoryName}</td>
 				
 	                <td><fmt:formatDate value="${q.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	                <td>${q.viewCnt}</td>
@@ -188,27 +195,16 @@
         </a>
     </div>
     <!--pagenation-->
+    
     <c:import url="page.jsp"></c:import>
+    </div>
 </body>
 <script>
 /*category*/
 
  
 
- let memberNickname = '${user.memberNickname}';
- 
- 
 
- 
- id(memberNickname);
- 
- function id(memberNickname){
-	 console.log($("#memberNickname"));
-	 console.log(memberNickname);
-	 console.log("-------------")
- }
- 
- 
 
 
 

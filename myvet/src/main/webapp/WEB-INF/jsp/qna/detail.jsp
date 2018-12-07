@@ -62,17 +62,7 @@
 	outline: none;
 }
 
-html, body {
-	width: 100%;
-	height: 100%;
-	padding: 10px 0;
-	margin: 0;
-	background-color: #eee;
-	/* background-color: none; */
-	font-family: 'Source Sans Pro';
-	padding-bottom: 50px;
-	overflow: none;
-}
+
 
 .notes-wrapper {
 	max-width: 1400px;
@@ -83,7 +73,7 @@ html, body {
 	border-radius: 5px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	position: relative;
-	z-index: 999;
+	
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
@@ -389,13 +379,13 @@ rotate
 }
 
 /*Comment*/
-html, body {
+/* html, body {
 	background-color: #f0f2fa;
 	font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial",
 		sans-serif;
 	color: #555f77;
 	-webkit-font-smoothing: antialiased;
-}
+} */
 
 input, textarea {
 	outline: none;
@@ -538,6 +528,7 @@ p {
 	display: inline-block;
 	cursor: pointer;
 	margin: 10px;
+
 	/*   color: gray; */
 }
 
@@ -555,12 +546,20 @@ p {
 	color: red;
 	transition: .5s;
 }
+.bodyContainer{
+			width:1100px;
+			overflow: hidden;
+			margin: auto;
+			margin-top: 30px;
+			
+		}
 </style>
 </head>
 
 
-<body style="overflow-y: hidden; overflow-y: hidden;">
+<body >
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+	<div class="bodyContainer">
 	<div class="notes-wrapper">
 		<div class="saver-wrap" contenteditable="false">
 			<div class="notes-dot" contenteditable="false"></div>
@@ -610,8 +609,8 @@ p {
 				href="<c:url value='/qna/list.do'/>"> <strong>List</strong>
 			</a>
 			</span> <span id="update" data-toggle="tooltip" title="UPDATE"
-				style="margin-left: 60px;"> <a
-				href="<c:url value='/qna/updateForm.do?qnaNo=${qna.qnaNo }'/>">
+				style="margin-left: 60px;">
+				 <a href="<c:url value='/qna/updateForm.do?qnaNo=${qna.qnaNo }'/>">
 					<strong>Update</strong>
 			</a>
 			</span> <span id="delete" data-toggle="tooltip" title="DELETE"
@@ -651,7 +650,7 @@ p {
 
 	</div>
 	<br>
-
+	</div>
 	<script
 		src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
