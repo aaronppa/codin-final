@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
+import kr.co.codin.repository.domain.HosBooking;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
@@ -114,5 +115,49 @@ public class HosServiceImpl implements HosService{
 	@Override
 	public int isCreateBlock(HosBlock block) {
 		return mapper.isCreateBlock(block);
+	}
+
+	@Override
+	public List<HosBlock> selectBlockList(HosBlock block) {
+		return mapper.selectBlockList(block);
+	}
+
+	@Override
+	public HosBlock selectBlock(int blockCode) {
+		return mapper.selectBlock(blockCode);
+	}
+
+	@Override
+	public void deleteBlock(int blockCode) {
+		mapper.deleteBlock(blockCode);
+	}
+
+	@Override
+	public void updateBlock(HosBlock block) {
+		mapper.updateBlock(block);
+	}
+
+	@Override
+	public List<Pet> selectPetList(int memberNo) {
+		return mapper.selectPetList(memberNo);
+	}
+	@Override
+	public void insertBooking(HosBooking booking) {
+		mapper.insertBooking(booking);
+	}
+
+	@Override
+	public List<HosBooking> selectBooking(int hosCode) {
+		return mapper.selectBooking(hosCode);
+	}
+
+	@Override
+	public void confirmBooking(int bookingNo) {
+		mapper.confirmBooking(bookingNo);
+	}
+
+	@Override
+	public void banBooking(int bookingNo) {
+		mapper.banBooking(bookingNo);
 	}
 }

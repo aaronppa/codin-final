@@ -37,7 +37,7 @@
 		<result column="pet_sys_name" property="petSysName"/>
 		<result column="pet_file_path" property="petFilePath"/>
 		<result column="pet_file_size" property="petFileSize"/>
-		<association property="petOwner" column="member_no" select="selectMember"></association>
+<!-- 		<association property="petOwner" column="member_no" select="selectMember"></association> -->
 	</resultMap>
 
 	<resultMap type="Hospital" id="hospitalMap">
@@ -96,9 +96,23 @@
 		<result column="block_no" property="blockNo"/>
 		<result column="block_start" property="blockStart"/>
 		<result column="block_end" property="blockEnd"/>
+		<result column="facility_no" property="facilityNo"/>
 		<result column="max_booking" property="maxBooking"/>
 	</resultMap>
 	
+	<resultMap type="HosBooking" id="bookingMap">
+		<result column="booking_no" property="bookingNo"/>
+		<result column="block_code" property="blockCode"/>
+		<result column="booking_owner" property="bookingOwner"/>
+		<result column="booking_pet" property="bookingPet"/>
+		<result column="confirm" property="confirm"/>
+		<result column="finish" property="finish"/>
+		<result column="booking_reg_data" property="bookingRegData"/>
+		<result column="hos_code" property="hosCode"/>
+		<association property="hosBlock" column="block_code" select="selectBlock"></association>
+		<association property="member" column="booking_owner" select="selectMember"></association>
+		<association property="pet" column="booking_pet" select="selectPet"></association>
+	</resultMap>
 	
 	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
 		select *
@@ -253,7 +267,8 @@
 		select count(*)
 		from hos_block
 		where hos_code = #{hosCode} and
-			  block_day = #{blockDay}
+			  block_day = #{blockDay} and
+			  facility_no = #{facilityNo}
 	</select>
 	
 	
@@ -263,5 +278,69 @@
 		values
 		(#{hosCode}, #{blockDay}, #{blockNo}, #{blockStart}, #{blockEnd}, #{facilityNo}, #{maxBooking})
 	</insert>
+	
+	<select id="selectBlockList" parameterType="HosBlock" resultMap="blockMap">
+		select *
+		from hos_block
+		where block_day = #{blockDay}
+		<if test="hosCode > 0">
+			and hos_code = #{hosCode}
+			and facility_no = #{facilityNo}
+		</if>
+	</select>
+	
+	<select id="selectBlock" parameterType="int" resultMap="blockMap">
+		select *
+		from hos_block
+		where block_code = #{blockCode}
+	</select>
+	
+	<update id="updateBlock" parameterType="HosBlock">
+		update hos_block
+		set max_booking = #{maxBooking}
+		where block_code = #{blockCode}
+	</update>
+	
+	<delete id="deleteBlock" parameterType="int">
+		delete
+		from hos_block
+		where block_code = #{blockCode}
+	</delete>
+	
+	<select id="selectPetList" parameterType="int" resultMap="petMap">
+		select *
+		from pet
+		where member_no = #{no}
+	</select>
+	
+	<insert id="insertBooking" parameterType="HosBooking">
+		insert into hos_booking
+		(block_code, booking_owner, booking_pet, hos_code)
+		values
+		(#{blockCode}, #{bookingOwner}, #{bookingPet}, #{hosCode})
+	</insert>
+	
+	<select id="selectBooking" parameterType="int" resultMap="bookingMap">
+		select *
+		from hos_booking
+		where hos_code = #{hosCode}
+	</select>
+	
+	<select id="selectPet" parameterType="int" resultMap="petMap">
+		select *
+		from pet
+		where pet_no = #{petNo}
+	</select>
+	
+	<update id="confirmBooking" parameterType="int">
+		update hos_booking
+		set confirm = 'Y'
+		where booking_no = #{bookingNo}
+	</update>
+	<update id="banBooking" parameterType="int">
+		update hos_booking
+		set confirm = 'B'
+		where booking_no = #{bookingNo}
+	</update>
 	
 </mapper>

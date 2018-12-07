@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,12 @@ import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
+import kr.co.codin.repository.domain.HosBooking;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.Hospital;
+import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.TempBooking;
 
@@ -45,14 +48,114 @@ public class HosController {
 	@Autowired 
 	private ServletContext servletContext;
 	
+	@RequestMapping("booking.do")
+	public void booking(
+				Model model, 
+				HttpSession session, 
+				int hosCode, 
+				@RequestParam(value="date", defaultValue="null") String date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		HosBlock block = new HosBlock();
+		Member member = (Member) session.getAttribute("user");
+		
+		if (date.equals("null")) {
+			date = sdf.format(new Date());
+		}
+		
+		block.setBlockDay(date);
+		block.setHosCode(hosCode);
+		block.setFacilityNo(1);
+		
+		System.out.println(block);
+		System.out.println(service.selectBlockList(block));
+		
+		model.addAttribute("petList", service.selectPetList(member.getMemberNo()));
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+		model.addAttribute("blockList", service.selectBlockList(block));
+	}
+	
+	@RequestMapping("bookingList.do")
+	@ResponseBody
+	public List<HosBooking> bookingList(Model model, int hosCode) {
+		System.out.println(service.selectBooking(hosCode));
+	
+		return service.selectBooking(hosCode);
+	}
+	
+	@RequestMapping("bookingSubmit.do")
+	@ResponseBody
+	public void bookingSubmit(HosBooking booking) {
+		System.out.println(booking.toString());
+		
+		service.insertBooking(booking);
+	}
+	
+	@RequestMapping("selectBlock.do")
+	@ResponseBody
+	public List<HosBlock> selectBlock(HosBlock block) {
+		
+		System.out.println(block);
+		System.out.println(service.selectBlockList(block));
+		
+		return service.selectBlockList(block);
+	}
+	
 	@RequestMapping("hospital.do")
 	public void hospital(Model model, int hosCode) {
-		model.addAttribute("hos", service.selectHospitalByNo(hosCode));
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
 	}
 	
 	@RequestMapping("bookingManager.do")
-	public void bookingManager() {
+	public void bookingManager(Model model, int hosCode) {
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+	}
+	
+	@RequestMapping("confirmBooking.do")
+	public void confirmBooking(int bookingNo) {
+		System.out.println(bookingNo);
+		service.confirmBooking(bookingNo);
+	}
+	
+	@RequestMapping("banBooking.do")
+	public void banBooking(int bookingNo) {
+		service.banBooking(bookingNo);
+	}
+
+	
+	@RequestMapping("blockEdit.do")
+	public void blockEdit(Model model,
+						   int hosCode,
+						   @RequestParam(value="date", defaultValue="null") 
+						   String date
+						   ) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		HosBlock block = new HosBlock();
 		
+		if (date.equals("null")) {
+			date = sdf.format(new Date());
+		}
+		
+		block.setBlockDay(date);
+		
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+		model.addAttribute("blockList", service.selectBlockList(block));
+	}
+	
+	@RequestMapping("blockEditForm.do")
+	public void blockEditForm (Model model, int blockCode) {
+		model.addAttribute("block", service.selectBlock(blockCode));
+	}
+		
+	@RequestMapping("blockEditing.do")
+	@ResponseBody
+	public void blockEditing (HosBlock block) {
+		service.updateBlock(block);
+	}
+	
+	@RequestMapping("blockDelete.do")
+	@ResponseBody
+	public void blockDelete (Model model, int blockCode) {
+		service.deleteBlock(blockCode);
 	}
 	
 	@RequestMapping("blockMaking.do")
@@ -88,6 +191,7 @@ public class HosController {
 		Date date = null;
 		block.setHosCode(booking.getHosCode());
 		block.setBlockNo(0);
+		block.setMaxBooking(booking.getMaxBook());
 		try {
 			date = sdf.parse(booking.getDate());
 		} catch (ParseException e) {
@@ -98,10 +202,6 @@ public class HosController {
 		System.out.println(cal.getTime());
 		
 		block.setBlockDay(sdf.format(date));
-		
-		if (service.isCreateBlock(block) > 0) {
-			throw new Exception("이미 등록된 날짜입니다." + sdf.format(date));
-		}
 		
 		Date breakStart = setTimeToCal(cal, new StringTokenizer(booking.getBreakStart(), ":"));
 		Date breakEnd = setTimeToCal(cal, new StringTokenizer(booking.getBreakEnd(), ":"));
@@ -115,6 +215,49 @@ public class HosController {
 			;;
 		}
 		System.out.println("blockNo : " + blockNo);
+
+		if (booking.getMedical()!=null) {
+			block.setFacilityNo(1);
+
+			if (service.isCreateBlock(block) > 0) {
+				throw new Exception("이미 등록된 날짜입니다." + sdf.format(date));
+			}
+
+
+		}
+		
+		while (true) {
+			if ((cal.getTime().after(breakStart) || (cal.getTime().equals(breakStart))) && 
+				(cal.getTime().before(breakEnd))
+				){
+				cal.add(Calendar.MINUTE, booking.getBookInterval());
+				continue;
+			}
+			
+			if (cal.getTime().equals(closeTime)) break;
+			if (block.getFacilityNo() != 1) break;
+			
+			block.setBlockStart(calToTime(cal));
+			cal.add(Calendar.MINUTE, booking.getBookInterval());
+			block.setBlockEnd(calToTime(cal));
+			
+			block.setBlockNo(++blockNo);
+			System.out.println(block);
+			service.createBlock(block);
+		}
+		
+		setTimeToCal(cal, new StringTokenizer(booking.getOpenTime(), ":"));
+
+		if (booking.getBeauty()!=null) {
+			block.setFacilityNo(2);
+			if (service.isCreateBlock(block) > 0) {
+				throw new Exception("이미 등록된 날짜입니다." + sdf.format(date));
+			}
+
+		} else {
+			return;
+		}
+		
 		while (true) {
 			if ((cal.getTime().after(breakStart) || (cal.getTime().equals(breakStart))) && 
 				(cal.getTime().before(breakEnd))
@@ -129,19 +272,9 @@ public class HosController {
 			cal.add(Calendar.MINUTE, booking.getBookInterval());
 			block.setBlockEnd(calToTime(cal));
 			
-			if (booking.getMedical()!=null) {
-				block.setFacilityNo(1);
-				block.setBlockNo(++blockNo);
-				System.out.println(block);
-				service.createBlock(block);
-			}
-			
-			if (booking.getBeauty()!=null) {
-				block.setFacilityNo(2);
-				block.setBlockNo(++blockNo);
-				System.out.println(block);
-				service.createBlock(block);
-			}
+			block.setBlockNo(++blockNo);
+			System.out.println(block);
+			service.createBlock(block);
 		}
 		
 	}

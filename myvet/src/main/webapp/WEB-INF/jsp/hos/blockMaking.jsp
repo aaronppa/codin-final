@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>예약 블럭 만들기 - MyVet</title>
+<title>예약 블럭 만들기 (${hospital.title }) - MyVet</title>
     <style>
     #bodyContainer {
         width: 1100px;
@@ -101,7 +101,6 @@
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="<c:url value='/resources/js/timepicker/jquery.timepicker.css'/>"/>
-	<link rel="stylesheet" href="<c:url value='/resources/js/timepicker/jquery.timepicker.css'/>"/>
 	<script src="<c:url value='/resources/js/timepicker/jquery.timepicker.js'/>"></script>
 	
 </head>
@@ -159,7 +158,7 @@
 	                 	class="date" 
 	                 	type="hidden" 
 	                 	name="date"
-	                 	data-date="<%=i %>"
+	                 	data-day="<%=i %>"
 	                 	value=<fmt:formatDate value="<%=cal.getTime()%>" pattern="yyyy/MM/dd"/>
 	                 >
 	                 </th>
@@ -219,7 +218,7 @@
             	</th>
             	<c:forEach var="i" begin="0" end="6" >
 	                <td>
-	                    <input class="maxBook" type="number" name="maxBoox" id="max-book" data-date="${i }">
+	                    <input class="maxBook" type="number" name="maxBook" id="max-book" data-date="${i }">
 	                </td>
 	            </c:forEach>
             </tr>
@@ -318,7 +317,7 @@
         		for (let l = 0; l < $sendDate.length; l++) {
 					booking[$sendDate[l].name] = $sendDate[l].value;
         		}
-        		
+        		booking.date = $("#blockTable").find("[data-day="+i+"]").val();
         		if ($("#medical").is(":checked")) booking.medical = "on";
         		if ($("#beauty").is(":checked")) booking.beauty = "on";
         		booking.hosCode = $("#hosCode").val();

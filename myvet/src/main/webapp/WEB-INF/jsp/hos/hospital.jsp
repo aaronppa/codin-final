@@ -4,14 +4,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
-<title>${hos.title } - MyVet</title>
+<title>${hospital.title } - MyVet</title>
 <script
     src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 <style>
+
    .hosfacility {
        position: relative;
        display: inline-block;
@@ -30,7 +30,7 @@
        margin-left: 10px;
        font-size: 2em;
    }
-   table {
+   #hosTable {
        width: 1100px;
        margin-top:20px;
        margin-right: auto;
@@ -42,6 +42,7 @@
        position: relative;
        display: inline-block;
        margin-top: 10px;
+       overflow: hidden;
    }
    #book {
        width: 40%;
@@ -49,6 +50,7 @@
        position: relative;
        display: inline-block;
        margin-top: 10px;
+       overflow: hidden;
    }
    #hosBoard {
        width: 30%;
@@ -77,15 +79,20 @@
        text-align: center;
        border: 0px solid black;
    }
+   
+   #bookTable {
+		overflow: auto;
+   }
 </style>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 
-    <table>
+    <table id="hosTable">
         <tr>
             <td rowspan="2">
-                <h1 id="title">${hos.title }</h1>
+                <h1 id="title">${hospital.title }</h1>
+                <input type="hidden" id="hosCode" value="${hospital.hosCode }">
                 <div id="fallow">즐겨찾기 버튼</div>
             </td>
             <td>
@@ -112,6 +119,7 @@
         </div>
         <div id="book">
             오늘의 예약현황
+            <div id="bookTable">
             <table>
                 <tr>
                     <td></td>
@@ -125,7 +133,7 @@
                     <td>17시</td>
                 </tr>
                 <tr>
-                    <td style="width:100px;"><span>김의사</span></td>
+                    <td style="width:100px;"><span>진료</span></td>
                     <td>가능</td>
                     <td>가능</td>
                     <td>가능</td>
@@ -136,7 +144,7 @@
                     <td>불가</td>
                 </tr>
                 <tr>
-                    <td><span>박의사</span></td>
+                    <td><span>미용</span></td>
                     <td>가능</td>
                     <td>가능</td>
                     <td>가능</td>
@@ -147,7 +155,9 @@
                     <td>불가</td>
                 </tr>
             </table>
-            <div><button id="bookingManager">예약관리</button></div>
+            </div>
+            <div><button id="booking">예약</button>
+            <button id="bookingManager">예약관리</button></div>
         </div>
     </div>
     <div id="bottomContainer">
@@ -163,8 +173,12 @@
     </div>
     <script>
     
+    	$("#booking").click(function(){
+    		window.location.href = "/myvet/hos/booking.do?hosCode=" + $("#hosCode").val();
+    	})
+    	
     	$("#bookingManager").click(function(){
-    		window.location.href = "/myvet/hos/bookingManager.do"
+    		window.location.href = "/myvet/hos/bookingManager.do?hosCode=" + $("#hosCode").val();
     	})
     </script>
 </body>

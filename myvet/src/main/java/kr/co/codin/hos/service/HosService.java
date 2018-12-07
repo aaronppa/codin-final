@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
+import kr.co.codin.repository.domain.HosBooking;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
@@ -32,4 +33,14 @@ public interface HosService {
 	int nextBlockNo(int hosCode);
 	void createBlock(HosBlock block);
 	int isCreateBlock (HosBlock block);
+	List<HosBlock> selectBlockList(HosBlock block);
+	HosBlock selectBlock(int blockCode);
+	void deleteBlock(int blockCode);
+	void updateBlock(HosBlock block);
+	List<Pet> selectPetList(int memberNo);
+	void insertBooking(HosBooking booking);
+	List<HosBooking> selectBooking(int hosCode);
+	void confirmBooking(int bookingNo);
+	void banBooking(int bookingNo);
+
 }
