@@ -184,16 +184,19 @@
 			)
 	</insert>
 	
-	<update id="updateNoticePublish" parameterType="int">
-		update notice
-		   set temp_save = 0
-		 where notice_no = #{noticeNo}
-	</update>
-	
 	<update id="updateNoticeSave" parameterType="Notice">
 		update notice
 		   set notice_content = #{noticeContent}
+		   <if test="tempSave==0">
+		   , temp_save = 1
+		   </if>
 		 where notice_no = #{noticeNo}
+	</update>
+	
+	<update id="updateNoticePublish" parameterType="Notice">
+		update notice
+		  set notice_content = #{noticeContent}, temp_save = 0
+		where notice_no = #{noticeNo}
 	</update>
 	
 	<update id="updateApproval" parameterType="Member">

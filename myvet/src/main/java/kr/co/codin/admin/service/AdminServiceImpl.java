@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Notice;
 import kr.co.codin.repository.domain.Search;
-import kr.co.codin.repository.domain.VetAuth;
 import kr.co.codin.repository.mapper.AdminMapper;
 
 @Service
@@ -22,8 +21,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public void writeTemp(int noticeNo) {
-		mapper.updateNoticePublish(noticeNo);
+	public void writeUpdate(Notice notice) {
+		mapper.updateNoticePublish(notice);
 	}
 
 	@Override
@@ -76,7 +75,6 @@ public class AdminServiceImpl implements AdminService{
 		mapper.updateApproval(vetApproval);
 		
 	}
-
 
 
 }

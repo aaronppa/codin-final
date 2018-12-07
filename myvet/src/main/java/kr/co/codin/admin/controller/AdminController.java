@@ -126,7 +126,7 @@ public class AdminController {
 		if(notice.getNoticeNo()==0) {
 			service.writeNew(notice);
 		} else {
-			service.writeTemp(notice.getNoticeNo());
+			service.writeUpdate(notice);
 		}
 	}
 	
@@ -142,11 +142,6 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping("edit.do")
-	@ResponseBody
-	public void openEdit(Notice notice) throws Exception{
-		System.out.println("Edit Notice"+notice);
-	}
 	
 	// 수의사 인정 처리 
 	@RequestMapping(value="/process/{itemno}.do", method=RequestMethod.GET)

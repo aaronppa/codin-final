@@ -5,7 +5,6 @@ import java.util.List;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Notice;
 import kr.co.codin.repository.domain.Search;
-import kr.co.codin.repository.domain.VetAuth;
 
 public interface AdminService {
 	List<Notice> noticeList(Search search);
@@ -19,6 +18,6 @@ public interface AdminService {
 	Member memberDetail(int itemno);
 	Member vetAuthDetail(int itemno);
 	void updateStatus(Member vetApproval);
-	void writeTemp(int noticeNo);
+	void writeUpdate(Notice notice);
 }
 
