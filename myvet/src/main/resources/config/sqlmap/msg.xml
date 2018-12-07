@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.codin.repository.mapper.MsgMapper">
+
+	<resultMap type="SearchMemberHospital" id="searchMemberHospitalMap">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_grade" property="memberGrade"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="member_ori_name" property="memberOriName"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="title" property="title"/>
+		<result column="file_id" property="fileId"/>
+		<result column="board_code" property="boardCode"/>
+		<result column="ori_name" property="oriName"/>
+		<result column="sys_name" property="sysName"/>
+		<result column="file_path" property="filePath"/>
+		
+	</resultMap>
+
+	<!-- 
+		분명 문자열 비교 구문인데 NumberFormatException이 발생하는 상황이다.
+		결론적으로 위 현상은 myBatis 문제는 아니고 OGNL(Object Graph Navigation Language) 의 문제이다.
+		OGNL 인터프리터에서는 위 구문의 ‘Y’를 char 형으로 인식하고, ‘YY’나 “Y”는 String으로 인식한다. (따옴표를 잘보자)
+		그래서 <if test=”stringValue == ‘Y’”> 이와 같은 구문을 비교할 때  NumberFormat으로 비교를 시도하여 Exception이 발생한다.
+		이유는 java의 char형은 실제로 문자의 코드값을 저장하기 때문이다. 그래서 아래와 같은 형변환이 가능하다. 
+		1. <if test=’stringValue == “Y”‘> – 쌍따옴표와 홑따옴표의 위치를 변경
+		2. <if test=”stringValue == &quot;Y&quot;”> – 쌍따옴표를 HTML 코드로 변경
+		3. <if test=”stringValue == ‘Y’.toString()”> – toString() 함수를 사용해 String 형으로 변환
+		
+		http://t-ara72.blogspot.com/2013/10/mybatis-numberformatexception.html
+	-->
+	
+	<select id="selectSearchMember" parameterType="string" resultMap="searchMemberHospitalMap">
+		select member_no, member_grade, member_nickname, hos_code, member_ori_name, member_sys_name, member_file_path
+		 from member
+		where member_nickname like CONCAT('%',#{keyword},'%') 
+	</select>
+	
+	<select id="selectSearchHospital" parameterType="string" resultMap="searchMemberHospitalMap">
+		select hos_code, title, ori_name, sys_name, file_path
+		 from (select hos_code, title
+		 		from hos_basic
+                where title like CONCAT('%',#{keyword},'%') 
+                and hos_register = 'Y') as h
+			left outer join (select board_no, ori_name, sys_name, file_path
+		 					from file_info) as f on f.board_no = h.hos_code
+	</select>
+</mapper>

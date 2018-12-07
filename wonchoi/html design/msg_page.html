@@ -14,6 +14,7 @@ crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
 <script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
+<script src="<c:url value='/resources/js/waitme/common-waitme.js'/>"></script>
 <style>
 body{
 	margin: 0;
@@ -123,6 +124,7 @@ h5{
     height: 50px;
 }
 .rounded-circle.search-result{
+    border: 1px solid black;
     width: 32px;
     height: 32px;
 }
@@ -157,16 +159,12 @@ h5{
 .recipients,.lastmsg.brief{
 	position: relative;
 	height: 22px;
-
+	width: 204px;
 	line-height: 20px;;
 }
 
-.recipients{
-	width: 150px;
-}
-
-.lastmsg.brief{
-	width: 204px;
+.nodisplay{
+	display: none;
 }
 
 .converstaion-chatroom:hover{
@@ -175,7 +173,6 @@ h5{
 
 input.recipient{
 	width: 300px;
-	border-radius: 5px;
 	border: none;
 }
 
@@ -190,7 +187,7 @@ input.recipient{
 .recipientSearchLayer{
 	position: absolute;
 	left: 527px;
-	top: 148px;
+	top: 150px;
 	width: 300px;
 	max-height: 400px;
 	border: 1px solid grey;
@@ -204,7 +201,7 @@ input.recipient{
     width: 298px;
     height: 24px;
     border: 1px solid transparent;
-    background: #f5e9c3;
+    background: #8b787a;
 }
 
 .resultList *{
@@ -214,12 +211,12 @@ input.recipient{
 }
 
 .resultList{
-    height: 41px;
+    height: 40px;
     display: inline-flex;
 }
 
 .resultList:hover{
-    background: #f4e8e6;
+    background: #f4e8e6
 }
 
 .profile-search{
@@ -232,10 +229,6 @@ input.recipient{
     width: 250px;
     height: 32px;
     line-height: 32px;
-}
-
-.nodisplay, .nodisplay *{
-	display: none !important;
 }
 </style>
 </head>
@@ -282,7 +275,7 @@ input.recipient{
         </div>
     </div>
     
-    <div class="recipientSearchLayer nodisplay">
+    <div class="recipientSearchLayer ">
     	<div class="recipientSearchBox scrollable">
     		<div class="recipientResultType member">
                 <span>회원</span>
@@ -357,12 +350,11 @@ $("#writemsgbtn").on("click", function(){
 /* 수신자 검색 */
 $(".top-main.header").on("keyup","#recipientSearch",function(){
 	$(".recipientSearchLayer.nodisplay").removeClass("nodisplay");
-	var keyword = $(this).val();
-	console.log("Recipient Search Input Keyup this:",keyword);
+	console.log("Recipient Search Input Keyup this:",$(this).val());
 	
-	$.get(
-		"searchMember.do?keyword="+keyword, function(){}
-	);
+	$.post({
+		
+	});
 	
 });
 
