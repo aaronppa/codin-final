@@ -1,520 +1,660 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <!-- 좋아요,싫어요 -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></script>
-    
-    
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-   <!--Comment-->
-   
-   <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-   <meta name="viewport" content="width=device-width">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<!-- 좋아요,싫어요 -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></script>
 
-    <!--bootstrap-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    
 
-    <style>
-    .notes-wrapper .saver-wrap {
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	}
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<!--Comment-->
+
+<link
+	href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic'
+	rel='stylesheet' type='text/css'>
+<meta name="viewport" content="width=device-width">
+
+<!--bootstrap-->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
+
+
+<style>
+.notes-wrapper .saver-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 *, *:before, *:after, h2, p {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  border: none;
-  background-color: transparent;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: none;
+	background-color: transparent;
 }
+
 *:focus, *:before:focus, *:after:focus, h2:focus, p:focus {
-  outline: none;
+	outline: none;
 }
 
 html, body {
-  width: 100%;
-  height: 100%;
-  padding: 10px 0;
-  margin: 0;
-  background-color: #eee;
-  /* background-color: none; */
-  font-family: 'Source Sans Pro';
-  padding-bottom: 50px;
-  overflow: none;
-  
+	width: 100%;
+	height: 100%;
+	padding: 10px 0;
+	margin: 0;
+	background-color: #eee;
+	/* background-color: none; */
+	font-family: 'Source Sans Pro';
+	padding-bottom: 50px;
+	overflow: none;
 }
 
 .notes-wrapper {
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  height: 700px;
-  background-color: #fff; 
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  position: relative;
-  z-index: 999;
-  overflow-y: scroll;
-  overflow-x:hidden;
+	max-width: 1400px;
+	width: 100%;
+	margin: 0 auto;
+	height: 700px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	position: relative;
+	z-index: 999;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .notes-wrapper .saver-wrap {
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  right: 0;
-  top: 0;
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
+
 .notes-wrapper .saver-wrap .notes-dot {
-  width: 10px;
-  height: 10px;
-  background-color: #D1D3D6;
-  border-radius: 50px;
-  transition: .1s ease-in-out;
+	width: 10px;
+	height: 10px;
+	background-color: #D1D3D6;
+	border-radius: 50px;
+	transition: .1s ease-in-out;
 }
+
 .notes-wrapper .saver-wrap .notes-dot.saved {
-  background-color: #66cc8f;
-  transition: .1s ease-in-out;
-  transition-delay: 2.10s;
+	background-color: #66cc8f;
+	transition: .1s ease-in-out;
+	transition-delay: 2.10s;
 }
+
 .notes-wrapper .saver-wrap .rest {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  clip: rect(0, 30px, 30px, 15px);
-  height: 30px;
-  width: 30px;
-  position: absolute;
-  left: calc(50% - 15px);
-  top: calc(50% - 15px);
+	-webkit-transform: scale(0);
+	transform: scale(0);
+	clip: rect(0, 30px, 30px, 15px);
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	left: calc(50% - 15px);
+	top: calc(50% - 15px);
 }
+
 .notes-wrapper .saver-wrap .rest.active {
-  -webkit-animation: animate 1.05s linear 2;
-          animation: animate 1.05s linear 2;
+	-webkit-animation: animate 1.05s linear 2;
+	animation: animate 1.05s linear 2;
 }
+
 .notes-wrapper .saver-wrap .rest.active:after {
-  -webkit-animation: animate2 1.05s linear 2;
-          animation: animate2 1.05s linear 2;
+	-webkit-animation: animate2 1.05s linear 2;
+	animation: animate2 1.05s linear 2;
 }
+
 .notes-wrapper .saver-wrap .rest:after {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  clip: rect(0, 30px, 30px, 15px);
-  content: '';
-  border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  position: absolute;
+	-webkit-transform: scale(0);
+	transform: scale(0);
+	clip: rect(0, 30px, 30px, 15px);
+	content: '';
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	position: absolute;
 }
+
 .notes-wrapper .writer {
-  padding: 25px 30px;
-  padding-right: 60px;
-  font-weight: 600;
-/*   color: #000C2F; */
-  font-size: 13px;
-  text-transform: uppercase;
-  position: relative;
+	padding: 25px 30px;
+	padding-right: 60px;
+	font-weight: 600;
+	/*   color: #000C2F; */
+	font-size: 13px;
+	text-transform: uppercase;
+	position: relative;
 }
+
 .notes-wrapper .title {
-  padding: 25px 30px;
-  padding-right: 60px;
-  font-weight: 600;
-/*   color: #000C2F; */
-  font-size: 13px;
-  text-transform: uppercase;
-  position: relative;
+	padding: 25px 30px;
+	padding-right: 60px;
+	font-weight: 600;
+	/*   color: #000C2F; */
+	font-size: 13px;
+	text-transform: uppercase;
+	position: relative;
 }
+
 .notes-wrapper .content {
-  padding: 10px 30px;
-  padding-bottom: 15px;
-  font-weight: 400;
-/*   color: #666D82; */
-  line-height: 1.4;
-  font-size: 14px;
-  
+	padding: 10px 30px;
+	padding-bottom: 15px;
+	font-weight: 400;
+	/*   color: #666D82; */
+	line-height: 1.4;
+	font-size: 14px;
 }
+
 .notes-wrapper .content span.bold {
-  font-weight: 700;
+	font-weight: 700;
 }
+
 .notes-wrapper .content img {
-  width: 90%;
-  border-radius: 5px;
-  margin: 15px 5%;
+	width: 90%;
+	border-radius: 5px;
+	margin: 15px 5%;
 }
+
 .notes-wrapper .comment {
-  height: 60px;
-  line-height: 60px;
-  text-align: left;
-  font-size: 13px;
-/*   color: #999EAC; */
-  position: relative;
+	height: 60px;
+	line-height: 60px;
+	text-align: left;
+	font-size: 13px;
+	/*   color: #999EAC; */
+	position: relative;
 }
+
 .notes-wrapper .getImg {
-  width: 60px;
-  height: 60px;
-  /* position: left; */
-  /* position: absolute; */
-  bottom: 0;
-  /* right: -15px; */
-  text-align: center;
-  cursor: pointer;
+	width: 60px;
+	height: 60px;
+	/* position: left; */
+	/* position: absolute; */
+	bottom: 0;
+	/* right: -15px; */
+	text-align: center;
+	cursor: pointer;
 }
+
 .notes-wrapper {
-  line-height: 60px;
-  /* color: #999EAC; */
-  color:black;
-  font-size: 30px;
-  text-align: left;
+	line-height: 60px;
+	/* color: #999EAC; */
+	color: black;
+	font-size: 30px;
+	text-align: left;
 }
 
 .listnsub {
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
+	max-width: 800px;
+	width: 100%;
+	text-align: center;
+	height: auto;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	/* position: relative; */
+	z-index: 999;
+	font-size: 25px;
+}
+
+.rounded-circle {
+	width: 50px;
+	height: 50px;
+}
+
+@
+-webkit-keyframes animate { 0% {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+:
+ 
+scale
+(1);
+
+            
+transform
+:
+ 
+scale
+(1);
+
+    
+-webkit-transform
+:
+ 
+rotate
+(220deg);
+
+            
+transform
+:
+ 
+rotate
+(220deg);
+
   
-  height: auto;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  /* position: relative; */
-  z-index: 999;
-  font-size: 25px;
 }
-.rounded-circle{
-    width: 50px;
-    height: 50px;
+}
+@
+keyframes animate { 0% {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
 }
 
+100%
+{
+-webkit-transform
+:
+ 
+scale
+(1);
 
-@-webkit-keyframes animate {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(220deg);
-            transform: rotate(220deg);
-  }
+            
+transform
+:
+ 
+scale
+(1);
+
+    
+-webkit-transform
+:
+ 
+rotate
+(220deg);
+
+            
+transform
+:
+ 
+rotate
+(220deg);
+
+  
+}
+}
+@
+-webkit-keyframes animate2 { 0% {
+	box-shadow: inset #D1D3D6 0 0 0 2px;
+	-webkit-transform: rotate(-140deg);
+	transform: rotate(-140deg);
 }
 
-@keyframes animate {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(220deg);
-            transform: rotate(220deg);
-  }
+100%
+{
+box-shadow
+:
+ 
+inset
+ 
+#D1D3D6
+ 
+0
+0
+0
+2
+px
+;
+
+    
+-webkit-transform
+:
+ 
+rotate
+(140deg);
+
+            
+transform
+:
+ 
+rotate
+(140deg);
+
+  
 }
-@-webkit-keyframes animate2 {
-  0% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(-140deg);
-            transform: rotate(-140deg);
-  }
-  100% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(140deg);
-            transform: rotate(140deg);
-  }
 }
-@keyframes animate2 {
-  0% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(-140deg);
-            transform: rotate(-140deg);
-  }
-  100% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(140deg);
-            transform: rotate(140deg);
-  }
+@
+keyframes animate2 { 0% {
+	box-shadow: inset #D1D3D6 0 0 0 2px;
+	-webkit-transform: rotate(-140deg);
+	transform: rotate(-140deg);
+}
+
+100%
+{
+box-shadow
+:
+ 
+inset
+ 
+#D1D3D6
+ 
+0
+0
+0
+2
+px
+;
+
+    
+-webkit-transform
+:
+ 
+rotate
+(140deg);
+
+            
+transform
+:
+ 
+rotate
+(140deg);
+
+  
+}
 }
 
 /*Comment*/
 html, body {
-  background-color: #f0f2fa;
-  font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-  color: #555f77;
-  -webkit-font-smoothing: antialiased;
+	background-color: #f0f2fa;
+	font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial",
+		sans-serif;
+	color: #555f77;
+	-webkit-font-smoothing: antialiased;
 }
 
 input, textarea {
-  outline: none;
-  border: none;
-  display: block;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-  font-size: 1rem;
-  color: #555f77;
+	outline: none;
+	border: none;
+	display: block;
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial",
+		sans-serif;
+	font-size: 1rem;
+	color: #555f77;
 }
+
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  color: #ced2db;
+	color: #ced2db;
 }
+
 input::-moz-placeholder, textarea::-moz-placeholder {
-  color: #ced2db;
+	color: #ced2db;
 }
+
 input:-moz-placeholder, textarea:-moz-placeholder {
-  color: #ced2db;
+	color: #ced2db;
 }
+
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color: #ced2db;
+	color: #ced2db;
 }
 
 p {
-  line-height: 1.3125rem;
+	line-height: 1.3125rem;
 }
 
 .comments {
-  margin: 2.5rem auto 0;
-  max-width: 60.75rem;
-  padding: 0 1.25rem;
+	margin: 2.5rem auto 0;
+	max-width: 60.75rem;
+	padding: 0 1.25rem;
 }
 
 .comment-wrap {
-  margin-bottom: 1.25rem;
-  display: table;
-  width: 100%;
-  min-height: 5.3125rem;
+	margin-bottom: 1.25rem;
+	display: table;
+	width: 100%;
+	min-height: 5.3125rem;
 }
 
 .photo {
-  padding-top: 0.625rem;
-  display: table-cell;
-  width: 3.5rem;
+	padding-top: 0.625rem;
+	display: table-cell;
+	width: 3.5rem;
 }
+
 .photo .avatar {
-  height: 2.25rem;
-  width: 2.25rem;
-  border-radius: 50%;
-  background-size: contain;
+	height: 2.25rem;
+	width: 2.25rem;
+	border-radius: 50%;
+	background-size: contain;
 }
 
 .comment-block {
-  padding: 1rem;
-  background-color: #fff;
-  display: table-cell;
-  vertical-align: top;
-  border-radius: 0.1875rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+	padding: 1rem;
+	background-color: #fff;
+	display: table-cell;
+	vertical-align: top;
+	border-radius: 0.1875rem;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
+
 .comment-block textarea {
-  width: 100%;
-  resize: none;
+	width: 100%;
+	resize: none;
 }
 
 .comment-text {
-  margin-bottom: 1.25rem;
+	margin-bottom: 1.25rem;
 }
 
 .bottom-comment {
-  color: #acb4c2;
-  font-size: 0.875rem;
+	color: #acb4c2;
+	font-size: 0.875rem;
 }
 
 .comment-date {
-  float: left;
+	float: left;
 }
 
 .comment-actions {
-  float: right;
+	float: right;
 }
+
 .comment-actions li {
-  display: inline;
-  margin: -2px;
-  cursor: pointer;
+	display: inline;
+	margin: -2px;
+	cursor: pointer;
 }
-.comment-actions li.registration{
-  color : 1px solid gray;
+
+.comment-actions li.registration {
+	color: 1px solid gray;
 }
+
 .comment-actions li.complain {
-  padding-right: 0.75rem;
-  border-right: 1px solid #e1e5eb;
+	padding-right: 0.75rem;
+	border-right: 1px solid #e1e5eb;
 }
+
 .comment-actions li.reply {
-  padding-left: 0.75rem;
-  padding-right: 0.125rem;
+	padding-left: 0.75rem;
+	padding-right: 0.125rem;
 }
+
 .comment-actions li:hover {
-  color: #0095ff;
+	color: #0095ff;
 }
 
 /*댓글 제출*/
-.commentSubmit:hover{
-	background:gray;
+.commentSubmit:hover {
+	background: gray;
 	color: white;
 	transition: .5s;
 }
 
-#deleteCommentBtn:hover{
+#deleteCommentBtn:hover {
 	background: gray;
-	color:white;
+	color: white;
 	transition: .5s;
 }
-#comment::-webkit-scrollbar{
+
+#comment::-webkit-scrollbar {
 	display: none;
-	}
-	
-
-<!-- 좋아요 -->
-.rating {
-  text-align: center;
 }
 
-.like,
-.dislike {
-  font-size: 30px;
-  display: inline-block;
-  cursor: pointer;
-  margin: 10px;
-/*   color: gray; */
+<!--
+좋아요 -->.rating {
+	text-align: center;
 }
 
-.dislike:hover,
-.like:hover {
-  color:red;
-  transition: all .2s ease-in-out;
-  transform: scale(1.1);
+.like, .dislike {
+	font-size: 30px;
+	display: inline-block;
+	cursor: pointer;
+	margin: 10px;
+	/*   color: gray; */
+}
+
+.dislike:hover, .like:hover {
+	color: red;
+	transition: all .2s ease-in-out;
+	transform: scale(1.1);
 }
 
 .active {
-  color: red;
-}
-
-.comActive{
 	color: red;
-	transition:.5s;
 }
 
-
-
-    </style>
+.comActive {
+	color: red;
+	transition: .5s;
+}
+</style>
 </head>
-          
 
-<body style="overflow-y:hidden; overflow-y:hidden;">
- 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />    
-    <div class="notes-wrapper">
-            <div class="saver-wrap" contenteditable="false">
-                <div class="notes-dot" contenteditable="false"></div>
-                <div class="rest" contenteditable="false"></div>
-            </div>
-            <div class="writer" aria-placeholder="writer..">
-                <img src="/myvet/images/pony01.jpg" class="rounded-circle">&nbsp;${user.memberNickname}
-            </div>
-            <div class="information" style="font-size: 20px;">
-           		<c:if test="${qna.categoryCode eq 1 }">
-           			<i style="margin-left:5%;">category : 건강</i>
-           		</c:if>
-           		<c:if test="${qna.categoryCode eq 2 }">
-           			<i style="margin-left:5%;">category : 생활</i>
-           		</c:if>
-           		<c:if test="${qna.categoryCode eq 3 }">
-           			<i style="margin-left:5%;">category : 용품</i>
-           		</c:if>
-               <%--  <i class="fas fa-heart" id="tipRecomCnt" style="margin-left: 5%;color:red;">&nbsp;${countRecomment}</i>  --%>
-                <i class="far fa-eye" style="margin-left: 5%;">&nbsp; ${qna.viewCnt}</i>
-                <i class="far fa-clock"style="margin-left: 34%;">&nbsp;<fmt:formatDate value="${qna.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
-              </div>
-		  <div class="report" style="text-align: right; font-size: 15px;">
-               <i class="fas fa-exclamation-triangle" >신고하기</i>
-		  </div>          
-            <div class="title" aria-placeholder="title..">
-				${qna.title }
-            </div>
-            <div class="content" >
-				${qna.content }
-            </div>
-            <span data-toggle="tooltip" title="포니, 포돌이">
-            </span>
-          <!-- 좋아요,싫어요 -->
-			 <div class="rating" style="text-align: center;">
-			 <input type="hidden" name="memberNo" id="memberNo" value="8">
-			 <input type="hidden" name="recommend" id="recommend" value="${recom}">
-			  <!-- Thumbs up -->
-			  <div class="like grow">
-			    <i id="like" class="fa fa-thumbs-up fa-3x like <c:if test='${recom == 1}'>active</c:if>"
-			     aria-hidden="true" data-like=""></i>
-			  </div>
-			  <!-- Thumbs down -->
-			  <div class="dislike grow">
-			    <i id="dislike" class="fa fa-thumbs-down fa-3x dislike <c:if test='${recom == -1}'>active</c:if>" aria-hidden="true" data-dislike=""></i>
-			  </div>
+
+<body style="overflow-y: hidden; overflow-y: hidden;">
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+	<div class="notes-wrapper">
+		<div class="saver-wrap" contenteditable="false">
+			<div class="notes-dot" contenteditable="false"></div>
+			<div class="rest" contenteditable="false"></div>
+		</div>
+		<div class="writer" aria-placeholder="writer..">
+			<img src="/myvet/images/pony01.jpg" class="rounded-circle">&nbsp;${qna.member.memberNickname}
+		</div>
+		<div class="information" style="font-size: 20px;">
+
+			<i style="margin-left: 5%;">category :
+				${qna.category.categoryName}</i>
+
+			<%--  <i class="fas fa-heart" id="tipRecomCnt" style="margin-left: 5%;color:red;">&nbsp;${countRecomment}</i>  --%>
+			<i class="far fa-eye" style="margin-left: 5%;">&nbsp;
+				${qna.viewCnt}</i> <i class="far fa-clock" style="margin-left: 34%;">&nbsp;<fmt:formatDate
+					value="${qna.regDate}" pattern="yyyy-MM-dd hh:mm:ss" /></i>
+		</div>
+		<div class="report" style="text-align: right; font-size: 15px;">
+			<i class="fas fa-exclamation-triangle">신고하기</i>
+		</div>
+		<div class="title" aria-placeholder="title..">${qna.title }</div>
+		<div class="content">${qna.content }</div>
+		<span data-toggle="tooltip" title="포니, 포돌이"> </span>
+		<!-- 좋아요,싫어요 -->
+		<div class="rating" style="text-align: center;">
+			<input type="hidden" name="memberNo" id="memberNo" value="8">
+			<input type="hidden" name="recommend" id="recommend" value="${recom}">
+			<!-- Thumbs up -->
+			<div class="like grow">
+				<i id="like"
+					class="fa fa-thumbs-up fa-3x like <c:if test='${recom == 1}'>active</c:if>"
+					aria-hidden="true" data-like=""></i>
 			</div>
-		  
-          <!-- 삭제, 수정 -->
-            <div id="delete-update" style="text-align: right;">
-                <span id="list" data-toggle="tooltip" title="LIST" style="margin-left: 60px;">
-	                <a href="<c:url value='/qna/list.do'/>">
-	                  <strong>List</strong>
-	                </a>
-                </span>
-                <span id="update" data-toggle="tooltip" title="UPDATE" style="margin-left: 60px;">
-                   <a href="<c:url value='/qna/updateForm.do?qnaNo=${qna.qnaNo }'/>">
-                   		<strong>Update</strong>
-                   </a>
-                </span>
-                <span id="delete" data-toggle="tooltip" title="DELETE" style="margin-left: 60px;">
-	                <a href="<c:url value='/qna/delete.do?qnaNo=${qna.qnaNo }'/>">
-						<strong>Delete</strong>
-	                </a>
-                </span>
-            </div>
-            
-            <!--Comment-->
-            <div class="comment">
-                <div class="comments">
-<!--                 <form action="" method="post"> -->
-                    <div class="comment-wrap">
-                        <div class="photo">
-                            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
-                        </div>
-                        <input type="hidden" name="qnaNo" id="qnaNo" value="${qna.qnaNo}">
-                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="${user.memberNo}">
-                        <div class="comment-block" style="-ms-overflow-style: none;">                            
-                           <textarea name="comment" id="comment" cols="30" rows="4" placeholder="300자 이내..." ></textarea>
-                           <span id="counter">###</span>
-                           <input type="submit" class="commentSubmit" style="float: right; cursor: pointer; font-style: ">
-                       </div>
-                     </div>
-<!--                 </form> -->
-                <!-- 댓글 목록-->
-                <i class="far fa-comments" style="margin-left: 5%; font-size: 20px;">&nbsp;${countComment}</i>
-                </div>
-                <br>
-				<div class="comment-list" style="text-align: left;">
-				
+			<!-- Thumbs down -->
+			<div class="dislike grow">
+				<i id="dislike"
+					class="fa fa-thumbs-down fa-3x dislike <c:if test='${recom == -1}'>active</c:if>"
+					aria-hidden="true" data-dislike=""></i>
+			</div>
+		</div>
+
+		<!-- 삭제, 수정 -->
+		<div id="delete-update" style="text-align: right;">
+			<span id="list" data-toggle="tooltip" title="LIST"
+				style="margin-left: 60px;"> <a
+				href="<c:url value='/qna/list.do'/>"> <strong>List</strong>
+			</a>
+			</span> <span id="update" data-toggle="tooltip" title="UPDATE"
+				style="margin-left: 60px;"> <a
+				href="<c:url value='/qna/updateForm.do?qnaNo=${qna.qnaNo }'/>">
+					<strong>Update</strong>
+			</a>
+			</span> <span id="delete" data-toggle="tooltip" title="DELETE"
+				style="margin-left: 60px;"> <a
+				href="<c:url value='/qna/delete.do?qnaNo=${qna.qnaNo }'/>"> <strong>Delete</strong>
+			</a>
+			</span>
+		</div>
+
+		<!--Comment-->
+		<div class="comment">
+			<div class="comments">
+				<!--                 <form action="" method="post"> -->
+				<div class="comment-wrap">
+					<div class="photo">
+						<div class="avatar"
+							style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
+					</div>
+					<input type="hidden" name="qnaNo" id="qnaNo" value="${qna.qnaNo}">
+					<input type="hidden" class="commenterNo" name="commenterNo"
+						id="commenterNo" value="${user.memberNo}">
+					<div class="comment-block" style="-ms-overflow-style: none;">
+						<textarea name="comment" id="comment" cols="30" rows="4"
+							placeholder="300자 이내..."></textarea>
+						<span id="counter">###</span> <input type="submit"
+							class="commentSubmit"
+							style="float: right; cursor: pointer; font-style:">
+					</div>
 				</div>
-                </div>
-                
-            </div> 
-            <br>   
-  		  
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script>
+				<!--                 </form> -->
+				<!-- 댓글 목록-->
+				<i class="far fa-comments" style="margin-left: 5%; font-size: 20px;">&nbsp;${countComment}</i>
+			</div>
+			<br>
+			<div class="comment-list" style="text-align: left;"></div>
+		</div>
+
+	</div>
+	<br>
+
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>
         //좋아요, 싫어요 토글
         	
 //  		    $('.like, .dislike').on('click', function() {

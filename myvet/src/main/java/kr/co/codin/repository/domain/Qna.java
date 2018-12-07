@@ -12,7 +12,32 @@ public class Qna {
 	private int viewCnt;
 	private int categoryCode;
 	private char answered;
-
+	private int recomCnt;
+	
+	private Member member;
+	private QnaCategoryList category;
+	
+	
+	
+	
+	public int getRecomCnt() {
+		return recomCnt;
+	}
+	public void setRecomCnt(int recomCnt) {
+		this.recomCnt = recomCnt;
+	}
+	public QnaCategoryList getCategory() {
+		return category;
+	}
+	public void setCategory(QnaCategoryList category) {
+		this.category = category;
+	}
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	public int getQnaNo() {
 		return qnaNo;
 	}

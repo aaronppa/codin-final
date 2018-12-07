@@ -37,13 +37,7 @@ public class QnaController {
 	
 	@RequestMapping("list.do")
 	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo,Member member) throws Exception{
-		System.out.println("list");
-		System.out.println((String)member.getMemberNickname());
-		System.out.println((String)context.getAttribute("memberNo"));
-		//int memberdd =member.getMemberNo();
-		System.out.println("--dsldjfs");
-		//System.out.println(memberdd);
-		System.out.println("----------------------");
+	
 		model.addAttribute("qna", service.SelectList());
 		
 		//System.out.println(memberNickname);
@@ -53,28 +47,29 @@ public class QnaController {
 	
 	
 	@RequestMapping("writeForm.do")
-	public void writeForm(Model model,String memberNickname ,HttpSession session) {
+	public void writeForm(Model model,String memberNickname ) {
 		System.out.println("라이트폼");
+		
 		//System.out.println(memberNickname);
-		System.out.println("dd:"+session.toString());
+		//System.out.println("dd:"+session.toString());
 	}
 	
 	@RequestMapping("write.do")
-	public String write(Model model,Qna qna,HttpSession session) {
+	public String write(Model model,Qna qna) {
 		service.InsertQna(qna);
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
 	@RequestMapping("detail.do")
-	public void detail(Model model, int qnaNo,HttpSession session) {
+	public void detail(Model model, int qnaNo) {
 		service.selectQnaByNo(qnaNo);
 		//model.addAttribute()
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
 	}
 	
 	@RequestMapping("updateForm.do")
-	public void updateForm(Model model, int qnaNo,HttpSession session) {
+	public void updateForm(Model model, int qnaNo) {
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
 		
 		

@@ -12,8 +12,36 @@
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="category_code" property="categoryCode"/>
 		<result column="answered" property="answered"/>
-
+		<association property="recomCnt" column="qna_no" select="countRecommend"></association>
+		<collection property="member" resultMap="memberMap"></collection>
+		<collection property="category" resultMap="QnaCategoryMap"></collection>
+		
 	</resultMap>
+	
+		
+	<resultMap type="Member" id="memberMap">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_email" property="memberEmail"/>
+		<result column="password" property="password"/>
+		<result column="member_grade" property="memberGrade"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="member_career" property="memberCareer"/>
+		<result column="mailing_opt" property="mailingOpt"/>
+		<result column="member_ori_name" property="memberOriName"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="member_file_size" property="memberFileSize"/>
+		<result column="member_file_reg_date" property="memberFileRegDate"/>
+	</resultMap>
+	
+	<resultMap type="QnaCategoryList" id="QnaCategoryMap">
+		<result column="category_code" property="cateogryCode"/>
+		<result column="category_name" property="categoryName"/>
+	</resultMap>
+	
 	<resultMap type="QnaComment" id="QnaCommentMap">
 		<result column="comment_no" property="commentNo"/>
 		<result column="qna_no" property="qnaNo"/>
@@ -43,11 +71,23 @@
 	
 	
 	
-	<select id="qnaList" parameterType="Qna" resultMap="QnaMap">
-		select *
-		from qna
-		order by qna_no desc
 	
+	
+	
+	<select id="countRecommend" parameterType="int" resultMap="QnaMap">
+		select sum(recommend)
+			from qna_recommend
+			where qna_no = #{qnaNo}
+	</select>
+	
+	
+	
+	<select id="qnaList" parameterType="Qna" resultMap="QnaMap">
+		select q.qna_no qna_no, q.title title,q.reg_date reg_date, q.view_cnt view_cnt,m.member_nickname member_nickname, c.category_name category_name, re.recommend recomCnt 
+			from qna q, member m, qna_category_list c ,  (select sum(recommend) recommend, qna_no
+															from qna_recommend) re
+			where q.writer_no = m.member_no and q.category_code =c.category_code 
+			order by q.qna_no desc
 	</select>
 	
 	<insert id="InsertQna" parameterType="Qna">
@@ -55,9 +95,12 @@
 	</insert>
 	
 	<select id="selectQnaByNo" parameterType="Qna" resultMap="QnaMap">
-		select *
-		from qna
-		where qna_no = #{qnaNo}
+		select q.qna_no qna_no, q.title title,q.reg_date reg_date, q.view_cnt view_cnt,q.content,m.member_nickname member_nickname, c.category_name category_name, re.recommend recomCnt 
+			from qna q, member m, qna_category_list c ,  (select sum(recommend) recommend, qna_no
+															from qna_recommend) re
+			where q.writer_no = m.member_no and q.category_code =c.category_code and  q.qna_no = #{qnaNo}
+			
+		
 	</select>
 	
 	<update id="updateViewCnt" parameterType="Qna">

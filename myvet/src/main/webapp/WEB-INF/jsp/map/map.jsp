@@ -85,7 +85,7 @@
 		var position;
 		var positionData = new Array();
 		geoLocation();
-		var jsondata;
+		let jsondata;
 		let xx=null;
 		let yy=null;
 		let centerXY;
@@ -107,11 +107,13 @@
 			})
 		})
 		function geoLocation() {
-
+			console.log("geoLocation 진입");
 			if (navigator.geolocation) {
-
+				console.log(navigator.geolocation);
+				console.log("if geoLocation 진입");
+				console.log(position);
 				navigator.geolocation.getCurrentPosition(function(position) {//허용하면 여기옴
-
+					console.log("위치정보 허용 요기옴");
 					y = position.coords.latitude;
 					x = position.coords.longitude;
 					//console.log(position.coords.latitude+"  "+position.coords.longitude);
@@ -132,7 +134,10 @@
 						//	console.log("됨");
 						//	console.log(x);		console.log(y);//위치정보 제공시의 중심점
 						//MainMap(x,y);
-
+						
+						
+						
+						console.log("ajax 통신성공");
 						for (var i = 0; i < result.length; i++) {
 							//console.log(result[i]);
 							//console.log(result[i].title);
@@ -158,10 +163,11 @@
 
 				}, function(error) {
 					//console.log(error.code);
+					console.log("에러코드"+error);
 					switch (error.code) {
 					case error.PERMISSION_DENIED:
 						//console.log("위치정보 제공 x");
-
+						console.log("요기옴");
 						$.ajax({
 							url : "<c:url value='/map/ajax.do'/>",
 							type : "post",
@@ -217,13 +223,16 @@
 		
 		
 		let myaddr=null;
-	
+		let centerX=xx;
+		let centerY=yy;
+		console.log("호이쨔:"+jsondata);
 		function MainMap(x, y, jsondata,xx,yy) {//x,y는 중심점 , jsondata는 병원 좌표
 			
 			console.log("x:"+x);
 			console.log("y:"+y);
 			console.log("xx:"+xx);
 			console.log("yy:"+yy);
+			
 			console.log(jsondata);
 			$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
 			for(let k = 0 ;  k < jsondata.length; k ++){
@@ -263,10 +272,19 @@
 				}
 			}
 			
+
 			
 			
-			
-			
+		/* 	$("#gotoCenter").click(function(e){
+				console.log("클릭");
+				console.log(x);
+				console.log(y);
+				xx=centerX;
+				yy=centerY;
+				MainMap(xx, yy);
+				//MainMap(xx, yy, jsondata);
+			})
+			 */
 		
 			
 			//console.log(jsondata.length);

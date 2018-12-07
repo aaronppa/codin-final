@@ -167,20 +167,14 @@
      		<c:forEach var="q" items="${qna}" varStatus="loop">
 	            <tr style="text-align: center;">
 	                <th scope="row"> ${q.qnaNo} </th>
-	                <td>Mark</td>
+	                <td>${q.member.memberNickname}</td>
 	                <td><a href="<c:url value='/qna/detail.do?qnaNo=${q.qnaNo}'/>">${q.title }</a><span id="countComment"></span></td>
-					<c:if test="${q.categoryCode eq 1}">
-		                <td>건강</td>
-					</c:if>
-					<c:if test="${q.categoryCode eq 2}">
-		                <td>생활</td>
-					</c:if>
-					<c:if test="${q.categoryCode eq 3}">
-		                <td>용품</td>
-					</c:if>
+					
+		                <td>${q.category.categoryName}</td>
+				
 	                <td><fmt:formatDate value="${q.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	                <td>${q.viewCnt}</td>
-	                <td><i class="fas fa-heart" style="color:red;">&nbsp;123</i> 
+	                <td><i class="fas fa-heart" style="color:red;">&nbsp;${q.recomCnt }</i> 
 	                </td>
 	           	</tr>
      		</c:forEach>   	
@@ -189,8 +183,8 @@
     </table>
     <!--writeBtn-->
     <div class="writeBtn"style="text-align: right;">
-        <a href="<c:url value='/qna/writeForm.do'/>">
-            <button type="button" class="btn btn-light">글쓰기</button>
+        <a id="writeButton" href="<c:url value='/qna/writeForm.do'/>">
+            <button  type="button" class="btn btn-light">글쓰기</button>
         </a>
     </div>
     <!--pagenation-->
@@ -198,12 +192,13 @@
 </body>
 <script>
 /*category*/
- 
- 
- 
+
  
 
  let memberNickname = '${user.memberNickname}';
+ 
+ 
+
  
  id(memberNickname);
  
@@ -212,47 +207,8 @@
 	 console.log(memberNickname);
 	 console.log("-------------")
  }
-function chainSelect(current, target){
-  var value1 = $(current).on('change', function(){
-    if($(this).find(':selected').val() != ''){
-      $(target).removeAttr('disabled');
-      var value = $(this).find(':selected').text();
-    }else{
-      $(target).prop('disabled', 'disabled').val(null);
-    }
-  return value;
-  });
-  return value1;
-}
-size = chainSelect('select#size', '#color');
-color = chainSelect('select#color', '#qty');
-qty = chainSelect('select#qty', '#submit');
-
-
-// $.ajax({
-// 	url : "/myvet/tip/countComment.do",
-// 	type : "post",
-// 	data : {tipNo : $("#tipNo").val()}
-// }).done(function(result){
-// 	console.log("countComment-success : "+ $("#tipNo").val())
-// 	$("#countComment").show(result)
-// })
-
-
-$('#addToCart').submit(function(){
-  event.preventDefault();
-  alert('Size: ' + size + '\nColor: ' + color + '\nQuantity: ' + qty);
-});
-//count
-// $ajax({
-// 	url: "<c:url value='/tip/countTip.do'/>",
-// 	type: "post",
-// 	data:{tipNo:$("#tipNo").val()}
-// }).done(function(result){
-// 	console("countAjax")
-// });
-
-//pagenation
+ 
+ 
 
 
 
