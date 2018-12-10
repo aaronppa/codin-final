@@ -9,6 +9,15 @@ public class QnaComment {
 	private String content;
 	private Date regDate;
 	private char pick;
+	private int recommendCnt;
+	
+	
+	public int getRecommendCnt() {
+		return recommendCnt;
+	}
+	public void setRecommendCnt(int recommendCnt) {
+		this.recommendCnt = recommendCnt;
+	}
 	public int getCommentNo() {
 		return commentNo;
 	}

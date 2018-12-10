@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.Qna;
+import kr.co.codin.repository.domain.QnaCategoryList;
 import kr.co.codin.repository.domain.QnaComment;
+import kr.co.codin.repository.domain.QnaRecommend;
 import kr.co.codin.repository.mapper.QnaMapper;
 
 @Service
@@ -55,6 +57,22 @@ public class QnaServiceImpl implements QnaService{
 	public List<QnaComment> selectCombyNo(int qnaNo) {
 		// TODO Auto-generated method stub
 		return mapper.selectCombyNo(qnaNo);
+	}
+	@Override
+	public List<QnaCategoryList> cateList() {
+		// TODO Auto-generated method stub
+		return mapper.categoryList();
+	}
+	@Override
+	public void insertRecommend(QnaRecommend QnaRecommend) {
+		// TODO Auto-generated method stub
+		 mapper.insertRecommend(QnaRecommend);
+		
+	}
+	@Override
+	public void deleteComment(QnaComment com) {
+		// TODO Auto-generated method stub
+		mapper.deleteComment(com);
 	}
 	
 	

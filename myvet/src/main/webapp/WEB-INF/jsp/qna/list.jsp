@@ -162,6 +162,7 @@
             <thead>
                 <tr style="text-align: center;">
 	                <th scope="col" style="width:7%;"class="no">글 번호</th>
+	                 <th scope="col" style="width:10%;"class="no">채택여부</th>
 	                <th scope="col" style="width:20%;"class="writer">작성자</th>
 	                <th scope="col" style="width:25%;"class="title">제목</th>
 	                <th scope="col" style="width:10%;"class="category">카테고리</th>
@@ -174,10 +175,11 @@
      		<c:forEach var="q" items="${qna}" varStatus="loop">
 	            <tr style="text-align: center;">
 	                <th scope="row"> ${q.qnaNo} </th>
+	                <td>${q.answered }</td>
 	                <td>${q.memberNickname}</td>
 	                <td><a href="<c:url value='/qna/detail.do?qnaNo=${q.qnaNo}'/>">${q.title }(<strong style="color:brown">${q.commentCount}</strong>) </a><span id="countComment"></span></td>
 					
-		                <td>${q.categoryName}</td>
+		            <td>${q.categoryName}</td>
 				
 	                <td><fmt:formatDate value="${q.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	                <td>${q.viewCnt}</td>

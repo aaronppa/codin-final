@@ -1,13 +1,16 @@
 package kr.co.codin.repository.domain;
 
+
+
 public class QnaCategoryList {
-	private int cateogryCode;
+	private int categoryCode;
 	private String categoryName;
-	public int getCateogryCode() {
-		return cateogryCode;
+
+	public int getCategoryCode() {
+		return categoryCode;
 	}
-	public void setCateogryCode(int cateogryCode) {
-		this.cateogryCode = cateogryCode;
+	public void setCategoryCode(int categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 	public String getCategoryName() {
 		return categoryName;

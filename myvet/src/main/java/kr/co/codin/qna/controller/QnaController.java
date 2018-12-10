@@ -3,7 +3,6 @@ package kr.co.codin.qna.controller;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.google.gson.JsonObject;
+
 import kr.co.codin.qna.service.QnaService;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaComment;
+import kr.co.codin.repository.domain.QnaRecommend;
 
 
 
@@ -49,7 +52,7 @@ public class QnaController {
 	@RequestMapping("writeForm.do")
 	public void writeForm(Model model,String memberNickname ) {
 		System.out.println("라이트폼");
-		
+		model.addAttribute("category",service.cateList());
 		//System.out.println(memberNickname);
 		//System.out.println("dd:"+session.toString());
 	}
@@ -90,7 +93,7 @@ public class QnaController {
 	
 	@RequestMapping("writeComment.do")
 	@ResponseBody
-	public List<QnaComment> writeComment(Model model,int qnaNo,QnaComment qna) {
+	public List<QnaComment> writeComment(Model model,int qnaNo,QnaComment qna) throws Exception{
 		service.writeComment(qna);
 		System.out.println("dddd");
 		System.out.println(qnaNo);
@@ -111,13 +114,27 @@ public class QnaController {
 	
 	@RequestMapping("insertRecommend.do")
 	@ResponseBody
-	public void insertRecommend(int qnaNo, int recommend, int commenterNo) {
-		System.out.println("insertRecommend 왔음");
-		System.out.println(qnaNo);
-		System.out.println(recommend);
-		System.out.println(commenterNo);
+	public String insertRecommend(Integer qnaNo,String data) throws Exception{
+		
+		System.out.println(data);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"detail.do?qnaNo="+18;
+	}
+	
+	@RequestMapping("deleteComment.do")
+	@ResponseBody
+	public void deleteComment(QnaComment comment,int qnaNo) throws Exception{
+		
+		service.deleteComment(comment);
+		
+		//return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"/myvet/qna/detail.do?qnaNo="+qnaNo;
 		
 	}
 	
+	
+	@RequestMapping("updateComment.do")
+	@ResponseBody
+	public void updateComment(QnaComment comment) throws Exception{
+		
+	}
 	
 }

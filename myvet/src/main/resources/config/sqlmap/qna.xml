@@ -41,7 +41,7 @@
 	</resultMap>
 
 	<resultMap type="QnaCategoryList" id="QnaCategoryMap">
-		<result column="category_code" property="cateogryCode" />
+		<result column="category_code" property="categoryCode" />
 		<result column="category_name" property="categoryName" />
 	</resultMap>
 
@@ -58,7 +58,7 @@
 	<resultMap type="QnaRecommend" id="QnaRecommendMap">
 		<result column="no" property="no" />
 		<result column="member_no" property="memberNo" />
-		<result column="comment_no" property="qndNo" />
+		<result column="qna_no" property="qnaNo" />
 		<result column="recommend" property="recommend" />
 
 
@@ -100,6 +100,8 @@
 				,q.reg_date
 				,(select category_name from qna_category_list where category_code=
 				q.category_code) categoryName
+				,q.answered
+				
 			from qna q
 			order by q.qna_no desc
 	</select>
@@ -109,7 +111,13 @@
 		qna(title,board_code,writer_no,content,category_code)
 		values(#{title},20,#{writerNo},#{content},#{categoryCode})
 	</insert>
-
+	
+	<select id="categoryList" resultMap="QnaCategoryMap">
+		select *
+			from qna_category_list		
+			
+	</select>
+	
 	<select id="selectQnaByNo" parameterType="Qna" resultMap="QnaMap">
 		select
 		q.qna_no qna_no, q.title title,q.reg_date reg_date, q.view_cnt
@@ -127,7 +135,7 @@
 	<update id="updateViewCnt" parameterType="Qna">
 		update qna
 		set
-		view_cnt=#{viewCnt}+1
+		view_cnt=view_cnt+1
 		where qna_no = #{qnaNo}
 	</update>
 
@@ -150,8 +158,18 @@
 	</insert>
 
 	<select id="selectCombyNo" parameterType="QnaComment" resultMap="QnaCommentMap">
-		select *
-		from qna_comment
+		select q.* , (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
+		from qna_comment q
 		where qna_no = #{qnaNo}
 	</select>
+	
+	<insert id="insertRecommend">
+		insert into qna_recommend(member_no,qna_no,recommend) values(#{memberNo},#{qnaNo},#{recommend})
+	</insert>
+	
+	<delete id="deleteComment">
+		delete from qna_comment
+		where comment_no =#{commentNo} and commenter_no = #{commenterNo}
+	
+	</delete>
 </mapper>

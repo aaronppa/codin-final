@@ -524,7 +524,7 @@ p {
 }
 
 .like, .dislike {
-	font-size: 30px;
+	font-size: 10px;
 	display: inline-block;
 	cursor: pointer;
 	margin: 10px;
@@ -533,13 +533,14 @@ p {
 }
 
 .dislike:hover, .like:hover {
-	color: red;
+	color: blue;
 	transition: all .2s ease-in-out;
 	transform: scale(1.1);
 }
 
+
 .active {
-	color: red;
+	color: blue;
 }
 
 .comActive {
@@ -807,7 +808,7 @@ p {
         
         list();
       
-        
+        let commenterNo=null;
         function list(){
         	$.ajax({
         		url:"/myvet/qna/commentList.do",
@@ -820,6 +821,7 @@ p {
         		console.log("코멘트 엠프티2");
         		//console.log("성공 tipNo"+result);
          		//console.log(result[1])
+         		$(".comment-list").empty();
                 for (let i = 0; i < result.length; i++) {
             	   let likeRecommend = "", dislikeRecommend = "";
             	   if(result[i].recommend == 1){
@@ -827,7 +829,7 @@ p {
             	   }else if(result[i].recommend == -1){
             		   dislikeRecommend = "comActive";
 		     	   }
-            	   
+            	
             	   console.log(result);
             	   
                 $(".comment-list").append(
@@ -852,8 +854,8 @@ p {
         	
         function detail(){
         	$.ajax({
-        		url:"/myvet/tip/detail.do",
-        		data:"tipNo=${tip.tipNo}"
+        		url:"/myvet/qna/detail.do",
+        		data:"qnaNo=${qna.qnaNo}"
         	}).done(function(){
         		console.log("detail!");
         	})
@@ -864,25 +866,51 @@ p {
        		
        		var isActive = $(this).hasClass('active');
        		if(isActive == true){
-       			insertRecommend(0, $('#tipNo').val());
+       			insertRecommend(0, $('#qnaNo').val());
        		}else{
-       			insertRecommend(1, $('#tipNo').val());
+       			insertRecommend(1, $('#qnaNo').val());
        		}
        		$("#tipRecomCnt").val();
        		$(this).toggleClass('active')
        	})
-        
+       	
+       	
+     	  let qnaNo = $("#qnaNo").val();
+       	//  let commenterNo1 = ${user.memberNo};
        function insertRecommend(recommend ){
         	console.log("insertRecome:"+$(commenterNo).val());
+        	console.log(recommend);
+        	console.log(qnaNo);
+        	//console.log(commenterNo);
+        	var recom=new Array();
+        	var qnaRecomInfo = new Object();
+        	
+        	qnaRecomInfo.qnaNo=parseInt(qnaNo);
+        	qnaRecomInfo.recommend=parseInt(recommend);
+        	qnaRecomInfo.memberNo=parseInt('${user.memberNo}');
+        	
+        	recom.push(qnaRecomInfo);
+        
+        	
+        	
+        	recom = JSON.stringify(recom[0]);
+        	 recom = JSON.parse(recom);
+        //	recom={qnaRecommend:recom}; 
+        	console.log(recom);
+        	 
+        	console.log(typeof(recom));
+        	//console.log(recom); 
         	$.ajax({
-        		url:"/myvet/qna/insertRecommend.do",
-        		data:"qnaNo=${qna.qnaNo}&recommend="+recommend+"&commenterNo=${commenterNo}.val()",
+        		url:"/myvet/qna/insertRecommend.do",	
+        		data:{data:recom},
+        	     
         		type:"post",
         		dataType:"json"
         	}).done(function(result){
         		console.log("insertRecommend-success")
         	}).fail(function(result){
-        		console.log("ㅇㅇ");
+        		console.log("실패");
+        		console.log(result);
         	})
         }
         
@@ -962,21 +990,25 @@ p {
         		console.log("작성자 : "+$(".commenterNo").val());
         		console.log("댓글 번호 : "+$(this).data("deletecombtn"));
         		$.ajax({
-        			url: "/myvet/tip/deleteComment.do",
+        			url: "/myvet/qna/deleteComment.do",
         	/* 		data: {
         				commentNo: $(this).data("deletecombtn"),
         				commenterNo: $(".commenterNo").val()
         				},
  					dataType:"json" */
- 					data:"commentNo="+$(this).data("deletecombtn")+"&commenterNo="+$(".commenterNo").val()
+ 					//data:"commentNo="+$(this).data("deletecombtn")+"&commenterNo="+$(".commenterNo").val()
+ 					data:{commentNo:$(this).data("deletecombtn"),commenterNo:$(".commenterNo").val(),qnaNo:$("#qnaNo").val()},
+ 					dataType:"text",
+ 					type:"post"
         		})
-        		.done(function(){
+        		.done(function(result){
         			console.log("deleteComplete");
-        			$(".comment-list").children().remove();
+        			//$(".comment-list").children().remove();
         			list();
         		})
-        		.fail(function(){
-        			console.log("deleteFail")
+        		.fail(function(result){
+        			console.log("deleteFail");
+        			console.log(result);
         		})
         	});
         
@@ -989,6 +1021,7 @@ p {
         		console.log("작성자 : "+$(".commenterNo").val());
         		console.log("댓글 번호 : "+$(this).data("updatecomno"));
         		console.log("댓글 내용 : "+ $(this).data("updatecombtn"));
+        		console.log($(this).val());
         		console.dir($(this).prev().prev());
         		$(this).prev().prev().replaceWith(
            		"<textarea placeholder='댓글수정..' cols='100' rows='2' style='border: gray;'>"+$(this).data('updatecombtn')+"</textarea>"
@@ -997,7 +1030,7 @@ p {
         		"<button class='cancelupdatecom' style='cursor:pointer;'>취소</button>"		
         		)
         		$(this).replaceWith(
-        		"<button class='submitupdatecom' style='cursor:pointer;margin-left:20%;'>제출<button>"		
+        		"<button class='submitupdatecom' style='cursor:pointer;margin-left:20%;'>제출</button>"		
         		)
         	})
         		
@@ -1014,15 +1047,16 @@ p {
         			console.dir($(this).prev().prev())//댓글내용 경로
         			console.log($(this).prev().prev().val())//댓글 내용
         			console.log($(".commenterNo").val())//작성자
-					console.log($(this).prev().prev().prev().data("commentno"))//댓글번호        
+					console.log($(this).prev().prev().prev().data("commentno"))//댓글번호 
+					console.log()
 					$.ajax({
-						url : "/myvet/tip/updateComment.do",
+						url : "/myvet/qna/updateComment.do",
 						data : "commentNo="+$(this).prev().prev().prev().data("commentno")
 							   +"&commenterNo="+$(".commenterNo").val()
 							   +"&comment="+$(this).prev().prev().val()
 						}).done(function(){
 							console.log("success")
-							$(".comment-list").children().remove();
+							//$(".comment-list").children().remove();
 							list();
 						}).fail(function(){
 							console.log("fail")
