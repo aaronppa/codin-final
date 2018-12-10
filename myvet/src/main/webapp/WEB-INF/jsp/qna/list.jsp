@@ -32,7 +32,7 @@
 
         /*search*/
         .mb-3{
-            margin-left: 60%;
+            margin-left: 53%;
         }
         .dropdown-toggle{
             background: none;
@@ -130,6 +130,17 @@
 			margin-top: 30px;
 			
 		}
+		.viewCntOrderBy{
+			display:none;
+		}
+		
+		.recommendOrderBy{
+			display:none;
+		}
+		.regDateOrder{
+			display:none;
+		}
+
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
     
@@ -141,15 +152,19 @@
     <!--category-->
     <div class="bodyContainer">
     <div class="input-group mb-3">
-            <div class="input-group-prepend">
+            <!-- <div class="input-group-prepend"> -->
               <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Title</button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Title</a>
-                <a class="dropdown-item" href="#">Content</a>
-                <div role="separator" class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Title + Content</a>
-              </div>
-            </div>
+              	<select name="sort" id="sort" class="sort">
+					<option selected value="0">검색조건</option>
+					<option value="1">제목</option>
+					<option value="2">내용</option>
+					<option value="3">작성자</option>
+					<option value="4">제목+내용</option>
+				</select>
+              
+              
+              
+           <!--  </div> -->
             <input type="text" class="input-search" placeholder="search">
             <button type="button" class="btn btn-outline">검색</button>
     </div>
@@ -161,14 +176,25 @@
             <!-- <caption>List of users</caption> -->
             <thead>
                 <tr style="text-align: center;">
-	                <th scope="col" style="width:7%;"class="no">글 번호</th>
-	                 <th scope="col" style="width:10%;"class="no">채택여부</th>
+	                <th scope="col" style="width:10%;"class="no">
+	           글번호
+	                	
+	                </th>
+	                 <th scope="col" style="width:3%;"class="no">
+	                 		<select name="categoryCode" class="categoryCode">
+			
+									<option selected value="0" >채택여부</option>
+									<option  value="1" >Y</option>
+									<option  value="2" >N</option>
+								
+							</select>
+	                 </th>
 	                <th scope="col" style="width:20%;"class="writer">작성자</th>
-	                <th scope="col" style="width:25%;"class="title">제목</th>
+	                <th scope="col" style="width:20%;"class="title">제목</th>
 	                <th scope="col" style="width:10%;"class="category">
 	                		<select name="categoryCode" class="categoryCode">
 			
-									<option selected value="" >Category</option>
+									<option selected value="0" >Category</option>
 									
 								<c:forEach var="c" items="${category}" varStatus="loop">
 									
@@ -177,9 +203,18 @@
 								</c:forEach>
 							</select>
 	                </th>
-	                <th scope="col" style="width:10%;"class="reg_date">작성일</th>                
-	                <th scope="col" style="width:10%;"class="view_cnt">조회수</th>
-	                <th scope="col" style="width:10%;"class="view_cnt">추천수</th>
+	                <th scope="col" style="width:10%;"class="reg_date">
+						<a href="#" id="regDateDown">작성일▼</a>
+	                	<a href="#" id="regDateUp" class="regDateOrder">작성일▲</a>
+					</th>                
+	                <th scope="col" style="width:10%;"class="view_cnt">
+	                	<a href="#" id="viewCntDown">조회수▼</a>
+	                	<a href="#" id="viewCntUp" class="viewCntOrderBy">조회수▲</a>
+	                </th>
+	                <th scope="col" style="width:10%;"class="view_cnt">
+	                	<a href="#" id="recommendCntDown">추천수▼</a>
+	                	<a href="#" id="recommendCntUp" class="recommendOrderBy">추천수▲</a>
+	                </th>
             	</tr>
         </thead>
         <tbody>
@@ -214,8 +249,14 @@
 </body>
 <script>
 /*category*/
-
- 
+	
+	
+	
+	
+	if(${".recommendOrderBy"}.click==true){
+		console.log("클릭됨")
+	}
+ 			
 
 
 

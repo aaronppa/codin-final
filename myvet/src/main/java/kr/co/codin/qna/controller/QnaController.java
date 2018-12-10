@@ -134,6 +134,7 @@ public class QnaController {
 	@RequestMapping("updateComment.do")
 	@ResponseBody
 	public void updateComment(QnaComment comment) throws Exception{
+		System.out.println("여기옴");
 		service.updateQnaComment(comment);
 	}
 	
