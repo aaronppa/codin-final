@@ -74,6 +74,16 @@ public class QnaServiceImpl implements QnaService{
 		// TODO Auto-generated method stub
 		mapper.deleteComment(com);
 	}
+	@Override
+	public void updateQnaComment(QnaComment com) {
+		// TODO Auto-generated method stub
+		mapper.updateQnaComment(com);
+	}
+	@Override
+	public int countTotalContent() {
+		// TODO Auto-generated method stub
+		return mapper.countTotalContent();
+	}
 	
 	
 	

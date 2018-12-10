@@ -21,4 +21,6 @@ public interface QnaService {
 	List<QnaCategoryList> cateList();
 	void insertRecommend(QnaRecommend QnaRecommend);
 	void deleteComment(QnaComment com);
+	void updateQnaComment(QnaComment com);
+	int countTotalContent();
 }

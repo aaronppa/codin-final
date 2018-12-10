@@ -19,4 +19,6 @@ public interface QnaMapper {
 	List<QnaCategoryList> categoryList();
 	void insertRecommend(QnaRecommend QnaRecommend);
 	void deleteComment(QnaComment qc);
+	void updateQnaComment(QnaComment qc);
+	int countTotalContent();
 }

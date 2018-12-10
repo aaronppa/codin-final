@@ -157,7 +157,7 @@
    
     <!--list-->
     <table class="table">
-            <div style="text-align: right;">전체 ${count} 개</div>
+            <div style="text-align: right;">전체 ${totalCnt} 개</div>
             <!-- <caption>List of users</caption> -->
             <thead>
                 <tr style="text-align: center;">
@@ -165,7 +165,18 @@
 	                 <th scope="col" style="width:10%;"class="no">채택여부</th>
 	                <th scope="col" style="width:20%;"class="writer">작성자</th>
 	                <th scope="col" style="width:25%;"class="title">제목</th>
-	                <th scope="col" style="width:10%;"class="category">카테고리</th>
+	                <th scope="col" style="width:10%;"class="category">
+	                		<select name="categoryCode" class="categoryCode">
+			
+									<option selected value="" >Category</option>
+									
+								<c:forEach var="c" items="${category}" varStatus="loop">
+									
+									<option value="${c.categoryCode }">${c.categoryName }</option>
+									
+								</c:forEach>
+							</select>
+	                </th>
 	                <th scope="col" style="width:10%;"class="reg_date">작성일</th>                
 	                <th scope="col" style="width:10%;"class="view_cnt">조회수</th>
 	                <th scope="col" style="width:10%;"class="view_cnt">추천수</th>

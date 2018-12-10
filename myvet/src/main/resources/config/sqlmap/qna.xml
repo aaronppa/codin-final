@@ -120,14 +120,20 @@
 	
 	<select id="selectQnaByNo" parameterType="Qna" resultMap="QnaMap">
 		select
-		q.qna_no qna_no, q.title title,q.reg_date reg_date, q.view_cnt
-		view_cnt,q.content,m.member_nickname member_nickname, c.category_name
-		category_name, re.recommend recomCnt
-		from qna q, member m, qna_category_list c , (select sum(recommend)
-		recommend, qna_no
+			(select member_nickname from member where member_no = q.writer_no) memberNickname
+			, q.title title
+			,q.reg_date reg_date
+			, q.view_cnt view_cnt
+			,q.content
+			
+			, (select category_name from qna_category_list where category_code=
+				q.category_code) categoryName
+			, re.recommend recomCnt
+			from qna q, member m, qna_category_list c , (select sum(recommend)
+			recommend, qna_no
 		from qna_recommend) re
 		where q.writer_no = m.member_no and q.category_code =c.category_code and
-		q.qna_no = #{qnaNo}
+			q.qna_no = #{qnaNo}
 
 
 	</select>
@@ -172,4 +178,16 @@
 		where comment_no =#{commentNo} and commenter_no = #{commenterNo}
 	
 	</delete>
+	
+	<update id="updateQnaComment" >
+		update qna_comment
+		set content= #{content}
+		where comment_no = #{commentNo} and commenter_no= #{commenterNo}
+	</update>
+	
+	<select id="countTotalContent" resultType="int">
+		select count(qna_no)
+			from qna
+	</select>
+	
 </mapper>

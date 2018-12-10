@@ -40,9 +40,9 @@ public class QnaController {
 	
 	@RequestMapping("list.do")
 	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo,Member member) throws Exception{
-	
+		model.addAttribute("category",service.cateList());
 		model.addAttribute("qna", service.SelectList());
-		
+		model.addAttribute("totalCnt",service.countTotalContent());
 		//System.out.println(memberNickname);
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countTip()));
 	}
@@ -134,7 +134,7 @@ public class QnaController {
 	@RequestMapping("updateComment.do")
 	@ResponseBody
 	public void updateComment(QnaComment comment) throws Exception{
-		
+		service.updateQnaComment(comment);
 	}
 	
 }

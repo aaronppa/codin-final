@@ -9,10 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Document</title>
+
 <!-- 좋아요,싫어요 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></script>
-
+ 
 
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -45,184 +46,184 @@
 
 <style>
 .notes-wrapper .saver-wrap {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 *, *:before, *:after, h2, p {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	border: none;
-	background-color: transparent;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   border: none;
+   background-color: transparent;
 }
 
 *:focus, *:before:focus, *:after:focus, h2:focus, p:focus {
-	outline: none;
+   outline: none;
 }
 
 
 
 .notes-wrapper {
-	max-width: 1400px;
-	width: 100%;
-	margin: 0 auto;
-	height: 700px;
-	background-color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	position: relative;
-	
-	overflow-y: scroll;
-	overflow-x: hidden;
+   max-width: 1400px;
+   width: 100%;
+   margin: 0 auto;
+   height: 700px;
+   background-color: #fff;
+   border-radius: 5px;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+   position: relative;
+   
+   overflow-y: scroll;
+   overflow-x: hidden;
 }
 
 .notes-wrapper .saver-wrap {
-	width: 60px;
-	height: 60px;
-	position: absolute;
-	right: 0;
-	top: 0;
+   width: 60px;
+   height: 60px;
+   position: absolute;
+   right: 0;
+   top: 0;
 }
 
 .notes-wrapper .saver-wrap .notes-dot {
-	width: 10px;
-	height: 10px;
-	background-color: #D1D3D6;
-	border-radius: 50px;
-	transition: .1s ease-in-out;
+   width: 10px;
+   height: 10px;
+   background-color: #D1D3D6;
+   border-radius: 50px;
+   transition: .1s ease-in-out;
 }
 
 .notes-wrapper .saver-wrap .notes-dot.saved {
-	background-color: #66cc8f;
-	transition: .1s ease-in-out;
-	transition-delay: 2.10s;
+   background-color: #66cc8f;
+   transition: .1s ease-in-out;
+   transition-delay: 2.10s;
 }
 
 .notes-wrapper .saver-wrap .rest {
-	-webkit-transform: scale(0);
-	transform: scale(0);
-	clip: rect(0, 30px, 30px, 15px);
-	height: 30px;
-	width: 30px;
-	position: absolute;
-	left: calc(50% - 15px);
-	top: calc(50% - 15px);
+   -webkit-transform: scale(0);
+   transform: scale(0);
+   clip: rect(0, 30px, 30px, 15px);
+   height: 30px;
+   width: 30px;
+   position: absolute;
+   left: calc(50% - 15px);
+   top: calc(50% - 15px);
 }
 
 .notes-wrapper .saver-wrap .rest.active {
-	-webkit-animation: animate 1.05s linear 2;
-	animation: animate 1.05s linear 2;
+   -webkit-animation: animate 1.05s linear 2;
+   animation: animate 1.05s linear 2;
 }
 
 .notes-wrapper .saver-wrap .rest.active:after {
-	-webkit-animation: animate2 1.05s linear 2;
-	animation: animate2 1.05s linear 2;
+   -webkit-animation: animate2 1.05s linear 2;
+   animation: animate2 1.05s linear 2;
 }
 
 .notes-wrapper .saver-wrap .rest:after {
-	-webkit-transform: scale(0);
-	transform: scale(0);
-	clip: rect(0, 30px, 30px, 15px);
-	content: '';
-	border-radius: 50%;
-	height: 30px;
-	width: 30px;
-	position: absolute;
+   -webkit-transform: scale(0);
+   transform: scale(0);
+   clip: rect(0, 30px, 30px, 15px);
+   content: '';
+   border-radius: 50%;
+   height: 30px;
+   width: 30px;
+   position: absolute;
 }
 
 .notes-wrapper .writer {
-	padding: 25px 30px;
-	padding-right: 60px;
-	font-weight: 600;
-	/*   color: #000C2F; */
-	font-size: 13px;
-	text-transform: uppercase;
-	position: relative;
+   padding: 25px 30px;
+   padding-right: 60px;
+   font-weight: 600;
+   /*   color: #000C2F; */
+   font-size: 13px;
+   text-transform: uppercase;
+   position: relative;
 }
 
 .notes-wrapper .title {
-	padding: 25px 30px;
-	padding-right: 60px;
-	font-weight: 600;
-	/*   color: #000C2F; */
-	font-size: 13px;
-	text-transform: uppercase;
-	position: relative;
+   padding: 25px 30px;
+   padding-right: 60px;
+   font-weight: 600;
+   /*   color: #000C2F; */
+   font-size: 13px;
+   text-transform: uppercase;
+   position: relative;
 }
 
 .notes-wrapper .content {
-	padding: 10px 30px;
-	padding-bottom: 15px;
-	font-weight: 400;
-	/*   color: #666D82; */
-	line-height: 1.4;
-	font-size: 14px;
+   padding: 10px 30px;
+   padding-bottom: 15px;
+   font-weight: 400;
+   /*   color: #666D82; */
+   line-height: 1.4;
+   font-size: 14px;
 }
 
 .notes-wrapper .content span.bold {
-	font-weight: 700;
+   font-weight: 700;
 }
 
 .notes-wrapper .content img {
-	width: 90%;
-	border-radius: 5px;
-	margin: 15px 5%;
+   width: 90%;
+   border-radius: 5px;
+   margin: 15px 5%;
 }
 
 .notes-wrapper .comment {
-	height: 60px;
-	line-height: 60px;
-	text-align: left;
-	font-size: 13px;
-	/*   color: #999EAC; */
-	position: relative;
+   height: 60px;
+   line-height: 60px;
+   text-align: left;
+   font-size: 13px;
+   /*   color: #999EAC; */
+   position: relative;
 }
 
 .notes-wrapper .getImg {
-	width: 60px;
-	height: 60px;
-	/* position: left; */
-	/* position: absolute; */
-	bottom: 0;
-	/* right: -15px; */
-	text-align: center;
-	cursor: pointer;
+   width: 60px;
+   height: 60px;
+   /* position: left; */
+   /* position: absolute; */
+   bottom: 0;
+   /* right: -15px; */
+   text-align: center;
+   cursor: pointer;
 }
 
 .notes-wrapper {
-	line-height: 60px;
-	/* color: #999EAC; */
-	color: black;
-	font-size: 30px;
-	text-align: left;
+   line-height: 60px;
+   /* color: #999EAC; */
+   color: black;
+   font-size: 30px;
+   text-align: left;
 }
 
 .listnsub {
-	max-width: 800px;
-	width: 100%;
-	text-align: center;
-	height: auto;
-	background-color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	/* position: relative; */
-	z-index: 999;
-	font-size: 25px;
+   max-width: 800px;
+   width: 100%;
+   text-align: center;
+   height: auto;
+   background-color: #fff;
+   border-radius: 5px;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+   /* position: relative; */
+   z-index: 999;
+   font-size: 25px;
 }
 
 .rounded-circle {
-	width: 50px;
-	height: 50px;
+   width: 50px;
+   height: 50px;
 }
 
 @
 -webkit-keyframes animate { 0% {
-	-webkit-transform: scale(1);
-	transform: scale(1);
-	-webkit-transform: rotate(0deg);
-	transform: rotate(0deg);
+   -webkit-transform: scale(1);
+   transform: scale(1);
+   -webkit-transform: rotate(0deg);
+   transform: rotate(0deg);
 }
 
 100%
@@ -259,10 +260,10 @@ rotate
 }
 @
 keyframes animate { 0% {
-	-webkit-transform: scale(1);
-	transform: scale(1);
-	-webkit-transform: rotate(0deg);
-	transform: rotate(0deg);
+   -webkit-transform: scale(1);
+   transform: scale(1);
+   -webkit-transform: rotate(0deg);
+   transform: rotate(0deg);
 }
 
 100%
@@ -299,9 +300,9 @@ rotate
 }
 @
 -webkit-keyframes animate2 { 0% {
-	box-shadow: inset #D1D3D6 0 0 0 2px;
-	-webkit-transform: rotate(-140deg);
-	transform: rotate(-140deg);
+   box-shadow: inset #D1D3D6 0 0 0 2px;
+   -webkit-transform: rotate(-140deg);
+   transform: rotate(-140deg);
 }
 
 100%
@@ -339,9 +340,9 @@ rotate
 }
 @
 keyframes animate2 { 0% {
-	box-shadow: inset #D1D3D6 0 0 0 2px;
-	-webkit-transform: rotate(-140deg);
-	transform: rotate(-140deg);
+   box-shadow: inset #D1D3D6 0 0 0 2px;
+   -webkit-transform: rotate(-140deg);
+   transform: rotate(-140deg);
 }
 
 100%
@@ -380,180 +381,180 @@ rotate
 
 /*Comment*/
 /* html, body {
-	background-color: #f0f2fa;
-	font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial",
-		sans-serif;
-	color: #555f77;
-	-webkit-font-smoothing: antialiased;
+   background-color: #f0f2fa;
+   font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial",
+      sans-serif;
+   color: #555f77;
+   -webkit-font-smoothing: antialiased;
 } */
 
 input, textarea {
-	outline: none;
-	border: none;
-	display: block;
-	margin: 0;
-	padding: 0;
-	-webkit-font-smoothing: antialiased;
-	font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial",
-		sans-serif;
-	font-size: 1rem;
-	color: #555f77;
+   outline: none;
+   border: none;
+   display: block;
+   margin: 0;
+   padding: 0;
+   -webkit-font-smoothing: antialiased;
+   font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial",
+      sans-serif;
+   font-size: 1rem;
+   color: #555f77;
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-	color: #ced2db;
+   color: #ced2db;
 }
 
 input::-moz-placeholder, textarea::-moz-placeholder {
-	color: #ced2db;
+   color: #ced2db;
 }
 
 input:-moz-placeholder, textarea:-moz-placeholder {
-	color: #ced2db;
+   color: #ced2db;
 }
 
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-	color: #ced2db;
+   color: #ced2db;
 }
 
 p {
-	line-height: 1.3125rem;
+   line-height: 1.3125rem;
 }
 
 .comments {
-	margin: 2.5rem auto 0;
-	max-width: 60.75rem;
-	padding: 0 1.25rem;
+   margin: 2.5rem auto 0;
+   max-width: 60.75rem;
+   padding: 0 1.25rem;
 }
 
 .comment-wrap {
-	margin-bottom: 1.25rem;
-	display: table;
-	width: 100%;
-	min-height: 5.3125rem;
+   margin-bottom: 1.25rem;
+   display: table;
+   width: 100%;
+   min-height: 5.3125rem;
 }
 
 .photo {
-	padding-top: 0.625rem;
-	display: table-cell;
-	width: 3.5rem;
+   padding-top: 0.625rem;
+   display: table-cell;
+   width: 3.5rem;
 }
 
 .photo .avatar {
-	height: 2.25rem;
-	width: 2.25rem;
-	border-radius: 50%;
-	background-size: contain;
+   height: 2.25rem;
+   width: 2.25rem;
+   border-radius: 50%;
+   background-size: contain;
 }
 
 .comment-block {
-	padding: 1rem;
-	background-color: #fff;
-	display: table-cell;
-	vertical-align: top;
-	border-radius: 0.1875rem;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+   padding: 1rem;
+   background-color: #fff;
+   display: table-cell;
+   vertical-align: top;
+   border-radius: 0.1875rem;
+   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
 .comment-block textarea {
-	width: 100%;
-	resize: none;
+   width: 100%;
+   resize: none;
 }
 
 .comment-text {
-	margin-bottom: 1.25rem;
+   margin-bottom: 1.25rem;
 }
 
 .bottom-comment {
-	color: #acb4c2;
-	font-size: 0.875rem;
+   color: #acb4c2;
+   font-size: 0.875rem;
 }
 
 .comment-date {
-	float: left;
+   float: left;
 }
 
 .comment-actions {
-	float: right;
+   float: right;
 }
 
 .comment-actions li {
-	display: inline;
-	margin: -2px;
-	cursor: pointer;
+   display: inline;
+   margin: -2px;
+   cursor: pointer;
 }
 
 .comment-actions li.registration {
-	color: 1px solid gray;
+   color: 1px solid gray;
 }
 
 .comment-actions li.complain {
-	padding-right: 0.75rem;
-	border-right: 1px solid #e1e5eb;
+   padding-right: 0.75rem;
+   border-right: 1px solid #e1e5eb;
 }
 
 .comment-actions li.reply {
-	padding-left: 0.75rem;
-	padding-right: 0.125rem;
+   padding-left: 0.75rem;
+   padding-right: 0.125rem;
 }
 
 .comment-actions li:hover {
-	color: #0095ff;
+   color: #0095ff;
 }
 
 /*댓글 제출*/
 .commentSubmit:hover {
-	background: gray;
-	color: white;
-	transition: .5s;
+   background: gray;
+   color: white;
+   transition: .5s;
 }
 
 #deleteCommentBtn:hover {
-	background: gray;
-	color: white;
-	transition: .5s;
+   background: gray;
+   color: white;
+   transition: .5s;
 }
 
 #comment::-webkit-scrollbar {
-	display: none;
+   display: none;
 }
 
 <!--
 좋아요 -->.rating {
-	text-align: center;
+   text-align: center;
 }
 
 .like, .dislike {
-	font-size: 10px;
-	display: inline-block;
-	cursor: pointer;
-	margin: 10px;
+   font-size: 10px;
+   display: inline-block;
+   cursor: pointer;
+   margin: 10px;
 
-	/*   color: gray; */
+   /*   color: gray; */
 }
 
 .dislike:hover, .like:hover {
-	color: blue;
-	transition: all .2s ease-in-out;
-	transform: scale(1.1);
+   color: blue;
+   transition: all .2s ease-in-out;
+   transform: scale(1.1);
 }
 
 
 .active {
-	color: blue;
+   color: blue;
 }
 
 .comActive {
-	color: red;
-	transition: .5s;
+   color: red;
+   transition: .5s;
 }
 .bodyContainer{
-			width:1100px;
-			overflow: hidden;
-			margin: auto;
-			margin-top: 30px;
-			
-		}
+         width:1100px;
+         overflow: hidden;
+         margin: auto;
+         margin-top: 30px;
+         
+      }
 </style>
 </head>
 
@@ -567,12 +568,12 @@ p {
 			<div class="rest" contenteditable="false"></div>
 		</div>
 		<div class="writer" aria-placeholder="writer..">
-			<img src="/myvet/images/pony01.jpg" class="rounded-circle">&nbsp;${qna.member.memberNickname}
+			<img src="/myvet/images/pony01.jpg" class="rounded-circle">&nbsp;${qna.memberNickname}
 		</div>
 		<div class="information" style="font-size: 20px;">
 
 			<i style="margin-left: 5%;">category :
-				${qna.category.categoryName}</i>
+				${qna.categoryName}</i>
 
 			<%--  <i class="fas fa-heart" id="tipRecomCnt" style="margin-left: 5%;color:red;">&nbsp;${countRecomment}</i>  --%>
 			<i class="far fa-eye" style="margin-left: 5%;">&nbsp;
@@ -784,7 +785,7 @@ p {
 					"content-type:text/html;charset=utf-8"
 				,
 				data: /* "tipNo="+$("#tipNo").val()+"&commenterNo="+$(".commenterNo").val()+"&comment="+$("#comment").val() */
-					{qnaNo : $("#qnaNo").val(), commenterNo: $("#commenterNo").val(),content:$("#comment").val()}
+					{qnaNo : location.search.substring(6).substring(1), commenterNo: $("#commenterNo").val(),content:$("#comment").val()}
 			}).done(function(result){
 				console.log("성공:"+result);
 				console.log(result.length);
@@ -810,11 +811,22 @@ p {
       
         let commenterNo=null;
         function list(){
+        	
+        	
+        	
+        	
+        	
+        	
+        	console.log(location.search.substring(6).substring(1));
+        	
         	$.ajax({
         		url:"/myvet/qna/commentList.do",
         		type: "post",
-        		data: {qnaNo : $("#qnaNo").val()},
-        		datatype:"json"
+        		data: {qnaNo : location.search.substring(6).substring(1)},
+        		dataType:"json",
+        		header:
+					"content-type:text/html;charset=utf-8"
+				,
         	}).done(function(result){
         		console.log("코멘트 엠프티 1");
         		$("#comment").val("");
@@ -842,7 +854,7 @@ p {
 	                +"<div class='comment' style='width:400px;height:auto;font-size:20px;font-style:italic;' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
               	+"</div>"
               	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
-              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
+              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
               	+"<hr>"
                 );
 			} 
@@ -999,11 +1011,12 @@ p {
  					//data:"commentNo="+$(this).data("deletecombtn")+"&commenterNo="+$(".commenterNo").val()
  					data:{commentNo:$(this).data("deletecombtn"),commenterNo:$(".commenterNo").val(),qnaNo:$("#qnaNo").val()},
  					dataType:"text",
- 					type:"post"
+ 					type:"post",
+ 					
         		})
         		.done(function(result){
         			console.log("deleteComplete");
-        			//$(".comment-list").children().remove();
+        			$(".comment-list").children().remove();
         			list();
         		})
         		.fail(function(result){
@@ -1051,15 +1064,19 @@ p {
 					console.log()
 					$.ajax({
 						url : "/myvet/qna/updateComment.do",
-						data : "commentNo="+$(this).prev().prev().prev().data("commentno")
-							   +"&commenterNo="+$(".commenterNo").val()
-							   +"&comment="+$(this).prev().prev().val()
-						}).done(function(){
-							console.log("success")
-							//$(".comment-list").children().remove();
+						data : {commentNo:$(this).prev().prev().prev().data("commentno"),
+							   commenterNo:$(".commenterNo").val(),
+							   content:$(this).prev().prev().val()},
+						type:"post"
+				
+						}).done(function(result){
+							console.log("success");
+							$(".comment-list").children().remove();
 							list();
-						}).fail(function(){
-							console.log("fail")
+						}).fail(function(result){
+							debugger;
+							console.log("fail");
+							console.log(result)
 						})
 						
         		})
