@@ -1,8 +1,13 @@
 package kr.co.codin.member.service;
 
+import java.io.File;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.VetAuth;
@@ -65,5 +70,23 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void nickChange(Member member) {
 		mapper.updateNicknameByNo(member);
+	}
+
+	@Override
+	public Member updateMemberInfo(Member member) {
+		mapper.updateMember(member);
+		return mapper.selectMemberByNo(member.getMemberNo());
+	}
+
+	@Override
+	public int updatePassword(Member member) {
+		
+		if (passwordEncoder.matches(member.getPassword(), mapper.selectMemberByNo(member.getMemberNo()).getPassword()) == false)
+			return -1;
+		
+		System.out.println(member);
+		
+		member.setPassword(passwordEncoder.encode(member.getNewPassword()));
+		return mapper.updatePassword(member);
 	}
 }

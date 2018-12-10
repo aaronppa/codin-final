@@ -33,7 +33,7 @@
 	      <div class="container">
 	        <div class="row align-items-center">
 	          <div class="col-lg-3">
-	              <img class="img-fluid rounded-circle" src="<c:url value='${result.pet.petFilePath}/${result.pet.petSysName}' />" alt="" />
+	              <img class="img-fluid rounded-circle" src="<c:url value='${result.pet.petFilePath}/${result.pet.petSysName}' />" alt="반려동물 사진" title="반려동물 사진" />
 	          </div>
 	          <div class="col-lg-9">
 	            <table class="table table-stripe">

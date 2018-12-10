@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 public class Member {
 	private int memberNo;
 	private String memberEmail;
 	private String password;
+	private String newPassword;
 	private String memberGrade;
 	private String memberName;
 	private String memberPhone;
@@ -20,7 +22,15 @@ public class Member {
 	private String memberSysName;
 	private String memberFilePath;
 	private int memberFileSize;	
-	
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date memberFileRegDate;
 	
@@ -157,12 +167,11 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberEmail=" + memberEmail + ", password=" + password
-				+ ", memberGrade=" + memberGrade + ", memberName=" + memberName + ", memberPhone=" + memberPhone
-				+ ", memberNickname=" + memberNickname + ", hosCode=" + hosCode + ", memberCareer=" + memberCareer
-				+ ", mailingOpt=" + mailingOpt + ", memberOriName=" + memberOriName + ", memberSysName=" + memberSysName
-				+ ", memberFilePath=" + memberFilePath + ", memberFileSize=" + memberFileSize + ", memberFileRegDate="
-				+ memberFileRegDate + ", vetAuth=" + vetAuth + "]";
+				+ ", newPassword=" + newPassword + ", memberGrade=" + memberGrade + ", memberName=" + memberName
+				+ ", memberPhone=" + memberPhone + ", memberNickname=" + memberNickname + ", hosCode=" + hosCode
+				+ ", memberCareer=" + memberCareer + ", mailingOpt=" + mailingOpt + ", memberOriName=" + memberOriName
+				+ ", memberSysName=" + memberSysName + ", memberFilePath=" + memberFilePath + ", memberFileSize="
+				+ memberFileSize + ", memberFileRegDate=" + memberFileRegDate + ", vetAuth=" + vetAuth + "]";
 	}
-	
-	
+
 }

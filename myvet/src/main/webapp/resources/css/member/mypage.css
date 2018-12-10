@@ -1,0 +1,85 @@
+.container > h2 { margin-top: 1.2em; }
+
+.member__span--mod-yes {
+	float: right;
+}
+
+.member__span--mod-show {
+	float: right;
+}
+
+.member-mod.member--img-hide {
+	display: none;
+}
+
+#profile { min-width: 293px; height: 183px; }
+#passBtn { float: right; }
+.basics {
+    margin-right : auto;
+    margin-left : auto;
+}
+
+.form-control {
+    width: 150px;
+}
+
+.form-control.member-mod, .form-control.span__pass {
+	width: 76%;
+	float: left;	
+}
+
+.form-control.form__input--mod {
+	border: 0px;
+	background: #fff !important;
+	padding-left: 0px;
+}
+
+.career {
+    width: 80%;
+    margin-right : auto;
+    margin-left : auto;
+    
+}
+
+#tools {
+    margin-left: 50px;
+}
+
+.imgTd {
+    width: 170px;
+}
+
+a {
+	text-decoration: none !important;
+	color: white;
+}
+
+.update-delete {
+	text-align: right;
+	margin-top: 50px;
+}
+
+.career {
+	text-align: right;
+}
+
+#top-menu {
+	height: 50px;
+}
+
+.pet-info {
+	width: 200px;
+	height: 160px;
+	border: 1px solid black;
+	float: left;
+	margin: 50px;
+	text-align: center;
+}
+
+.pet-info > img {
+	width: 100%;
+}
+
+#pet-add {
+	padding-top: 0;
+}

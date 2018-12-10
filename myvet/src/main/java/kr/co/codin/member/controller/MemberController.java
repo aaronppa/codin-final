@@ -1,7 +1,6 @@
 package kr.co.codin.member.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -165,10 +164,52 @@ public class MemberController {
 		model.addAttribute("pet", pService.myPet(memberNo));
 	}
 	
-//	@RequestMapping("/nickChange.do")
-//	@ResponseBody
-//	public void nickChange(@RequestBody int myNo) {
-//		Member member = mapper.selectMemberByNo(myNo);
-//		service.nickChange(member);
-//	}
+	/**
+	 * 회원 정보 수정
+	 * @param session
+	 * @param model
+	 */
+	@RequestMapping("/updatemember.do")
+	@ResponseBody
+	public Member updateMemberInfo(Member member, MultipartFile file, HttpSession session) throws Exception {
+		
+		Member loginMember = (Member)session.getAttribute("user");  
+		int memberNo = loginMember.getMemberNo();
+		member.setMemberNo(memberNo);
+		
+		File uploadFile = new File(context.getRealPath("/upload/profile"));
+		if (uploadFile.exists() == false) uploadFile.mkdirs();
+		
+		// 파일 정보 설정 및 서버 저장	
+		if (file.isEmpty() == false) {
+			String oriName = file.getOriginalFilename();
+			member.setMemberOriName(file.getOriginalFilename());
+			member.setMemberFileSize((int)file.getSize());
+			member.setMemberFilePath("/profile");
+			
+			String memberSysName = UUID.randomUUID().toString() + "_" + oriName;
+			member.setMemberSysName(memberSysName);
+			
+			file.transferTo(new File(uploadFile, memberSysName));
+		}
+		
+		return service.updateMemberInfo(member);
+	}
+	
+	@RequestMapping("/updatepassword.do")
+	@ResponseBody
+	public int updatePassword(Member member, HttpSession session) throws Exception {
+		System.out.println(member);
+		Member loginMember = (Member)session.getAttribute("user");  
+		int memberNo = loginMember.getMemberNo();
+		member.setMemberNo(memberNo);
+		
+		return service.updatePassword(member);
+	}
 }
+
+
+
+
+
+

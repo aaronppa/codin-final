@@ -68,9 +68,22 @@
 		 where member_no = #{memberNo}
 	</select>
 	
-	<update id="updateNicknameByNo" parameterType="Member">
+	<update id="updatePassword" parameterType="Member">
 		update member
-		   set member_nickname = #{memberNickname}
+		   set password = #{password}
+		 where member_no = #{memberNo}
+	</update>
+	
+	<update id="updateMember" parameterType="Member">
+		update member
+		   set member_nickname = #{memberNickname},
+		   <if test="memberSysName != null and memberSysName != ''">
+		       member_file_size = #{memberFileSize},
+		       member_file_path = #{memberFilePath},
+		       member_ori_name = #{memberOriName},
+		       member_sys_name = #{memberSysName},
+		   </if>
+		       member_phone = #{memberPhone}
 		 where member_no = #{memberNo}
 	</update>
 </mapper>

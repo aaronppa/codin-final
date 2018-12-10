@@ -56,4 +56,17 @@ public interface MemberMapper {
 	 * @param member
 	 */
 	void updateNicknameByNo(Member member);
+
+	/**
+	 * 회원정보를 수정(닉네임, 연락처)
+	 * @param member
+	 */
+	void updateMember(Member member);
+
+	/**
+	 * 회원의 패스워드를 변경
+	 * @param member
+	 * @return
+	 */
+	int updatePassword(Member member);
 }

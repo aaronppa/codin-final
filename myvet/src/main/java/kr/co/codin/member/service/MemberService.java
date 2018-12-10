@@ -52,4 +52,18 @@ public interface MemberService {
 	 * @param memberNo
 	 */
 	void nickChange(Member member);
+
+	/**
+	 * 마이페이지 - 회원 정보 수정
+	 * @param member
+	 * @return
+	 */
+	Member updateMemberInfo(Member member);
+
+	/**
+	 * 패스워드 변경
+	 * @param member
+	 * @return
+	 */
+	int updatePassword(Member member);
 }

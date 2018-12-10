@@ -46,7 +46,7 @@
 	                            <div class="input-group-prepend">
 	                                <span class="input-group-text" id="basic-addon1"><i class="far fa-envelope"></i></span>
 	                            </div>
-	                            <input type="email" class="form-control" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" />                       
+	                            <input type="email" class="form-control" value="test1@test1.do" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" />                       
 	                        </div>
 	                        <span id="checkEmail"></span>
 	                        <br>                       
@@ -54,7 +54,7 @@
 	                            <div class="input-group-prepend">
 	                                <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
 	                            </div>
-	                            <input type="password" class="form-control" id="password1" placeholder="password" name="password" aria-label="Password" />
+	                            <input type="password" value="1q2w3e" class="form-control" id="password1" placeholder="password" name="password" aria-label="Password" />
 	                        </div>
 	                </div>
 	                <div class="modal-footer">
