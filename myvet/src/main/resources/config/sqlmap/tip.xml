@@ -14,6 +14,26 @@
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="category_code" property="categoryCode"/>
 		<association property="recomCnt" column="tip_no" select="countRecommend"></association>
+		<collection property="member" resultMap="memberMap"></collection>
+	</resultMap>
+
+	
+		<resultMap type="Member" id="memberMap">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_email" property="memberEmail"/>
+		<result column="password" property="password"/>
+		<result column="member_grade" property="memberGrade"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="member_career" property="memberCareer"/>
+		<result column="mailing_opt" property="mailingOpt"/>
+		<result column="member_ori_name" property="memberOriName"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="member_file_size" property="memberFileSize"/>
+		<result column="member_file_reg_date" property="memberFileRegDate"/>
 	</resultMap>
 	
 	<resultMap type="tipComment" id="tipCommentMap">
@@ -51,49 +71,52 @@
 	</resultMap>
 
 	<select id="countRecommend" parameterType="int" resultType="int">
-		select count(*)
+		select sum(recommend)
 		from tip_recommend
 		where tip_no = #{tipNo}
 	</select>
 	
-	<select id="selectTip" parameterType='SearchTip' resultMap="tipMap">
-		select *
-		  from tip
+<select id="selectTip" parameterType='SearchTip' resultMap="tipMap">
+		select t.*, m.member_nickname
+		  from tip t, member m
+		  where t.member_no = m.member_no
 		<choose>
   			<when test="sort == 0">
-  				where title like CONCAT('%',#{keyword},'%') or content like CONCAT('%',#{keyword},'%') or member_no like CONCAT('%',#{keyword},'%')
+  				 and (t.title like CONCAT('%',#{keyword},'%') or t.content like CONCAT('%',#{keyword},'%') or t.member_no like CONCAT('%',#{keyword},'%'))
   			</when>
   			<when test="sort == 1">
-  				where title like CONCAT('%',#{keyword},'%')
+  				 and t.title like CONCAT('%',#{keyword},'%')
   			</when>
   			<when test="sort == 2">
-  				where content like CONCAT('%',#{keyword},'%')
+  				 and t.content like CONCAT('%',#{keyword},'%')
   			</when>
   			<when test="sort == 3">
-  				where member_no like CONCAT('%', #{keyword},'%')
+  				 and t.member_no like CONCAT('%', #{keyword},'%')
   			</when>
   			<when test="sort == 4">
-  				where title like CONCAT('%', #{keyword},'%') or content like CONCAT('%', #{keyword},'%')
+  				 and (t.title like CONCAT('%', #{keyword},'%') or t.content like CONCAT('%', #{keyword},'%'))
   			</when>
   			<when test="category == 0">
-  				and category_code = 1 or 2 or 3 or 4
+  				t.category_code in (1, 2, 3, 4)
   			</when>
   			<when test="category == 1">
-  				and category_code = 1
+  				and t.category_code = 1
   			</when>
   			<when test="category == 2">
-  				and category_code = 2
+  				and t.category_code = 2
   			</when>
   			<when test="category == 3">
-  				and category_code = 3
+  				and t.category_code = 3
   			</when>
   			<when test="category == 4">
-  				and category_code = 4
+  				and t.category_code = 4
   			</when>
   		</choose> 
+  		
 		 order by tip_no desc
 		 limit #{begin}, #{pageNum}		
 	</select>
+  		
 	<select id="selectTipByNo" parameterType="int" resultMap="tipMap">
 		select *
 		  from tip

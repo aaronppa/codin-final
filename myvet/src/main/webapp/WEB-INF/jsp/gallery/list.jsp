@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="/myvet/resources/css/gallery/list.css">
+    
     <!-- page -->
         <link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
 <%--     <script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script> --%>
@@ -22,11 +25,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script></head>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Give+You+Glory|The+Girl+Next+Door|Gloria+Hallelujah|Indie+Flower);
-	
+	/*
 	.container{
 		width:1100px;
 	}
        /*공지*/
+       /*
        .sticky {
         -webkit-box-shadow: #DDD 0px 1px 2px;
         position: relative;
@@ -46,171 +50,171 @@
         font-family: 'The Girl Next Door', cursive;
         font-family: 'Gloria Hallelujah', cursive; */
         }
-        .post-it {
-        display: table;
-        margin: 5em auto 0;  
-        width:300px;
-        height: auto;
-        }
-        .taped {
-        display: table-cell;
-        text-align: center;
-        vertical-align: middle;
-        }
-        .sticky.taped:after {
-        display: block;
-        content: "";
-        position: absolute; 
-        width: 110px;
-        height: 30px;
-        top: -21px;
-        left: 30%;    
-        border: 1px solid #fff;
-        background: rgba(254, 254, 254, .6);
-        -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
-        -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
-        box-shadow: 0px 0 3px rgba(0,0,0,0.1);  
-        }
+/*         .post-it { */
+/*         display: table; */
+/*         margin: 5em auto 0;   */
+/*         width:300px; */
+/*         height: auto; */
+/*         } */
+/*         .taped { */
+/*         display: table-cell; */
+/*         text-align: center; */
+/*         vertical-align: middle; */
+/*         } */
+/*         .sticky.taped:after { */
+/*         display: block; */
+/*         content: ""; */
+/*         position: absolute;  */
+/*         width: 110px; */
+/*         height: 30px; */
+/*         top: -21px; */
+/*         left: 30%;     */
+/*         border: 1px solid #fff; */
+/*         background: rgba(254, 254, 254, .6); */
+/*         -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
+/*         -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
+/*         box-shadow: 0px 0 3px rgba(0,0,0,0.1);   */
+/*         } */
 
-        .note { 
-        -webkit-box-shadow: #DDD 0px 1px 2px;
-        position: relative;
-        background-color: #F4F39E;
-        border-color: #DEE184;
-        text-align: center;
-        margin: 1.5em auto;
-        padding: 1.5em 1em;
-        -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
-        -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
-        box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
-        -webkit-transform: rotate(2deg);
-        -moz-transform: rotate(2deg);
-        -o-transform: rotate(2deg);
-        -ms-transform: rotate(2deg);
-        transform: rotate(2deg);
-        width: 250px;
-        font-family: 'The Girl Next Door', cursive; /*originally with brain flower font*/
-        font-size: 1em;
-        }
-        .note:after {
-        display: block;
-        content: "";
-        position: absolute; 
-        width: 110px;
-        height: 30px;
-        top: -21px;
-        left: 30%;    
-        border: 1px solid #fff;
-        background: rgba(254, 254, 254, .6);
-        -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
-        -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
-        box-shadow: 0px 0 3px rgba(0,0,0,0.1);  
-        }
-       /*전체*/
-        h2{
-            text-align: center;
-        }
-        table{
-            margin-left: auto;
-            margin-right: auto;
-        }
+/*         .note {  */
+/*         -webkit-box-shadow: #DDD 0px 1px 2px; */
+/*         position: relative; */
+/*         background-color: #F4F39E; */
+/*         border-color: #DEE184; */
+/*         text-align: center; */
+/*         margin: 1.5em auto; */
+/*         padding: 1.5em 1em; */
+/*         -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.25); */
+/*         -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.25); */
+/*         box-shadow: 0px 1px 3px rgba(0,0,0,0.25); */
+/*         -webkit-transform: rotate(2deg); */
+/*         -moz-transform: rotate(2deg); */
+/*         -o-transform: rotate(2deg); */
+/*         -ms-transform: rotate(2deg); */
+/*         transform: rotate(2deg); */
+/*         width: 250px; */
+/*         font-family: 'The Girl Next Door', cursive; /*originally with brain flower font*/ */
+/*         font-size: 1em; */
+/*         } */
+/*         .note:after { */
+/*         display: block; */
+/*         content: ""; */
+/*         position: absolute;  */
+/*         width: 110px; */
+/*         height: 30px; */
+/*         top: -21px; */
+/*         left: 30%;     */
+/*         border: 1px solid #fff; */
+/*         background: rgba(254, 254, 254, .6); */
+/*         -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
+/*         -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
+/*         box-shadow: 0px 0 3px rgba(0,0,0,0.1);   */
+/*         } */
+/*        /*전체*/ */
+/*         h2{ */
+/*             text-align: center; */
+/*         } */
+/*         table{ */
+/*             margin-left: auto; */
+/*             margin-right: auto; */
+/*         } */
 
-        /**게시글**/
-        #title{
-            font-style: oblique;
-            font-weight: bold;
-        }
-        #writer{
-            text-align: right;
-            font-style: oblique;
-        }
-        .card{
-            margin-right: auto;
-            margin-left: auto;
-        }
-        .active{
-            background: black;
-        }
-        .w-100{
-            height:200px;
-        }
-        .w-100:hover{
-            transition: .5s;
-            transform: scale(1.1);
-            opacity: 0.8;
-        }
-        .card-title{
-            text-align: center;
-            font-weight: bolder;
-        }
-        .card-writer{
-            text-align: right;
-        }
-        .card-reg-date{
-            text-align: right;
-        }
-        .etc{
-            text-align: center;
-        }
+/*         /**게시글**/ */
+/*         #title{ */
+/*             font-style: oblique; */
+/*             font-weight: bold; */
+/*         } */
+/*         #writer{ */
+/*             text-align: right; */
+/*             font-style: oblique; */
+/*         } */
+/*         .card{ */
+/*             margin-right: auto; */
+/*             margin-left: auto; */
+/*         } */
+/*         .active{ */
+/*             background: black; */
+/*         } */
+/*         .w-100{ */
+/*             height:200px; */
+/*         } */
+/*         .w-100:hover{ */
+/*             transition: .5s; */
+/*             transform: scale(1.1); */
+/*             opacity: 0.8; */
+/*         } */
+/*         .card-title{ */
+/*             text-align: center; */
+/*             font-weight: bolder; */
+/*         } */
+/*         .card-writer{ */
+/*             text-align: right; */
+/*         } */
+/*         .card-reg-date{ */
+/*             text-align: right; */
+/*         } */
+/*         .etc{ */
+/*             text-align: center; */
+/*         } */
     
-        /**상세보기**/
-        .modal-image{
-            height: 200px;
-            width:250px;
-        }
-        /**검색**/
+/*         /**상세보기**/ */
+/*         .modal-image{ */
+/*             height: 200px; */
+/*             width:250px; */
+/*         } */
+/*         /**검색**/ */
 
-        /*검색분류*/
-        .mb-3{
-            margin-left: 70%;
-        }
-        .dropdown-toggle{
-            background: none;
-        }
-        .dropdown-toggle:hover{
-            background: saddlebrown;
-            opacity: 0.5;
-            color:white;
-        }
-        /*검색입력창*/
-        .input-search{
-            border:none;
-            width: 280px;
-            color: saddlebrown;
-        }
-        /*검색버튼*/
-        .btn-outline{
-            background: none;
-            border:none;
-            color: saddlebrown;
-        }
-        .btn-outline:hover{
-            opacity: 0.8;
-            transition:.5s;
-            background: saddlebrown;
-            color: white;
-        }
-        /*글쓰기*/
-        .write-btn-form{
-            text-align: center;
-        }
-        .write-btn{
-            color:saddlebrown;
-        }
-        .write-btn:hover{
-            color:white;
-            background: saddlebrown;
-            opacity: 0.5;
-        }
-        /*detail*/
-        /*프로필 사진*/
-        .rounded-circle{
-            width: 50px;
-            height: 50px;
-        }
-        td{
-        	padding-left: 10px;
-        }
+/*         /*검색분류*/ */
+/*         .mb-3{ */
+/*             margin-left: 70%; */
+/*         } */
+/*         .dropdown-toggle{ */
+/*             background: none; */
+/*         } */
+/*         .dropdown-toggle:hover{ */
+/*             background: saddlebrown; */
+/*             opacity: 0.5; */
+/*             color:white; */
+/*         } */
+/*         /*검색입력창*/ */
+/*         .input-search{ */
+/*             border:none; */
+/*             width: 280px; */
+/*             color: saddlebrown; */
+/*         } */
+/*         /*검색버튼*/ */
+/*         .btn-outline{ */
+/*             background: none; */
+/*             border:none; */
+/*             color: saddlebrown; */
+/*         } */
+/*         .btn-outline:hover{ */
+/*             opacity: 0.8; */
+/*             transition:.5s; */
+/*             background: saddlebrown; */
+/*             color: white; */
+/*         } */
+/*         /*글쓰기*/ */
+/*         .write-btn-form{ */
+/*             text-align: center; */
+/*         } */
+/*         .write-btn{ */
+/*             color:saddlebrown; */
+/*         } */
+/*         .write-btn:hover{ */
+/*             color:white; */
+/*             background: saddlebrown; */
+/*             opacity: 0.5; */
+/*         } */
+/*         /*detail*/ */
+/*         /*프로필 사진*/ */
+/*         .rounded-circle{ */
+/*             width: 50px; */
+/*             height: 50px; */
+/*         } */
+/*         td{ */
+/*         	padding-left: 10px; */
+/*         } */
 
     </style>
     <body>
@@ -230,7 +234,7 @@
 	   <input type="text" name="keyword" id="keyword" class="input-search" placeholder="search">
 	   <input type="submit" class="btn btn-outline" value="검색"></input>
      </div>
-    <div id="galleryCount" style="float:right;">전체 ${count} 개</div>
+    <div id="galleryCount" >전체 ${count} 개</div>
     <br>
     
     <table>
@@ -241,10 +245,10 @@
     </c:if>
         <td>
             <br>
-            <div class="card" style="width: 18rem;">
+            <div class="card" >
                     <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                    <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}'/>">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval='false'>
+                    <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}&memberNo=7'/>">
+                        <div id="carouselExampleIndicators${g.galleryNo}" class="carousel slide" data-ride="carousel" data-interval='false'>
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -261,11 +265,11 @@
                                     <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test4.jpg" alt="Third slide">
                                 </div>
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators${g.galleryNo}" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <a class="carousel-control-next" href="#carouselExampleIndicators${g.galleryNo}" role="button" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>
@@ -279,12 +283,12 @@
                                     
                                 </div>
                                 <div class="card-content" >
-                                    <p class="card-title">${g.title } </p>
+                                    <p class="card-title">${g.title} </p>
                                     <span data-toggle="tooltip" title="포니, 포돌이">
-                                        <i class="fas fa-dog" style="font-size: 20px;"></i>
+                                        <i class="fas fa-dog"></i>
                                     </span>
-                                    <p class="card-writer">by Pony</p>
-                                    <p class="card-reg-date">2018-12-26</p>
+                                    <p class="card-writer">${g.writerNo}</p>
+                                    <p class="card-reg-date"><fmt:formatDate value="${g.regDate}" pattern="yyyy-MM-dd"/></p>
                                 </div>
                             </div>
                         </div>

@@ -10,8 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
-
    <style>
       .container{
           width:1100px;
@@ -24,30 +22,30 @@
 	<div class="container">
 	<br>
 	<br>
-        <form action="<c:url value='/report/insertReport.do'/>" method="post">
+	        <form action="<c:url value='/report/insertReport.do'/>">
             <!--신고자, 신고대상-->
             <input type="hidden" name="processResult" value="0">
             <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputReportMemberNo">신고자</label>
-                        <input type="hidden" name="reportMemberNo" id="reportMemberNo" value="${reportTip.memberNo}"><p class="text-justify">${nickname}</p>
+                        <input type="hidden" name="reportMemberNo" value="${user.memberNo}"><p class="text-justify">${report.memberNo}</p>
                         <p class="text-justify"></p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">신고대상</label>
-                        <input type="hidden" name="targetMemberNo" id="targetMemberNo" value="${reportTip.memberNo}"><p class="text-justify">${reportTip.memberNo}</p>
+                        <input type="hidden" name="targetMemberNo" value="${report.memberNo}"><p class="text-justify">${report.memberNo}</p>
                     </div>
             </div>
             <!-- 게시판 분류, 게시판 제목-->
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">게시판 분류</label>
-                    <input type="hidden" name="boardCode" id="boardCode" value="${reportTip.boardCode}">
+                    <input type="hidden" name="boardCode" value="${report.boardCode}">
                     <p class="text-justify">개꿀팁이냥</p>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">게시판 제목</label>
-                    	<input type="hidden" name="contentNo" id="contentNo" value="${reportTip.tipNo}"><p class="text-justify">${reportTip.title}</p>
+                    	<input type="hidden" name="contentNo" value="${report.tipNo}"><p class="text-justify">${report.title}</p>
                 </div>
             </div>
             <!-- 댓글 내용-->
@@ -57,7 +55,7 @@
 <!--              </div> -->
             <div class="form-group">
                 <label for="exampleFormControlSelect1">신고사유</label>
-                <select name="reportCode" id="reportCode" class="form-control" id="exampleFormControlSelect1">
+                <select name="reportCode" class="form-control" id="exampleFormControlSelect1">
                         <option value="">신고유형</option>
                         <option value="1">음란성 및 선정성</option>
                         <option value="2">상업적 광고 홍보</option>
@@ -88,58 +86,10 @@
             </div> -->
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">신고내용</label>
-                <textarea class="form-control" name="reportContent" id="reportContent" rows="3"></textarea>
+                <textarea class="form-control" name="reportContent" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
-            <input id="submit" class="btn btn-primary" type="submit" value="Input">
+            <input class="btn btn-primary" type="submit" value="Input">
         </form>
 	</div>
-	<script>
-	$("#submit").click(function(e){
-		alert("신고 등록되었습니다.");
-		window.close();
-// 		$.ajax({
-// 			url: "/myvet/report/insertReport.do",
-// 			data: {contentNo : $("#contentNo").val(),
-// 				   boardCode : $("boardCode").val(),
-// 				   reportMemberNo : $("#reportMemberNo").val(),
-// 				   targetMemberNo : $("#targetMemberNo").val(),
-// 				   reportCode : $("#reportCode").val(),
-// 				   reportResult : $("#reportResult").val(),
-// 				   processResult : $("#processResult").val(),
-// 				   reportContent : $("#reportContent").val()
-// 			}
-// 		}).done(function(){
-// 	 		alert("신고 등록되었습니다.");
-// 	 		window.close();
-// 		})
-		
-// 		Swal({
-// 			  title: '정말',
-// 			  text: '신고 하시겠습니까?',
-// 			  type: 'warning',
-// 			  showCancelButton: true,
-// 			  confirmButtonColor: '#3085d6',
-// 			  cancelButtonColor: '#d33',
-// 			  confirmButtonText: '네',
-// 			  cancelButtonText: '아니오'
-// 			}).then((result)=>{
-// 			  if (result.value) {
-// 			    Swal({
-// 				  title: '신고 되었습니다!',
-// 				  text: '관리자의 확인 후 처리 될 예정입니다..',
-// 				  type: 'success',
-// 				  showCancelButton: false,
-// 				  cancelButtonColor: '#d33',
-// 				  confirmButtonText: '확인'
-// 			    }).then((result)=>{	
-// 			    	console.dir($("form")[0])
-// 					$("form")[0].submit;
-// 					window.close();
-// 			   		})
-// 				}
-// 			})
-	})
-
-	</script>
 </body>
 </html>

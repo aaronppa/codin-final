@@ -13,6 +13,23 @@ public class Tip {
 	private int categoryCode;
 	private int recomCnt;
 	
+	private Member member;
+	private String memberNickname;
+	
+	
+	
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	public int getTipNo() {
 		return tipNo;
 	}

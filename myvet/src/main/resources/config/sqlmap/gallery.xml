@@ -11,6 +11,25 @@
 		<result column="content" property="content"/>		
 		<result column="reg_date" property="regDate"/>		
 		<result column="view_cnt" property="viewCnt"/>
+		<association property="recomCnt" column="gallery_no" select="countRecommend"></association>
+		<collection property="member" resultMap="memberMap"></collection>
+	</resultMap>
+	<resultMap type="Member" id="memberMap">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_email" property="memberEmail"/>
+		<result column="password" property="password"/>
+		<result column="member_grade" property="memberGrade"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="member_career" property="memberCareer"/>
+		<result column="mailing_opt" property="mailingOpt"/>
+		<result column="member_ori_name" property="memberOriName"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="member_file_size" property="memberFileSize"/>
+		<result column="member_file_reg_date" property="memberFileRegDate"/>
 	</resultMap>
 	<resultMap type="galleryComment" id="galleryCommentMap">
 		<result column="comment_no" property="commentNo"/>
@@ -19,12 +38,12 @@
 		<result column="comment" property="comment"/>		
 		<result column="reg_date" property="regDate"/>
 	</resultMap>
-<!-- 	<resultMap type="galleryRecommend" id="galleryRecommendMap"> -->
-<!-- 		<result column="no" property="no"/> -->
-<!-- 		<result column="gallery_no" property="galleryNo"/>		 -->
-<!-- 		<result column="member_no" property="memberNo"/>		 -->
-<!-- 		<result column="recommend" property="recommend"/> -->
-<!-- 	</resultMap> -->
+	<resultMap type="GalleryRecommend" id="GalleryRecommendMap">
+		<result column="no" property="no"/>
+		<result column="gallery_no" property="galleryNo"/>		
+		<result column="member_no" property="memberNo"/>		
+		<result column="recommend" property="recommend"/>
+	</resultMap>
 	<resultMap id="fileMap" type="fileInfo">
 		<result column="file_id" property="fileId"/><!-- 파일번호(auto) -->
 		<result column="board_code" property="boardCode"/><!-- 게시판 테이블 고유 번호(FK(code_list(board_code))) -->
@@ -34,26 +53,32 @@
 		<result column="file_path" property="filePath"/>
 		<result column="file_size" property="fileSize"/>
 	</resultMap>
-
+	
+	<select id="countRecommend" parameterType="int" resultType="int">
+		select sum(recommend)
+		  from gallery_recommend
+		 where gallery_no = #{galleryNo}
+	</select>
 	
 	<select id="selectGallery" parameterType="SearchGallery" resultMap="galleryMap">
-		select *
-		  from gallery
+		select g.*, m.member_nickname
+		  from gallery g, member m
+		 where g.writer_no = m.member_no
 		  	<choose>
 	  			<when test="sort == 0">
-	  				where title like CONCAT('%',#{keyword},'%') or content like CONCAT('%',#{keyword},'%') or writer_no like CONCAT('%',#{keyword},'%')
+	  				and (g.title like CONCAT('%',#{keyword},'%') or g.content like CONCAT('%',#{keyword},'%') or g.writer_no like CONCAT('%',#{keyword},'%'))
 	  			</when>
 	  			<when test="sort == 1">
-	  				where title like CONCAT('%',#{keyword},'%')
+	  				and g.title like CONCAT('%',#{keyword},'%')
 	  			</when>
 	  			<when test="sort == 2">
-	  				where content like CONCAT('%',#{keyword},'%')
+	  				and g.content like CONCAT('%',#{keyword},'%')
 	  			</when>
 	  			<when test="sort == 3">
-	  				where writer_no like CONCAT('%', #{keyword},'%')
+	  				and g.writer_no like CONCAT('%', #{keyword},'%')
 	  			</when>
 	  			<when test="sort == 4">
-	  				where title like CONCAT('%', #{keyword},'%') or content like CONCAT('%', #{keyword},'%')
+	  				and (g.title like CONCAT('%', #{keyword},'%') or g.content like CONCAT('%', #{keyword},'%'))
 	  			</when>
   			</choose>
 		 order by gallery_no desc		
@@ -108,43 +133,69 @@
 		 where gallery_no=#{galleryNo}
 		 order by comment_no desc
 	</select>
-<!-- 	<delete id="deleteComment" parameterType="galleryComment"> -->
-<!-- 		delete  -->
-<!-- 		  from gallery_comment -->
-<!-- 		 where commenter_no = #{commenterNo} -->
-<!-- 		   and comment_no = #{commentNo} -->
-<!-- 	</delete> -->
-<!-- 	<update id="updateComment" parameterType="galleryComment"> -->
-<!-- 		update gallery_comment  -->
-<!-- 		   set comment = #{comment}   -->
-<!-- 		 where commenter_no = #{commenterNo} -->
-<!-- 		   and comment_no = #{commentNo} -->
-<!-- 	</update> -->
-<!-- 	<select id="countComment" parameterType="int" resultType="int"> -->
-<!-- 		select count(*) -->
-<!-- 		  from gallery_comment -->
-<!-- 		 where gallery_no=#{galleryNo} -->
-<!-- 	</select> -->
+	<delete id="deleteComment" parameterType="galleryComment">
+		delete 
+		  from gallery_comment
+		 where commenter_no = #{commenterNo}
+		   and comment_no = #{commentNo}
+	</delete>
+	<update id="updateComment" parameterType="galleryComment">
+		update gallery_comment 
+		   set comment = #{comment}  
+		 where commenter_no = #{commenterNo}
+		   and comment_no = #{commentNo}
+	</update>
+	<select id="countComment" parameterType="int" resultType="int">
+		select count(*)
+		  from gallery_comment
+		 where gallery_no=#{galleryNo}
+	</select>
 	<!-- 추천 -->
-<!-- 	<select id="selectRecommend" parameterType="galleryRecommend" resultMap="galleryRecommendMap"> -->
-<!-- 		select * -->
-<!-- 		  from gallery_recommend -->
-<!-- 		 where gallery_no = #{galleryNo} -->
-<!-- 	</select> -->
-<!-- 	<insert id="insertRecommend" parameterType="galleryRecommend" > -->
-<!-- 		insert into gallery_recommend( -->
-<!-- 			gallery_no, member_no, recommend -->
-<!-- 		)values( -->
-<!-- 			#{galleryNo}, #{memberNo}, #{recommend} -->
-<!-- 		) -->
-<!-- 	</insert> -->
-<!-- 	<delete id="deleteRecommend" parameterType="galleryRecommend"> -->
-<!-- 		delete  -->
-<!-- 		  from gallery_recommend -->
-<!-- 		 where gallery_no = #{galleryNo} -->
-<!-- 		 	   member_no = #{memberNo} -->
-<!-- 	</delete> -->
+	<select id="selectRecommend" parameterType="GalleryRecommend" resultType="int">
+		select recommend
+		  from gallery_recommend
+		 where member_no = #{memberNo}
+		   and gallery_no = #{galleryNo}
+	</select>
+	<insert id="insertRecommend" parameterType="galleryRecommend" >
+		insert into gallery_recommend(
+			gallery_no, member_no, recommend
+		)values(
+			#{galleryNo}, #{memberNo}, #{recommend}
+		)
+	</insert>
+	<delete id="deleteRecommend" parameterType="galleryRecommend">
+		delete 
+		  from gallery_recommend
+		 where gallery_no = #{galleryNo}
+		   and member_no = #{memberNo}
+	</delete>
+	<select id="sumRecommend" parameterType="int" resultType="Integer">
+		select sum(recommend) as recommend
+		  from gallery_recommend
+		 where gallery_no = #{galleryNo}
+	</select>
 	
+	<!-- 댓글 추천 -->
+	<select id="selectCommentRecommend" parameterType="tipCommentRecommend" resultType="int">
+		select recommend
+		  from gallery_comment_recommend
+		 where comment_no = #{commentNo}
+			   member_no = #{memberNo}	
+	</select>
+	<insert id="insertCommentRecommend" parameterType="galleryCommentRecommend">
+		insert into gallery_comment_recommend(
+			comment_no, member_no, recommend
+		)values(
+			#{commentNo}, #{memberNo}, #{recommend}
+		)
+	</insert>
+	<delete id="deleteCommentRecommend" parameterType="galleryCommentRecommend">
+		delete 
+		  from gallery_comment_recommend
+		 where member_no = #{memberNo}
+		 	   comment_no = #{commentNo}
+	</delete>
 	
 <!-- file -->
 	<insert id="uploadFile" parameterType="fileInfo">

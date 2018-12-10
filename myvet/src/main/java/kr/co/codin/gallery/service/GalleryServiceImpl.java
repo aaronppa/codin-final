@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.GalleryCommentRecommend;
+import kr.co.codin.repository.domain.GalleryRecommend;
 import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.SearchGallery;
 import kr.co.codin.repository.domain.SearchTip;
@@ -18,8 +20,6 @@ import kr.co.codin.repository.mapper.GalleryMapper;
 public class GalleryServiceImpl implements GalleryService{
 	@Autowired 
 	private GalleryMapper mapper;
-
-	
 
 	
 	@Override
@@ -76,10 +76,83 @@ public class GalleryServiceImpl implements GalleryService{
 		return mapper.selectComment(galleryNo);
 	}
 
+//	@Override
+//	public void uploadFile(FileInfo fileInfo) {
+//		mapper.uploadFile(fileInfo);
+//	}
+
 	@Override
-	public void uploadFile(FileInfo fileInfo) {
-		mapper.uploadFile(fileInfo);
+	public int countComment(int galleryNo) {
+		return mapper.countComment(galleryNo);
 	}
+
+	
+	@Override
+	public void updateComment(GalleryComment galleryComment) {
+		mapper.updateComment(galleryComment);
+	}
+
+	@Override
+	public void deleteComment(GalleryComment galleryComment) {
+		mapper.deleteComment(galleryComment);
+	}
+
+	//추천
+	
+	@Override
+	public Integer selectRecommend(GalleryRecommend galleryRecommend) {
+		return mapper.selectRecommend(galleryRecommend);
+	}
+
+	@Override
+	public void insertRecommend(GalleryRecommend galleryRecommend) {
+		mapper.deleteRecommend(galleryRecommend);
+		int recommend = galleryRecommend.getRecommend();
+		if(recommend == 1 || recommend == -1) {
+			mapper.insertRecommend(galleryRecommend);
+		}
+		 
+	}
+
+	@Override
+	public void deleteRecommend(GalleryRecommend galleryRecommend) {
+		mapper.deleteRecommend(galleryRecommend);
+	}
+
+	@Override
+	public Integer sumRecommend(int galleryNo) {
+		return mapper.sumRecommend(galleryNo);
+	}
+
+	//댓글 추천
+	
+	@Override
+	public Integer selectCommentRecommend(GalleryCommentRecommend galleryCommentRecommend) {
+		return mapper.selectCommentRecommend(galleryCommentRecommend);
+	}
+
+	@Override
+	public void insertCommentRecommend(GalleryCommentRecommend galleryCommentRecommend) {
+		mapper.deleteCommentRecommend(galleryCommentRecommend);
+		int recommend = galleryCommentRecommend.getRecommend();
+		if(recommend == 1 || recommend == -1) {
+			mapper.insertCommentRecommend(galleryCommentRecommend);
+		}
+	}
+
+	@Override
+	public void deleteCommentRecommend(GalleryCommentRecommend galleryCommentRecommend) {
+		mapper.deleteCommentRecommend(galleryCommentRecommend);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

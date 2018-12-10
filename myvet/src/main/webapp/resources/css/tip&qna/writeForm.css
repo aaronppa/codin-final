@@ -1,0 +1,40 @@
+@charset "UTF-8";
+.container{ 
+	width:1100px; 
+	margin-left: auto; 
+	margin-right: auto; 
+	background-color: none; 
+} 
+.information{
+	text-align:center;
+}
+        /*글제목*/
+  .title{
+      font:bolder;
+      font-size: 60px;
+      text-align: center;
+  }
+  /*글쓴이 사진*/
+  #writer-img{
+      width: 60px;
+      height: 60px;
+  }
+  /*글 작성자 id*/
+  .writer-id{
+      font-weight: bold;
+  }
+  /*글 정보*/
+  .information{
+      text-align: center; 
+  }
+  .write-btn-form{
+      text-align: center; 
+  }
+  /*제목*/
+  .mb-3{
+  width:60%;margin-left: 23%;
+  }
+  /*작성폼*/
+  .contentForm{
+  	margin-left: 8%;
+  }

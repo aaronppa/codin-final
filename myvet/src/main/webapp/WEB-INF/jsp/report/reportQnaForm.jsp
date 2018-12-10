@@ -10,6 +10,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
+
    <style>
       .container{
           width:1100px;
@@ -22,47 +24,40 @@
 	<div class="container">
 	<br>
 	<br>
-	        <form action="<c:url value='/report/writeReport.do'/>">
+	        <form action="<c:url value='/report/insertReport.do'/>">
             <!--신고자, 신고대상-->
+            <input type="hidden" name="processResult" value="0">
             <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputReportMemberNo">신고자</label>
-                        <c:if test="boardCode == 10"><input type="hidden" name="reportMemberNo" value="${user.memberNo}"></c:if>
-                        <p class="text-justify">${user.memberNickname}</p>
+                        <input type="hidden" name="reportMemberNo" value="${user.writerNo}"><p class="text-justify">${nickname}</p>
+                        <p class="text-justify"></p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">신고대상</label>
-                        <c:if test="${report.boardCode == 10}"><input type="hidden" name="targetMemberNo" value="${report.writerNo}"><p class="text-justify">${report.writerNo}</p></c:if>
-                        <c:if test="${report.boardCode == 11}"><input type="hidden" name="targetMemberNo" value="${report.reportMemberNo}"><p class="text-justify">${report.memberNo}</p></c:if>
-                        <c:if test="${report.boardCode == 20}"><input type="hidden" name="targetMemberNo" value="${report.writerNo}"><p class="text-justify">${report.writerNo}</p></c:if>
+                        <input type="hidden" name="targetMemberNo" value="${reportQna.writerNo}"><p class="text-justify">${reportQna.writerNo}</p>
                     </div>
             </div>
             <!-- 게시판 분류, 게시판 제목-->
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">게시판 분류</label>
-                    <input type="hidden" name="boardCode" value="${report.boardCode}">
-                    <c:if test="${report.boardCode == 10}"><p class="text-justify">5959내시끼</p></c:if>
-                    <c:if test="${report.boardCode == 11}"><p class="text-justify">개꿀팁이냥</p></c:if>
-                    <c:if test="${report.boardCode == 20}"><p class="text-justify">Q&A</p></c:if>
+                    <input type="hidden" name="boardCode" value="${reportQna.boardCode}">
+                    <p class="text-justify">개꿀팁이냥</p>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">게시판 제목</label>
-                    	<c:if test="${report.boardCode == 10}"><input type="hidden" name="contentNo" value="${report.galleryNo}"><p class="text-justify">${report.title}</p></c:if>
-                        <c:if test="${report.boardCode == 11}"><input type="hidden" name="contentNo" value="${report.tipNo}"><p class="text-justify">${report.title}</p></c:if>
-                        <c:if test="${report.boardCode == 20}"><input type="hidden" name="contentNo" value="${report.qnaNo}"><p class="text-justify">${report.title}</p></c:if>
+                    	<input type="hidden" name="contentNo" value="${reportQna.tipNo}"><p class="text-justify">${reportQna.title}</p>
                 </div>
             </div>
             <!-- 댓글 내용-->
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">댓글내용</label>
-               		<c:if test="${report.boardCode != ''}"><input type="hidden" name="conmmentNo" value="${report.commentNo}"><p class="text-justify">${report.comment}</p></c:if>
-                    <c:if test="${report.boardCode != ''}"><input type="hidden" name="conmmentNo" value="${report.commentNo}"><p class="text-justify">${report.comment}</p></c:if>
-                    <c:if test="${report.boardCode != ''}"><input type="hidden" name="conmmentNo" value="${report.commentNo}"><p class="text-justify">${report.content}</p></c:if>
-            </div>
+<!--             <div class="form-group"> -->
+<!--                 <label for="exampleFormControlTextarea1">댓글내용</label> -->
+<!--                		<input type="hidden" name="conmmentNo" value=""><p class="text-justify"></p> -->
+<!--              </div> -->
             <div class="form-group">
                 <label for="exampleFormControlSelect1">신고사유</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select name="reportCode" class="form-control" id="exampleFormControlSelect1">
                         <option value="">신고유형</option>
                         <option value="1">음란성 및 선정성</option>
                         <option value="2">상업적 광고 홍보</option>
@@ -95,8 +90,39 @@
                 <label for="exampleFormControlTextarea1">신고내용</label>
                 <textarea class="form-control" name="reportContent" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
-            <input class="btn btn-primary" type="submit" value="Input">
+            <input id="submit" class="btn btn-primary" type="submit" value="Input">
         </form>
 	</div>
+	<script>
+	$("#submit").click(function(e){
+// 		e.preventDefault();
+		
+		Swal({
+			  title: '정말',
+			  text: '신고 하시겠습니까?',
+			  type: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '네',
+			  cancelButtonText: '아니오'
+			}).then((result) => {
+			  if (result.value) {
+			    Swal({
+				  title: '신고 되었습니다!',
+				  text: '관리자의 확인 후 처리 될 예정입니다..',
+				  type: 'success',
+				  showCancelButton: false,
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '확인'
+			    }).then((result) => {	
+			    	console.dir($("form")[0])
+					$("form")[0].submit;
+// 					window.close();
+			   		})
+				}
+			})
+	})
+	</script>
 </body>
 </html>

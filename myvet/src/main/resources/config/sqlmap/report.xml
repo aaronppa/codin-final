@@ -76,9 +76,39 @@
 		select *
 		  from tip
 		 where tip_no=#{tipNo}
+	</select>
+	
+	<select id="selectByReportGallery" parameterType="int" resultMap="galleryMap">
+		select *
+		  from gallery
+		 where gallery_no=#{galleryNo}
 	</select>	
 	
-	<insert id="insertReportTip" parameterType="report">
+	<select id="selectByReportQna" parameterType="int" resultMap="QnaMap">
+		select *
+		  from qna
+		 where gallery_no=#{galleryNo}
+	</select>	
+	
+	<select id="selectByReportGalleryComment" parameterType="int" resultMap="galleryMap">
+		select *
+		  from gallery_comment
+		 where gallery_comment_no=#{galleryCommentNo}
+	</select>	
+	
+	<select id="selectByReportTipComment" parameterType="int" resultMap="tipMap">
+		select *
+		  from tip_comment
+		 where tip_comment_no=#{tipCommentNo}
+	</select>	
+	
+	<select id="selectByReportQnaComment" parameterType="int" resultMap="QnaMap">
+		select *
+		  from qna_comment
+		 where qna_comment_no=#{qnaCommentNo}
+	</select>	
+	
+	<insert id="insertReport" parameterType="report">
 		insert into report_list(
 			board_code, content_no, comment_no, report_member_no, target_member_no, report_code, process_result, report_content 
 		)values(

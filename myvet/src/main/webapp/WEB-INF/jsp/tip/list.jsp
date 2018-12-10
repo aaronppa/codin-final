@@ -12,6 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="/myvet/resources/css/tip&qna/list.css">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value='/resources/js/waitme/waitMe.css'/>"/>
     <script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
@@ -28,74 +30,74 @@
 /*             padding:30px 30px; */
 /*         } */
 		
-        /*category*/
-        @import "compass/css3";
-        .container{
-        	width:1100px;
-        	margin-left: auto;
-        	margin-right: auto;
-        }
-        select[disabled]{
-        color:#aaa;
-        }
-        h1{color:#563d7c;}
+/*         /*category*/ */
+/*         @import "compass/css3"; */
+/*         .container{ */
+/*         	width:1100px; */
+/*         	margin-left: auto; */
+/*         	margin-right: auto; */
+/*         } */
+/*         select[disabled]{ */
+/*         color:#aaa; */
+/*         } */
+/*         h1{color:#563d7c;} */
 
 
-        /*search*/
-        .mb-3{
-            margin-left: 65%;
-        }
-        .dropdown-toggle{
-            background: none;
-        }
-        .dropdown-toggle:hover{
-            opacity: 0.5;
-            /* color:white; */
-        }
-        /*검색입력창*/
-        .input-search{
-            border:none;
-            width: 18%;
-            color: saddlebrown;
-        }
-        /*검색버튼*/
-        .btn-outline{
-            background: none;
-            border:none;
-        }
-        .btn-outline:hover{
-            border:none;
-            opacity: 0.5;
-        }
+/*         /*search*/ */
+/*         .mb-3{ */
+/*             margin-left: 65%; */
+/*         } */
+/*         .dropdown-toggle{ */
+/*             background: none; */
+/*         } */
+/*         .dropdown-toggle:hover{ */
+/*             opacity: 0.5; */
+/*             /* color:white; */ */
+/*         } */
+/*         /*검색입력창*/ */
+/*         .input-search{ */
+/*             border:none; */
+/*             width: 18%; */
+/*             color: saddlebrown; */
+/*         } */
+/*         /*검색버튼*/ */
+/*         .btn-outline{ */
+/*             background: none; */
+/*             border:none; */
+/*         } */
+/*         .btn-outline:hover{ */
+/*             border:none; */
+/*             opacity: 0.5; */
+/*         } */
         
-        /*writeBtn*/
-        .btn-light:hover{
-            background: black;
-            color: white;
-            transition: .5s;
-        }
+/*         /*writeBtn*/ */
+/*         .btn-light:hover{ */
+/*             background: black; */
+/*             color: white; */
+/*             transition: .5s; */
+/*         } */
         
-        /*table*/
-        tr:hover{
-            background: gray;
-            opacity: 0.8;
-        }
-        .no{
-            width:10%;
-        }
-        .writer{
-            width:15%;
-        }
-        .reg_date{
-            width:15%;
-        }
-        .view_cnt{
-            width:15%;
-        }
-        /*pagenation*/
-   		#pagination{
-   			vertical-align: middle;
-   		}
+/*         /*table*/ */
+/*         tr:hover{ */
+/*             background: gray; */
+/*             opacity: 0.8; */
+/*         } */
+/*         .no{ */
+/*             width:10%; */
+/*         } */
+/*         .writer{ */
+/*             width:15%; */
+/*         } */
+/*         .reg_date{ */
+/*             width:15%; */
+/*         } */
+/*         .view_cnt{ */
+/*             width:15%; */
+/*         } */
+/*         /*pagenation*/ */
+/*    		#pagination{ */
+/*    			vertical-align: middle; */
+/*    		} */
 
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
@@ -107,7 +109,7 @@
     <!--search-->
     <!--category-->
     <form action="<c:url value='/tip/list.do'/>" method="post">
-	    <div class="input-group mb-3">
+	    <div class="input-group mb-3" style="margin-left: 53%;">
 	      		<select name="sort" id="sort" class="sort">
 					<option selected value="0">검색조건</option>
 					<option value="1">제목</option>
@@ -131,25 +133,26 @@
     <!--count-->
     
     <!--list-->
+            <div class="totalCount">전체 ${count} 개</div>
     <table class="table">
-            <div style="text-align: right;">전체 ${count} 개</div>
+    		
             <!-- <caption>List of users</caption> -->
             <thead>
-                <tr style="text-align: center;">
-	                <th scope="col" style="width:5%;"class="no">글 번호</th>
-	                <th scope="col" style="width:20%;"class="writer">작성자</th>
+                <tr class="tipList" style="text-align: center;">
+	                <th scope="col" style="width:10%;"class="no">글 번호</th>
+	                <th scope="col" style="width:15%;"class="writer">작성자</th>
 	                <th scope="col" style="width:25%;"class="title">제목</th>
 	                <th scope="col" style="width:10%;"class="category">카테고리</th>
-	                <th scope="col" style="width:10%;"class="reg_date">작성일</th>                
-	                <th scope="col" style="width:10%;"class="view_cnt">조회수</th>
-	                <th scope="col" style="width:10%;"class="view_cnt">추천수</th>
+	                <th scope="col" style="width:10%;"class="regDate">작성일</th>                
+	                <th scope="col" style="width:10%;"class="viewCnt">조회수</th>
+	                <th scope="col" style="width:10%;"class="recomCnt">추천수</th>
             	</tr>
         </thead>
         <tbody>
      		<c:forEach var="t" items="${tip}" varStatus="loop">
 	            <tr style="text-align: center;">
 	                <th scope="row"> ${t.tipNo} </th>
-	                <td>Mark</td>
+	                <td>${t.memberNickname}</td>
 	                <td><a href="<c:url value='/tip/detail.do?tipNo=${t.tipNo}'/>">${t.title }</a><span id="countComment"></span></td>
 					<c:if test="${t.categoryCode eq 1}">
 		                <td>건강</td>
@@ -165,7 +168,7 @@
 					</c:if>
 	                <td><fmt:formatDate value="${t.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	                <td>${t.viewCnt}</td>
-	                <td><i class="fas fa-heart" style="color:red;">&nbsp;${t.recomCnt }</i> 
+	                <td><i class="fas fa-heart">&nbsp;${t.recomCnt }</i> 
 	                </td>
 	           	</tr>
      		</c:forEach>   	
@@ -173,7 +176,7 @@
         </tbody>
     </table>
     <!--writeBtn-->
-    <div class="writeBtn"style="text-align: right;">
+    <div class="writeBtn">
         <a href="<c:url value='/tip/writeForm.do'/>">
             <button type="button" class="btn btn-light">글쓰기</button>
         </a>

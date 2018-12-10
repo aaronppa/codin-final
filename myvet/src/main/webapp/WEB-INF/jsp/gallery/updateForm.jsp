@@ -184,6 +184,7 @@
                     <span style="font-weight:bolder">복순이</span>
                     <hr>
                     <br>
+                    <input type="hidden" name="galleryNo" value="${gallery.galleryNo}">
                     <!--제목-->
                     <textarea cols="50" rows="1" name="title" placeholder="제목을 입력...">${gallery.title}</textarea>
                     <br>

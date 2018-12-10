@@ -5,6 +5,8 @@ import java.util.List;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.GalleryCommentRecommend;
+import kr.co.codin.repository.domain.GalleryRecommend;
 import kr.co.codin.repository.domain.SearchGallery;
 
 public interface GalleryService {
@@ -29,20 +31,28 @@ public interface GalleryService {
 //	
 	List<GalleryComment> commentList(int galleryNo);
 //	
-//	void deleteComment(GalleryComment galleryComment);
+	void deleteComment(GalleryComment galleryComment);
 //	
-//	void updateComment(GalleryComment galleryComment);
+	void updateComment(GalleryComment galleryComment);
 //	
-//	int countComment(int GalleryNo);
+	int countComment(int galleryNo);
 //	
 //	//추천
-//	GalleryRecommend selectRecommend(int galleryNo);
-//	int insertRecommend(GalleryRecommend galleryRecommend);
-//	void deleteRecommend(GalleryRecommend galleryRecommend);
-//	
+	Integer selectRecommend(GalleryRecommend galleryRecommend);
+	void insertRecommend(GalleryRecommend galleryRecommend);
+	void deleteRecommend(GalleryRecommend galleryRecommend);
+	Integer sumRecommend(int galleryNo);
+	
+	//댓글 추천
+	Integer selectCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
+	void insertCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
+	void deleteCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
+	
+	
+	
 //	//파일
 //	
-	void uploadFile(FileInfo fileInfo);
+//	void uploadFile(FileInfo fileInfo);
 //	
 //	void deleteFile(FileInfo fileInfo);
 }

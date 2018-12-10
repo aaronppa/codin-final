@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+        <link rel="stylesheet" href="/myvet/resources/css/tip&qna/writeForm.css">
+    
 <!--     include libraries(jQuery, bootstrap) -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <!--     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
@@ -19,35 +21,35 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
         <style>
-        html,body{
-        	width:80%;
-        	margin-left: auto;
-        	margin-right: auto;
-        	background-color: none;
-        }
+/*          .container{  */
+/*          	width:1100px;  */
+/*          	margin-left: auto;  */
+/*          	margin-right: auto;  */
+/*          	background-color: none;  */
+/*          }  */
         
-        /*글제목*/
-        .title{
-            font:bolder;
-            font-size: 60px;
-            text-align: center;
-        }
-        /*글쓴이 사진*/
-        #writer-img{
-            width: 60px;
-            height: 60px;
-        }
-        /*글 작성자 id*/
-        .writer-id{
-            font-weight: bold;
-        }
-        /*글 정보*/
-        .information{
-            text-align: center; 
-        }
-        .write-btn-form{
-            text-align: center; 
-        }
+/*         /*글제목*/ */
+/*         .title{ */
+/*             font:bolder; */
+/*             font-size: 60px; */
+/*             text-align: center; */
+/*         } */
+/*         /*글쓴이 사진*/ */
+/*         #writer-img{ */
+/*             width: 60px; */
+/*             height: 60px; */
+/*         } */
+/*         /*글 작성자 id*/ */
+/*         .writer-id{ */
+/*             font-weight: bold; */
+/*         } */
+/*         /*글 정보*/ */
+/*         .information{ */
+/*             text-align: center;  */
+/*         } */
+/*         .write-btn-form{ */
+/*             text-align: center;  */
+/*         } */
 
 
        
@@ -55,20 +57,20 @@
 </head>
 <body>
 <%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
-
+	<div class="container">
     <form action="<c:url value='/tip/write.do' />" method="post">
     <br>
     <input name="boardCode" type="hidden" value="11">
 <!--     <input name="categoryCode" type="hidden" value="1"> -->
-    <input name="memberNo" class="memberNo" type="hidden" value="33">
+    <input name="memberNo" class="memberNo" type="hidden" value="${user.memberNo}">
     
 <!--     <div id="titleForm" style="text-align:center;"> -->
 <!-- 	    <input name="title" type="text" style="width:500px;"> -->
 <!--     </div> -->
 	<br>
-    <div class="information">
+    <div class="information" style="text-align: center;">
         <img id="writer-img" src="/myvet/images/pony01.jpg" class="rounded-circle">
-        <span>PONY</span>
+        <span class="nickname">${nickname}</span>
     </div>
     <br>
     <!-- 제목 -->
@@ -88,7 +90,7 @@
 	<!-- 카테고리 -->
 	
     <hr>
-        <div style="margin-left: 8%;">
+        <div class="contentForm" style="margin-left: 8%;">
           <textarea name="content" class="content" id="summernote" value="" cols="100" rows="15">
           </textarea>
         </div>
@@ -107,8 +109,9 @@
 		</a>
     </div>    
     </form>
+    </div>
 	<script>
-	
+// 	console.log("memberNo : "+${user.memberNo})
 
 // 	$("#summernote").summernote({
 // 		toolbar: [

@@ -5,6 +5,8 @@ import java.util.List;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.GalleryCommentRecommend;
+import kr.co.codin.repository.domain.GalleryRecommend;
 import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.SearchGallery;
 
@@ -22,13 +24,20 @@ public interface GalleryMapper {
 //	//댓글
 	void insertComment(GalleryComment galleryComment);
 	List<GalleryComment> selectComment(int galleryNo);
-//	void deleteComment(galleryComment galleryComment);
-//	void updateComment(galleryComment galleryComment);
-//	int countComment(int galleryNo);
+	void deleteComment(GalleryComment galleryComment);
+	void updateComment(GalleryComment galleryComment);
+	int countComment(int galleryNo);
 //	//추천
-//	galleryRecommend selectRecommend(int galleryNo);
-//	int insertRecommend(galleryRecommend galleryRecommend);
-//	void deleteRecommend(galleryRecommend galleryRecommend);
+	Integer selectRecommend(GalleryRecommend galleryRecommend);
+	int insertRecommend(GalleryRecommend galleryRecommend);
+	void deleteRecommend(GalleryRecommend galleryRecommend);
+	Integer sumRecommend(int galleryNo);
+	
+	//댓글 추천
+	Integer selectCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
+	int insertCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
+	void deleteCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
+	
 	
 	//파일
 	void uploadFile(FileInfo fileInfo);

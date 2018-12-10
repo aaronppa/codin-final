@@ -21,114 +21,114 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script>
   <style>
-    #thumbs { 
-        padding-top: 10px; 
-        overflow: hidden; 
-    }
-    #thumbs img, #largeImage {
-    cursor: pointer;
-    width: 500px;
-    height: 400px;
-    }
-    #thumbs img {
-    float: left;
-    margin-right: 6px;
-    width:120px;
-    height: 120px;
-    }
-    #description {
-    background: black;
-    color: white;
-    position: absolute;
-    bottom: 0;
-    padding: 10px 20px;
-    margin: 5px;
-    }
-    #panel {
-        position: relative;
-    }
-    #gallary{
-        float: left;
-        width: 300px;
+/*     #thumbs {  */
+/*         padding-top: 10px;  */
+/*         overflow: hidden;  */
+/*     } */
+/*     #thumbs img, #largeImage { */
+/*     cursor: pointer; */
+/*     width: 500px; */
+/*     height: 400px; */
+/*     } */
+/*     #thumbs img { */
+/*     float: left; */
+/*     margin-right: 6px; */
+/*     width:120px; */
+/*     height: 120px; */
+/*     } */
+/*     #description { */
+/*     background: black; */
+/*     color: white; */
+/*     position: absolute; */
+/*     bottom: 0; */
+/*     padding: 10px 20px; */
+/*     margin: 5px; */
+/*     } */
+/*     #panel { */
+/*         position: relative; */
+/*     } */
+/*     #gallary{ */
+/*         float: left; */
+/*         width: 300px; */
 
-    }
-    .content{
-        text-align: left;
-    }
-    #writer-img{
-        width: 60px;
-        height: 60px;
-    }
-    #user-img{
-        width: 50px;
-        height: 50px;
-    }
-    .content{
-        border: none;
+/*     } */
+/*     .content{ */
+/*         text-align: left; */
+/*     } */
+/*     #writer-img{ */
+/*         width: 60px; */
+/*         height: 60px; */
+/*     } */
+/*     #user-img{ */
+/*         width: 50px; */
+/*         height: 50px; */
+/*     } */
+/*     .content{ */
+/*         border: none; */
         
-    }
-    .col-sm-5{
-		height: 590px;
-		overflow: hidden;
-		overflow: scroll;
-		overflow: auto;
-    }
+/*     } */
+/*     .col-sm-5{ */
+/* 		height: 590px; */
+/* 		overflow: hidden; */
+/* 		overflow: scroll; */
+/* 		overflow: auto; */
+/*     } */
 
-    textarea{
-      border-top: none;
-      border-left: none;
-      border-right: none;
-    }
-    .btn-group{
-      float: right;
-    }
-    /*swiper*/
-    html, body {
-      position: relative;
-      height: 100%;
-    }
-    body {
-      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      color:#000;
-      margin: 0;
-      padding: 0;
-    }
-    .swiper-container {
-      width: 100%;
-      height: 300px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .swiper-slide {
-      background-size: cover;
-      background-position: center;
-    }
-    .gallery-top {
-      height: 400px;
-      width: 600px;
-    }
-    .gallery-thumbs {
-      height: 25%;
-      width: 600px;
-      box-sizing: border-box;
-      padding: 10px 0;
-    }
-    .gallery-thumbs .swiper-slide {
-      height: 100%;
-      opacity: 0.4;
-    }
-    .gallery-thumbs .swiper-slide-thumb-active {
-      opacity: 1;
-    }
-    .top-img{
-        width: 600px;
-        height: 400px;
-    }
-    .thumbs-img{
-        width:150px;
-        height: 100px;
-    }
+/*     textarea{ */
+/*       border-top: none; */
+/*       border-left: none; */
+/*       border-right: none; */
+/*     } */
+/*     .btn-group{ */
+/*       float: right; */
+/*     } */
+/*     /*swiper*/ */
+/*     html, body { */
+/*       position: relative; */
+/*       height: 100%; */
+/*     } */
+/*     body { */
+/*       font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */
+/*       font-size: 14px; */
+/*       color:#000; */
+/*       margin: 0; */
+/*       padding: 0; */
+/*     } */
+/*     .swiper-container { */
+/*       width: 100%; */
+/*       height: 300px; */
+/*       margin-left: auto; */
+/*       margin-right: auto; */
+/*     } */
+/*     .swiper-slide { */
+/*       background-size: cover; */
+/*       background-position: center; */
+/*     } */
+/*     .gallery-top { */
+/*       height: 400px; */
+/*       width: 600px; */
+/*     } */
+/*     .gallery-thumbs { */
+/*       height: 25%; */
+/*       width: 600px; */
+/*       box-sizing: border-box; */
+/*       padding: 10px 0; */
+/*     } */
+/*     .gallery-thumbs .swiper-slide { */
+/*       height: 100%; */
+/*       opacity: 0.4; */
+/*     } */
+/*     .gallery-thumbs .swiper-slide-thumb-active { */
+/*       opacity: 1; */
+/*     } */
+/*     .top-img{ */
+/*         width: 600px; */
+/*         height: 400px; */
+/*     } */
+/*     .thumbs-img{ */
+/*         width:150px; */
+/*         height: 100px; */
+/*     } */
  
 
     </style>
@@ -164,9 +164,9 @@
                         </div>
                     </div>
                     <div class="pet-add">
-                        <i class="fas fa-plus" style="width:50px;height:50px;text-align: center;"></i>
+                        <i class="fas fa-plus"></i>
                         <span data-toggle="tooltip" title="PONY">
-                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle" style="width:60px;height:60px;">
+                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle" >
                         </span>
                     </div>
 
@@ -177,7 +177,7 @@
                     <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                     <input type="hidden" name="writerNo" value="12">
                     <input type="hidden" name="boardCode" value="2">
-                    <span style="font-weight:bolder">복순이</span>
+                    <span class="nickname" >복순이</span>
                     <hr>
                     <br>
                     <!--제목-->

@@ -10,7 +10,16 @@ public class Gallery {
 	private String title;
 	private Date regDate;
 	private int viewCnt;
+	private int recomCnt;
 	
+	private Member member;
+	
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	public int getGalleryNo() {
 		return galleryNo;
 	}
@@ -53,6 +62,13 @@ public class Gallery {
 	public void setViewCnt(int viewCnt) {
 		this.viewCnt = viewCnt;
 	}
+	public int getRecomCnt() {
+		return recomCnt;
+	}
+	public void setRecomCnt(int recomCnt) {
+		this.recomCnt = recomCnt;
+	}
+	
 	
 	
 }

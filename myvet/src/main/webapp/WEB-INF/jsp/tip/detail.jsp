@@ -19,6 +19,7 @@
    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
    <meta name="viewport" content="width=device-width">
 
+    <link rel="stylesheet" href="/myvet/resources/css/tip&qna/detail.css">
     <!--bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -27,417 +28,386 @@
     
 
     <style>
-    .container{
-	    width:1100px;
-       	margin-left: auto;
-       	margin-right: auto;
-    }
-    .notes-wrapper .saver-wrap {
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	}
+/*     .container{ */
+/* 	    width:1100px; */
+/*        	margin-left: auto; */
+/*        	margin-right: auto; */
+/*     } */
+/*     .notes-wrapper .saver-wrap { */
+/* 	  display: flex; */
+/* 	  align-items: center; */
+/* 	  justify-content: center; */
+/* 	} */
 
-*, *:before, *:after, h2, p {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  border: none;
-  background-color: transparent;
-}
-*:focus, *:before:focus, *:after:focus, h2:focus, p:focus {
-  outline: none;
-}
-
-/* html, body { */
-/*   width: 100%; */
-/*   height: 100%; */
-/*   padding: 10px 0; */
+/* *, *:before, *:after, h2, p { */
 /*   margin: 0; */
-/*   background-color: #eee; */
-/*   /* background-color: none; */ */
-/*   font-family: 'Source Sans Pro'; */
-/*   padding-bottom: 50px; */
-/*   overflow: none; */
-  
+/*   padding: 0; */
+/*   box-sizing: border-box; */
+/*   border: none; */
+/*   background-color: transparent; */
+/* } */
+/* *:focus, *:before:focus, *:after:focus, h2:focus, p:focus { */
+/*   outline: none; */
 /* } */
 
-.notes-wrapper {
-/*   max-width: 1400px; */
+
+/* .notes-wrapper .saver-wrap { */
+/*   width: 60px; */
+/*   height: 60px; */
+/*   position: absolute; */
+/*   right: 0; */
+/*   top: 0; */
+/* } */
+/* .notes-wrapper .saver-wrap .notes-dot { */
+/*   width: 10px; */
+/*   height: 10px; */
+/*   border-radius: 50px; */
+/*   transition: .1s ease-in-out; */
+/* } */
+/* .notes-wrapper .saver-wrap .notes-dot.saved { */
+/*   transition: .1s ease-in-out; */
+/*   transition-delay: 2.10s; */
+/* } */
+/* .notes-wrapper .saver-wrap .rest { */
+/*   -webkit-transform: scale(0); */
+/*           transform: scale(0); */
+/*   clip: rect(0, 30px, 30px, 15px); */
+/*   height: 30px; */
+/*   width: 30px; */
+/*   position: absolute; */
+/*   left: calc(50% - 15px); */
+/*   top: calc(50% - 15px); */
+/* } */
+/* .notes-wrapper .saver-wrap .rest.active { */
+/*   -webkit-animation: animate 1.05s linear 2; */
+/*           animation: animate 1.05s linear 2; */
+/* } */
+/* .notes-wrapper .saver-wrap .rest.active:after { */
+/*   -webkit-animation: animate2 1.05s linear 2; */
+/*           animation: animate2 1.05s linear 2; */
+/* } */
+/* .notes-wrapper .saver-wrap .rest:after { */
+/*   -webkit-transform: scale(0); */
+/*           transform: scale(0); */
+/*   clip: rect(0, 30px, 30px, 15px); */
+/*   content: ''; */
+/*   border-radius: 50%; */
+/*   height: 30px; */
+/*   width: 30px; */
+/*   position: absolute; */
+/* } */
+/* .notes-wrapper .writer { */
+/*   padding: 25px 30px; */
+/*   padding-right: 60px; */
+/*   font-weight: 600; */
+/* /*   color: #000C2F; */ */
+/*   font-size: 13px; */
+/*   text-transform: uppercase; */
+/*   position: relative; */
+/* } */
+/* .notes-wrapper .title { */
+/*   padding: 25px 30px; */
+/*   padding-right: 60px; */
+/*   font-weight: 600; */
+/* /*   color: #000C2F; */ */
+/*   font-size: 13px; */
+/*   text-transform: uppercase; */
+/*   position: relative; */
+/* } */
+/* .notes-wrapper .content { */
+/*   padding: 10px 30px; */
+/*   padding-bottom: 15px; */
+/*   font-weight: 400; */
+/* /*   color: #666D82; */ */
+/*   line-height: 1.4; */
+/*   font-size: 14px; */
+  
+/* } */
+/* .notes-wrapper .content span.bold { */
+/*   font-weight: 700; */
+/* } */
+/* .notes-wrapper .content img { */
+/*   width: 90%; */
+/*   border-radius: 5px; */
+/*   margin: 15px 5%; */
+/* } */
+/* .notes-wrapper .comment { */
+/* /*   height: 60px; */ */
+/*   line-height: 60px; */
+/*   text-align: left; */
+/*   font-size: 13px; */
+/*   position: relative; */
+/* } */
+/* .notes-wrapper .getImg { */
+/*   width: 60px; */
+/*   height: 60px; */
+/*   /* position: left; */ */
+/*   /* position: absolute; */ */
+/*   bottom: 0; */
+/*   /* right: -15px; */ */
+/*   text-align: center; */
+/*   cursor: pointer; */
+/* } */
+/* .notes-wrapper { */
+/*   line-height: 60px; */
+/*   color:black; */
+/*   font-size: 30px; */
+/*   text-align: left; */
+/* } */
+
+/* .listnsub { */
+/*   max-width: 800px; */
 /*   width: 100%; */
-/*   margin: 0 auto; */
-/*   height: 700px; */
-/*   background-color: #fff;  */
+/*   text-align: center; */
+  
+/*   height: auto; */
+/* /*   background-color: #fff; */ */
 /*   border-radius: 5px; */
 /*   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
-/*   position: relative; */
+/*   /* position: relative; */ */
 /*   z-index: 999; */
-/*   overflow-y: scroll; */
-/*   overflow-x:hidden; */
-}
-
-.notes-wrapper .saver-wrap {
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.notes-wrapper .saver-wrap .notes-dot {
-  width: 10px;
-  height: 10px;
-/*   background-color: #D1D3D6; */
-  border-radius: 50px;
-  transition: .1s ease-in-out;
-}
-.notes-wrapper .saver-wrap .notes-dot.saved {
-/*   background-color: #66cc8f; */
-  transition: .1s ease-in-out;
-  transition-delay: 2.10s;
-}
-.notes-wrapper .saver-wrap .rest {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  clip: rect(0, 30px, 30px, 15px);
-  height: 30px;
-  width: 30px;
-  position: absolute;
-  left: calc(50% - 15px);
-  top: calc(50% - 15px);
-}
-.notes-wrapper .saver-wrap .rest.active {
-  -webkit-animation: animate 1.05s linear 2;
-          animation: animate 1.05s linear 2;
-}
-.notes-wrapper .saver-wrap .rest.active:after {
-  -webkit-animation: animate2 1.05s linear 2;
-          animation: animate2 1.05s linear 2;
-}
-.notes-wrapper .saver-wrap .rest:after {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  clip: rect(0, 30px, 30px, 15px);
-  content: '';
-  border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  position: absolute;
-}
-.notes-wrapper .writer {
-  padding: 25px 30px;
-  padding-right: 60px;
-  font-weight: 600;
-/*   color: #000C2F; */
-  font-size: 13px;
-  text-transform: uppercase;
-  position: relative;
-}
-.notes-wrapper .title {
-  padding: 25px 30px;
-  padding-right: 60px;
-  font-weight: 600;
-/*   color: #000C2F; */
-  font-size: 13px;
-  text-transform: uppercase;
-  position: relative;
-}
-.notes-wrapper .content {
-  padding: 10px 30px;
-  padding-bottom: 15px;
-  font-weight: 400;
-/*   color: #666D82; */
-  line-height: 1.4;
-  font-size: 14px;
-  
-}
-.notes-wrapper .content span.bold {
-  font-weight: 700;
-}
-.notes-wrapper .content img {
-  width: 90%;
-  border-radius: 5px;
-  margin: 15px 5%;
-}
-.notes-wrapper .comment {
-/*   height: 60px; */
-  line-height: 60px;
-  text-align: left;
-  font-size: 13px;
-/*   color: #999EAC; */
-  position: relative;
-}
-.notes-wrapper .getImg {
-  width: 60px;
-  height: 60px;
-  /* position: left; */
-  /* position: absolute; */
-  bottom: 0;
-  /* right: -15px; */
-  text-align: center;
-  cursor: pointer;
-}
-.notes-wrapper {
-  line-height: 60px;
-  /* color: #999EAC; */
-  color:black;
-  font-size: 30px;
-  text-align: left;
-}
-
-.listnsub {
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
-  
-  height: auto;
-/*   background-color: #fff; */
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  /* position: relative; */
-  z-index: 999;
-  font-size: 25px;
-}
-.rounded-circle{
-    width: 50px;
-    height: 50px;
-}
-
-
-@-webkit-keyframes animate {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(220deg);
-            transform: rotate(220deg);
-  }
-}
-
-@keyframes animate {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform: rotate(220deg);
-            transform: rotate(220deg);
-  }
-}
-@-webkit-keyframes animate2 {
-  0% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(-140deg);
-            transform: rotate(-140deg);
-  }
-  100% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(140deg);
-            transform: rotate(140deg);
-  }
-}
-@keyframes animate2 {
-  0% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(-140deg);
-            transform: rotate(-140deg);
-  }
-  100% {
-    box-shadow: inset #D1D3D6 0 0 0 2px;
-    -webkit-transform: rotate(140deg);
-            transform: rotate(140deg);
-  }
-}
-
-/*Comment*/
-/* html, body { */
-/* /*   background-color: #f0f2fa; */ */
-/*   font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; */
-/*   color: #555f77; */
-/*   -webkit-font-smoothing: antialiased; */
+/*   font-size: 25px; */
+/* } */
+/* .rounded-circle{ */
+/*     width: 50px; */
+/*     height: 50px; */
 /* } */
 
-input, textarea {
-  outline: none;
-  border: none;
-  display: block;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-  font-size: 1rem;
-  color: #555f77;
-}
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  color: #ced2db;
-}
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color: #ced2db;
-}
-input:-moz-placeholder, textarea:-moz-placeholder {
-  color: #ced2db;
-}
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color: #ced2db;
-}
 
-p {
-  line-height: 1.3125rem;
-}
+/* @-webkit-keyframes animate { */
+/*   0% { */
+/*     -webkit-transform: scale(1); */
+/*             transform: scale(1); */
+/*     -webkit-transform: rotate(0deg); */
+/*             transform: rotate(0deg); */
+/*   } */
+/*   100% { */
+/*     -webkit-transform: scale(1); */
+/*             transform: scale(1); */
+/*     -webkit-transform: rotate(220deg); */
+/*             transform: rotate(220deg); */
+/*   } */
+/* } */
 
-.comments {
-  margin: 2.5rem auto 0;
-  max-width: 60.75rem;
-  padding: 0 1.25rem;
-}
+/* @keyframes animate { */
+/*   0% { */
+/*     -webkit-transform: scale(1); */
+/*             transform: scale(1); */
+/*     -webkit-transform: rotate(0deg); */
+/*             transform: rotate(0deg); */
+/*   } */
+/*   100% { */
+/*     -webkit-transform: scale(1); */
+/*             transform: scale(1); */
+/*     -webkit-transform: rotate(220deg); */
+/*             transform: rotate(220deg); */
+/*   } */
+/* } */
+/* @-webkit-keyframes animate2 { */
+/*   0% { */
+/*     box-shadow: inset #D1D3D6 0 0 0 2px; */
+/*     -webkit-transform: rotate(-140deg); */
+/*             transform: rotate(-140deg); */
+/*   } */
+/*   100% { */
+/*     box-shadow: inset #D1D3D6 0 0 0 2px; */
+/*     -webkit-transform: rotate(140deg); */
+/*             transform: rotate(140deg); */
+/*   } */
+/* } */
+/* @keyframes animate2 { */
+/*   0% { */
+/*     box-shadow: inset #D1D3D6 0 0 0 2px; */
+/*     -webkit-transform: rotate(-140deg); */
+/*             transform: rotate(-140deg); */
+/*   } */
+/*   100% { */
+/*     box-shadow: inset #D1D3D6 0 0 0 2px; */
+/*     -webkit-transform: rotate(140deg); */
+/*             transform: rotate(140deg); */
+/*   } */
+/* } */
 
-.comment-wrap {
-  margin-bottom: 1.25rem;
-  display: table;
-  width: 100%;
-  min-height: 5.3125rem;
-}
+/* /*Comment*/ */
+/* /* html, body { */ */
+/* /* /*   background-color: #f0f2fa; */ */ */
+/* /*   font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; */ */
+/* /*   color: #555f77; */ */
+/* /*   -webkit-font-smoothing: antialiased; */ */
+/* /* } */ */
 
-.photo {
-  padding-top: 0.625rem;
-  display: table-cell;
-  width: 3.5rem;
-}
-.photo .avatar {
-  height: 2.25rem;
-  width: 2.25rem;
-  border-radius: 50%;
-  background-size: contain;
-}
+/* input, textarea { */
+/*   outline: none; */
+/*   border: none; */
+/*   display: block; */
+/*   margin: 0; */
+/*   padding: 0; */
+/*   -webkit-font-smoothing: antialiased; */
+/*   font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; */
+/*   font-size: 1rem; */
+/*   color: #555f77; */
+/* } */
+/* input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { */
+/*   color: #ced2db; */
+/* } */
+/* input::-moz-placeholder, textarea::-moz-placeholder { */
+/*   color: #ced2db; */
+/* } */
+/* input:-moz-placeholder, textarea:-moz-placeholder { */
+/*   color: #ced2db; */
+/* } */
+/* input:-ms-input-placeholder, textarea:-ms-input-placeholder { */
+/*   color: #ced2db; */
+/* } */
 
-.comment-block {
-  padding: 1rem;
-  background-color: #fff;
-  display: table-cell;
-  vertical-align: top;
-  border-radius: 0.1875rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-}
-.comment-block textarea {
-  width: 100%;
-  resize: none;
-}
+/* p { */
+/*   line-height: 1.3125rem; */
+/* } */
 
-.comment-text {
-  margin-bottom: 1.25rem;
-}
+/* .comments { */
+/*   margin: 2.5rem auto 0; */
+/*   max-width: 60.75rem; */
+/*   padding: 0 1.25rem; */
+/* } */
 
-.bottom-comment {
-  color: #acb4c2;
-  font-size: 0.875rem;
-}
+/* .comment-wrap { */
+/*   margin-bottom: 1.25rem; */
+/*   display: table; */
+/*   width: 100%; */
+/*   min-height: 5.3125rem; */
+/* } */
 
-.comment-date {
-  float: left;
-}
+/* .photo { */
+/*   padding-top: 0.625rem; */
+/*   display: table-cell; */
+/*   width: 3.5rem; */
+/* } */
+/* .photo .avatar { */
+/*   height: 2.25rem; */
+/*   width: 2.25rem; */
+/*   border-radius: 50%; */
+/*   background-size: contain; */
+/* } */
 
-.comment-actions {
-  float: right;
-}
-.comment-actions li {
-  display: inline;
-  margin: -2px;
-  cursor: pointer;
-}
-.comment-actions li.registration{
-  color : 1px solid gray;
-}
-.comment-actions li.complain {
-  padding-right: 0.75rem;
-  border-right: 1px solid #e1e5eb;
-}
-.comment-actions li.reply {
-  padding-left: 0.75rem;
-  padding-right: 0.125rem;
-}
-.comment-actions li:hover {
-  color: #0095ff;
-}
+/* .comment-block { */
+/*   padding: 1rem; */
+/*   background-color: #fff; */
+/*   display: table-cell; */
+/*   vertical-align: top; */
+/*   border-radius: 0.1875rem; */
+/*   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08); */
+/* } */
+/* .comment-block textarea { */
+/*   width: 100%; */
+/*   resize: none; */
+/* } */
 
-/*댓글 제출*/
-.commentSubmit:hover{
-	background:gray;
-	color: white;
-	transition: .5s;
-}
+/* .comment-text { */
+/*   margin-bottom: 1.25rem; */
+/* } */
 
-#deleteCommentBtn:hover{
-	background: gray;
-	color:white;
-	transition: .5s;
-}
-#comment::-webkit-scrollbar{
-	display: none;
-	}
+/* .bottom-comment { */
+/*   color: #acb4c2; */
+/*   font-size: 0.875rem; */
+/* } */
+
+/* .comment-date { */
+/*   float: left; */
+/* } */
+
+/* .comment-actions { */
+/*   float: right; */
+/* } */
+/* .comment-actions li { */
+/*   display: inline; */
+/*   margin: -2px; */
+/*   cursor: pointer; */
+/* } */
+/* .comment-actions li.registration{ */
+/*   color : 1px solid gray; */
+/* } */
+/* .comment-actions li.complain { */
+/*   padding-right: 0.75rem; */
+/*   border-right: 1px solid #e1e5eb; */
+/* } */
+/* .comment-actions li.reply { */
+/*   padding-left: 0.75rem; */
+/*   padding-right: 0.125rem; */
+/* } */
+/* .comment-actions li:hover { */
+/*   color: #0095ff; */
+/* } */
+
+/* /*댓글 제출*/ */
+/* .commentSubmit:hover{ */
+/* 	background:gray; */
+/* 	color: white; */
+/* 	transition: .5s; */
+/* } */
+
+/* #deleteCommentBtn:hover{ */
+/* 	background: gray; */
+/* 	color:white; */
+/* 	transition: .5s; */
+/* } */
+/* #comment::-webkit-scrollbar{ */
+/* 	display: none; */
+/* 	} */
 	
 
-<!-- 좋아요 -->
-.rating {
-  text-align: center;
-}
+/* <!-- 좋아요 --> */
+/* .rating { */
+/*   text-align: center; */
+/* } */
 
-.like,
-.dislike {
-  font-size: 30px;
-  display: inline-block;
-  cursor: pointer;
-  margin: 10px;
-/*   color: gray; */
-}
+/* .like, */
+/* .dislike { */
+/*   font-size: 30px; */
+/*   display: inline-block; */
+/*   cursor: pointer; */
+/*   margin: 10px; */
+/* /*   color: gray; */ */
+/* } */
 
-.dislike:hover,
-.like:hover {
-  color:blue;
-  transition: all .2s ease-in-out;
-  transform: scale(1.1);
-}
+/* .dislike:hover, */
+/* .like:hover { */
+/*   color:blue; */
+/*   transition: all .2s ease-in-out; */
+/*   transform: scale(1.1); */
+/* } */
 
-.active {
-  color: blue;
-}
+/* .active { */
+/*   color: blue; */
+/* } */
 
-.comActive{
-	color: blue;
-	transition:.5s;
-}
-<!--신고-->
+/* .comActive{ */
+/* 	color: blue; */
+/* 	transition:.5s; */
+/* } */
+/* <!--신고--> */
 
-.report{
-}
-.report:hover{
-	color:red;
-}
+/* .report{ */
+/* } */
+/* .report:hover{ */
+/* 	color:red; */
+/* } */
 
-#delete-update{
-	text-align: right;
-	padding-right: 30px;
-}
+/* #delete-update{ */
+/* 	text-align: right; */
+/* 	padding-right: 30px; */
+/* } */
 
-#delete-update > span > a {
-	width: 100px;
-}
-.grow{
-	font-size: 10px;
-}
-
+/* #delete-update > span > a { */
+/* 	width: 100px; */
+/* } */
+/* .grow{ */
+/* 	font-size: 10px; */
+/* } */
     </style>
 </head>
-   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 
 <body>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 	<div class="container">
     <div class="notes-wrapper">
 <!--     <input type="hidden" name="boardCode" id="boardCode" value="11"> -->
@@ -448,25 +418,25 @@ p {
             <div class="writer" aria-placeholder="writer..">
                 <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;PONY
             </div>
-            <div class="information" style="font-size: 20px;">
+            <div class="information">
            		<c:if test="${tip.categoryCode eq 1 }">
-           			<i style="margin-left:5%;">category : 건강</i>
+           			<i id="category">category : 건강</i>
            		</c:if>
            		<c:if test="${tip.categoryCode eq 2 }">
-           			<i style="margin-left:5%;">category : 생활</i>
+           			<i id="category">category : 생활</i>
            		</c:if>
            		<c:if test="${tip.categoryCode eq 3 }">
-           			<i style="margin-left:5%;">category : 용품</i>
+           			<i id="category">category : 용품</i>
            		</c:if>
            		<c:if test="${tip.categoryCode eq 4 }">
-           			<i style="margin-left:5%;">category : 기타</i>
+           			<i id="category">category : 기타</i>
            		</c:if>
-               <i class="fas fa-heart" id="tipRecomHeart"style="margin-left: 5%;color:red;">&nbsp;</i><span id="tipRecomCnt">${sumRecommend}</span> 
-                <i class="far fa-eye" style="margin-left: 5%;">&nbsp; ${tip.viewCnt}</i>
-                <i class="far fa-clock"style="margin-left: 5%;">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
+               <i class="fas fa-heart" id="tipRecomHeart">&nbsp;</i><span id="tipRecomCnt">${sumRecommend}</span> 
+                <i class="far fa-eye" >&nbsp; ${tip.viewCnt}</i>
+                <i class="far fa-clock">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
               </div>
-		  <div class="report" data-toggle="modal" data-target="#exampleModal" style="text-align: right;font-size: 15px; padding-right: 30px">
-               		<i class="fas fa-exclamation-triangle" id="tipReport" style="cursor:pointer">신고하기</i>
+		  <div class="report" data-toggle="modal" data-target="#exampleModal">
+               		<i class="fas fa-exclamation-triangle" id="tipReport">신고하기</i>
                
 		  </div>
             <div class="title" aria-placeholder="title..">
@@ -478,7 +448,7 @@ p {
             <span data-toggle="tooltip" title="포니, 포돌이">
             </span>
           <!-- 좋아요,싫어요 -->
-			 <div class="rating" style="text-align: center;">
+			 <div class="rating">
 			 <input type="hidden" name="memberNo" id="memberNo" value="8">
 			 <input type="hidden" name="recommend" id="recommend" value="${recom}">
 			  <!-- Thumbs up -->
@@ -494,19 +464,21 @@ p {
 		  
           <!-- 삭제, 수정 -->
             <div id="delete-update">
-                <span id="list" data-toggle="tooltip" title="LIST" class="btn btn-primary">
-	                  <strong>List</strong>
-                </span>
-                <span id="update" data-toggle="tooltip" title="UPDATE">
-                   <a href="<c:url value='/tip/updateForm.do?tipNo=${tip.tipNo }'/>" class="btn btn-primary">
-                   		<strong>Update</strong>
-                   </a>
-                </span>
-                <span id="delete" data-toggle="tooltip" title="DELETE">
-	                <a href="<c:url value='/tip/delete.do?tipNo=${tip.tipNo }'/>" class="btn btn-danger">
+	            <a href="<c:url value='/tip/list.do'/>">
+	                <span id="list" data-toggle="tooltip" title="LIST" class="btn btn-primary">
+		                  <strong>List</strong>
+	                </span>
+	            </a>
+                 <a href="<c:url value='/tip/updateForm.do?tipNo=${tip.tipNo }'/>" class="btn btn-primary">
+	               <span id="update" data-toggle="tooltip" title="UPDATE">
+	                  		<strong>Update</strong>
+	               </span>
+                 </a>
+                <a href="<c:url value='/tip/delete.do?tipNo=${tip.tipNo }'/>" class="btn btn-danger">
+    	            <span id="delete" data-toggle="tooltip" title="DELETE">
 						<strong>Delete</strong>
-	                </a>
-                </span>
+	                </span>
+                </a>
             </div>
             
             <!--Comment-->
@@ -515,23 +487,22 @@ p {
 <!--                 <form action="" method="post"> -->
                     <div class="comment-wrap">
                         <div class="photo">
-                            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
+                			<img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;PONY
                         </div>
                         <input type="hidden" name="tipNo" id="tipNo" value="${tip.tipNo}">
                         <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="7">
-                        <div class="comment-block" style="-ms-overflow-style: none;">                            
+                        <div class="comment-block">                            
                            <textarea name="comment" id="comment" cols="30" rows="4" placeholder="300자 이내..." ></textarea>
                            <span id="counter">###</span>
-                           <input type="submit" class="commentSubmit" style="float: right; cursor: pointer; font-style: ">
+                           <input type="submit" class="commentSubmit" >
                        </div>
                      </div>
 <!--                 </form> -->
                 <!-- 댓글 목록-->
-                <i class="far fa-comments" style="margin-left: 5%; font-size: 20px;">&nbsp;${countComment}</i>
+                <i class="far fa-comments">&nbsp;${countComment}</i>
                 </div>
                 <br>
-				<div class="comment-list" style="text-align: left;">
-				
+				<div class="comment-list" >
 				</div>
                 </div>
                 
@@ -549,9 +520,17 @@ p {
         })
         
         //리스트 이전
-        $('.btn-primary').click(function(){
-        	window.history.back();
-        })
+//         $('.btn-primary').click(function(){
+//         	window.history.back();
+//         })
+
+
+// 		$("#list").click(function(){
+// 			$.ajax(function(){
+// 				url: "/myvet/tip/list.do",
+// 				data: "keyword="++
+// 			})
+// 		})
         
         //댓글 글자 입력수
 		$(function typing() {
@@ -693,17 +672,17 @@ p {
             		   dislikeRecommend = "comActive";
 		     	   }
                 $(".comment-list").append(
-                "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
-              	+"<button class='com-like "+likeRecommend+"' style='margin-left:65%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up' style='font-size:25px;'></i>"+"</button><button class='com-dislike "+dislikeRecommend+"' style='margin-left:5%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down' style='font-size:25px;'></i>"+"</button>"	
-            	+"<i class='fas fa-heart' style='margin-left: 5%;color:red;'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
-                
+                "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle'/>&nbsp;"
+              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
+              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
+            	+"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
             	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
                 +"<div class='comment-content'>" 
 	                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].comment+"'/>"
-	                +"<div class='comment' style='width:400px;height:auto;font-size:20px;font-style:italic;' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
+	                +"<div class='comment' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
               	+"</div>"
-              	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
-              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
+              	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
+              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' >UPDATE</button>"
               	+"<hr>"
                 );
 			}
@@ -836,6 +815,7 @@ p {
 	    		data:"commentNo="+commentNo+"&recommend="+recommend
 	    	}).done(function(){
 	    		console.log("insertCommentRecommend-success")
+	    		
 	    	})
 	    }
     
@@ -876,13 +856,13 @@ p {
         		console.log("댓글 내용 : "+ $(this).data("updatecombtn"));
         		console.dir($(this).prev().prev());
         		$(this).prev().prev().replaceWith(
-           		"<textarea placeholder='댓글수정..' cols='100' rows='2' style='border: gray;'>"+$(this).data('updatecombtn')+"</textarea>"
+           		"<textarea id='updateCommentForm'placeholder='댓글수정..' cols='100' rows='2' >"+$(this).data('updatecombtn')+"</textarea>"
         		)
         		$(this).prev().replaceWith(
-        		"<button class='cancelupdatecom' style='cursor:pointer;'>취소</button>"		
+        		"<button class='cancelupdatecom'>취소</button>"		
         		)
         		$(this).replaceWith(
-        		"<button class='submitupdatecom' style='cursor:pointer;margin-left:20%;'>제출<button>"		
+        		"<button class='submitupdatecom'>제출<button>"		
         		)
         	})
         		

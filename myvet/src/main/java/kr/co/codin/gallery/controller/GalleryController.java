@@ -22,6 +22,9 @@ import kr.co.codin.gallery.service.GalleryService;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
+import kr.co.codin.repository.domain.GalleryCommentRecommend;
+import kr.co.codin.repository.domain.GalleryRecommend;
+import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.SearchGallery;
 import kr.co.codin.repository.domain.SearchTip;
@@ -38,7 +41,7 @@ public class GalleryController{
 	private GalleryService service;
 	
 	@RequestMapping("list.do")
-	public void list(Model model, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{
+	public void list(Model model,Member member, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{
 		SearchGallery searchGallery = new SearchGallery(pageNo);
 		searchGallery.setSort(sort);
 		searchGallery.setKeyword(keyword);
@@ -53,40 +56,54 @@ public class GalleryController{
 	}
 	
 	@RequestMapping("writeForm.do")
-	public void writeForm(Model model) throws Exception{
+	public void writeForm(Model model, String memberNickname) throws Exception{
 		System.out.println("writeForm");
 	}
 	
 	@RequestMapping("write.do")
 	public String write(Gallery gallery, FileInfo fileInfo, @RequestParam("file") List<MultipartFile> mFileList) throws Exception{
 		System.out.println("write");
-		service.insertGallery(gallery);
+		System.out.println("mFileList : "+mFileList);
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMMdd");
-		String datePath = sdf.format(new Date());
 		String oriName = fileInfo.getOriName();
-		int fileSize = (int)fileInfo.getFileSize();
-		
-		String newName = UUID.randomUUID().toString();
-		newName = newName.replaceAll("-", "");
-		
-		String fileExtention = "";
+		String filePath = "/gallery"+sdf;
 		String sysName = "";
-		
-		String realPath = context.getRealPath("/upload/gallery");
-		System.out.println("realPath : "+realPath);
-		
+		int fileSize = (int)fileInfo.getFileSize();
 		for(MultipartFile mFile : mFileList) {
-			if(mFile.isEmpty()==true) continue;
+		fileInfo.setFilePath(filePath);
+		fileInfo.setFileSize(fileSize);
+		fileInfo.setOriName(oriName);
+		fileInfo.setSysName(sysName); 
+		fileInfo.setBoardCode(10);
+		
 		}
+		
+		
+		
+		service.insertGallery(gallery);
+		
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
 	@RequestMapping("detail.do")
-	public void detail(int galleryNo,Model model) throws Exception{
+	public void detail(int galleryNo,GalleryRecommend galleryRecommend,GalleryCommentRecommend galleryCommentRecommend, Model model) throws Exception{
 		System.out.println("detail");
+		galleryRecommend.setMemberNo(7);
+		int sumRecommend = 0;
+		try {
+			sumRecommend = service.sumRecommend(galleryNo);
+		}catch (Exception e) {
+			;;		
+		}
 		service.updateViewCnt(galleryNo);
 		model.addAttribute("gallery",service.detailGallery(galleryNo));
+		model.addAttribute("countComment",service.countComment(galleryNo));
+		model.addAttribute("recommend",service.selectRecommend(galleryRecommend));
+		System.out.println(galleryRecommend);
+		model.addAttribute("sumRecommend",sumRecommend);
+		model.addAttribute("comRecommend",service.selectRecommend(galleryRecommend));
 //		model.addAttribute("gallery", service.commentList(galleryNo));
 //		System.out.println("댓글조회");
 	}
@@ -125,10 +142,38 @@ public class GalleryController{
 		
 		return service.commentList(galleryNo);
 	}
+	@RequestMapping("updateComment.do")
+	@ResponseBody
+	public void updateComment(GalleryComment galleryComment) throws Exception{
+		System.out.println("updateComment!!");
+		service.updateComment(galleryComment);
+	}
+	
+	@RequestMapping("deleteComment.do")
+	@ResponseBody
+	public void deleteComment(GalleryComment galleryComment) throws Exception{
+		System.out.println("deleteComment!!");
+		service.deleteComment(galleryComment);
+	}
+	
+	@RequestMapping("insertRecommend.do")
+	@ResponseBody
+	public void insertRecommend(Model model,GalleryRecommend galleryRecommend) throws Exception{
+		System.out.println("insertRecommend!");
+		service.insertRecommend(galleryRecommend);
+	}
+	
+	@RequestMapping("insertCommentRecommend.do")
+	@ResponseBody
+	public void insertCommentRecommend(Model model, GalleryCommentRecommend galleryCommentRecommend) throws Exception{
+		System.out.println("insertComRecom~@!");
+		service.insertCommentRecommend(galleryCommentRecommend);
+	}
+	
 	
 //	@RequestMapping("uploadFile.do")
 //	@ResponseBody
-//	//filePath로 리턴
+	//filePath로 리턴
 //	public FileInfo uploadFile(@RequestParam("file") List<MultipartFile> mFileList) throws IllegalStateException,Exception{
 //		System.out.println("mFileList : "+mFileList);
 //		String uploadPath = "/gallery";
@@ -190,7 +235,7 @@ public class GalleryController{
 //	            return "";
 //	        }
 //	 }
-	
+//	}
 }
 
 

@@ -7,9 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+        <link rel="stylesheet" href="/myvet/resources/css/gallery/detail.css">
+
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script></head>
     <!-- Link Swiper's CSS -->
@@ -23,235 +26,236 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script> -->
   <style>
-    #thumbs { 
-        padding-top: 10px; 
-        overflow: hidden; 
-    }
-    #thumbs img, #largeImage {
-    cursor: pointer;
-    width: 500px;
-    height: 400px;
-    }
-    #thumbs img {
-    float: left;
-    margin-right: 6px;
-    width:120px;
-    height: 120px;
-    }
-    #description {
-    background: black;
-    color: white;
-    position: absolute;
-    bottom: 0;
-    padding: 10px 20px;
-    margin: 5px;
-    }
-    #panel {
-        position: relative;
-    }
-    #gallary{
-        float: left;
-        width: 300px;
+/*     #thumbs {  */
+/*         padding-top: 10px;  */
+/*         overflow: hidden;  */
+/*     } */
+/*     #thumbs img, #largeImage { */
+/*     cursor: pointer; */
+/*     width: 500px; */
+/*     height: 400px; */
+/*     } */
+/*     #thumbs img { */
+/*     float: left; */
+/*     margin-right: 6px; */
+/*     width:120px; */
+/*     height: 120px; */
+/*     } */
+/*     #description { */
+/*     background: black; */
+/*     color: white; */
+/*     position: absolute; */
+/*     bottom: 0; */
+/*     padding: 10px 20px; */
+/*     margin: 5px; */
+/*     } */
+/*     #panel { */
+/*         position: relative; */
+/*     } */
+/*     #gallary{ */
+/*         float: left; */
+/*         width: 300px; */
 
-    }
-    .content{
-        text-align: left;
-    }
-    #writer-img{
-        width: 60px;
-        height: 60px;
-    }
-    #user-img{
-        width: 50px;
-        height: 50px;
-    }
-    .content{
-        border: none;
+/*     } */
+/*     .content{ */
+/*         text-align: left; */
+/*     } */
+/*     #writer-img{ */
+/*         width: 60px; */
+/*         height: 60px; */
+/*     } */
+/*     #user-img{ */
+/*         width: 50px; */
+/*         height: 50px; */
+/*     } */
+/*     .content{ */
+/*         border: none; */
         
-    }
-    #comment{
-		height: 590px;
-		overflow: hidden;
-		overflow: scroll;
-		overflow: auto;
-    }
+/*     } */
+/*     #comment{ */
+/* 		height: 590px; */
+/* 		overflow: hidden; */
+/* 		overflow: scroll; */
+/* 		overflow: auto; */
+/*     } */
 
-    /*swiper*/
-/*     html, body { */
-/*       position: relative; */
+/*     /*swiper*/ */
+/* /*     html, body { */ */
+/* /*       position: relative; */ */
+/* /*       height: 100%; */ */
+/* /*     } */ */
+/* /*     body { */ */
+/* /*       font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */ */
+/* /*       font-size: 14px; */ */
+/* /*       color:#000; */ */
+/* /*       margin: 0; */ */
+/* /*       padding: 0; */ */
+/* /*     } */ */
+/*     .swiper-container { */
+/*       width: 100%; */
+/*       height: 300px; */
+/*       margin-left: auto; */
+/*       margin-right: auto; */
+/*     } */
+/*     .swiper-slide { */
+/*       background-size: cover; */
+/*       background-position: center; */
+/*     } */
+/*     .gallery-top { */
+/*       height: 400px; */
+/*       width: 600px; */
+/*     } */
+/*     .gallery-thumbs { */
+/*       height: 25%; */
+/*       width: 600px; */
+/*       box-sizing: border-box; */
+/*       padding: 10px 0; */
+/*     } */
+/*     .gallery-thumbs .swiper-slide { */
 /*       height: 100%; */
+/*       opacity: 0.4; */
 /*     } */
-/*     body { */
-/*       font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */
-/*       font-size: 14px; */
-/*       color:#000; */
-/*       margin: 0; */
-/*       padding: 0; */
+/*     .gallery-thumbs .swiper-slide-thumb-active { */
+/*       opacity: 1; */
 /*     } */
-    .swiper-container {
-      width: 100%;
-      height: 300px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .swiper-slide {
-      background-size: cover;
-      background-position: center;
-    }
-    .gallery-top {
-      height: 400px;
-      width: 600px;
-    }
-    .gallery-thumbs {
-      height: 25%;
-      width: 600px;
-      box-sizing: border-box;
-      padding: 10px 0;
-    }
-    .gallery-thumbs .swiper-slide {
-      height: 100%;
-      opacity: 0.4;
-    }
-    .gallery-thumbs .swiper-slide-thumb-active {
-      opacity: 1;
-    }
-    .top-img{
-        width: 600px;
-        height: 400px;
-    }
-    .thumbs-img{
-        width:150px;
-        height: 100px;
-    }
+/*     .top-img{ */
+/*         width: 600px; */
+/*         height: 400px; */
+/*     } */
+/*     .thumbs-img{ */
+/*         width:150px; */
+/*         height: 100px; */
+/*     } */
 
-    /*comment*/
+/*     /*comment*/ */
 
-    /* html, body {
-    background-color: #f0f2fa;
-    font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-    color: #555f77;
-    -webkit-font-smoothing: antialiased;
-    } */
+/*     /* html, body { */
+/*     background-color: #f0f2fa; */
+/*     font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; */
+/*     color: #555f77; */
+/*     -webkit-font-smoothing: antialiased; */
+/*     } */ */
 
-    input, textarea {
-    outline: none;
-    border: none;
-    display: block;
-    margin: 0;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-    font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-    font-size: 1rem;
-    color: #555f77;
-    }
-    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-    color: #ced2db;
-    }
-    input::-moz-placeholder, textarea::-moz-placeholder {
-    color: #ced2db;
-    }
-    input:-moz-placeholder, textarea:-moz-placeholder {
-    color: #ced2db;
-    }
-    input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-    color: #ced2db;
-    }
+/*     input, textarea { */
+/*     outline: none; */
+/*     border: none; */
+/*     display: block; */
+/*     margin: 0; */
+/*     padding: 0; */
+/*     -webkit-font-smoothing: antialiased; */
+/*     font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; */
+/*     font-size: 1rem; */
+/*     color: #555f77; */
+/*     } */
+/*     input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { */
+/*     color: #ced2db; */
+/*     } */
+/*     input::-moz-placeholder, textarea::-moz-placeholder { */
+/*     color: #ced2db; */
+/*     } */
+/*     input:-moz-placeholder, textarea:-moz-placeholder { */
+/*     color: #ced2db; */
+/*     } */
+/*     input:-ms-input-placeholder, textarea:-ms-input-placeholder { */
+/*     color: #ced2db; */
+/*     } */
 
-    p {
-    line-height: 1.3125rem;
-    }
+/*     p { */
+/*     line-height: 1.3125rem; */
+/*     } */
 
-    .comments {
-    margin: 2.5rem auto 0;
-    max-width: 60.75rem;
-    padding: 0 1.25rem;
-    }
+/*     .comments { */
+/*     margin: 2.5rem auto 0; */
+/*     max-width: 60.75rem; */
+/*     padding: 0 1.25rem; */
+/*     } */
 
-    .comment-wrap {
-    margin-bottom: 1.25rem;
-    display: table;
-    width: 100%;
-    min-height: 5.3125rem;
-    }
+/*     .comment-wrap { */
+/*     margin-bottom: 1.25rem; */
+/*     display: table; */
+/*     width: 100%; */
+/*     min-height: 5.3125rem; */
+/*     } */
 
-    #writer-pic{
-        width:60px;
-        height: 60px;
-    }
-    #user-pic{
-        width:45px;
-        height:45px;
-    }
-    .photo {
-    padding-top: 0.625rem;
-    display: table-cell;
-    width: 3.5rem;
-    }
-    .photo .avatar {
-    height: 2.25rem;
-    width: 2.25rem;
-    border-radius: 50%;
-    background-size: contain;
-    }
+/*     #writer-pic{ */
+/*         width:60px; */
+/*         height: 60px; */
+/*     } */
+/*     #user-pic{ */
+/*         width:45px; */
+/*         height:45px; */
+/*     } */
+/*     .photo { */
+/*     padding-top: 0.625rem; */
+/*     display: table-cell; */
+/*     width: 3.5rem; */
+/*     } */
+/*     .photo .avatar { */
+/*     height: 2.25rem; */
+/*     width: 2.25rem; */
+/*     border-radius: 50%; */
+/*     background-size: contain; */
+/*     } */
 
-    .comment-block {
-    padding: 1rem;
-    background-color: #fff;
-    display: table-cell;
-    vertical-align: top;
-    border-radius: 0.1875rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-    }
-    .comment-block textarea {
-    width: 100%;
-    resize: none;
-    }
+/*     .comment-block { */
+/*     padding: 1rem; */
+/*     background-color: #fff; */
+/*     display: table-cell; */
+/*     vertical-align: top; */
+/*     border-radius: 0.1875rem; */
+/*     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08); */
+/*     } */
+/*     .comment-block textarea { */
+/*     width: 100%; */
+/*     resize: none; */
+/*     } */
 
-    .comment-text {
-    margin-bottom: 1.25rem;
-    }
+/*     .comment-text { */
+/*     margin-bottom: 1.25rem; */
+/*     } */
 
-    .bottom-comment {
-    color: #acb4c2;
-    font-size: 0.875rem;
-    }
+/*     .bottom-comment { */
+/*     color: #acb4c2; */
+/*     font-size: 0.875rem; */
+/*     } */
 
-    .comment-date {
-    float: left;
-    }
+/*     .comment-date { */
+/*     float: left; */
+/*     } */
 
-    .comment-actions {
-    float: right;
-    }
-    .comment-actions li {
-    display: inline;
-    margin: -2px;
-    cursor: pointer;
-    }
-    .comment-actions li.registration{
-    color : 1px solid gray;
-    }
-    .comment-actions li.complain {
-    padding-right: 0.75rem;
-    border-right: 1px solid #e1e5eb;
-    }
-    .comment-actions li.reply {
-    padding-left: 0.75rem;
-    padding-right: 0.125rem;
-    }
-    .comment-actions li:hover {
-    color: #0095ff;
-    }
-    .active{
-    	color: red;
-    }
+/*     .comment-actions { */
+/*     float: right; */
+/*     } */
+/*     .comment-actions li { */
+/*     display: inline; */
+/*     margin: -2px; */
+/*     cursor: pointer; */
+/*     } */
+/*     .comment-actions li.registration{ */
+/*     color : 1px solid gray; */
+/*     } */
+/*     .comment-actions li.complain { */
+/*     padding-right: 0.75rem; */
+/*     border-right: 1px solid #e1e5eb; */
+/*     } */
+/*     .comment-actions li.reply { */
+/*     padding-left: 0.75rem; */
+/*     padding-right: 0.125rem; */
+/*     } */
+/*     .comment-actions li:hover { */
+/*     color: #0095ff; */
+/*     } */
+/*     .active{ */
+/*     	color: blue; */
+/*     } */
 
 
     </style>
 </head>
 <body>
-	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
-
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+	<div class="">            
+	<input type="hidden" name="memberNo" value="7">
     <div class="container-fluid">
         <div class="row">
          
@@ -278,12 +282,12 @@
                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
                         </div>
                     </div>
-                    <div class="pet" style="margin-left: 10%; text-align: center;">
+                    <div class="pet">
                         <span data-toggle="tooltip" title="PONY">
-                            <img src="/myvet/resources/img/gall&tip/pony01.jpg" id="pet-img" class="rounded-circle" style="width:80px;height:80px;margin-right: 10px;">
+                            <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony01.jpg" id="pet-img" style="margin-right: 10px;">
                         </span>
                         <span data-toggle="tooltip" title="PODOL">
-                            <img src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img" class="rounded-circle" style="width:80px;height:80px;">
+                            <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img">
                         </span>
                     </div>
                 </div>
@@ -293,24 +297,31 @@
                             <br>
                             <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                             
-                            <span style="font-weight:bolder">복순이</span>
-                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall" style="font-size:20px;float:right;margin-right:2%;cursor:pointer;">삭제</a>
-                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall" style="font-size:20px;float:right;margin-right:5%;cursor:pointer;">수정</a>
+                            <span class="writerNick">복순이</span>
+                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">삭제</a>
+                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">수정</a>
                             <br>
                             <br>
-                            <i class="fas fa-heart" style="color:red;">&nbsp;123</i> 
-                            <span style="margin-left:10px;">view : ${gallery.viewCnt}</span>
+                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
+                            <span class="view">view : ${gallery.viewCnt}</span>
                             <!-- <i class="far fa-comments" style="margin-left: 5%;">&nbsp;458</i> -->
-                            <i class="far fa-clock"style="margin-left: 70%;">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
+                            <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
                             <hr>
-                            <i class="fas fa-exclamation-triangle" style="margin-left: 88%;">신고하기</i>
+                            <i class="fas fa-exclamation-triangle" id="galleryReport">신고하기</i>
                             <br>
                             <br>
-                            <div id="title" style="font-size:20px;"><strong>${gallery.title}</strong></div>
+                            <div id="title"><strong>${gallery.title}</strong></div>
                             <br>
                             <br>
                             <div id="content">${gallery.content}</div>
                             <br>
+                            <input type="hidden" name="recommend" id="recommend" value="${recommend}">
+                            <div id="thumbs">
+                           	  <i id="like" class="fa fa-thumbs-up fa-3x like <c:if test='${recommend == 1}'>active</c:if>"
+							     aria-hidden="true" data-like=""></i>
+							  <i id="dislike" class="fa fa-thumbs-down fa-3x dislike <c:if test='${recommend == -1}'>active</c:if>" 
+							     aria-hidden="true" data-dislike=""></i>
+                            </div>
                             <!--유저 댓글-->
                             <!-- <img src="/myvet/resources/img/gall&tip/pic3.jpg" class="rounded-circle" id="user-img">
                             <span style="font-weight:bolder">복돌이</span>
@@ -336,7 +347,7 @@
                                                 <li class="registration">등록</li>
                                             </ul>
 									<!-- 댓글 수 -->
-                                    <i class="far fa-comments" style="margin-left: 5%; font-size: 20px;">&nbsp;458</i>
+                                    <i class="far fa-comments"></i><span id="">&nbsp;${countComment}</span>
                                     <!-- 댓글 목록-->
                                      
                                         <div class="comment-wrap comment-list" id="comment-list">
@@ -361,20 +372,91 @@
                         </div>
                     </div>
                 </div>
-             <a href="<c:url value='/gallery/list.do'/>">
-             <button style="float:right;">목록</button>
-             </a>         
         </div>
+             <a href="<c:url value='/gallery/list.do'/>">
+             <button class="list">목록</button>
+             </a>         
     </div>
 
   <!-- Swiper JS -->
   <!-- <script src="../dist/js/swiper.min.js"></script> -->
 
     <script>
-        $('#thumbs img').click(function(){
+    function detail(){
+    	$.ajax({
+    		url:"/myvet/gallery/detail.do",
+    		data:"galleryNo=${gallery.galleryNo}"
+    	}).done(function(){
+    		console.log("detail!");
+    	})
+    }
+    //게시글 추천
+    $("#like").on('click',function(){
+       		var isActive = $(this).hasClass('active');
+//        		$("#galleryRecomCnt").remove();
+       		var galleryRecomCnt = $('#galleryRecomCnt');
+       		console.log(galleryRecomCnt.text());
+       		detail();
+       		if($('#dislike').hasClass('active')){
+       			alert('이미 싫어요를 눌렀어요')
+       			return false;
+       		}
+       		if(isActive == true){
+       			galleryRecomCnt.text(parseInt(galleryRecomCnt.text()) - 1) ;
+       			insertRecommend(0);
+       		}else{
+       			galleryRecomCnt.text(parseInt(galleryRecomCnt.text()) + 1) ;
+       			
+       			insertRecommend(1);
+
+       		}
+       		$(this).toggleClass('active')
+       	})
+       	
+       	 function insertRecommend(recommend){
+        	$.ajax({
+        		url:"/myvet/gallery/insertRecommend.do",
+        		data:"galleryNo=${gallery.galleryNo}&memberNo=7&recommend="+recommend
+        	}).done(function(){
+        		console.log("insertRecommend-success")
+        	})
+        }
+    //게시글 비추
+    $('#dislike').on('click',function(){
+    	var isActive = $(this).hasClass('active');
+    	var galleryRecomCnt = $('#galleryRecomCnt');
+   		detail();
+   		if($('#like').hasClass('active')){
+   			alert('이미 좋아요를 눌렀어요')
+   			return false;
+   		}
+//     	alert(isActive);
+		//싫어요 취소
+    	if(isActive == true){
+    		insertRecommend(0);
+   			galleryRecomCnt.text(parseInt(galleryRecomCnt.text()) + 1) ;
+
+			//싫어요 
+    	}else{
+    		insertRecommend(-1);
+   			galleryRecomCnt.text(parseInt(galleryRecomCnt.text()) - 1) ;
+
+    	}
+    	$(this).toggleClass('active')
+    })
+       	
+       	
+       	
+    
+    //게시글 신고
+     $('#galleryReport').click(function(){
+     	window.open("/myvet/report/reportGalleryForm.do?galleryNo=${gallery.galleryNo}","report","width=1000, height=600, left=500, top=10")
+     })
+    
+     $('#thumbs img').click(function(){
         $('#largeImage').attr('src',$(this).attr('src').replace('thumb','large'));
         $('#description').html($(this).attr('alt'));
-    });
+     });
 
     //swiper
     var galleryThumbs = new Swiper('.gallery-thumbs', {
@@ -419,6 +501,10 @@
     	}).done(function(){
     		console.log('댓글 등록!')
     		$('#input-comment').val('');
+    		$('#comment-list').children().remove();
+    		list();
+    		$('#counter').val().empty();
+    		typing();
     	})
     })
     
@@ -455,31 +541,159 @@
 // 				+"</ul>"
 // 				+"</div>"
 // 				+"</div>"
-	                "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle'style='width:45px;height:45px;'/>&nbsp;"
-	              	+"<button class='com-like "+likeRecommend+"' style='background:none; border:none; margin-left:55%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up' style='font-size:25px;'></i>"+"</button><button class='com-dislike "+dislikeRecommend+"' style='background:none; border:none; margin-left:5%;cursor:pointer;' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down' style='font-size:25px;'></i>"+"</button>"	
-	            	+"<i class='fas fa-heart' style='margin-left: 5%;color:red;'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+	                "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='commenterImg rounded-circle'/>&nbsp;"
+	              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
+	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
+	            	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recomCnt+"</span>"
 	                
-	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
+	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno="+result[i].commenterNo+"></div>"
 	                +"<div class='comment-content'>" 
-		                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].comment+"'/>"
-		                +"<div class='comment' style='width:400px;height:auto;font-size:20px;font-style:normal;' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
+		                +"<input type='hidden' class='commentval' data-commentno='"+result[i].commentNo+"'/>"
+		                +"<input type='hidden' class='commentval' data-commenterno='"+result[i].commenterNo+"'/>"		                
+		                +"<div class='comment' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
 	              	+"</div>"
 // 	              	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
 // 	              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
-	              	+"<button type='button' class='btn btn-outline-success' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' style='margin-left:70%;'>UPDATE</button>"
-	              	+"<button type='button' class='btn btn-outline-danger' data-deletecombtn='"+result[i].commentNo+"' style='margin-left:5%;'>DELETE</button>"
+	              	+"<button type='button' id='updateCom' class='btn btn-outline-success' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"'>UPDATE</button>"
+	              	+"<button type='button' id='deleteCom' class='btn btn-outline-danger' data-deletecombtn='"+result[i].commentNo+"' >DELETE</button>"
 	              	+"<hr>"
 			);
 	    	}
 	    })
     }
+//     $("#comment-list").on("click","#updateCom",function(){
+//     	$.ajax({
+//     		url: "/myvet/gallery/updateComment.do",
+//     		data: "commentNo="+$(this).data("updatecombtn")+"&commenterNo="+$("#commenterNo").val()
+//     	}).done(function(result){
+//     		console.log("댓글삭제 완료")
+//     		$("#comment-list").children().remove();
+//     		list();
+//     	})
+//     })
+	//댓글 수정폼
+	$("#comment-list").on("click","#updateCom",function(){
+		console.dir($(this).prev())
+		$(this).prev().replaceWith(
+         "<textarea id='textcom' placeholder='댓글수정..' cols='90' rows='2'>"+$(this).data('updatecombtn')+"</textarea>"		
+		)
+		$(this).next().replaceWith(
+        "<button class='btn btn-outline-danger' id='cancelupdatecom'>취소</button>"		
+		)
+		$(this).replaceWith(
+		"<button class='btn btn-outline-success' id='submitupdatecom'>제출<button>"		
+		)
+	})
+
+	//댓글 삭제
+    $("#comment-list").on("click","#deleteCom",function(){
+    	$.ajax({
+    		url: "/myvet/gallery/deleteComment.do",
+    		data: "commentNo="+$(this).data("deletecombtn")+"&commenterNo="+$("#commenterNo").val()
+    	}).done(function(result){
+    		console.log("댓글삭제 완료")
+    		$("#comment-list").children().remove();
+    		list();
+    	})
+    })
+    //댓글 수정 취소
+    $("#comment-list").on("click","#cancelupdatecom",function(){
+		$("#comment-list").children().remove();
+    	list();
+    })
+    //댓글 수정 제출
+   $("#comment-list").on("click","#submitupdatecom",function(){
+		console.dir($(this).prev())//댓글수정내용
+		console.dir($(this).prev().prev())//댓글 번호
+		console.log($(this).prev().prev().data("commenterno"))//댓글 작성자
+		console.log($(this).prev().prev().data("commentno"))//댓글 번호
+		
+		$.ajax({
+			url:"/myvet/gallery/updateComment.do",
+			data:"commentNo="+$(this).prev().prev().data("commentno")
+				+"&commenterNo="+$(this).prev().prev().data("commenterno")
+				+"&comment="+$(this).prev().val()
+		}).done(function(){
+			console.log("댓글 수정..!")
+			$("#comment-list").children().remove();
+    		list();
+		})
+		
+	//댓글 추천
+	
+    	$('.comment-list').on('click', '.com-like', function(){
+//     		alert('com-like!')
+			var recomCnt = $('#recommendCnt'+$(this).data('comno'));
+       		var isActive = $(this).hasClass('comActive');
+//        		alert(recomCnt);
+//        		if($('.com-dislike').hasClass('comActive')){
+//        			if($(this).data('comno') == $('.com-dislike').data('comno')){       				
+//        			alert('이미 싫어요를 누르셨잖아여')
+// 				return false;
+//        			}
+// 				console.log($(this).next())
+       			if($(this).next().hasClass('comActive')){       				
+       			alert('이미 싫어요를 누르셨잖아여')
+				return false;
+       			
+			}
+			//좋아요 
+       		if(isActive == true){
+       			recomCnt.text(parseInt(recomCnt.text()) - 1) ;
+       			insertCommentRecommend(0, $(this).data('comno'));
+       		//좋아요 취소
+       		}else{
+       			recomCnt.text(parseInt(recomCnt.text()) + 1) ;
+       			insertCommentRecommend(1, $(this).data('comno'));
+       		}
+       		$(this).toggleClass('comActive')
+    		
+    	})
+    	//댓글 싫어요
+       	$('.comment-list').on('click', '.com-dislike', function(){
+//     		alert('com-like!')
+			var recomCnt = $('#recommendCnt'+$(this).data('comno'));
+       		var isActive = $(this).hasClass('comActive');
+//        		alert(isActive);
+       		if($(this).prev().hasClass('comActive')){       				
+       			alert('이미 좋아요를 누르셨잖아여')
+				return false;
+       			}
+			
+			//싫어요 취소
+       		if(isActive == true){
+       			recomCnt.text(parseInt(recomCnt.text()) + 1) ;
+       			insertCommentRecommend(0, $(this).data('comno'));
+       		}else{//싫어요
+       			recomCnt.text(parseInt(recomCnt.text()) - 1) ;
+       			insertCommentRecommend(-1, $(this).data('comno'));
+       		}
+       		$(this).toggleClass('comActive')
+    		
+    	})
+	 	function insertCommentRecommend(recommend, commentNo){
+	       		console.log(recommend, commentNo)
+	    	$.ajax({
+	    		url:"/myvet/tip/insertCommentRecommend.do",
+	    		data:"commentNo="+commentNo+"&recommend="+recommend
+	    	}).done(function(){
+	    		console.log("insertCommentRecommend-success")
+	    		
+	    	})
+	    }
+	
+	
+	
+// 	   $("#comment-list").children().remove();
+//     	list();
+    })
     
     
     
     
     
-    //tooltip
-//     $('[data-toggle="tooltip"]').tooltip()
+//     tooltip
+    $('[data-toggle="tooltip"]').tooltip()
 
     </script>
 </body>
