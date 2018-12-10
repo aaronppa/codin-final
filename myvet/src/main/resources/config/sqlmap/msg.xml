@@ -36,7 +36,8 @@
 	<select id="selectSearchMember" parameterType="string" resultMap="searchMemberHospitalMap">
 		select member_no, member_grade, member_nickname, hos_code, member_ori_name, member_sys_name, member_file_path
 		 from member
-		where member_nickname like CONCAT('%',#{keyword},'%') 
+		where member_grade = "U" 
+		  and member_nickname like CONCAT('%',#{keyword},'%') 
 	</select>
 	
 	<select id="selectSearchHospital" parameterType="string" resultMap="searchMemberHospitalMap">

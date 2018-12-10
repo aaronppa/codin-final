@@ -173,10 +173,15 @@ h5{
 	background: #f4e8e6;
 }	
 
-input.recipient{
+#recipientSearch{
 	width: 300px;
 	border-radius: 5px;
 	border: none;
+	margin-left: 10px;
+}
+
+#recipientSearch:focus{
+	outline: none;
 }
 
 .recipients-input{
@@ -186,6 +191,7 @@ input.recipient{
 .recipients-input > div:first-child{
 	line-height: 27px;
 }
+
 
 .recipientSearchLayer{
 	position: absolute;
@@ -197,7 +203,7 @@ input.recipient{
 	border-radius: 5px;
 	background: #fff;
     display: block;
-    overflow:hidden;
+   	overflow-y: auto;
 }
 
 .recipientResultType.member, .recipientResultType.hospital{
@@ -220,6 +226,7 @@ input.recipient{
 
 .resultList:hover{
     background: #f4e8e6;
+    cursor: pointer;
 }
 
 .profile-search{
@@ -236,6 +243,14 @@ input.recipient{
 
 .nodisplay, .nodisplay *{
 	display: none !important;
+}
+
+span.addedRecipient{
+	line-height: 28px;
+	padding: 4px;
+	background: #f4e8e6;
+	border-radius: 3px;
+	margin-right: 5px;
 }
 </style>
 </head>
@@ -284,37 +299,6 @@ input.recipient{
     
     <div class="recipientSearchLayer nodisplay">
     	<div class="recipientSearchBox scrollable">
-    		<div class="recipientResultType member">
-                <span>회원</span>
-            </div>
-            <ul class="recipientSearchList member">
-                <li>
-                    <div class="resultList">
-                        <div class='profile-search'>
-                                <img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle search-result">
-                        </div>
-                        <div class="memberNickname">
-                            <span>aaronpa</span>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-    		
-  			<div class="recipientResultType hospital">
-                <span>병원</span>
-                <ul class="recipientSearchList hospital">
-                    <li>
-                        <div class="resultList">
-                                <div class='profile-search'>
-                                    <img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle search-result">
-                                </div>
-                                <div class="hospitalName">
-                                    <span>성심동물병원</span>
-                                </div>
-                        </div>
-                    </li>
-                </ul>               
-  			</div>
     	</div>
     </div>
 <script>
@@ -343,9 +327,9 @@ $("#writemsgbtn").on("click", function(){
 		
 		var recipientInputHtml = ` <div class="recipients-input">
 							        	<div>수신자:&nbsp;</div>
-							        	<div>
-							        		<input autocomplete="off" id="recipientSearch" class="recipient" placeholder="수신자 닉네임 또는 수신단체명을 입력해주세요" spellcheck="false" type="text">
+							        	<div class="recipient">
 							       	 	</div>
+							        	<input autocomplete="off" id="recipientSearch" class="recipient" placeholder="수신자 닉네임 또는 수신단체명을 입력해주세요" spellcheck="false" type="text">
 							        </div>`;
 		
 		$(".top-main.header").html(recipientInputHtml);
@@ -355,20 +339,127 @@ $("#writemsgbtn").on("click", function(){
 })
 
 /* 수신자 검색 */
-$(".top-main.header").on("keyup","#recipientSearch",function(){
+$(".top-main.header").on("keyup","#recipientSearch",function(e){
 	$(".recipientSearchLayer.nodisplay").removeClass("nodisplay");
 	var keyword = $(this).val();
 	console.log("Recipient Search Input Keyup this:",keyword);
 	
-	$.get(
-		"searchMember.do?keyword="+keyword, function(){}
-	);
+	// 검색 키워드에 아무 value가 없으면 아무것도 보이지 않음
+	// 검색 키워드에 value가 없는 상태에서 Backspace 키 누르면 수신자로 등록되어있는 수신자 삭제 
+	
+	/* 현재 안되고 있음  */
+	if(!keyword){
+		$(".recipientSearchBox").html("");
+			if (e.key === "Backspace" || e.key === "Delete") {
+				console.log("Search Key:",$("#recipientSearch").val())
+				if($("#recipientSearch").val()==undefined){
+					console.log("backspaced!")
+					console.dir($("div.recipient > :last-child"));
+					$("div.recipient > :last-child").remove();
+			        return false;
+		  	  	}
+			return false;
+			}
+		return false;
+	}
+	
+	$.get("searchMember.do?keyword="+keyword)
+	.done(function(result){
+	//	console.log("Msg Search:",result);
+		var searchResultHtml="";
+		
+		var recipientList = document.querySelectorAll('span.addedRecipient');
+		for(var i=0;i<=recipientList.length;i++){
+			console.log("added recipient:");		
+			console.log(recipientList[i]);		
+			console.log("added recipient DIR")
+			console.dir(recipientList[i]);		
+		}
+		if(result.member.length>0){
+			searchResultHtml+=`<div class="recipientResultType member"><span>회원</span></div><ul class="recipientSearchList member">`;
+			for(var member of result.member){
+				var imgPath;
+				if(member.memberFilePath==null){
+					imgPath = "<c:url value='/upload/profile/default-profile.jpg'/>";
+				} else if(member.memberFilePath!=null){
+					imgPath = "<c:url value='/upload/profile/"+member.memberFilePath+"/"+member.memberSystem+"'/>";
+				}
+				searchResultHtml += `<li>
+					                    <div class="resultList" data-recipientno=`+member.memberNo+` data-hosno='' data-recipientname=`+member.memberNickname+`>
+					                        <div class='profile-search'>
+					                                <img src=`+imgPath+` class="rounded-circle search-result">
+					                        </div>
+					                        <div class="memberNickname">
+					                            <span>`+member.memberNickname+`</span>
+					                        </div>
+					                    </div>
+					                </li>`;
+						            
+			}
+			searchResultHtml+= "</ul>";
+			
+		}
+		
+		if(result.hospital.length>0){
+			searchResultHtml+=`<div class="recipientResultType hospital"><span>병원</span></div><ul class="recipientSearchList hospital">`;
+			
+			for(var hospital of result.hospital){
+				var imgPath;
+				if(hospital.filePath==null){
+					imgPath = "<c:url value='/upload/profile/Logo-Vet-02.png'/>";
+				} else if(hospital.filePath!=null){
+					imgPath = "<c:url value='/upload/profile/"+hospital.filePath+"/"+hospital.sysName+"'/>";
+				}
+				searchResultHtml += `<li>
+					                    <div class="resultList" data-recipientno="" data-hosno=`+hospital.hosCode+` data-recipientname=`+hospital.title+`>
+					                        <div class='profile-search'>
+					                                <img src=`+imgPath+` class="rounded-circle search-result">
+					                        </div>
+					                        <div class="hospitalName">
+					                            <span>`+hospital.title+`</span>
+					                        </div>
+					                    </div>
+					                </li>`;
+						            
+			}
+			searchResultHtml+= "</ul>";
+			
+		}
+		
+		$(".recipientSearchBox").html(searchResultHtml);
+		
+	});
 	
 });
 
-$(".top-main.header").on("blur","#recipientSearch",function(){
-	$(".recipientSearchLayer").addClass("nodisplay");
+/* 검색중 blur 해제 */
+$(".recipientSearchLayer").on("mouseenter",function(e){
+	$("#recipientSearch").off("blur");
 });
+
+/* 검색 아이템 선택시 Event Action */
+$(".recipientSearchBox").on("click",".resultList",function(e){
+	console.log("Search Result Select:", $(this));
+	$("div.recipient").append("<span class='addedRecipient' data-recipientno='"+$(this).data("recipientno")+"' data-hosno='"+$(this).data("hosno")+"'>"+$(this).data("recipientname")+"</span>");
+	$("#recipientSearch").val("");
+	$("#recipientSearch").focus();
+});
+
+/* 검색중 밖에 나왔다 다시 검색창 Input을 눌렀을때 검색결과 항목 다시 보이기 */
+$(".top-main.header").on("click","#recipientSearch", function(){
+	$(".recipientSearchLayer.nodisplay").removeClass("nodisplay");
+}); 
+
+/* 검색중 다른곳으로 blur하면 검색결과 div 숨기기 */
+$(".top-main.header").on("blur","#recipientSearch", nodisplay);
+
+/* 검색결과 div 숨기기 함수 */
+function nodisplay() {
+	 setTimeout(function(){
+	 $(".recipientSearchLayer").addClass("nodisplay");
+	 }, 150)
+}
+
 </script>
 </body>
 </html>
