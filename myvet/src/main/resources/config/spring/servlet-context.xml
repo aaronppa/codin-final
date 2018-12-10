@@ -31,16 +31,20 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	
-<!-- 	<mvc:interceptors> -->
-<!-- 		<mvc:interceptor> -->
-<!-- 			<mvc:mapping path="/**"/> -->
-<!-- 			<mvc:exclude-mapping path="/member/signup*.do"/> -->
-<!-- 			<mvc:exclude-mapping path="/member/login*.do"/> -->
-<!-- 			<mvc:exclude-mapping path="/member/checkId.do"/> -->
-<!-- 			<mvc:exclude-mapping path="/board/list.do*"/> -->
-<!-- 			<bean class="kr.co.codin.common.interceptor.AuthInterceptor" /> -->
-<!-- 		</mvc:interceptor> -->
-<!-- 	</mvc:interceptors> -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/index.*"/>
+			<mvc:exclude-mapping path="/hos/search.do"/>
+			<mvc:exclude-mapping path="/member/log*.do"/>
+			<mvc:exclude-mapping path="/member/checkId.do"/>
+			<mvc:exclude-mapping path="/member/search.do"/>
+			<mvc:exclude-mapping path="/member/list.do"/>
+			<mvc:exclude-mapping path="/member/signup.do"/>
+			<mvc:exclude-mapping path="/map/map.do"/>
+			<bean class="kr.co.codin.common.interceptor.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> 
 	
 	<mvc:default-servlet-handler />
 	

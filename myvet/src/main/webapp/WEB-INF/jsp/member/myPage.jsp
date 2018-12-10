@@ -13,7 +13,7 @@
   crossorigin="anonymous"></script>
 <title>반려인의 개인 페이지입니다.</title>
 
-<link rel="stylesheet" type="text/css" href="/codin_mini/resources/css/top.css" />
+<link rel="stylesheet" href="<c:url value='../resources/css/common/topbar.css'/>"/>
 
 <!-- fontawesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -74,17 +74,15 @@
     	text-align: right;
     }
     
-    #container {
+    .container {
     	margin-top: 50px;
     	margin-left: 50px;
     	margin-right: 50px;
     	margin-bottom: 50px;
     	font-size: 18px;
+   	    width: 1100px;
     }
     
-    #top-menu {
-    	height: 50px;
-    }
     
     .pet-info {
     	width: 200px;
@@ -103,16 +101,10 @@
     	padding-top: 0;
     }
 </style>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-</head>
+
 <body>
-	<div id="top-menu">
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
-	</div>
-	<div id="container">
+	<div class="container">
 	<h2>반려인</h2>
     <hr>
     <div>
@@ -177,6 +169,7 @@
 			</div>
 		</c:forEach>
 		<button class="pet-info" id="pet-add">반려동물 정보 추가</button>
+	</div>
 	</div>
 	<script src="<c:url value='/resources/js/member/mypage.js'/>"></script>
 </body>

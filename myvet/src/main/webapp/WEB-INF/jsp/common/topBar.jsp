@@ -17,13 +17,21 @@
         }
 
         .menu > li > a {
-            margin-top: 10px;
             color: #412427;
+            font-weight: 500;
+            text-decoration: none;
         }
 
-        .menu-text > span {
+        .menu-text > span > a  {
             font-size: 30px;
             color: #412427;
+            font-weight: unset;
+            text-decoration: none;
+        }
+        
+        .menu-text.sub{
+        	margin-top: 10px;
+      
         }
         
         #grade {
@@ -33,6 +41,10 @@
         
         .custom-file-input {
         	opacity: 1;
+        }
+        
+        .is-dropdown-submenu{
+        z-index: 200
         }
     </style>
 	<link rel="stylesheet" href="<c:url value='../resources/css/common/topbar.css'/>"/>
@@ -52,17 +64,19 @@
     <div class="top-bar">
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text"><span>MyVet</span></li>
-                <li><a href="<c:url value='/hos/search.do'/>">동물병원 찾기</a></li>
-                <li>
+                <li class="menu-text"><span><a href="<c:url value='/index.jsp'/>">MyVet</a></span></li>
+                <li class="menu-text sub"><a href="<c:url value='/hos/search.do'/>">동물병원 찾기</a></li>
+                 <c:if test="${not empty user}">
+                <li class="menu-text sub">
                     <a href="#">커뮤니티</a>
                     <ul class="menu vertical">
 	                    <li><a href="<c:url value='/tip/list.do'/>">개꿀팁이냥</a></li>
-	                    <li><a href="#">5959 내시끼</a></li>
+	                    <li><a href="<c:url value='/gallery/list.do'/>">5959 내시끼</a></li>
 	                    <li><a href="<c:url value='/qna/list.do'/>">QnA 게시판</a></li>
 	                    <li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
                     </ul>
                 </li>
+                </c:if>
                 <!-- <li><a href="#">Three</a></li> -->
             </ul>
         </div>
