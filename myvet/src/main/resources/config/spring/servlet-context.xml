@@ -41,7 +41,7 @@
 			<mvc:exclude-mapping path="/member/search.do"/>
 			<mvc:exclude-mapping path="/member/list.do"/>
 			<mvc:exclude-mapping path="/member/signup.do"/>
-			<mvc:exclude-mapping path="/map/map.do"/>
+			<mvc:exclude-mapping path="/map/**"/>
 			<bean class="kr.co.codin.common.interceptor.AuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors> 
