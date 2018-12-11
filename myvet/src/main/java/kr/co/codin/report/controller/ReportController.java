@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import kr.co.codin.gallery.service.GalleryService;
 import kr.co.codin.member.service.MemberService;
+import kr.co.codin.qna.service.QnaService;
 import kr.co.codin.report.service.ReportService;
 import kr.co.codin.repository.domain.Gallery;
 import kr.co.codin.repository.domain.GalleryComment;
@@ -21,6 +23,7 @@ import kr.co.codin.repository.domain.QnaComment;
 import kr.co.codin.repository.domain.Report;
 import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.TipComment;
+import kr.co.codin.tip.service.TipService;
 
 @Controller
 @RequestMapping("report")
@@ -32,6 +35,17 @@ public class ReportController {
 	private ReportService service; 
 	
 	@Autowired
+	private TipService tipService; 
+	
+	@Autowired
+	private GalleryService galleryService; 
+	
+	@Autowired
+	private QnaService qnaService; 
+	
+	
+	
+	@Autowired
 	private MemberService memberService;
 //	@Autowired
 //	private Member memberService;
@@ -40,6 +54,7 @@ public class ReportController {
 	@RequestMapping("reportTipForm.do")
 	public void reportTipForm(int tipNo,HttpSession session,Model model) throws Exception{
 		Member member = (Member)session.getAttribute("user");
+		model.addAttribute("tip",tipService.detailTip(tipNo));
 		model.addAttribute("nickname",member.getMemberNickname());
 		System.out.println("tipReport!");
 		System.out.println(tipNo);
@@ -51,7 +66,7 @@ public class ReportController {
 	public void reportGalleryForm(int galleryNo,HttpSession session,Model model) throws Exception{
 		Member member = (Member)session.getAttribute("user");
 		model.addAttribute("nickname",member.getMemberNickname());
-		System.out.println();
+		model.addAttribute("gallery",galleryService.detailGallery(galleryNo));
 		System.out.println("gallReport!");
 		System.out.println("galleryNo : "+galleryNo);
 		model.addAttribute("reportGallery",service.detailReportGallery(galleryNo));
@@ -62,6 +77,7 @@ public class ReportController {
 	public void reportQnaForm(int qnaNo,HttpSession session,Model model) throws Exception{
 		Member member = (Member)session.getAttribute("user");
 		model.addAttribute("nickname",member.getMemberNickname());
+		model.addAttribute("qna",qnaService.selectQnaByNo(qnaNo));
 		System.out.println("qnaReport!");
 		model.addAttribute("reportQna",service.detailReportQna(qnaNo));
 	}

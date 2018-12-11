@@ -26,78 +26,7 @@
    <link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
    
     <style>
-/*         body { */
-/*             padding:30px 30px; */
-/*         } */
-		
-/*         /*category*/ */
-/*         @import "compass/css3"; */
-/*         .container{ */
-/*         	width:1100px; */
-/*         	margin-left: auto; */
-/*         	margin-right: auto; */
-/*         } */
-/*         select[disabled]{ */
-/*         color:#aaa; */
-/*         } */
-/*         h1{color:#563d7c;} */
 
-
-/*         /*search*/ */
-/*         .mb-3{ */
-/*             margin-left: 65%; */
-/*         } */
-/*         .dropdown-toggle{ */
-/*             background: none; */
-/*         } */
-/*         .dropdown-toggle:hover{ */
-/*             opacity: 0.5; */
-/*             /* color:white; */ */
-/*         } */
-/*         /*검색입력창*/ */
-/*         .input-search{ */
-/*             border:none; */
-/*             width: 18%; */
-/*             color: saddlebrown; */
-/*         } */
-/*         /*검색버튼*/ */
-/*         .btn-outline{ */
-/*             background: none; */
-/*             border:none; */
-/*         } */
-/*         .btn-outline:hover{ */
-/*             border:none; */
-/*             opacity: 0.5; */
-/*         } */
-        
-/*         /*writeBtn*/ */
-/*         .btn-light:hover{ */
-/*             background: black; */
-/*             color: white; */
-/*             transition: .5s; */
-/*         } */
-        
-/*         /*table*/ */
-/*         tr:hover{ */
-/*             background: gray; */
-/*             opacity: 0.8; */
-/*         } */
-/*         .no{ */
-/*             width:10%; */
-/*         } */
-/*         .writer{ */
-/*             width:15%; */
-/*         } */
-/*         .reg_date{ */
-/*             width:15%; */
-/*         } */
-/*         .view_cnt{ */
-/*             width:15%; */
-/*         } */
-/*         /*pagenation*/ */
-/*    		#pagination{ */
-/*    			vertical-align: middle; */
-/*    		} */
 
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>

@@ -32,12 +32,12 @@
             <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputReportMemberNo">신고자</label>
-                        <input type="hidden" name="reportMemberNo" value="${user.writerNo}"><p class="text-justify">${nickname}</p>
+                        <input type="hidden" name="reportMemberNo" value="${user.memberNo}"><p class="text-justify">${nickname}</p>
                         <p class="text-justify"></p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">신고대상</label>
-                        <input type="hidden" name="targetMemberNo" value="${reportQna.writerNo}"><p class="text-justify">${reportQna.writerNo}</p>
+                        <input type="hidden" name="targetMemberNo" value="${reportQna.writerNo}"><p class="text-justify">${qna.memberNickname}</p>
                     </div>
             </div>
             <!-- 게시판 분류, 게시판 제목-->
@@ -97,24 +97,25 @@
 	</div>
 	<script>
 	$("#submit").click(function(e){
-		$("#submit").click(function(e){
-			e.preventDefault();
-			var formData= $("form").serialize();
-			console.log("과연?", formData);
-			$.ajax({
-				url:"/myvet/report/insertReport.do",
-				type:"post",
-				data: formData
-				
-			})
-			.fail(function(result){
-				console.log("error");
-			})
-			.done(function(e){
-				alert("신고가 접수되었습니다.")
-				window.close();
-			})
+		e.preventDefault();
+		
+		var formData= $("form").serialize();
+	
+		console.log("과연?", formData);
+		$.ajax({
+			url:"/myvet/report/insertReport.do",
+			type:"post",
+			data: formData
+			
 		})
+		.fail(function(result){
+			console.log("error");
+		})
+		.done(function(e){
+			alert("신고가 접수되었습니다.")
+			window.close();
+		})
+	})
 	</script>
 </body>
 </html>
