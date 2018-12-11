@@ -13,6 +13,7 @@
 		<result column="telephone" property="telephone"/>
 		<result column="hos_register" property="hosRegister"/>
 		<result column="hos_search_cnt" property="hosSearchCnt"/>
+		<result column="hos_code" property="hosCode"/>
 	</resultMap>
 	
 	<insert id="insertMap" parameterType="HosBasic">
@@ -35,6 +36,15 @@
 					address=#{address} and 
 				  roadAddress=#{roadAddress} and 
 				  telephone = #{telephone}			
+	</select>
+	
+	<select id="selectHosCode" parameterType="HosBasic" resultType="int">
+		select hos_code
+			from hos_basic
+				where
+					address=#{address} and 
+				  roadAddress=#{roadAddress} and 
+				  telephone = #{telephone}	
 	</select>
 	
 	<select id="selectMap" parameterType="HosBasic" resultMap="HosBasicMap">

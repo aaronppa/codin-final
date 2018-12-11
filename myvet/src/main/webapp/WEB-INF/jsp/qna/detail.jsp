@@ -582,7 +582,7 @@
             ${qna.viewCnt}</i> <i class="far fa-clock">&nbsp;<fmt:formatDate
                value="${qna.regDate}" pattern="yyyy-MM-dd hh:mm:ss" /></i>
       </div>
-      <div class="report">
+      <div class="report qnaReportBtn">
          <i class="fas fa-exclamation-triangle">신고하기</i>
       </div>
       <div class="title" aria-placeholder="title..">${qna.title }</div>
@@ -1084,7 +1084,11 @@
                   
               })
                   
-                  
+        
+              
+      $('.qnaReportBtn').click(function(){
+        window.open("/myvet/report/reportQnaForm.do?qnaNo="+location.search.substring(6).substring(1),"report","width=1000, height=600, left=500, top=10")
+     })
         
         //like-dislike
 //       $("#like").toggle(

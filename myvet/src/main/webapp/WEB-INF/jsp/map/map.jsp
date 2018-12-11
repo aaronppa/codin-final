@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -445,10 +446,15 @@
 									let infowindow = new naver.maps.InfoWindow(
 											{
 
-												content : '<p>중심점'
+												content : '<p>병원이름:'
 														+ jsondata[k].title
-														+ "</p>'+<a href='#'>"
-														+ "임의적 이동버튼" + "</a>"
+														+ "</p>'<a href='<c:url value='/hos/hospital.do?hosCode="
+														+jsondata[k].hosCode
+														+"&memberNo="
+														+${user.memberNo}
+														+"'/>'>"
+														+ "동물병원 찾기 페이지로 이동" 
+														+ "</a>"
 											});
 
 									//마크점 클릭시 나오는 action의 분기
