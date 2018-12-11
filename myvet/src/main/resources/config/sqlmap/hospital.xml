@@ -114,6 +114,25 @@
 		<association property="pet" column="booking_pet" select="selectPet"></association>
 	</resultMap>
 	
+	<resultMap type="HosChart" id="chartMap">
+		<result column="chart_no" property="chartNo"/>
+		<result column="board_code" property="boardCode"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="vet_no" property="vetNo"/>
+		<result column="booking_no" property="bookingNo"/>
+		<result column="dissease" property="dissease"/>
+		<result column="diagnosis" property="diagnosis"/>
+		<result column="warning" property="warning"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="pet_no" property="petNo"/>
+		<result column="next_booking" property="nextBooking"/>
+		<result column="chart_reg_date" property="chartRegDate"/>
+		<result column="chart_edit_date" property="chartEditDate"/>
+		<association column="member_no" property="member" select="selectMember"></association>
+		<association column="vet_no" property="vet" select="selectMember"></association>
+		<association property="pet" column="pet_no" select="selectPet"></association>
+	</resultMap>
+	
 	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
 		select *
 		from file_info
@@ -323,6 +342,22 @@
 	<select id="selectBooking" parameterType="int" resultMap="bookingMap">
 		select *
 		from hos_booking
+		where booking_no = #{bookingNo}
+	</select>
+	
+	<select id="selectBookingByHosCode" parameterType="int" resultMap="bookingMap">
+		select *
+		from hos_booking
+		where hos_code = #{hosCode}
+	</select>
+	
+	<select id="selectBookingByDate" parameterType="HosBooking" resultMap="bookingMap">
+		select *
+		from (select *
+			  from hos_booking
+			  where block_code in (select block_code
+			  						from hos_block
+			  						where block_day = #{hosBlock.blockDay})) blockDay
 		where hos_code = #{hosCode}
 	</select>
 	
@@ -337,10 +372,43 @@
 		set confirm = 'Y'
 		where booking_no = #{bookingNo}
 	</update>
+	
 	<update id="banBooking" parameterType="int">
 		update hos_booking
 		set confirm = 'B'
 		where booking_no = #{bookingNo}
 	</update>
 	
+	<update id="finishBooking" parameterType="int">
+		update hos_booking
+		set finish = 'Y'
+		where booking_no = #{bookingNo}
+	</update>
+	
+	<insert id="insertChart" parameterType="HosChart" useGeneratedKeys="true" keyProperty="chartNo">
+		insert into hos_chart
+		(hos_code, vet_no, disease, diagnosis, warning, member_no, pet_no, next_booking)
+		values
+		(#{hosCode}, #{vetNo}, #{disease}, #{diagnosis}, #{warning}, #{memberNo}, #{petNo}, #{nextBooking})
+	</insert>
+	
+	<insert id="insertFileInfoAtChart" parameterType="FileInfo">
+		insert into file_info
+		(board_code, board_no, ori_name, sys_name, file_path, file_size)
+		values
+		(31, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize})
+	</insert>
+	
+	<select id="chartListByPetNo" parameterType="int" resultMap="chartMap">
+		select *
+		from hos_chart
+		where pet_no = #{petNo}
+	</select>
+	
+	<select id="selectChartImgs" parameterType="int" resultMap="fileInfoMap">
+		select *
+		from file_info
+		where board_code = 31 and
+			  board_no = #{chartNo}
+	</select>
 </mapper>

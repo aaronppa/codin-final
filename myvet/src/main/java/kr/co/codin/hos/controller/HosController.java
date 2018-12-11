@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ import kr.co.codin.hos.service.HosServiceImpl;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosBooking;
+import kr.co.codin.repository.domain.HosChart;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.HosPage;
@@ -77,9 +79,29 @@ public class HosController {
 	@RequestMapping("bookingList.do")
 	@ResponseBody
 	public List<HosBooking> bookingList(Model model, int hosCode) {
-		System.out.println(service.selectBooking(hosCode));
 	
-		return service.selectBooking(hosCode);
+		return service.selectBookingByHosCode(hosCode);
+	}
+	
+	@RequestMapping("bookingListByDay.do")
+	@ResponseBody
+	public List<HosBooking> bookingList(Model model, 
+										int hosCode, 
+										@RequestParam(value="date", defaultValue="null")String date) {
+		
+		if (date.equals("null")) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			date = sdf.format(new Date());
+		}
+		
+		HosBooking booking = new HosBooking();
+		HosBlock block = new HosBlock();
+		
+		block.setBlockDay(date);
+		booking.setHosCode(hosCode);
+		booking.setHosBlock(block);
+		
+		return service.selectBookingByDate(booking);
 	}
 	
 	@RequestMapping("bookingSubmit.do")
@@ -285,8 +307,68 @@ public class HosController {
 	}
 
 	@RequestMapping("chartHos.do")
-	public void chartHos() {
+	public void chartHos(Model model, int hosCode) {
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+	}
+	
+	@RequestMapping("writeChart.do")
+	public void writeChart(Model model, int bookingNo) {
+	 	model.addAttribute("booking", service.selectBooking(bookingNo));
+	}
+	
+	@RequestMapping("insertChart.do")
+	@ResponseBody
+	public void insertChart(HosChart chart, List<MultipartFile> chartImg) throws IllegalStateException, IOException {
 		
+		service.insertChart(chart);
+
+		if (chartImg.isEmpty()) return;
+		
+		for (MultipartFile img : chartImg) {
+			
+			if(img.isEmpty()) continue;
+			
+			boolean run = true;
+			int no = 0;
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String filePath = servletContext.getRealPath("/")+"/upload/hospital/chart/" + sdf.format(date);
+			String sysName = img.getOriginalFilename();
+			
+			File file = new File(filePath, sysName);
+			
+			while(run) {
+				if (!file.exists()) break;
+				sysName = sysName + no++;
+				file = new File(filePath, sysName);
+				continue;
+			}
+			file.mkdirs();
+			img.transferTo(file);
+			
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setBoardNo(chart.getChartNo());
+			fileInfo.setFilePath("/hospital/chart/"+ sdf.format(date));
+			fileInfo.setOriName(img.getOriginalFilename());
+			fileInfo.setSysName(sysName);
+			fileInfo.setFileSize(img.getSize());
+			
+			service.insertFileInfoAtChart(fileInfo);
+		}
+		
+		service.finishBooking(chart.getBookingNo());
+		
+	}
+	
+	@RequestMapping("chartListByPetNo")
+	@ResponseBody
+	public List<HosChart> chartListByPetNo (int bookingNo) {
+		return service.chartListByPetNo(service.selectBooking(bookingNo).getBookingPet());
+	}
+	
+	@RequestMapping("chartImg.do")
+	public void chartImg(Model model, int chartNo) {
+		model.addAttribute("chartImgs", service.selectChartImgs(chartNo));
 	}
 	
 	@RequestMapping("search.do")
@@ -385,7 +467,7 @@ public class HosController {
 			int no = 0;
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			String filePath = servletContext.getRealPath("/")+"/upload/hospital/" + sdf.format(date);
+			String filePath = servletContext.getRealPath("/")+"/upload/hospital/basic/" + sdf.format(date);
 			String sysName = img.getOriginalFilename();
 			
 			File file = new File(filePath, sysName);
@@ -458,6 +540,51 @@ public class HosController {
 	@RequestMapping("norHosPage.do")
 	public void normalHosPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int ListCount) {
 		model.addAttribute("pageResult", new PageResult(pageNo, ListCount, 4, 5));
+	}
+	
+	@RequestMapping("hosBoard.do")
+	public void hosBoard() {
+		
+	}
+
+	@RequestMapping("writeBoard.do")
+	public void writeBoard() {
+		
+	}
+	
+	@RequestMapping("insertBoardImg.do")
+	public void insertBoardImg(String img) throws IllegalStateException, IOException {
+		
+		System.out.println("img :" + img);
+		
+//		if(img.isEmpty()) return null;
+		
+//		boolean run = true;
+//		int no = 0;
+//		Date date = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//		String filePath = servletContext.getRealPath("/")+"/upload/hospital/board/" + sdf.format(date);
+//		String sysName = img.getOriginalFilename();
+//		
+//		File file = new File(filePath, sysName);
+//		
+//		while(run) {
+//			if (!file.exists()) break;
+//			sysName = sysName + no++;
+//			file = new File(filePath, sysName);
+//			continue;
+//		}
+//		
+//		file.mkdirs();
+//		img.transferTo(file);
+//		
+//		FileInfo fileInfo = new FileInfo();
+//		fileInfo.setFilePath("/hospital/board/"+ sdf.format(date));
+//		fileInfo.setOriName(img.getOriginalFilename());
+//		fileInfo.setSysName(sysName);
+//		fileInfo.setFileSize(img.getSize());
+//			
+//		return fileInfo;
 	}
 	
 	public Date setTimeToCal(Calendar cal, StringTokenizer st) {

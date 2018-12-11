@@ -53,21 +53,14 @@
        overflow: hidden;
    }
    #hosBoard {
-       width: 30%;
-       height: 250px;
-       position: relative;
-       display: inline-block;
-       margin-top: 10px;
-   }
-   #hosReview {
-       width: 30%;
+       width: 49%;
        height: 250px;
        position: relative;
        display: inline-block;
        margin-top: 10px;
    }
    #hosStaff {
-       width: 19.5%;
+       width: 49%;
        height: 250px;
        position: relative;
        display: inline-block;
@@ -83,11 +76,16 @@
    #bookTable {
 		overflow: auto;
    }
+   
+   #bodyContainer {
+   		width: 1100px;
+   		margin: auto;
+   }
 </style>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
-
+	<div id="bodyContainer">
     <table id="hosTable">
         <tr>
             <td rowspan="2">
@@ -97,6 +95,9 @@
             </td>
             <td>
             <div class="hosTitle"><span>즐겨찾는 고객 수 : </span><span></span><span>명</span></div>
+            </td>
+            <td rowspan="2" style="text-align: center">
+                <button id="chart">진료차트</button>
             </td>
             <td rowspan="2" style="text-align: center">
                 관리
@@ -162,17 +163,19 @@
     </div>
     <div id="bottomContainer">
         <div id="hosBoard">
-            병원게시판
-        </div>
-        <div id="hosReview">
-            후기
+            <a href="hosBoard.do">병원게시판</a>
         </div>
         <div id="hosStaff">
             직원
         </div>
     </div>
+    </div>
     <script>
     
+    	$("#chart").click(function(){
+    		window.location.href = "/myvet/hos/chartHos.do?hosCode=" + $("#hosCode").val();
+    	})
+    	
     	$("#booking").click(function(){
     		window.location.href = "/myvet/hos/booking.do?hosCode=" + $("#hosCode").val();
     	})

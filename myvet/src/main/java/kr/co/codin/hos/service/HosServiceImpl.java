@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosBooking;
+import kr.co.codin.repository.domain.HosChart;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
+import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Pet;
-import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.mapper.HosMapper;
 
 @Service
@@ -147,8 +148,8 @@ public class HosServiceImpl implements HosService{
 	}
 
 	@Override
-	public List<HosBooking> selectBooking(int hosCode) {
-		return mapper.selectBooking(hosCode);
+	public List<HosBooking> selectBookingByHosCode(int hosCode) {
+		return mapper.selectBookingByHosCode(hosCode);
 	}
 
 	@Override
@@ -159,5 +160,39 @@ public class HosServiceImpl implements HosService{
 	@Override
 	public void banBooking(int bookingNo) {
 		mapper.banBooking(bookingNo);
+	}
+
+	@Override
+	public List<HosBooking> selectBookingByDate(HosBooking booking) {
+		return mapper.selectBookingByDate(booking);
+	}
+
+	@Override
+	public HosBooking selectBooking(int bookingNo) {
+		return mapper.selectBooking(bookingNo);
+	}
+	
+	@Override
+	public int insertChart(HosChart chart) {
+		return mapper.insertChart(chart);
+	}
+	
+	@Override
+	public void insertFileInfoAtChart(FileInfo fileInfo) {
+		mapper.insertFileInfoAtChart(fileInfo);
+	};
+	
+	@Override
+	public List<HosChart> chartListByPetNo(int petNo) {
+		return mapper.chartListByPetNo(petNo);
+	};
+	
+	@Override
+	public List<FileInfo> selectChartImgs(int chartNo) {
+		return mapper.selectChartImgs(chartNo);
+	}
+	
+	public void finishBooking(int bookingNo) {
+		mapper.finishBooking(bookingNo);
 	}
 }

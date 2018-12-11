@@ -65,7 +65,7 @@
 	    	<td class="blockTime">
 	    		${block.blockStart } ~ ${block.blockEnd }
     		</td>
-	    		<td class="possibility">쌉가능</td>
+	    		<td class="possibility">가능</td>
 	    		<td><button class="booking">예약하기</button></td>
 	    	</tr>
    			
@@ -74,7 +74,7 @@
 			    	<td class="blockTime">
 			    		${block.blockStart } ~ ${block.blockEnd }
 		    		</td>
-		    		<td class="possibility">쌉가능</td>
+		    		<td class="possibility">가능</td>
 		    		<td class="button"><button class="booking" data-block="${block.blockCode }">예약하기</button></td>
 		    	</tr>
     		</c:forEach>
@@ -161,7 +161,7 @@
 				for(let i = 0; i < blockList.length; i++) {
 					var $newRow = $blockRow.clone();
 					$newRow.find(".blockTime").html(blockList[i].blockStart + " ~ " + blockList[i].blockEnd);
-					$newRow.find(".possibility").html("쌉불가");
+					$newRow.find(".possibility").html("불가");
 					$newRow.find(".button").html("<button class='booking' data-blockCode='"+blockList[i].blockCode+"'>예약하기</button>");
 					$("#blockTable").append($newRow);	
 				}
