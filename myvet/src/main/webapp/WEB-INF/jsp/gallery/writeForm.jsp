@@ -6,6 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+   <link rel="stylesheet" href="/myvet/resources/css/gallery/writeForm.css">
+	<!--  -->
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -21,114 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script>
   <style>
-/*     #thumbs {  */
-/*         padding-top: 10px;  */
-/*         overflow: hidden;  */
-/*     } */
-/*     #thumbs img, #largeImage { */
-/*     cursor: pointer; */
-/*     width: 500px; */
-/*     height: 400px; */
-/*     } */
-/*     #thumbs img { */
-/*     float: left; */
-/*     margin-right: 6px; */
-/*     width:120px; */
-/*     height: 120px; */
-/*     } */
-/*     #description { */
-/*     background: black; */
-/*     color: white; */
-/*     position: absolute; */
-/*     bottom: 0; */
-/*     padding: 10px 20px; */
-/*     margin: 5px; */
-/*     } */
-/*     #panel { */
-/*         position: relative; */
-/*     } */
-/*     #gallary{ */
-/*         float: left; */
-/*         width: 300px; */
 
-/*     } */
-/*     .content{ */
-/*         text-align: left; */
-/*     } */
-/*     #writer-img{ */
-/*         width: 60px; */
-/*         height: 60px; */
-/*     } */
-/*     #user-img{ */
-/*         width: 50px; */
-/*         height: 50px; */
-/*     } */
-/*     .content{ */
-/*         border: none; */
-        
-/*     } */
-/*     .col-sm-5{ */
-/* 		height: 590px; */
-/* 		overflow: hidden; */
-/* 		overflow: scroll; */
-/* 		overflow: auto; */
-/*     } */
-
-/*     textarea{ */
-/*       border-top: none; */
-/*       border-left: none; */
-/*       border-right: none; */
-/*     } */
-/*     .btn-group{ */
-/*       float: right; */
-/*     } */
-/*     /*swiper*/ */
-/*     html, body { */
-/*       position: relative; */
-/*       height: 100%; */
-/*     } */
-/*     body { */
-/*       font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */
-/*       font-size: 14px; */
-/*       color:#000; */
-/*       margin: 0; */
-/*       padding: 0; */
-/*     } */
-/*     .swiper-container { */
-/*       width: 100%; */
-/*       height: 300px; */
-/*       margin-left: auto; */
-/*       margin-right: auto; */
-/*     } */
-/*     .swiper-slide { */
-/*       background-size: cover; */
-/*       background-position: center; */
-/*     } */
-/*     .gallery-top { */
-/*       height: 400px; */
-/*       width: 600px; */
-/*     } */
-/*     .gallery-thumbs { */
-/*       height: 25%; */
-/*       width: 600px; */
-/*       box-sizing: border-box; */
-/*       padding: 10px 0; */
-/*     } */
-/*     .gallery-thumbs .swiper-slide { */
-/*       height: 100%; */
-/*       opacity: 0.4; */
-/*     } */
-/*     .gallery-thumbs .swiper-slide-thumb-active { */
-/*       opacity: 1; */
-/*     } */
-/*     .top-img{ */
-/*         width: 600px; */
-/*         height: 400px; */
-/*     } */
-/*     .thumbs-img{ */
-/*         width:150px; */
-/*         height: 100px; */
-/*     } */
  
 
     </style>
@@ -164,9 +59,9 @@
                         </div>
                     </div>
                     <div class="pet-add">
-                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus" ></i>
                         <span data-toggle="tooltip" title="PONY">
-                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle" >
+                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="petImg rounded-circle">
                         </span>
                     </div>
 
@@ -177,7 +72,7 @@
                     <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                     <input type="hidden" name="writerNo" value="12">
                     <input type="hidden" name="boardCode" value="2">
-                    <span class="nickname" >복순이</span>
+                    <span class="writerNick">복순이</span>
                     <hr>
                     <br>
                     <!--제목-->

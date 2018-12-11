@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.member.service.MemberService;
@@ -48,8 +49,9 @@ public class ReportController {
 	
 	@RequestMapping("reportGalleryForm.do")
 	public void reportGalleryForm(int galleryNo,HttpSession session,Model model) throws Exception{
-//		Member member = (Member)session.getAttribute("user");
-//		model.addAttribute("nickname",member.getMemberNickname());
+		Member member = (Member)session.getAttribute("user");
+		model.addAttribute("nickname",member.getMemberNickname());
+		System.out.println();
 		System.out.println("gallReport!");
 		System.out.println("galleryNo : "+galleryNo);
 		model.addAttribute("reportGallery",service.detailReportGallery(galleryNo));
@@ -71,9 +73,10 @@ public class ReportController {
 	}
 	
 	@RequestMapping("insertReport.do")
+	@ResponseBody
 	public String insertReport(Report report) throws Exception{
-		System.out.println("신고 컨트롤러");
 		System.out.println("insertReport!");
+		System.out.println(report);
 		service.insertReport(report);
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}

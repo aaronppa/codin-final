@@ -87,7 +87,7 @@
 	<select id="selectByReportQna" parameterType="int" resultMap="QnaMap">
 		select *
 		  from qna
-		 where gallery_no=#{galleryNo}
+		 where qna_no=#{qnaNo}
 	</select>	
 	
 	<select id="selectByReportGalleryComment" parameterType="int" resultMap="galleryMap">

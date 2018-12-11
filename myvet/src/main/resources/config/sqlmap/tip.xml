@@ -13,8 +13,8 @@
 		<result column="reg_date" property="regDate"/>		
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="category_code" property="categoryCode"/>
+		<result column="member_nickname" property="memberNickname"/>
 		<association property="recomCnt" column="tip_no" select="countRecommend"></association>
-		<collection property="member" resultMap="memberMap"></collection>
 	</resultMap>
 
 	

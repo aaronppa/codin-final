@@ -44,10 +44,6 @@ public class TipController {
 	//value의 변수명
 	@RequestMapping("list.do")
 	public void list(Model model,HttpSession session, @RequestParam(value="pageNo", defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="") String keyword,@RequestParam(value="sort", defaultValue="0") int sort, @RequestParam(value="category", defaultValue="0") int category) throws Exception{
-		Member member = (Member)session.getAttribute("user");
-		int memberNo = member.getMemberNo();
-		System.out.println("닉넴 : "+member.getMemberNickname());
-		model.addAttribute("nickname",member.getMemberNickname());
 		SearchTip searchTip = new SearchTip(pageNo);
 		searchTip.setKeyword(keyword);
 		searchTip.setSort(sort);
@@ -114,7 +110,7 @@ public class TipController {
 	public void writeForm(Model model,HttpSession session) throws Exception{
 		System.out.println("writeForm");
 		Member member = (Member)session.getAttribute("user");
-		
+		System.out.println(member);
 		model.addAttribute("nickname",member.getMemberNickname());
 //		model.addAttribute("tip",service.insertTip(tip));
 	}

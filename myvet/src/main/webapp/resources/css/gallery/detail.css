@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/*petImg margin 인라인태그*/
+/*petImg margin, fa-exclamation-circle(댓글 신고) 인라인태그*/
     #thumbs { 
         padding-top: 10px; 
         overflow: hidden; 
@@ -322,4 +322,8 @@
 	}
 	#submitupdatecom{
 	cursor:pointer;margin-left:70%;
+	}
+	
+	.fa-exclamation-circle{
+		margin-left: 10px;
 	}
