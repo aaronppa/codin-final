@@ -9,6 +9,7 @@ import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaCategoryList;
 import kr.co.codin.repository.domain.QnaComment;
 import kr.co.codin.repository.domain.QnaRecommend;
+import kr.co.codin.repository.domain.SearchQnA;
 import kr.co.codin.repository.mapper.QnaMapper;
 
 @Service
@@ -19,9 +20,9 @@ public class QnaServiceImpl implements QnaService{
 	
 	
 	@Override
-	public List<Qna> SelectList() {
+	public List<Qna> SelectList(SearchQnA qna) {
 		// TODO Auto-generated method stub
-		return mapper.qnaList();
+		return mapper.qnaList(qna);
 	}
 	@Override
 	public void InsertQna(Qna qna) {

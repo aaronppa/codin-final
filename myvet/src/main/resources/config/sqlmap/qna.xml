@@ -90,7 +90,7 @@
 		where qna_no = #{qnaNo}
 	</select>
 
-	<select id="qnaList" parameterType="Qna" resultMap="QnaMap">
+	<select id="qnaList" parameterType="SearchQna" resultMap="QnaMap">
 		select q.qna_no ,q.title
 				,(select member_nickname from member where member_no = q.writer_no) memberNickname
 				, (select count(qna_no) from qna_comment where qna_no=q.qna_no) 
@@ -103,7 +103,88 @@
 				,q.answered
 				
 			from qna q
-			order by q.qna_no desc
+			<choose >
+				<when test="answered !=0 or categoryCode!=0 or sort !=0">
+				 where
+				</when>
+			</choose>
+			<choose>
+				<when test="answered==0">
+					
+				</when>
+				<when test="answered==1">
+				 	q.answered='Y'
+				</when>
+				<when test="answered==2">
+				 	q.answered='N'
+				</when>		
+			</choose>
+			<choose>
+				<when test="(answered==1 or answered==2) and categoryCode!=0">
+					and
+				</when>
+			</choose>
+			<choose>
+				<when test="categoryCode==0">
+					
+				</when>
+				<when test="categoryCode==1">
+					 q.category_code=1
+				</when>
+				<when test="categoryCode==2">
+					 q.category_code=2
+				</when>		
+			</choose>
+			<!-- order by q.qna_no desc -->
+			<choose>
+				<when test="(categoryCode==1 or categoryCode==2) and sort!=0">
+					and
+				</when>
+			</choose>
+			<choose>
+				<when test="sort==0">
+				    
+				</when>
+				<when test="sort==1">
+					 q.title like CONCAT('%',#{keyword},'%') 
+				</when>
+				<when test="sort==2">
+					 q.content like CONCAT('%',#{keyword},'%') 
+				</when>
+				<when test="sort==3">
+					(select member_nickname from member where member_no = q.writer_no) like CONCAT('%',#{keyword},'%') 
+				</when>
+				<when test="sort==4">
+					 (q.title like CONCAT('%',#{keyword},'%'),'%') or (q.content like CONCAT('%',#{keyword},'%')) 
+				</when>
+			</choose>
+		
+			<choose>
+				<when test="order==0">
+					order by q.qna_no desc
+					
+				</when>
+				<when test="order==1">
+					order by q.view_cnt desc
+				</when>
+				<when test="order==2">
+					order by q.view_cnt asc
+				</when>
+				<when test="order==3">
+					order by recomCnt  desc
+				</when>
+				<when test="order==4">
+					order by recomCnt  asc
+				</when>
+				<when test="order==5">
+					order by q.reg_date desc
+				</when>
+				<when test="order==6">
+					order by q.reg_date asc
+				</when>
+				
+			</choose>
+			<!-- limit #{pageNo},10 -->
 	</select>
 
 	<insert id="InsertQna" parameterType="Qna">

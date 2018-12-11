@@ -8,10 +8,11 @@ import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaCategoryList;
 import kr.co.codin.repository.domain.QnaComment;
 import kr.co.codin.repository.domain.QnaRecommend;
+import kr.co.codin.repository.domain.SearchQnA;
 
 @Service
 public interface QnaService {
-	List<Qna> SelectList();
+	List<Qna> SelectList(SearchQnA qna);
 	void InsertQna(Qna qna);
 	Qna selectQnaByNo(int qnaNo);
 	void updateDetail(Qna qna);

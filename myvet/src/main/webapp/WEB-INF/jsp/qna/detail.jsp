@@ -1085,7 +1085,7 @@
               })
                   
         
-              
+      //신고버튼 (게시글)        
       $('.qnaReportBtn').click(function(){
         window.open("/myvet/report/reportQnaForm.do?qnaNo="+location.search.substring(6).substring(1),"report","width=1000, height=600, left=500, top=10")
      })

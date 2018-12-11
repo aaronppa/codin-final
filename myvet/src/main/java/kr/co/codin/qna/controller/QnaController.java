@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.google.gson.JsonObject;
-
 import kr.co.codin.qna.service.QnaService;
 import kr.co.codin.repository.domain.Member;
+import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaComment;
-import kr.co.codin.repository.domain.QnaRecommend;
+import kr.co.codin.repository.domain.SearchQnA;
 
 
 
@@ -39,10 +37,47 @@ public class QnaController {
 	
 	
 	@RequestMapping("list.do")
-	public void list(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo,Member member) throws Exception{
+	public void list(Model model
+			, @RequestParam(value="pageNo", defaultValue="0") int pageNo
+			,Member member
+			,@RequestParam(value="order",defaultValue="0") int order
+			,@RequestParam(value="answered",defaultValue="0") int answered
+			,@RequestParam(value="categoryCode",defaultValue="0") int categoryCode
+			,@RequestParam(value="sort",defaultValue="0") String sort
+			,@RequestParam(value="keyword",defaultValue="0") String keyword
+			) throws Exception{
+		SearchQnA searChQuery= new SearchQnA(pageNo);
+		searChQuery.setAnswered(answered);
+		searChQuery.setKeyword(keyword);
+		System.out.println("--------------------------");
+		System.out.println(keyword);
+		searChQuery.setOrder(order);
+		searChQuery.setCategoryCode(categoryCode);
+		searChQuery.setSort(sort);
+		searChQuery.setPageNo(pageNo);
+		System.out.println("dlsdjfsljdf:"+pageNo);
+		if(pageNo == 0 ) {
+			model.addAttribute("pageNo",pageNo);
+			model.addAttribute("pageNoCnt",pageNo+9);
+		} else if(pageNo == 1) {
+			model.addAttribute("pageNo",(pageNo*10)-10);
+			model.addAttribute("pageNoCnt",(pageNo*10)-1);
+			
+		}else {
+			model.addAttribute("pageNo",(pageNo*10)-10);
+			model.addAttribute("pageNoCnt",(pageNo*10));
+		}
+			
 		model.addAttribute("category",service.cateList());
-		model.addAttribute("qna", service.SelectList());
-		model.addAttribute("totalCnt",service.countTotalContent());
+		model.addAttribute("qna", service.SelectList(searChQuery));
+		model.addAttribute("totalCnt",service.SelectList(searChQuery).size());
+		if((service.countTotalContent()%10)== 0) {
+			model.addAttribute("endPage",service.SelectList(searChQuery).size()/10);
+		}else {
+			model.addAttribute("endPage",service.SelectList(searChQuery).size()/10+1);
+		}
+		
+		model.addAttribute("pageResult", new PageResult(pageNo,service.SelectList(searChQuery).size()));
 		//System.out.println(memberNickname);
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countTip()));
 	}
