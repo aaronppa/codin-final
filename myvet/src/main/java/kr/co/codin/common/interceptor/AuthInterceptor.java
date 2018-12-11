@@ -23,8 +23,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		System.out.println("인증 인터셉터에 로그인 안되었음이 걸렸다!");
-		response.sendRedirect("../../myvet");
-		
+		response.sendRedirect("/myvet");
 		return false;
 	}
 	

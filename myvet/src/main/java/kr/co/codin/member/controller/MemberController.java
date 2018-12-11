@@ -128,6 +128,17 @@ public class MemberController {
 		}
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/";
 	}
+
+	@RequestMapping("/loginAjax.do")
+	@ResponseBody
+	public String loginAjax(Member member, HttpSession session) {
+		System.out.println(11111);
+		Member loginMember = service.login(member);
+		if (loginMember != null) {
+			session.setAttribute("user", loginMember);
+		}
+		return loginMember == null ? "fail" : "success";
+	}
 	
 	/**
 	 * 로그아웃

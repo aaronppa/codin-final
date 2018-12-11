@@ -130,7 +130,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="/myvet/member/login.do">
+                <form method="post" id="loginFormPop">
 	                <div class="modal-body">
 	                        <div class="input-group email">
 	                            <div class="input-group-prepend">
@@ -151,7 +151,7 @@
 	                    <button type="button" class="btn btn-outline-danger" id="find-email">
 	                    	<a href="findEmailForm.do">이메일 찾기</a>
 	                    </button>
-	                    <button type="submit" class="btn btn-outline-success">OK</button>
+	                    <button type="button" id="loginBtnPop" class="btn btn-outline-success">OK</button>
 	                </div>
                 </form>
             </div>
@@ -254,6 +254,42 @@
         
         $("#input-file").hide();
     	var emailCheck = 0;
+    	
+    	// 로그인 처리
+    	$("#loginBtnPop").click(function () {
+    		let memberEmail = $("input[name='memberEmail']");
+    		let password = $("input[name='password']");
+
+    		if (memberEmail.val() == "") {
+    			alert("이메일을 입력하세요");
+    			memberEmail.focus();
+    			return;
+    		}
+    		if (password.val() == "") {
+    			alert("패스워드를 입력하세요");
+    			password.focus();
+    			return;
+    		}
+    		
+    		// 폼의 데이터를 처리할 수 있는 스크립트 객체
+    		var fd = new FormData($("#loginFormPop")[0]);
+    		$.ajax({
+    			url: '<c:url value="/member/loginAjax.do"/>',
+    			type: "POST",
+    			data: {
+    				memberEmail: memberEmail.val(),
+    				password: password.val()
+    			},
+    			success: function (data) {
+    				if (data == 'fail') {
+    					alert("입력한 정보가 올바르지 않습니다.");
+    					password.select();
+    					return ;
+    				}
+    				location.reload();
+    			}
+    		});
+    	});
     	
     	$("#EmailCheck").click(function () {
     		var memberEmail = $("#email").val();

@@ -39,17 +39,23 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member login(Member member) {
 		String rawPassword = member.getPassword();
-//		System.out.println("입력한 비밀번호 : " + rawPassword);
-		String encPassword = mapper.selectPasswordById(member.getMemberEmail()).getPassword();
-//		System.out.println("저장된 비밀번호 : " + encPassword);
+		Member m = mapper.selectPasswordById(member.getMemberEmail());
 		
-		if (passwordEncoder.matches(rawPassword, encPassword)) {
-//			System.out.println("비밀번호 일치");
-			member.setPassword(encPassword);
-		} else {
-			System.out.println("비밀번호 불일치");
+		// 아이디에 해당하는 멤버가 존재하지 않는 경우
+		if (m == null) {
+			return null;
 		}
-		return mapper.selectMemberById(member);
+
+		// 데이터베이스 회원의 패스워드
+		String encPassword = m.getPassword();
+		
+		// 로그인 성공 : 입력된 패스워드와 암호화된 패스워드가 같은 경우
+		if (passwordEncoder.matches(rawPassword, encPassword)) {
+			return m;
+		} 
+		
+		// 비밀번호가 안맞는 경우
+		return null;
 	}
 
 	@Override
