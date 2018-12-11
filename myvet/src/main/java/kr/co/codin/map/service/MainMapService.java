@@ -10,4 +10,5 @@ import kr.co.codin.repository.domain.HosBasic;
 public interface MainMapService {
 	void insertMap(HosBasic list);
 	char HosCheck(HosBasic list);
+	int selectHosCode(HosBasic list);
 }

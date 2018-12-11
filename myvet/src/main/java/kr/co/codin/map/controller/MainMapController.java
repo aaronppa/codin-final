@@ -221,7 +221,7 @@ public class MainMapController {
 			service.insertMap(hos);
 			
 			
-			
+			hos.setHosCode(service.selectHosCode(hos));
 			hos.setHosRegister(service.HosCheck(hos));
 			
 			return hos;

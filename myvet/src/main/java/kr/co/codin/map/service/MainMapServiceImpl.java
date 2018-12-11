@@ -41,6 +41,12 @@ public class MainMapServiceImpl implements MainMapService{
 		return mapper.selectRegiMap(list).charAt(0);//mapper.selectRegiMap의 타입이 Stringd이기 때문에 char로 타입 형변환
 	}
 
+	@Override
+	public int selectHosCode(HosBasic list) {
+		// TODO Auto-generated method stub
+		return mapper.selectHosCode(list);
+	}
 
+	
 	
 }

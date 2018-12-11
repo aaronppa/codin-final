@@ -16,6 +16,15 @@ public class HosBasic {
 	public char hosRegister;
 	public int hosSearchCnt;
 	public String category;
+	public int hosCode;
+	
+
+	public int getHosCode() {
+		return hosCode;
+	}
+	public void setHosCode(int hosCode) {
+		this.hosCode = hosCode;
+	}
 	public String getCategory() {
 		return category;
 	}

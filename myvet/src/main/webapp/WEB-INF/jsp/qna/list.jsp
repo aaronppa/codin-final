@@ -252,12 +252,21 @@
 	
 	
 	
-	
-	if(${".recommendOrderBy"}.click==true){
+	/* 
+	${".recommendOrderBy"}.click==true){
 		console.log("클릭됨")
 	}
- 			
-
+ 			#")
+ */
+ 
+	$("#recommendCntDown").click(function(e){
+		console.log("클릭");
+		$("#recommendCntUp").removeClass("recommendOrderBy");
+		$("#recommendCntDown").addClass("recommendOrderBy");
+	
+		
+		
+	})
 
 
 
