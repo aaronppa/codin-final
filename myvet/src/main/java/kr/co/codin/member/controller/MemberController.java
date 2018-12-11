@@ -217,6 +217,17 @@ public class MemberController {
 		
 		return service.updatePassword(member);
 	}
+	
+	@RequestMapping("/updatecareer.do")
+	@ResponseBody
+	public int updateCareer(Member member, HttpSession session) throws Exception {
+		System.out.println(member);
+		Member loginMember = (Member)session.getAttribute("user");  
+		int memberNo = loginMember.getMemberNo();
+		member.setMemberNo(memberNo);
+		
+		return service.updateCareer(member);
+	}
 }
 
 

@@ -121,12 +121,56 @@ $(function () {
 				console.dir(data)
 				
 				if (data == 1) {
-					alert("패스워드가 변경되었습니다.");
-					 $("#passModal").modal("hide");
+					$.notify("패스워드가 변경되었습니다.", {position:"top right", autoHideDelay: 2000} );
+					$("#passModal").modal("hide");
 				} else {
-					alert("사용중인 패스워드가 올바르지 않습니다.");
+					$.notify("패스워드가 잘못 입력되었습니다.", {position:"top right", autoHideDelay: 2000} );
+//					alert("사용중인 패스워드가 올바르지 않습니다.");
 				}
 			}
 		});
 	});
+	
+	// 수의사 약력 수정
+	$("#memberCareer").blur(function () {
+		let career = $(this);
+		console.dir(memInfo);
+		// 변경된 내용이 없을 경우 취소
+		if (memInfo.career == career.html()) return;
+		
+		$.ajax({
+			url: `${APPLICATION_PATH}/member/updatecareer.do`,
+			data: {
+				memberCareer: career.html()
+			},
+			type: "POST",
+			success: function (data) {
+				$.notify("약력정보가 변경되었습니다.", {position:"top right", autoHideDelay: 2000} );
+				memInfo.career = career.html();
+			    if (career.html()) {
+			    	career.removeClass("career--edit");
+				}
+			    else {
+			    	career.addClass("career--edit");
+			    }
+			},
+			error: function () {
+				career.html(memInfo.career);
+				$.notify("처리중 에러가 발생했습니다.", {position:"top right", autoHideDelay: 2000} );
+			}
+		});
+	});
 })
+
+
+
+
+
+
+
+
+
+
+
+
+

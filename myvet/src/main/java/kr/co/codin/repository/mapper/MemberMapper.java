@@ -69,4 +69,11 @@ public interface MemberMapper {
 	 * @return
 	 */
 	int updatePassword(Member member);
+
+	/**
+	 * 회원의 약력을 수정
+	 * @param member
+	 * @return
+	 */
+	int updateCareer(Member member);
 }

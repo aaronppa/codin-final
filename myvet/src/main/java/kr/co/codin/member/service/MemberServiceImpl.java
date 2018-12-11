@@ -95,4 +95,9 @@ public class MemberServiceImpl implements MemberService {
 		member.setPassword(passwordEncoder.encode(member.getNewPassword()));
 		return mapper.updatePassword(member);
 	}
+	
+	@Override
+	public int updateCareer(Member member) {
+		return mapper.updateCareer(member);
+	}
 }

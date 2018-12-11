@@ -74,6 +74,12 @@
 		 where member_no = #{memberNo}
 	</update>
 	
+	<update id="updateCareer" parameterType="Member">
+		update member
+		   set member_career = #{memberCareer}
+		 where member_no = #{memberNo}
+	</update>
+	
 	<update id="updateMember" parameterType="Member">
 		update member
 		   set member_nickname = #{memberNickname},

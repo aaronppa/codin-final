@@ -34,11 +34,9 @@
 	padding-left: 0px;
 }
 
-.career {
-    width: 80%;
-    margin-right : auto;
-    margin-left : auto;
-    
+.career--edit {
+	width: 90%;
+	border: 1px solid #4d90fe;
 }
 
 #tools {
@@ -83,3 +81,5 @@ a {
 #pet-add {
 	padding-top: 0;
 }
+
+

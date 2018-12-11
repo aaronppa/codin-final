@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/member/mypage.css'/>" />
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
 <link rel="stylesheet" href="<c:url value='../resources/css/common/topbar.css'/>"/>
 </head>
 <body>
@@ -73,6 +72,28 @@
 		        </table>
 		    </div>
 		</form>
+
+		<%-- 수의사 추가정보 --%>
+		<c:if test="${member.memberGrade eq 'V'}">
+		    <div>
+		        <table class="table table-bordered" >
+		            <tr>
+		                <th>병원</th>
+		                <td>
+		                	A 병원
+		                </td>
+		            </tr>
+		            <tr><th style="width: 20%">약력</th>
+		                <td>
+		                	<div id="memberCareer" contenteditable="true" <c:if test="${empty member.memberCareer}">class='career--edit'</c:if>>
+	                			${member.memberCareer}
+		                	</div>
+		                </td>
+		            </tr>
+		        </table>
+		    </div>
+		</c:if>
+
 	    <h2>반려동물</h2>
 	    <hr>
 	    <div id="pet-container">
@@ -131,7 +152,9 @@
 			password: "${member.password}",
 			imgsrc: "<c:url value='/upload${member.memberFilePath}/${member.memberSysName}' />"
 		};
+		memInfo.career = $("#memberCareer").html();
 	</script>
+	<script src="<c:url value='/resources/js/common/notify.js'/>"></script>
 	<script src="<c:url value='/resources/js/member/mypage.js'/>"></script>
 </body>
 </html>

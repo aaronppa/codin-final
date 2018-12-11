@@ -66,4 +66,11 @@ public interface MemberService {
 	 * @return
 	 */
 	int updatePassword(Member member);
+
+	/**
+	 * 회원 약력 수정
+	 * @param member
+	 * @return
+	 */
+	int updateCareer(Member member);
 }
