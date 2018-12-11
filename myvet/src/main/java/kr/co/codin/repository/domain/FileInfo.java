@@ -56,5 +56,10 @@ public class FileInfo {
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
+	@Override
+	public String toString() {
+		return "FileInfo [fileId=" + fileId + ", boardCode=" + boardCode + ", boardNo=" + boardNo + ", oriName="
+				+ oriName + ", sysName=" + sysName + ", filePath=" + filePath + ", fileSize=" + fileSize + "]";
+	}
 	
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
+import kr.co.codin.repository.domain.HosBoard;
+import kr.co.codin.repository.domain.HosBoardCategoryList;
 import kr.co.codin.repository.domain.HosBooking;
 import kr.co.codin.repository.domain.HosChart;
 import kr.co.codin.repository.domain.HosFacility;
@@ -192,7 +194,39 @@ public class HosServiceImpl implements HosService{
 		return mapper.selectChartImgs(chartNo);
 	}
 	
+	@Override
 	public void finishBooking(int bookingNo) {
 		mapper.finishBooking(bookingNo);
 	}
+
+	@Override
+	public List<HosBoardCategoryList> selectCategory() {
+		return mapper.selectCategory();
+	}
+	
+	@Override
+	public void insertBoard(HosBoard board) {
+		mapper.insertBoard(board);
+	}
+	
+	@Override
+	public int lastBoardNo(int hosCode) {
+		return mapper.lastBoardNo(hosCode);
+	}
+
+	@Override
+	public void updateFileBoardNo(FileInfo fileInfo) {
+		mapper.updateFileBoardNo(fileInfo);
+	}
+
+	@Override
+	public void boardFileInfo(FileInfo fileInfo) {
+		mapper.boardFileInfo(fileInfo);
+	}
+
+	@Override
+	public List<HosBoard> selectHosBoard(int hosCode) {
+		return mapper.selectHosBoard(hosCode);
+	}
+	
 }

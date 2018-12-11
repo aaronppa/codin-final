@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
+import kr.co.codin.repository.domain.HosBoard;
 import kr.co.codin.repository.domain.HosBooking;
 import kr.co.codin.repository.domain.HosChart;
 import kr.co.codin.repository.domain.HosFacility;
@@ -543,48 +545,84 @@ public class HosController {
 	}
 	
 	@RequestMapping("hosBoard.do")
-	public void hosBoard() {
-		
+	public void hosBoard(Model model, int hosCode) {
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+		model.addAttribute("boardList", service.selectHosBoard(hosCode));
 	}
 
 	@RequestMapping("writeBoard.do")
-	public void writeBoard() {
+	public void writeBoard(Model model, int hosCode) {
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+		model.addAttribute("categoryList", service.selectCategory());
+	}
+	
+	@RequestMapping("insertBoard.do")
+	public String insertBoard(@RequestParam("fileId")int[] fileIdList,  
+ 							HosBoard board, 
+							@RequestParam(value="files", defaultValue="null")String files
+							) {
+		int hosBoardNo = 0;
+		try {
+			hosBoardNo = service.lastBoardNo(board.getHosCode());
+		} catch (BindingException e) {
+			;;
+		}
+		board.setHosBoardNo(++hosBoardNo);
 		
+		service.insertBoard(board);
+		System.out.println(board);
+		
+		System.out.println(Arrays.toString(fileIdList));
+		for (int fileid : fileIdList) {
+			if(fileid == 0) break;
+			
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setBoardNo(board.getHosBoardId());
+			fileInfo.setFileId(fileid);
+			System.out.println(fileInfo);
+			service.updateFileBoardNo(fileInfo);
+		}
+		
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/hos/hosBoard.do?hosCode=" + board.getHosCode();
 	}
 	
 	@RequestMapping("insertBoardImg.do")
-	public void insertBoardImg(String img) throws IllegalStateException, IOException {
+	@ResponseBody
+	public FileInfo uploadFile(@RequestParam("file") List<MultipartFile> mFileList) throws IllegalStateException,Exception{
+
+		FileInfo fileInfo = new FileInfo();
 		
-		System.out.println("img :" + img);
-		
-//		if(img.isEmpty()) return null;
-		
-//		boolean run = true;
-//		int no = 0;
-//		Date date = new Date();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//		String filePath = servletContext.getRealPath("/")+"/upload/hospital/board/" + sdf.format(date);
-//		String sysName = img.getOriginalFilename();
-//		
-//		File file = new File(filePath, sysName);
-//		
-//		while(run) {
-//			if (!file.exists()) break;
-//			sysName = sysName + no++;
-//			file = new File(filePath, sysName);
-//			continue;
-//		}
-//		
-//		file.mkdirs();
-//		img.transferTo(file);
-//		
-//		FileInfo fileInfo = new FileInfo();
-//		fileInfo.setFilePath("/hospital/board/"+ sdf.format(date));
-//		fileInfo.setOriName(img.getOriginalFilename());
-//		fileInfo.setSysName(sysName);
-//		fileInfo.setFileSize(img.getSize());
-//			
-//		return fileInfo;
+		for (MultipartFile img : mFileList) {
+			
+			if(img.isEmpty()) continue;
+			
+			boolean run = true;
+			int no = 0;
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String filePath = servletContext.getRealPath("/")+"/upload/hospital/board/" + sdf.format(date);
+			String sysName = img.getOriginalFilename();
+			
+			File file = new File(filePath, sysName);
+			
+			while(run) {
+				if (!file.exists()) break;
+				sysName = sysName + no++;
+				file = new File(filePath, sysName);
+				continue;
+			}
+			file.mkdirs();
+			img.transferTo(file);
+			
+			fileInfo.setBoardCode(32);
+			fileInfo.setFilePath("/hospital/board/"+ sdf.format(date));
+			fileInfo.setOriName(img.getOriginalFilename());
+			fileInfo.setSysName(sysName);
+			fileInfo.setFileSize(img.getSize());
+			service.boardFileInfo(fileInfo);
+		}
+		System.out.println(fileInfo);
+		return fileInfo;
 	}
 	
 	public Date setTimeToCal(Calendar cal, StringTokenizer st) {

@@ -163,7 +163,7 @@
     </div>
     <div id="bottomContainer">
         <div id="hosBoard">
-            <a href="hosBoard.do">병원게시판</a>
+            <a href="hosBoard.do?hosCode=${hospital.hosCode }">병원게시판</a>
         </div>
         <div id="hosStaff">
             직원

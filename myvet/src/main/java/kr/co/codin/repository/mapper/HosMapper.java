@@ -4,6 +4,8 @@ import java.util.List;
 
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
+import kr.co.codin.repository.domain.HosBoard;
+import kr.co.codin.repository.domain.HosBoardCategoryList;
 import kr.co.codin.repository.domain.HosBooking;
 import kr.co.codin.repository.domain.HosChart;
 import kr.co.codin.repository.domain.HosFacility;
@@ -23,6 +25,7 @@ public interface HosMapper {
 	void registerUpdate(Hospital hospital);
 	int hosCount(String keyWord);
 	void insertFileInfo(FileInfo fileInfo);
+	void boardFileInfo(FileInfo fileInfo);
 	List<Pet> searchPet(HosPage page);
 	int petCount(String keyWord);
 	List<Hospital> searchReg(HosPage page);
@@ -32,6 +35,7 @@ public interface HosMapper {
 	Hospital selectHospitalByNo (int hosCode);
 	FileInfo selectFileInfo (int fileId);
 	int nextBlockNo(int hosCode);
+	int lastBoardNo(int hosCode);
 	void createBlock(HosBlock block);
 	int isCreateBlock (HosBlock block);
 	List<HosBlock> selectBlockList(HosBlock block);
@@ -50,4 +54,9 @@ public interface HosMapper {
 	List<HosChart> chartListByPetNo(int petNo);
 	List<FileInfo> selectChartImgs(int chartNo);
 	void finishBooking(int bookingNo);
+	List<HosBoardCategoryList> selectCategory();
+	void insertBoard(HosBoard board);
+	void updateFileBoardNo(FileInfo fileInfo);
+	List<HosBoard> selectHosBoard(int hosCode);
+
 }

@@ -133,6 +133,23 @@
 		<association property="pet" column="pet_no" select="selectPet"></association>
 	</resultMap>
 	
+	<resultMap type="hosBoardCategoryList" id="categoryMap">
+		<result column="hos_board_category_code" property="hosBoardCategoryCode"/>
+		<result column="hos_board_category_name" property="hosBoardCategoryName"/>
+	</resultMap>
+	
+	<resultMap type="HosBoard" id="boardMap">
+		<result column="hos_board_id" property="hosBoardId"/>
+		<result column="board_code" property="boardCode"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="hos_board_no" property="hosBoardNo"/>
+		<result column="hos_board_category_code" property="hosBoardCategoryCode"/>
+		<result column="hos_board_title" property="hosBoardTitle"/>
+		<result column="hos_board_writer_no" property="hosBoardWriterNo"/>
+		<result column="hos_board_view_cnt" property="hosBoardViewCnt"/>
+		<result column="hos_board_content" property="hosBoardContent"/>
+	</resultMap>
+	
 	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
 		select *
 		from file_info
@@ -269,11 +286,18 @@
 		where hos_code = #{hosCode}
 	</update>
 	
-	<insert id="insertFileInfo" parameterType="FileInfo">
+	<insert id="insertFileInfo" parameterType="FileInfo" useGeneratedKeys="true" keyProperty="fileId">
 		insert into file_info
 		(board_code, board_no, ori_name, sys_name, file_path, file_size)
 		values
 		(30, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize})
+	</insert>
+	
+	<insert id="boardFileInfo" parameterType="FileInfo" useGeneratedKeys="true" keyProperty="fileId">
+		insert into file_info
+		(board_code, board_no, ori_name, sys_name, file_path, file_size)
+		values
+		(32, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize})
 	</insert>
 	
 	<select id="nextBlockNo" parameterType="int" resultType="int">
@@ -410,5 +434,35 @@
 		from file_info
 		where board_code = 31 and
 			  board_no = #{chartNo}
+	</select>
+	
+	<select id="selectCategory" resultMap="categoryMap">
+		select *
+		from hos_board_category_list
+	</select>
+	
+	<select id="lastBoardNo" parameterType="int" resultType="int">
+		select max(hos_board_no)
+		from hos_board
+		where hos_code = #{hosCode}
+	</select>
+	
+	<insert id="insertBoard" parameterType="HosBoard" useGeneratedKeys="true" keyProperty="hosBoardId">
+		insert into hos_board
+		(board_code, hos_code, hos_board_no, hos_board_category_code, hos_board_title, hos_board_content, hos_board_writer_no)
+		values
+		(32, #{hosCode}, #{hosBoardNo}, #{hosBoardCategoryCode}, #{hosBoardTitle}, #{hosBoardContent}, #{hosBoardWriterNo})
+	</insert>
+	
+	<update id="updateFileBoardNo" parameterType="FileInfo">
+		update file_info
+		set board_no = #{boardNo}
+		where file_id = #{fileId}
+	</update>
+	
+	<select id="selectHosBoard" parameterType="int" resultMap="boardMap">
+		select *
+		from hos_board
+		where hos_code = #{hosCode}
 	</select>
 </mapper>
