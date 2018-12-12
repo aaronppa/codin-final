@@ -16,12 +16,21 @@ public class Member {
 	private String memberPhone;
 	private String memberNickname;
 	private int hosCode;
+	private String hosTitle;
 	private String memberCareer;
 	private String mailingOpt;
 	private String memberOriName;
 	private String memberSysName;
 	private String memberFilePath;
 	private int memberFileSize;	
+
+	public String getHosTitle() {
+		return hosTitle;
+	}
+
+	public void setHosTitle(String hosTitle) {
+		this.hosTitle = hosTitle;
+	}
 
 	public String getNewPassword() {
 		return newPassword;

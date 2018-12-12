@@ -1,14 +1,12 @@
 package kr.co.codin.member.service;
 
-import java.io.File;
-import java.util.UUID;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.VetAuth;
 import kr.co.codin.repository.mapper.MemberMapper;
@@ -99,5 +97,14 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateCareer(Member member) {
 		return mapper.updateCareer(member);
+	}
+
+	@Override
+	public List<Hospital> retrieveHospital(String title) {
+		return mapper.selectHospitalByTitle(title);
+	}
+	
+	public void registMemberHospital(Member member) {
+		mapper.updateMemberHospital(member);
 	}
 }

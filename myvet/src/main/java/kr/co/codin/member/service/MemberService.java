@@ -1,7 +1,10 @@
 package kr.co.codin.member.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.VetAuth;
 
@@ -73,4 +76,18 @@ public interface MemberService {
 	 * @return
 	 */
 	int updateCareer(Member member);
+	
+	/**
+	 * 마이페이지 병원 등록 시 이름으로 검색
+	 * @param title
+	 * @return
+	 */
+	public List<Hospital> retrieveHospital(String title);
+	
+	/**
+	 * 수의사일 경우 병원 등록
+	 * @param title
+	 * @return
+	 */
+	public void registMemberHospital(Member member);
 }

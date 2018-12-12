@@ -14,9 +14,14 @@
 
 #profile { min-width: 293px; height: 183px; }
 #passBtn { float: right; }
+.float--right { float: right; }
 .basics {
     margin-right : auto;
     margin-left : auto;
+}
+
+table td, table th {
+	vertical-align: middle !important;
 }
 
 .form-control {
@@ -32,6 +37,33 @@
 	border: 0px;
 	background: #fff !important;
 	padding-left: 0px;
+}
+
+.hos--list {
+    margin-top: 10px;
+    border-radius: 3px;
+    background: #11BbCc22;
+}
+
+.hos--list > ul {
+    list-style: none;
+    padding: 4px 8px;
+    min-height: 270px;
+}
+
+.hos--list > ul > li {
+    border-bottom: 1px dotted skyblue;
+    padding: 10px 0px;
+    padding-left: 20px;
+}
+
+.hos--list > ul > li.active {
+    background: #00000088;
+    color: #fff;
+}
+
+.height200 {
+	height: 200px;
 }
 
 .career--edit {

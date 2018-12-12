@@ -11,6 +11,7 @@
 		<result column="member_phone" property="memberPhone"/>
 		<result column="member_nickname" property="memberNickname"/>
 		<result column="hos_code" property="hosCode"/>
+		<result column="hos_title" property="hosTitle"/>
 		<result column="member_career" property="memberCareer"/>
 		<result column="mailing_opt" property="mailingOpt"/>
 		<result column="member_ori_name" property="memberOriName"/>
@@ -63,9 +64,32 @@
 	</select>
 	
 	<select id="selectMemberByNo" parameterType="int" resultMap="MemberMap">
+		select a.*,
+		       (select title from hos_basic where hos_code = a.hos_code) as hos_title
+		  from member a
+		 where a.member_no = #{memberNo}
+	</select>
+	
+	<resultMap type="Hospital" id="hospitalMap">
+		<result column="hos_code" property="hosCode"/>
+		<result column="title" property="title"/>
+		<result column="roadAddress" property="roadAddress"/>
+		<result column="address" property="address"/>
+		<result column="mapx" property="mapx"/>
+		<result column="mapy" property="mapy"/>
+		<result column="hos_search_cnt" property="hosSearchCnt"/>
+		<result column="telephone" property="telephone"/>
+		<result column="hos_register" property="hosRegister"/>
+		<result column="lunch_start" property="lunchStart"/>
+		<result column="lunch_end" property="lunchEnd"/>
+		<result column="hos_homepage" property="hosHomepage"/>
+		<result column="hos_comment" property="hosComment"/>		
+	</resultMap>
+	
+	<select id="selectHospitalByTitle" parameterType="string" resultMap="hospitalMap">
 		select *
-		  from member
-		 where member_no = #{memberNo}
+		  from hos_basic
+		 where title like concat('%', #{title}, '%')
 	</select>
 	
 	<update id="updatePassword" parameterType="Member">
@@ -77,6 +101,12 @@
 	<update id="updateCareer" parameterType="Member">
 		update member
 		   set member_career = #{memberCareer}
+		 where member_no = #{memberNo}
+	</update>
+	
+	<update id="updateMemberHospital" parameterType="Member">
+		update member
+		   set hos_code = #{hosCode}
 		 where member_no = #{memberNo}
 	</update>
 	

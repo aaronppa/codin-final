@@ -160,6 +160,76 @@ $(function () {
 			}
 		});
 	});
+	
+	// 병원찾기 모달창에서 병원이름을 선택한 경우
+	$(".hos--list").on("click", "li", function () {
+		console.log($(this).data("hosno"));
+		$(this).siblings().removeClass("active");
+		$(this).toggleClass("active");
+	});
+	
+	// 병원명 검색 Ajax 처리
+	$("#hosTitle").keyup(function () {
+		if ($(this).val() == "") {
+			$(".hos--list > ul").empty();
+			return;
+		}
+		
+		$.ajax({
+			url: `${APPLICATION_PATH}/member/retrieve-hospital.do`,
+			data: {
+				title: $(this).val(),
+			},
+			success: function (data) {
+				var hosUL = $(".hos--list > ul");
+				hosUL.empty();
+				for (let hos of data) {
+					console.dir(hos)
+					hosUL.append(`<li data-hosno="${hos.hosCode}" data-hosRegister="${hos.hosRegister}">${hos.title}</li>`);
+				}
+			}
+		});
+	});
+	
+	// 병원등록 모달창 닫기
+	$("#hosCloseBtn").click(function () {
+		$("#hosTitle").val("");
+		$(".hos--list > ul").empty();
+		$("#hosRegModal").modal("hide");
+	});
+	
+	// 병원등록 - 모달창
+	$("#hosRegBtn").click(function () {
+		// 목록에서 선택한 병원
+		var selectHos = $(".hos--list > ul > li.active");
+		
+		// 선택한 병원의 이름
+		var hosTitle = selectHos.text();
+			
+		// 선택한 병원의 병원코드
+		var hosNo = selectHos.data("hosno");
+		if (hosNo == undefined) {
+			alert("등록할 병원을 선택하세요");
+			return;
+		}
+
+		// 선택한 병원 CSS 클래스 삭제
+		$(".hos--list > ul > li").removeClass("active");
+		
+		$.ajax({
+			url: `${APPLICATION_PATH}/member/hosreg.do`,
+			data: {
+				hosCode: hosNo
+			},
+			success: function (data) {
+				$("#hosTitleSpan").text(hosTitle);
+				$.notify("병원이 등록되었습니다.", {position:"top right", autoHideDelay: 2000} );
+				$("#hosTitle").val("");
+				$(".hos--list > ul").empty();
+				$("#hosRegModal").modal("hide");
+			}
+		});
+	});
 })
 
 

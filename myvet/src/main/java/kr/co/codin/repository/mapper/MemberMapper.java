@@ -1,5 +1,8 @@
 package kr.co.codin.repository.mapper;
 
+import java.util.List;
+
+import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.VetAuth;
 
@@ -76,4 +79,17 @@ public interface MemberMapper {
 	 * @return
 	 */
 	int updateCareer(Member member);
+
+	/**
+	 * 병원이름으로 검색
+	 * @param title
+	 * @return
+	 */
+	List<Hospital> selectHospitalByTitle(String title);
+	
+	/**
+	 * 수의사의 병원 등록
+	 * @param member
+	 */
+	void updateMemberHospital(Member member);
 }

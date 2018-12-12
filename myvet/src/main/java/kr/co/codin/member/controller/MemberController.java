@@ -2,6 +2,7 @@ package kr.co.codin.member.controller;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.member.service.MemberService;
 import kr.co.codin.pet.service.PetService;
+import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.VetAuth;
 import kr.co.codin.repository.mapper.MemberMapper;
@@ -227,6 +229,24 @@ public class MemberController {
 		member.setMemberNo(memberNo);
 		
 		return service.updateCareer(member);
+	}
+	
+	@RequestMapping("/retrieve-hospital.do")
+	@ResponseBody
+	public List<Hospital> retrieveHospital(String title) throws Exception {
+		System.out.println("retrieveHospital : " + title);
+		return service.retrieveHospital(title);
+	}
+	
+	@RequestMapping("/hosreg.do")
+	@ResponseBody
+	public void registMemberHospital(Member member, HttpSession session) throws Exception {
+		System.out.println(member);
+		Member loginMember = (Member)session.getAttribute("user");  
+		int memberNo = loginMember.getMemberNo();
+		member.setMemberNo(memberNo);
+		
+		service.registMemberHospital(member);
 	}
 }
 

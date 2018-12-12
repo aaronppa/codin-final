@@ -31,7 +31,7 @@
 		                <th>비밀번호</th>
 		                <td>
 		                	<input type="password" name="password" class="form-control form__input--mod span__pass" value="${member.password}" disabled />
-		                	<button type="button" class="btn btn-default" id="passBtn" data-toggle="modal" data-target="#passModal">변경</button>
+		                	<button type="button" class="btn btn-default float--right" id="passBtn" data-toggle="modal" data-target="#passModal">변경</button>
 		                </td>
 		            </tr>
 		            <tr>
@@ -78,9 +78,14 @@
 		    <div>
 		        <table class="table table-bordered" >
 		            <tr>
-		                <th>병원</th>
+		                <th>
+		                	병원
+		                	<button id="hosReg" class="btn btn-primary float--right" data-toggle="modal" data-target="#hosRegModal">병원등록</button>
+		                </th>
 		                <td>
-		                	A 병원
+		                	<span id="hosTitleSpan">
+		                		<c:out value="${member.hosTitle}" default="등록된 병원이 없습니다." />
+		                	</span>
 		                </td>
 		            </tr>
 		            <tr><th style="width: 20%">약력</th>
@@ -94,16 +99,18 @@
 		    </div>
 		</c:if>
 
-	    <h2>반려동물</h2>
+	    <h2>반려동물 <button class="btn btn-warning float--right" id="pet-add" style="padding: 7px; margin: 10px 0px;">반려동물 정보 추가</button></h2>
 	    <hr>
-	    <div id="pet-container">
+	    <div id="pet-container" class="height200">
+	    	<c:if test="${empty pet}">
+	    		<h3>등록된 반려동물이 없습니다.</h3>
+	    	</c:if>
 	    	<c:forEach var="pet" items="${pet}">
 				<div class="pet-info" data-pet-no="${pet.petNo}">
 					<img alt="강아지 사진" src="<c:url value='${pet.petFilePath}/${pet.petSysName}' />" class="img-thumbnail">
 					<div>${pet.petName}</div>
 				</div>
 			</c:forEach>
-			<button class="pet-info" id="pet-add">반려동물 정보 추가</button>
 		</div>
 	</div>
 	
@@ -140,6 +147,40 @@
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-primary" id="passModBtn">변경</button>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 병원등록 모달창 -->
+	<div class="modal fade" id="hosRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">병원찾기</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="control-group form-horizontal">
+	            
+	            <div class="row controls">
+	            	<div class="col-md-3">
+	            		<label for="current_password" class="control-label">병원명</label>
+	            	</div>
+	            	<div class="col-md-9">
+		                <input type="text" id="hosTitle" class="form-control">
+	            	</div>
+	            </div>
+	            <div class="hos--list" class="row controls">
+	            	<ul></ul>
+	            </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" id="hosRegBtn">등록</button>
+	        <button type="button" class="btn btn-secondary" id="hosCloseBtn">닫기</button>
 	      </div>
 	    </div>
 	  </div>
