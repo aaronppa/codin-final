@@ -81,10 +81,11 @@ public class QnaServiceImpl implements QnaService{
 		mapper.updateQnaComment(com);
 	}
 	@Override
-	public int countTotalContent() {
+	public int countTotalContent(SearchQnA QNA) {
 		// TODO Auto-generated method stub
-		return mapper.countTotalContent();
+		return mapper.qnaListCnt(QNA);
 	}
+	
 	
 	
 	

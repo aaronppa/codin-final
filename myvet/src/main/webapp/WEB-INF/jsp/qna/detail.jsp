@@ -575,7 +575,7 @@
 
          <i class="category">category :
             ${qna.categoryName}</i>
-            <i class="fas fa-heart" id="tipRecomHeart">&nbsp;</i><span id="tipRecomCnt">${sumRecommend}</span> 
+            <i class="fas fa-heart" id="tipRecomHeart">&nbsp;</i><span id="tipRecomCnt">${qna.recomCnt}</span> 
 
          <%--  <i class="fas fa-heart" id="tipRecomCnt" style="margin-left: 5%;color:red;">&nbsp;${countRecomment}</i>  --%>
          <i class="far fa-eye">&nbsp;

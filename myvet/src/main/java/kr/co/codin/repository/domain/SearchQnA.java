@@ -1,7 +1,7 @@
 package kr.co.codin.repository.domain;
 
 public class SearchQnA extends Page{
-	
+	int pageNo;
 	public SearchQnA() {
 		super(1);
 		// TODO Auto-generated constructor stub
@@ -13,13 +13,33 @@ public class SearchQnA extends Page{
 	}
 	
 	
+	
 	private int order;
 	private int answered;
 	private int categoryCode;
 	private String sort;
 	private String keyword;
+	private int prev;
+	private int next;
 	
 	
+	
+	public int getPrev() {
+		return prev;
+	}
+
+	public void setPrev(int prev) {
+		this.prev = prev;
+	}
+
+	public int getNext() {
+		return next;
+	}
+
+	public void setNext(int next) {
+		this.next = next;
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}
@@ -58,6 +78,12 @@ public class SearchQnA extends Page{
 
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchQnA [pageNo=" + pageNo + ", order=" + order + ", answered=" + answered + ", categoryCode="
+				+ categoryCode + ", sort=" + sort + ", keyword=" + keyword + ", prev=" + prev + ", next=" + next + "]";
 	}
 	
 	

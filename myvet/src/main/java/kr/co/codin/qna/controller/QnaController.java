@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,19 +33,17 @@ public class QnaController {
 	@Autowired
 	private QnaService service;
 	
-	
 
-	
-	
 	@RequestMapping("list.do")
 	public void list(Model model
-			, @RequestParam(value="pageNo", defaultValue="0") int pageNo
+			, @RequestParam(value="pageNo", defaultValue="1") int pageNo
 			,Member member
 			,@RequestParam(value="order",defaultValue="0") int order
 			,@RequestParam(value="answered",defaultValue="0") int answered
 			,@RequestParam(value="categoryCode",defaultValue="0") int categoryCode
 			,@RequestParam(value="sort",defaultValue="0") String sort
 			,@RequestParam(value="keyword",defaultValue="0") String keyword
+		
 			) throws Exception{
 		SearchQnA searChQuery= new SearchQnA(pageNo);
 		searChQuery.setAnswered(answered);
@@ -55,34 +54,27 @@ public class QnaController {
 		searChQuery.setCategoryCode(categoryCode);
 		searChQuery.setSort(sort);
 		searChQuery.setPageNo(pageNo);
-		System.out.println("dlsdjfsljdf:"+pageNo);
-		if(pageNo == 0 ) {
-			model.addAttribute("pageNo",pageNo);
-			model.addAttribute("pageNoCnt",pageNo+9);
-		} else if(pageNo == 1) {
-			model.addAttribute("pageNo",(pageNo*10)-10);
-			model.addAttribute("pageNoCnt",(pageNo*10)-1);
-			
-		}else {
-			model.addAttribute("pageNo",(pageNo*10)-10);
-			model.addAttribute("pageNoCnt",(pageNo*10));
-		}
-			
+		
+		model.addAttribute("pageNo", pageNo);
+		System.out.println("dlsdjfsljdf:"+pageNo);	
 		model.addAttribute("category",service.cateList());
 		model.addAttribute("qna", service.SelectList(searChQuery));
-		model.addAttribute("totalCnt",service.SelectList(searChQuery).size());
-		if((service.countTotalContent()%10)== 0) {
-			model.addAttribute("endPage",service.SelectList(searChQuery).size()/10);
-		}else {
-			model.addAttribute("endPage",service.SelectList(searChQuery).size()/10+1);
-		}
+		model.addAttribute("totalCnt",service.countTotalContent(searChQuery));
+		model.addAttribute("pageResult", new PageResult(pageNo, service.countTotalContent(searChQuery)));
+		model.addAttribute("searchQuery", searChQuery);
 		
-		model.addAttribute("pageResult", new PageResult(pageNo,service.SelectList(searChQuery).size()));
-		//System.out.println(memberNickname);
-//		model.addAttribute("pageResult", new PageResult(pageNo, service.countTip()));
 	}
 	
 	
+	@RequestMapping("listPaging.do")
+	@ResponseBody
+	public void QnaListPaging(Model model, int pageNo,int totalCnt ){
+		System.out.println("listPaging.do");
+		System.out.println(pageNo);
+		System.out.println(totalCnt);
+		if(pageNo == 0) {pageNo=1;}
+		model.addAttribute("pageResult", new PageResult(pageNo, totalCnt));
+	}
 	
 	@RequestMapping("writeForm.do")
 	public void writeForm(Model model,String memberNickname ) {
@@ -172,5 +164,12 @@ public class QnaController {
 		System.out.println("여기옴");
 		service.updateQnaComment(comment);
 	}
+	
+	
+/*	@RequestMapping("page.do")
+	@ResponseBody
+	public void paging(Qna qna) {
+		
+	}*/
 	
 }

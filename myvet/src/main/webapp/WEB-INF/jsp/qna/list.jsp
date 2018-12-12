@@ -237,7 +237,8 @@ tr:hover {
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="q" items="${qna}" begin="${pageNo }" end="${pageNoCnt }" varStatus="loop">
+		
+				<c:forEach  var="q" items="${qna}"  varStatus="loop">
 					<tr style="text-align: center;">
 						<th scope="row">${q.qnaNo}</th>
 						<td>${q.answered }</td>
@@ -268,9 +269,10 @@ tr:hover {
 		<!--pagenation-->
 
 		 <div id="pagination">
-   		 	<c:import url="page.jsp"></c:import>
+   	 	 	<c:import url="page.jsp"></c:import> 
     	</div>
 	</div>
+		<input type="hidden" id="searchQuery" value="${searchQuery }"> 
 </body>
 <script>
 
