@@ -49,4 +49,24 @@
 			left outer join (select board_no, ori_name, sys_name, file_path
 		 					from file_info) as f on f.board_no = h.hos_code
 	</select>
+	
+	<insert id="insertChatId" useGeneratedKeys="true" keyProperty="chatId">
+		insert into chat () values ()
+	</insert>
+	
+	<insert id="insertMsg" parameterType="Message">
+		insert into message (
+				chat_id, sender_no, msg_body, msg_type
+			) values ( 
+				#(chatId), #{memberNo}, #{msgBody}, #{msgType}
+			)
+	</insert>
+	
+	<insert id="insertRecipientGroup" parameterType="RecipientGroup">
+		insert into recipient_group ( 
+				recipient_group_id, recipient_no, recipient_type
+			) values ( 
+				#{recipientGroupId}, #{recipientNo}, #{recipientType}
+			)
+	</insert>
 </mapper>

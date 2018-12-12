@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.codin.repository.domain.Message;
+import kr.co.codin.repository.domain.RecipientGroup;
 import kr.co.codin.repository.domain.SearchMemberHospital;
 import kr.co.codin.repository.mapper.MsgMapper;
 
@@ -15,7 +17,6 @@ public class MsgServiceImpl implements MsgService{
 	
 	@Override
 	public List<SearchMemberHospital> searchMember(String keyword) {
-		
 		return mapper.selectSearchMember(keyword);
 	}
 
@@ -24,4 +25,21 @@ public class MsgServiceImpl implements MsgService{
 		return mapper.selectSearchHospital(keyword);
 	}
 
+	@Override
+	public void insertChatId() {
+		mapper.insertChatId();
+	}
+
+	@Override
+	public void insertMsg(Message msg) {
+		mapper.insertMsg(msg);
+	}
+
+	@Override
+	public void insertRecipientGroup(RecipientGroup rg) {
+		mapper.insertRecipientGroup(rg);
+		
+	}
+
+	
 }

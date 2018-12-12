@@ -7,24 +7,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Messenger</title>
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-	crossorigin="anonymous">
+
 <script src="https://code.jquery.com/jquery-3.3.1.js"
 	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	crossorigin="anonymous"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-	crossorigin="anonymous"></script>
+	src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
+
 <link rel="stylesheet"
 	href="<c:url value='/resources/js/waitme/waitMe.css'/>" />
-<script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
+<link rel="stylesheet"
+	href="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/msg/small-chat-responsive.css'/>" />
 <style>
 body {
 	margin: 0;
@@ -74,10 +71,10 @@ body {
 
 .header {
 	min-height: 50px;
-	border-bottom: 1px solid grey; 
+	border-bottom: 1px solid grey;
 }
 
-.top-side.header{
+.top-side.header {
 	height: 50px;
 }
 
@@ -168,7 +165,6 @@ h5 {
 .chatroom, .recipients-input {
 	height: inherit;
 	display: flex;
-	
 }
 
 .profile {
@@ -217,7 +213,6 @@ li>.chatroom>.chat-info>.recipient, .lastmsg.brief {
 
 .recipientSearchLayer {
 	position: absolute;
-	left: 527px;
 	top: 148px;
 	width: 300px;
 	max-height: 400px;
@@ -289,27 +284,28 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 	line-height: 10px;
 }
 
-.message-conversation {
+.messages-content {
 	overflow-y: auto;
 	height: 518px;
 }
 
 .recipients-input>div:first-child {
-    line-height: 32px;
-    width: 52px;
+	line-height: 32px;
+	width: 52px;
 }
 
-.close-chat{
+.close-chat {
 	text-align: center;
 	width: 9px;
-    height: 9px;
-    position: relative;
-    top: 6px;
-    left: -15px;
-    line-height: 9px;
-    border-radius: 9px;
+	height: 9px;
+	position: relative;
+	top: 6px;
+	left: -15px;
+	line-height: 9px;
+	border-radius: 9px;
 }
-.close-chat:hover{
+
+.close-chat:hover {
 	font-size: 150%;
 	font-weight: 500px;
 	width: 15px;
@@ -319,10 +315,10 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 }
 
 .btnarea {
-    text-align: center;
-    height: 49px;
-    width: 85px; 
-    margin: auto;
+	text-align: center;
+	height: 49px;
+	width: 85px;
+	margin: auto;
 }
 
 #send {
@@ -334,29 +330,30 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 	width: 30px;
 	height: 20px;
 	text-align: center;
- 	line-height: 49px;
+	line-height: 49px;
 }
 
-.msgtextinput{
+.msgtextinput {
 	line-height: 50px;
 	border-top: 1px solid #8b787a;
+	width: 775px;
 	height: 50px;
-	position: relative;
 	display: flex;
 	overflow: hidden;
+	position: absolute;
 }
 
-#msgtextarea{
+#msgtextarea {
 	line-height: 18px;
 	margin: 9px 0;
 	resize: none;
 	width: 700px;
 	height: 32px;
 	padding: 5px;
-	/* border-style: none; */ 
-    border-color: black; 
-    overflow: hidden;
-    box-sizing: border-box;
+	/* border-style: none; */
+	border-color: black;
+	overflow: hidden;
+	box-sizing: border-box;
 }
 
 </style>
@@ -374,24 +371,23 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 			</div>
 			<div class="left-panel scrollable">
 				<ul class="conversation list" id="chatroomlist">
-
-					<!-- 	
-				<c:forEach begin="0" end="20" step="1" var="hi">
-						<li class="conversation-chatroom">
-							<div class='chatroom'>
-								<div class='profile'>
-									<img src="<c:url value='/resources/img/test_image/test4.jpg'/>"
-										class="rounded-circle">
-								</div>
-								<div class='chat-info'>
-									<div class='recipient'>원래 있는 대화방</div>
-									<div class='lastmsg brief'></div>
-								</div>
-							</div>
-						</li>
-					</c:forEach> 
-					-->
-
+					<li class='conversation-chatroom' data-chatid='32'>
+				        <div class='chatroom'>
+					       	<div class='profile'>
+					       		<img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle">
+					       	</div>
+					       	<div class='chat-info'>
+					       		<div class='recipient new'>
+					       		원래 있는 메세지 
+					       		</div>
+					       		<div class='lastmsg brief'>
+					       		</div>
+					   		</div>
+					   		<div class="close-chat nodisplay">
+					   		x
+					   		</div>
+				   		</div>
+			   		</li>
 				</ul>
 			</div>
 		</div>
@@ -400,56 +396,17 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 				<div class="recipients-input"></div>
 			</div>
 			<div class="main-panel">
-				<div class="message-conversation scrollable">
-					asdfasdfasdfasadsfas
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
-					<h1>test</h1>
+				<div class="messages">
+					<div class="messages-content">
+						
+					</div>
 				</div>
 				<div class="msgtextinput">
 					<div class="msg-input">
 						<textarea id="msgtextarea"></textarea>
 					</div>
 					<div class="btnarea">
-					<a class="button send" id="send" href="#">전송</a>
+						<a class="button send" id="send" href="#" data-chatid="">전송</a>
 					</div>
 				</div>
 			</div>
@@ -460,6 +417,10 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 	<div class="recipientSearchLayer nodisplay">
 		<div class="recipientSearchBox scrollable"></div>
 	</div>
+	
+	<form action="/myvet/msg/insert.do" id="msgform">
+		
+	</form>
 	<script>
 
 /* Write Button Action */
@@ -468,8 +429,10 @@ var newMsgSwitch = false;
 
 $("#writemsgbtn").on("click", function(){
 	if(newMsgSwitch===false){
-		var chatRoomHtml = `<li class='conversation-chatroom new' data-chatno='new'>
-						        <div class='chatroom'>
+		$(".messages-content").html("");
+		$messages.mCustomScrollbar();
+		var chatRoomHtml = `<li class='conversation-chatroom new' data-chatid=0>
+						        <div class='chatroom active'>
 							       	<div class='profile'>
 							       		<img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle">
 							       	</div>
@@ -495,15 +458,19 @@ $("#writemsgbtn").on("click", function(){
 							        </div>`;
 		
 		$(".top-main.header").html(recipientInputHtml);
-		
+		$("#send").attr("data-chatid",0);
 		newMsgSwitch = true;
 	};
 });
 
 
 /* 수신자 검색 */
-$(".top-main.header").on("keyup","#recipientSearch",function(e){
+$(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 	$(".recipientSearchLayer.nodisplay").removeClass("nodisplay");
+	var searchBoxPosition = this.getBoundingClientRect();
+	console.log(searchBoxPosition);
+	$(".recipientSearchLayer").css({'left' : searchBoxPosition.left, 'top' : searchBoxPosition.bottom,'border-style' : 'none'});
+	
 	var keyword = $(this).val();
 	console.log("Recipient Search Input Keyup this:",keyword);
 	
@@ -512,13 +479,7 @@ $(".top-main.header").on("keyup","#recipientSearch",function(e){
 	// 현재 최초 keyup으로 입력후 한자리 글자 남았을때 Backspace누르면 직전에 등록된 수신자 삭제됨. 
 	if(!keyword){
 		$(".recipientSearchBox").html("");
-		if (e.key === "Backspace" || e.key === "Delete") {
-			console.log("Search Key:",$("#recipientSearch").val());
-			console.log("backspaced!");
-			$("div.recipient.new > :last-child").remove();
-			$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html($("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname"));
-			return false;
-		};
+		return false;
 	};
 	
 	$.get("searchMember.do?keyword="+keyword)
@@ -526,24 +487,34 @@ $(".top-main.header").on("keyup","#recipientSearch",function(e){
 			console.log("Msg Search:",result);
 		var searchResultHtml="";
 		
+		// 검색 결과 없을 시 
+		if(result.member.length==0 && result.hospital.length==0){
+			console.log("검색결과가 없음.")
+			$(".recipientSearchBox").text("검색결과가 없습니다.");
+			$(".recipientSearchLayer").css('border-style', 'outset');
+			return false;
+		}
+		
 		// 수신자 중복 검색 결과에서 제거 하기 위한 작업 
-		var recipientList = document.querySelectorAll('.top-main.header > .recipients-input > .recipient.new > span.addedRecipient');
-			console.log("recipientList:", recipientList);
+		// 등록된 수진사는 span 태그 내의 모든 데이터를 배열에 담아 검색결과와 대조 
+		// 중복확인시 검색결과의 객체의 배열에서 splice로 제거 
+		var addedRecipientList = document.querySelectorAll('.top-main.header > .recipients-input > .recipient.new > span.addedRecipient');
+			console.log("addedRecipientList:", addedRecipientList);
 		var recipientResultList = result;
 			console.log("recipientResultList:", recipientResultList);
-		if(recipientList.length){
-			for(var i=0;i<=recipientList.length-1;i++){
-				if(recipientList[i].dataset.recipientno){
+		if(addedRecipientList.length){
+			for(var i=0;i<=addedRecipientList.length-1;i++){
+				if(addedRecipientList[i].dataset.recipientno){
 					for(var j=0; j<=recipientResultList.member.length-1;j++){	
-						if(recipientResultList.member[j].memberNo==recipientList[i].dataset.recipientno){
+						if(recipientResultList.member[j].memberNo==addedRecipientList[i].dataset.recipientno){
 							recipientResultList.member.splice(j, 1);
 							console.log("recipient removed");
 						};
 					};
 						
-				} else if(recipientList[i].dataset.hosno){
+				} else if(addedRecipientList[i].dataset.hosno){
 					for(var j=0; j<=recipientResultList.hospital.length-1;j++){
-						if(recipientResultList.hospital[j].hosCode==recipientList[i].dataset.hosno){
+						if(recipientResultList.hospital[j].hosCode==addedRecipientList[i].dataset.hosno){
 							recipientResultList.hospital.splice(j, 1);
 							console.log("hospitcal removed");
 						};
@@ -613,6 +584,7 @@ $(".top-main.header").on("keyup","#recipientSearch",function(e){
 		}
 		
 		$(".recipientSearchBox").html(searchResultHtml);
+		$(".recipientSearchLayer").css('border-style', 'outset');
 	}); // done
 }); // keyup event
 
@@ -638,12 +610,6 @@ $(".recipientSearchBox").on("click",".resultList",function(e){
 	$(".recipientSearchBox").html("");
 	$("#recipientSearch").focus();
 });
-
-
-/* 검색중 밖에 나왔다 다시 검색창 Input을 눌렀을때 검색결과 항목 다시 보이기 */
-$(".top-main.header").on("click","#recipientSearch", function(){
-	$(".recipientSearchLayer.nodisplay").removeClass("nodisplay");
-}); 
 
 
 /* 검색중 다른곳으로 blur하면 검색결과 div 숨기기 */
@@ -706,12 +672,176 @@ $("#chatroomlist").on("mouseenter",".chatroom", function(){
 	});
 })
 
+/* 대화방에서 마우스 나가면 닫기 표시 없어짐 */
 $("#chatroomlist").on("mouseleave",".chatroom", function(){
 	console.log("close button",$(this).find(".close-chat"));
 	$(this).find(".close-chat").addClass("nodisplay");
 })
 
+$(".top-main.header").on("keydown","#recipientSearch", function(e){
+	if (!$("#recipientSearch").val() && e.key === "Backspace" || e.key === "Delete") {
+		console.log("Search Key:",$("#recipientSearch").val());
+		console.log("backspaced!");
+		$("div.recipient.new > :last-child").remove();
+		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html($("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname"));
+	};
+});
 
+console.log("bottom position:",document.querySelector(".main-container").getBoundingClientRect());
+
+
+
+<!-- Responsive Message Content -->
+var $messages = $('.messages-content'), form = $('form#msgform'),
+d, h, m, form,
+i = 0;
+
+$(window).on("change", function () {
+	$messages.mCustomScrollbar();
+	
+	// 삭제대상 
+	/* setTimeout(function() {
+	fakeMessage();
+	}, 100); */
+});
+
+/* 메세지 창 스크롤바 업데이트 */
+function updateMsgScrollBar() {
+	$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
+		scrollInertia: 10,
+		timeout: 0
+	});
+}
+
+/* 대화방리스트 스크롤바 업데이트 */
+function updateMsgScrollBar() {
+	$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'top', {
+		scrollInertia: 10,
+		timeout: 0
+	});
+}
+
+function setDate(){
+	d = new Date()
+	m = d.getMinutes();
+	$('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));
+	/* $('<div class="checkmark-sent-delivered">&check;</div>').appendTo($('.message:last'));
+	$('<div class="checkmark-read">&check;</div>').appendTo($('.message:last')); */
+}
+
+/* 메세지 입력 */
+function insertMessage() {
+	msg = $('#msgtextarea').val();
+	
+	if ($.trim(msg) == '') {
+		return false;
+	}
+	$("<input type='hidden' name='msgBody' value='" + msg + "'>").appendTo(form);
+	var senderNo = ${user.memberNo};
+	$("<input type='hidden' name='senderNo' value='" + senderNo + "'>").appendTo(form);
+	
+	$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
+	setDate();
+	$('#msgtextarea').val(null);
+	updateMsgScrollBar();
+	
+	// 등록된 수신자 배열을 변수에 담는다. 
+	var addedRecipientList = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
+	for(var recipientArr of addedRecipientList){
+		console.log("recipientArr");
+		// 수신자 타임(일반회원/병원) 별 구분하여 data 심어줌 
+		if(!recipientArr.dataset.hosno){
+			$("<input type='hidden' name='recipientNo' value='" + recipientArr.dataset.recipientno + "'>").appendTo(form);
+			console.log("Member",recipientArr.dataset.recipientno);
+			
+		} else if(!recipientArr.dataset.recipientno){
+			$("<input type='hidden' name='recipientHosNo' value='" + recipientArr.dataset.hosno + "'>").appendTo(form);
+			console.log("Hospital",recipientArr.dataset.hosno);
+			
+		}	
+	};
+	console.log("MsgFormData:", form.serialize());
+	form.submit();
+	
+	setTimeout(function() {
+		fakeMessage();
+	}, 1000 + (Math.random() * 20) * 100);
+
+};
+
+$('#send').click(function(e) {
+	e.preventDefault();
+	sendClick(this);
+});
+
+$('#msgtextarea').on('keydown', function(e) {
+	if (e.keyCode == 13) {
+		sendClick(this);
+	return false;
+	}
+})
+
+function sendClick(item){
+	var addedRecipientList = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
+	if(addedRecipientList.length>0 && $('#msgtextarea').val()){
+		$('#send').data("chatid")
+		$("<input type='hidden' name='chatId' value='" + $('#send').data("chatid") + "'>").appendTo(form);
+		insertMessage();
+		console.log("send btn chatid check:", item.dataset.chatid);
+		if(item.dataset.chatid==0){
+			var topMainHtml = $(".top-main.header .recipient.new");
+			console.log("topMainHtml", topMainHtml);
+			$(".top-main.header").html(topMainHtml);
+		}
+	} else if(addedRecipientList.length==0){
+		alert("수신자를 입력해주세요.");
+		$('#msgtextarea').val(null);
+		$("#recipientSearch").focus();
+		return false;
+	}
+	
+}
+
+var Fake = [
+'Hi there, I\'m Jesse and you?',
+'Nice to meet you',
+'How are you?',
+'Not too bad, thanks',
+'What do you do?',
+'That\'s awesome',
+'Codepen is a nice place to stay',
+'I think you\'re a nice person',
+'Why do you think that?',
+'Can you explain?',
+'Anyway I\'ve gotta go now',
+'It was a pleasure chat with you',
+'Time to make a new codepen',
+'Bye',
+':)'
+]
+
+function fakeMessage() {
+if ($('#msgtextarea').val() != '') {
+return false;
+}
+$('<div class="message loading new"><figure class="avatar"><img src="http://askavenue.com/img/17.jpg" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+updateMsgScrollBar();
+
+setTimeout(function() {
+$('.message.loading').remove();
+$('<div class="message new"><figure class="avatar"><img src="http://askavenue.com/img/17.jpg" /></figure>' + Fake[i] + '</div>').appendTo($('.mCSB_container')).addClass('new');
+setDate();
+updateMsgScrollBar();
+i++;
+}, 1000 + (Math.random() * 20) * 100);
+
+}
+
+$("#chatroomlist").on("click", ".chatroom", function(){
+	console.log("toggle");
+	$(".chatroom.active").removeClass('active');
+	$(this).toggleClass('active');
+});
 </script>
 </body>
 </html>
