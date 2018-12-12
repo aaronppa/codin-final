@@ -41,6 +41,7 @@
 			url: "<c:url value='/hos/searchReg.do'/>",
 			data: {
 				keyWord : $("#key-word").val(),
+   				searchType : $("input[name='searchType']:checked").val(),
 				pageNo : pageNo
 					}
 		}).done(function(hosMap) {
