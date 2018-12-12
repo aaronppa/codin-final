@@ -37,7 +37,7 @@
     <div class="container">
     <!--search-->
     <!--category-->
-    <form action="<c:url value='/tip/list.do'/>" method="post">
+    <form action="<c:url value='/tip/list.do'/>" method="get">
 	    <div class="input-group mb-3" style="margin-left: 53%;">
 	      		<select name="sort" id="sort" class="sort">
 					<option selected value="0">검색조건</option>

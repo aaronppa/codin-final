@@ -23,64 +23,187 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script>
   <style>
+/*********************************
+   CUSTOM INPUT FILES FOR IMAGES
+ *********************************/
+/*** GENERAL STYLES ***/
+* {
+  box-sizing: border-box;
+}
+
+#page {
+  text-align: center;
+}
+#page h1 {
+  margin-bottom: 4rem;
+  font-family: 'Lemonada', cursive;
+  text-transform: uppercase;
+  font-weight: normal;
+  color: #fff;
+  font-size: 2rem;
+}
+
+/*** CUSTOM FILE INPUT STYE ***/
+.wrap-custom-file {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  margin: 0 0.5rem 1rem;
+  text-align: center;
+}
+.wrap-custom-file input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  overflow: hidden;
+  opacity: 0;
+}
+.wrap-custom-file label {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: -webkit-transform 0.4s;
+  transition: transform 0.4s;
+  transition: transform 0.4s, -webkit-transform 0.4s;
+}
+.wrap-custom-file label span {
+  display: block;
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  color: #777;
+  transition: color 0.4s;
+}
+.wrap-custom-file label .fa {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  -webkit-transform: translatex(-50%);
+  transform: translatex(-50%);
+  font-size: 1.5rem;
+  color: lightcoral;
+  transition: color 0.4s;
+}
+.wrap-custom-file label:hover {
+  -webkit-transform: translateY(-1rem);
+  transform: translateY(-1rem);
+}
+.wrap-custom-file label:hover span, .wrap-custom-file label:hover .fa {
+  color: #333;
+}
+.wrap-custom-file label.file-ok {
+  background-size: cover;
+  background-position: center;
+}
+.wrap-custom-file label.file-ok span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.3rem;
+  font-size: 1.1rem;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.wrap-custom-file label.file-ok .fa {
+  display: none;
+}
 
  
 
     </style>
 </head>
 <body>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+
 <form action="<c:url value='/gallery/write.do'/>" method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
-            <div class="col-sm-7" >
-                <div class="swiper-container gallery-top">
-                     <div class="swiper-wrapper">
-                     <div class="swiper-slide"><img class = "top-img" src=""></div>
-                     </div>
-                     <div class="swiper-button-next swiper-button-white"></div>
-                     <div class="swiper-button-prev swiper-button-white"></div>
-                 </div>
-                 <div class="swiper-container gallery-thumbs">
-                     <div class="swiper-wrapper">
-                           <div class="swiper-slide"><img class = "thumbs-img" src=""></div>
-                     </div>
-                 </div>
-<!-- 		<div id="imgprev"> -->
-<!-- 			<img type="hidden"id="prev" src=''/> -->
-<!-- 		</div> -->
-                    <!--file-->
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon01"><i class="fas fa-camera-retro"></i></span>
-                        </div>
-                        <div class="custom-file">
-                          <input  type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
-                    </div>
-                    <div class="pet-add">
-                        <i class="fas fa-plus" ></i>
-                        <span data-toggle="tooltip" title="PONY">
-                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="petImg rounded-circle">
-                        </span>
-                    </div>
-
-            </div>
-            <div class="col-sm-5" > 
+            <div class="col" >
+                <!---------------------------------
+  CUSTOM FILE INPUTS FOR IMAGES
+ ---------------------------------->
+		
+		  <!-- Our File Inputs -->
+		  <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image1" accept=".gif, .jpg, .png" />
+		    <label  for="image1">
+		      <span>One</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		  
+		  <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image2" accept=".gif, .jpg, .png" />
+		    <label  for="image2">
+		      <span>Two</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		  
+		  <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image3" accept=".gif, .jpg, .png" />
+		    <label  for="image3">
+		      <span>Three</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		  
+		   <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image4" accept=".gif, .jpg, .png" />
+		    <label  for="image4">
+		      <span>Four</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		   <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image5" accept=".gif, .jpg, .png" />
+		    <label  for="image5">
+		      <span>Five</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		   <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image6" accept=".gif, .jpg, .png" />
+		    <label  for="image6">
+		      <span>Six</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+          <div class="pet-add">
+              <i class="fas fa-plus" ></i>
+              <span data-toggle="tooltip" title="PONY">
+                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="petImg rounded-circle">
+              </span>
+          </div>
+		</div>
+		</div>
+            <div class="col" > 
                 <div class="detail-content" >
                     <br>
                     <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                     <input type="hidden" name="writerNo" value="12">
-                    <input type="hidden" name="boardCode" value="2">
-                    <span class="writerNick">복순이</span>
+                    <input type="hidden" name="boardCode" value="10">
+                    <span class="writerNick">${user.memberNickname}</span>
                     <hr>
                     <br>
                     <!--제목-->
-                    <textarea cols="50" rows="1" name="title" placeholder="제목을 입력..."></textarea>
+                    <textarea cols="150" rows="1" name="title" placeholder="제목을 입력..."></textarea>
                     <br>
                     <br>
                     <!--내용-->
-                    <textarea cols="50" rows="5" name="content" placeholder="내용을 입력..."></textarea>
+                    <textarea cols="150" rows="5" name="content" placeholder="내용을 입력..."></textarea>
                 </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <a href="<c:url value='/gallery/list.do'/>">
@@ -90,13 +213,50 @@
                 </div>
             </div>
         </div>
-    </div>
 </form>
 
   <!-- Swiper JS -->
   <script src="../dist/js/swiper.min.js"></script>
 
     <script>
+    //
+    /**
+ * CUSTOM FILE INPUTS FOR IMAGES
+ *
+ * Version: 1.0.0
+ *
+ * Custom file inputs with image preview and 
+ * image file name on selection.
+ */
+$('input[type="file"]').each(function(){
+  // Refs
+  var $file = $(this),
+      $label = $file.next('label'),
+      $labelText = $label.find('span'),
+      labelDefault = $labelText.text();
+  
+  // When a new file is selected
+  $file.on('change', function(event){
+    var fileName = $file.val().split( '\\' ).pop(),
+        tmppath = URL.createObjectURL(event.target.files[0]);
+    //Check successfully selection
+		if( fileName ){
+      $label
+        .addClass('file-ok')
+        .css('background-image', 'url(' + tmppath + ')');
+			$labelText.text(fileName);
+    }else{
+      $label.removeClass('file-ok');
+			$labelText.text(labelDefault);
+    }
+  });
+  
+// End loop of file input elements  
+});
+    
+    
+    
+    
     //슬라이드 사진첨부
     var file = document.querySelector('#inputGroupFile01');
     
@@ -138,7 +298,7 @@
     			console.log($(ele))
     			console.log("upload-success");
     		}
-    	}
+    	})
     }
     
     

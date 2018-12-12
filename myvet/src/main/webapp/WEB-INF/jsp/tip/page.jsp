@@ -32,7 +32,7 @@
 		
 		if (pageNo == 0 || pageNo == ${pageResult.lastPage + 1}) return false;
 		if ($(this).hasClass("disabled")) return false;
-		location.href = "list.do?pageNo=" + pageNo;
+		location.href = "list.do?pageNo=" + pageNo+"&category="+$(".category").val()+"&sort="+$(".sort").val()+"&keyword="+$(".input-search").val();
 	})
 	
     </script>

@@ -52,7 +52,7 @@ public interface GalleryService {
 	
 //	//파일
 //	
-//	void uploadFile(FileInfo fileInfo);
+	void uploadFile(FileInfo fileInfo);
 //	
 //	void deleteFile(FileInfo fileInfo);
 }

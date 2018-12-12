@@ -44,6 +44,8 @@
 		<result column="reg_date" property="regDate"/>
 		<result column="recommend" property="recommend"/>		
 		<result column="recommendCnt" property="recommendCnt"/>		
+		<result column="member_nickname" property="memberNickname"/>
+	
 	</resultMap>
 	
 	<resultMap type="tipRecommend" id="tipRecommendMap">
@@ -77,7 +79,7 @@
 	</select>
 	
 <select id="selectTip" parameterType='SearchTip' resultMap="tipMap">
-		select t.*, m.member_nickname
+		select t.*,m.member_nickname
 		  from tip t, member m
 		  where t.member_no = m.member_no
 		<choose>
@@ -97,7 +99,7 @@
   				 and (t.title like CONCAT('%', #{keyword},'%') or t.content like CONCAT('%', #{keyword},'%'))
   			</when>
   			<when test="category == 0">
-  				t.category_code in (1, 2, 3, 4)
+  				and t.category_code in (1, 2, 3, 4)
   			</when>
   			<when test="category == 1">
   				and t.category_code = 1
@@ -118,11 +120,11 @@
 	</select>
   		
 	<select id="selectTipByNo" parameterType="int" resultMap="tipMap">
-		select *
-		  from tip
-		 where tip_no = #{tipNo}
+		select *, (select member_nickname from member where member_no = t.member_no)
+		  from tip t
+		 where t.tip_no = #{tipNo}
 	</select>
-	<insert id="insertTip" parameterType="tip">
+	<insert id="insertTip" parameterType="tip" useGeneratedKeys="true" keyProperty="tipNo">
 		insert into tip(
 		board_code, category_code, member_no, title, content
 			)values(
@@ -289,11 +291,19 @@
 	</delete>
 	
 <!-- 	file -->
-	<insert id="uploadFile" parameterType="fileInfo">
+	<insert id="uploadFile" parameterType="fileInfo" useGeneratedKeys="true" keyProperty="fileId">
+	
 		insert into file_info(
 			board_code, board_no, ori_name, sys_name, file_path, file_size
 		)values(
 			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize}
+		)
+	</insert>
+	<insert id="insertBoardNo" parameterType="int" useGeneratedKeys="true" keyProperty="fileId">
+		insert into file_info(
+			board_code
+		)values(
+			#{tipNo}
 		)
 	</insert>
 <!-- 	<delete id="deleteFile" parameterType="file"> -->

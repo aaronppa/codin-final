@@ -311,7 +311,7 @@
 	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
 	            	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recomCnt+"</span>"
 	            
-	            	+"<i class='fas fa-exclamation-circle' style='margin-left:10px;'></i>"
+	            	+"<i class='fas fa-exclamation-circle' data-comno='"+result[i].commentNo+"' style='margin-left:10px;'></i>"
 	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno="+result[i].commenterNo+"></div>"
 	                +"<div class='comment-content'>" 
 		                +"<input type='hidden' class='commentval' data-commentno='"+result[i].commentNo+"'/>"
@@ -337,6 +337,12 @@
 //     		list();
 //     	})
 //     })
+	//댓글 신고
+	
+	$(".comment-list").on("click",".fa-exclamation-circle",function(){
+		window.open("/myvet/report/reportCommentForm.do?boardCode=10&commentNo="+$(this).data("comno"),"report","width=1000, height=600, left=500, top=10")
+	})
+	
 	//댓글 수정폼
 	$("#comment-list").on("click","#updateCom",function(){
 		console.dir($(this).prev())
@@ -454,14 +460,9 @@
 //     	list();
     })
     
-    
-    
-    
-    
 //     tooltip
     $('[data-toggle="tooltip"]').tooltip()
-
-    $(".comment-list").('[data-toggle="tooltip"]').tooltip()
+	
     </script>
 </body>
 </html>

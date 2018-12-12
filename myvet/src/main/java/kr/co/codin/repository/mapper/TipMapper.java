@@ -36,11 +36,11 @@ public interface TipMapper {
 	//댓글 추천
 	Integer selectCommentRecommend(TipCommentRecommend tipCommentRecommend);
 	void deleteRecommend(TipCommentRecommend tipCommentRecommend);
+	void deleteCommentRecommend(TipCommentRecommend tipCommentRecommend);
+	void insertCommentRecommend(TipCommentRecommend tipCommentRecommend);
 	
 	//파일
 	void uploadFile(FileInfo fileInfo);
 	void deleteFile(FileInfo fileInfo);
-	void deleteCommentRecommend(TipCommentRecommend tipCommentRecommend);
-	void insertCommentRecommend(TipCommentRecommend tipCommentRecommend);
-	
+	void updateFile(FileInfo fileInfo);
 }

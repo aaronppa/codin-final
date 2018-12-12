@@ -42,7 +42,7 @@
                 <div class="rest" contenteditable="false"></div>
             </div>
             <div class="writer" aria-placeholder="writer..">
-                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;PONY
+                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;${tip.memberNickname}
             </div>
             <div class="information">
            		<c:if test="${tip.categoryCode eq 1 }">
@@ -113,8 +113,9 @@
 <!--                 <form action="" method="post"> -->
                     <div class="comment-wrap">
                         <div class="photo">
-                			<img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;PONY
+                			<img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;${tip.memberNickname}
                         </div>
+                       	<p class="com-nickname"><strong>${nickname}</strong></p>
                         <input type="hidden" name="tipNo" id="tipNo" value="${tip.tipNo}">
                         <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="7">
                         <div class="comment-block">                            
@@ -299,7 +300,8 @@
 		     	   }
                 $(".comment-list").append(
                 "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle'/>&nbsp;"
-              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
+              	+"<span class='commenter border'><a>sssaaa</a></span>"
+                +"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
               	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
             	+"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
             	

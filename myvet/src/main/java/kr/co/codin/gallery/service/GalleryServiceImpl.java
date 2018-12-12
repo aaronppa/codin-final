@@ -140,6 +140,14 @@ public class GalleryServiceImpl implements GalleryService{
 		}
 	}
 
+	
+	
+	
+	@Override
+	public void uploadFile(FileInfo fileInfo) {
+		mapper.uploadFile(fileInfo);
+	}
+
 	@Override
 	public void deleteCommentRecommend(GalleryCommentRecommend galleryCommentRecommend) {
 		mapper.deleteCommentRecommend(galleryCommentRecommend);

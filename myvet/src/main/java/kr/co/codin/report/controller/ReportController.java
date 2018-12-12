@@ -83,9 +83,19 @@ public class ReportController {
 	}
 	
 	@RequestMapping("reportCommentForm.do")
-	public void reportCommentForm(int commentNo,HttpSession session,Model model) throws Exception{
+	public void reportCommentForm(int commentNo, int boardCode,HttpSession session,Model model) throws Exception{
+		Member member = (Member)session.getAttribute("user");
+		model.addAttribute("nickname",member.getMemberNickname());
+		model.addAttribute("boardCode",boardCode);
 		System.out.println("reportComment!");
-		
+		if(boardCode == 10) {
+			model.addAttribute("report",service.detailReportGalleryComment(commentNo));
+		}else if(boardCode == 11) {
+			model.addAttribute("report",service.detailReportTipComment(commentNo));
+
+		}else if(boardCode == 20) {
+			model.addAttribute("report",service.detailReportQnaComment(commentNo));
+		}
 	}
 	
 	@RequestMapping("insertReport.do")

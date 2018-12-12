@@ -100,6 +100,15 @@ public class TipServiceImpl implements TipService{
 		mapper.deleteFile(fileInfo);
 	}
 	
+
+
+	@Override
+	public void intsertBoardNo(int tipNo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	@Override
 	public Integer selectRecommend(TipRecommend tipRecommend) {
 		return mapper.selectRecommend(tipRecommend);

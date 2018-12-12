@@ -61,11 +61,11 @@ public class TipController {
 	@RequestMapping("detail.do")
 	public void detail(Model model,int tipNo, HttpSession session, TipRecommend tipRecommend,TipCommentRecommend tipCommentRecommend) throws Exception{
 		
-//		Member member = (Member)session.getAttribute("user");
+		Member member = (Member)session.getAttribute("user");
+		model.addAttribute("nickname",member.getMemberNickname());
 //		int memberNo = member.getMemberNo();
 //		tipRecommend.setMemberNo(memberNo);
 		
-		tipRecommend.setMemberNo(7);
 		int sumRecommend = 0;
 		try {
 		sumRecommend = service.sumRecommend(tipNo);
@@ -117,8 +117,11 @@ public class TipController {
 	@RequestMapping("write.do")
 	public String write(Model model,Tip tip) throws Exception{
 		System.out.println("write");
-		
+		int tipNo = tip.getTipNo();
+		FileInfo fileInfo = new FileInfo();
 		service.insertTip(tip);
+		System.out.println("tipNo : "+tip.getTipNo());
+		fileInfo.setBoardNo(tip.getTipNo());
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
@@ -211,6 +214,7 @@ public class TipController {
 			System.out.println("filePath : "+uploadPath+datePath);
 			System.out.println("getSize"+(int)mFile.getSize());
 			
+			fileInfo.setBoardNo(boardNo);
 			fileInfo.setBoardCode(boardCode);
 			fileInfo.setBoardNo(boardNo);
 			fileInfo.setOriName(mFile.getOriginalFilename());

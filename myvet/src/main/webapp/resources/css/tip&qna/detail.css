@@ -480,7 +480,15 @@ cursor:pointer;
 	color:black;
 	margin-left:10%;
 }
-
+.com-nickname{
+	font-size:15px;
+	margin-left:10px;
+}
+.border{
+	font-weight: bolder;
+	font-size:15px;
+	border:none;
+}
 /* .commentBtn{ */
 /* 		background:none;border:none;color:black;cursor:pointer; */
 	

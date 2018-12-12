@@ -1,6 +1,7 @@
 package kr.co.codin.repository.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Gallery {
 	private int galleryNo;
@@ -11,14 +12,23 @@ public class Gallery {
 	private Date regDate;
 	private int viewCnt;
 	private int recomCnt;
+
+	private String memberNickname;
+	private List<FileInfo> fileInfoList;
+
 	
-	private Member member;
 	
-	public Member getMember() {
-		return member;
+	public List<FileInfo> getFileInfoList() {
+		return fileInfoList;
 	}
-	public void setMember(Member member) {
-		this.member = member;
+	public void setFileInfoList(List<FileInfo> fileInfoList) {
+		this.fileInfoList = fileInfoList;
+	}
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
 	}
 	public int getGalleryNo() {
 		return galleryNo;

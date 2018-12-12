@@ -9,6 +9,11 @@ public class SearchTip extends Page{
 		super(pageNo);
 	}
 
+//	public SearchTip(int pageNo, String keyword) {
+//		super(pageNo);
+//		this.keyword = keyword;
+//	}
+	
 	private int sort;
 	private int category;
 	private String keyword;

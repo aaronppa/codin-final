@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,13 +42,17 @@ public class GalleryController{
 	private GalleryService service;
 	
 	@RequestMapping("list.do")
-	public void list(Model model,Member member, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{
+	public void list(Model model,Member member,HttpSession session, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{
+		FileInfo fileInfo = new FileInfo();
+		member = (Member)session.getAttribute("user");
+		System.out.println("memberNo : "+member.getMemberNo());
 		SearchGallery searchGallery = new SearchGallery(pageNo);
 		searchGallery.setSort(sort);
 		searchGallery.setKeyword(keyword);
 		model.addAttribute("sort",sort);
 		model.addAttribute("keyword",keyword);
-		
+		model.addAttribute("filePath",fileInfo.getFilePath());
+		model.addAttribute("sysName",fileInfo.getSysName());
 		System.out.println("list");
 		model.addAttribute("gallery", service.galleryList(searchGallery));
 		model.addAttribute("count",service.countGallery());
@@ -57,35 +62,69 @@ public class GalleryController{
 	
 	@RequestMapping("writeForm.do")
 	public void writeForm(Model model, String memberNickname) throws Exception{
+		
 		System.out.println("writeForm");
 	}
 	
 	@RequestMapping("write.do")
-	public String write(Gallery gallery, FileInfo fileInfo, @RequestParam("file") List<MultipartFile> mFileList) throws Exception{
+	public String write(Gallery gallery, HttpSession session, FileInfo fileInfo, @RequestParam("file") List<MultipartFile> mFileList) throws Exception{
 		System.out.println("write");
 		System.out.println("mFileList : "+mFileList);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMMdd");
-		String oriName = fileInfo.getOriName();
-		String filePath = "/gallery"+sdf;
-		String sysName = "";
+		service.insertGallery(gallery);
+		
+		Date date = new Date();
+		System.out.println(date);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
+		String filePath = context.getRealPath("/")+"/upload/gallery/"+sdf.format(date);
+//		String newName = UUID.randomUUID().toString();
+//		newName = newName.replace("-", "");
+		String fileExtension = "";
 		int fileSize = (int)fileInfo.getFileSize();
 		for(MultipartFile mFile : mFileList) {
-		fileInfo.setFilePath(filePath);
-		fileInfo.setFileSize(fileSize);
-		fileInfo.setOriName(oriName);
-		fileInfo.setSysName(sysName); 
-		fileInfo.setBoardCode(10);
-		
-		}
-		
-		
+			int no = 0;
+			if(mFile.isEmpty()==true) continue;
+			fileExtension = getExtension(mFile.getOriginalFilename());
+			boolean run = true;
+			int galleryNo = gallery.getGalleryNo();
+			String oriName = mFile.getOriginalFilename();
+			String sysName = galleryNo+sdf.format(date)+oriName;
+			File file = new File(filePath, sysName);
+			
+			while(run) {
+				if(!file.exists()) break;
+				sysName = sdf.format(date)+galleryNo+oriName;
+				file = new File(filePath, sysName);
+			}
+			file.mkdirs();
+			mFile.transferTo(file);
+			
+			fileInfo.setFilePath("/gallery/"+sdf.format(date));
+			fileInfo.setFileSize(mFile.getSize());
+			fileInfo.setOriName(oriName);
+			fileInfo.setSysName(sysName); 
+			fileInfo.setBoardCode(10);
+			fileInfo.setBoardNo(gallery.getGalleryNo());
+			service.uploadFile(fileInfo);
+			}
 		
 		service.insertGallery(gallery);
 		
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
+	
+	 private static String getExtension(String fileName) {
+	        int dotPosition = fileName.lastIndexOf('.');
+	        
+	        if (dotPosition != -1 && fileName.length() - 1 > dotPosition) {
+	            return fileName.substring(dotPosition + 1);
+	        } else {
+	            return "";
+	        }
+	 }
+	
 	
 	@RequestMapping("detail.do")
 	public void detail(int galleryNo,GalleryRecommend galleryRecommend,GalleryCommentRecommend galleryCommentRecommend, Model model) throws Exception{

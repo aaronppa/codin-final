@@ -29,24 +29,24 @@
             <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputReportMemberNo">신고자</label>
-                        <input type="hidden" name="reportMemberNo" value="${user.memberNo}"><p class="text-justify">${report.memberNo}</p>
-                        <p class="text-justify"></p>
+                        <input type="hidden" name="reportMemberNo" value="${user.memberNo}">
+                        <p class="text-justify">${report.commenterNo}</p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">신고대상</label>
-                        <input type="hidden" name="targetMemberNo" value="${report.memberNo}"><p class="text-justify">${report.memberNo}</p>
+                        <input type="hidden" name="targetMemberNo" value="${report.commenterNo}"><p class="text-justify">${nickname}</p>
                     </div>
             </div>
             <!-- 게시판 분류, 게시판 제목-->
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">게시판 분류</label>
-                    <input type="hidden" name="boardCode" value="${report.boardCode}">
+                    <input type="hidden" name="boardCode" value="${boardCode}">
                     <p class="text-justify">개꿀팁이냥</p>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">게시판 제목</label>
-                    	<input type="hidden" name="contentNo" value="${report.tipNo}"><p class="text-justify">${report.title}</p>
+                    	<input type="hidden" name="contentNo" value="${report.title}"><p class="text-justify">${report.title}</p>
                 </div>
             </div>
             <!-- 댓글 내용-->

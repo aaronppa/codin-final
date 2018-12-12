@@ -90,22 +90,22 @@
 		 where qna_no=#{qnaNo}
 	</select>	
 	
-	<select id="selectByReportGalleryComment" parameterType="int" resultMap="galleryMap">
+	<select id="selectByReportGalleryComment" parameterType="int" resultMap="galleryCommentMap">
 		select *
 		  from gallery_comment
-		 where gallery_comment_no=#{galleryCommentNo}
+		 where comment_no=#{commentNo}
 	</select>	
 	
-	<select id="selectByReportTipComment" parameterType="int" resultMap="tipMap">
+	<select id="selectByReportTipComment" parameterType="int" resultMap="tipCommentMap">
 		select *
 		  from tip_comment
-		 where tip_comment_no=#{tipCommentNo}
+		 where comment_no=#{commentNo}
 	</select>	
 	
-	<select id="selectByReportQnaComment" parameterType="int" resultMap="QnaMap">
+	<select id="selectByReportQnaComment" parameterType="int" resultMap="QnaCommentMap">
 		select *
 		  from qna_comment
-		 where qna_comment_no=#{qnaCommentNo}
+		 where comment_no=#{commentNo}
 	</select>	
 	
 	<insert id="insertReport" parameterType="report">

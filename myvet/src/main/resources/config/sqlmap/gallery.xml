@@ -11,8 +11,9 @@
 		<result column="content" property="content"/>		
 		<result column="reg_date" property="regDate"/>		
 		<result column="view_cnt" property="viewCnt"/>
+		<result column="member_nickname" property="memberNickname"/>
 		<association property="recomCnt" column="gallery_no" select="countRecommend"></association>
-		<collection property="member" resultMap="memberMap"></collection>
+		<collection property="fileInfoList" column="gallery_no" select="selectFile"></collection>
 	</resultMap>
 	<resultMap type="Member" id="memberMap">
 		<result column="member_no" property="memberNo"/>
@@ -37,6 +38,7 @@
 		<result column="commenter_no" property="commenterNo"/>		
 		<result column="comment" property="comment"/>		
 		<result column="reg_date" property="regDate"/>
+		<result column="member_nickname" property="memberNickname"/>		
 	</resultMap>
 	<resultMap type="GalleryRecommend" id="GalleryRecommendMap">
 		<result column="no" property="no"/>
@@ -89,7 +91,7 @@
 		  from gallery
 		 where gallery_no = #{galleryNo}
 	</select>
-	<insert id="insertGallery" parameterType="gallery">
+	<insert id="insertGallery" parameterType="gallery" useGeneratedKeys="true" keyProperty="galleryNo">
 		insert into gallery(
 		board_code, writer_no, title, content
 			)values(
@@ -205,6 +207,12 @@
 			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize}
 		)
 	</insert>
+	<select id="selectFile" parameterType="fileInfo" resultMap="fileMap">
+		select *
+		  from file_info
+		 where board_code = #{boardCode}
+		   and board_no = #{boardNo}
+	</select>
 <!-- 	<delete id="deleteFile" parameterType="file"> -->
 <!-- 		delete  -->
 <!-- 		  from file -->

@@ -33,12 +33,12 @@
             <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputReportMemberNo">신고자</label>
-                        <input type="hidden" id="reportMemberNo"name="reportMemberNo" value="${reportGallery.writerNo}"><p class="text-justify">${nickname}</p>
+                        <input type="hidden" id="reportMemberNo"name="reportMemberNo" value="${user.memberNo}"><p class="text-justify">${nickname}</p>
                         <p class="text-justify"></p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">신고대상</label>
-                        <input type="hidden" id="targetMemberNo" name="targetMemberNo" value="${reportGallery.writerNo}"><p class="text-justify">${reportGallery.writerNo}</p>
+                        <input type="hidden" id="targetMemberNo" name="targetMemberNo" value="${reportGallery.writerNo}"><p class="text-justify">${gallery.memberNickname}</p>
                     </div>
             </div>
             <!-- 게시판 분류, 게시판 제목-->

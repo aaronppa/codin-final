@@ -56,7 +56,7 @@
     </style>
 </head>
 <body>
-<%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 	<div class="container">
     <form action="<c:url value='/tip/write.do' />" method="post">
     <br>
@@ -167,6 +167,7 @@
     			console.log($(ele))
     			console.log("upload-success");
     			console.log("file.url : "+ '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
+    			
     			$("input#url").val('${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
     			$("input#oriName").val(file.oriName)
     			$("input#sysName").val(file.sysName)

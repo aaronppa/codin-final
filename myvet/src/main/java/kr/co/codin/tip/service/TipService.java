@@ -55,6 +55,6 @@ public interface TipService {
 	
 	void deleteFile(FileInfo fileInfo);
 	
-
+	void intsertBoardNo(int tipNo);
 	
 }

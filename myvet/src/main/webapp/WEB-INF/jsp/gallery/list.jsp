@@ -25,196 +25,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script></head>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Give+You+Glory|The+Girl+Next+Door|Gloria+Hallelujah|Indie+Flower);
-	/*
-	.container{
-		width:1100px;
-	}
-       /*공지*/
-       /*
-       .sticky {
-        -webkit-box-shadow: #DDD 0px 1px 2px;
-        position: relative;
-        background-color: #F4F39E;
-        border-color: #DEE184;
-        color: #47576B;
-        text-align: center;
-        margin: 2.5em 0px;
-        padding: 1.5em 1em;
-        -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
-        -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
-        box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
-        width: 250px;
-        font-style: oblique;
-        /* font-family: 'Indie Flower', cursive;
-        font-family: 'Give You Glory', cursive;
-        font-family: 'The Girl Next Door', cursive;
-        font-family: 'Gloria Hallelujah', cursive; */
-        }
-/*         .post-it { */
-/*         display: table; */
-/*         margin: 5em auto 0;   */
-/*         width:300px; */
-/*         height: auto; */
-/*         } */
-/*         .taped { */
-/*         display: table-cell; */
-/*         text-align: center; */
-/*         vertical-align: middle; */
-/*         } */
-/*         .sticky.taped:after { */
-/*         display: block; */
-/*         content: ""; */
-/*         position: absolute;  */
-/*         width: 110px; */
-/*         height: 30px; */
-/*         top: -21px; */
-/*         left: 30%;     */
-/*         border: 1px solid #fff; */
-/*         background: rgba(254, 254, 254, .6); */
-/*         -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
-/*         -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
-/*         box-shadow: 0px 0 3px rgba(0,0,0,0.1);   */
-/*         } */
-
-/*         .note {  */
-/*         -webkit-box-shadow: #DDD 0px 1px 2px; */
-/*         position: relative; */
-/*         background-color: #F4F39E; */
-/*         border-color: #DEE184; */
-/*         text-align: center; */
-/*         margin: 1.5em auto; */
-/*         padding: 1.5em 1em; */
-/*         -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.25); */
-/*         -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.25); */
-/*         box-shadow: 0px 1px 3px rgba(0,0,0,0.25); */
-/*         -webkit-transform: rotate(2deg); */
-/*         -moz-transform: rotate(2deg); */
-/*         -o-transform: rotate(2deg); */
-/*         -ms-transform: rotate(2deg); */
-/*         transform: rotate(2deg); */
-/*         width: 250px; */
-/*         font-family: 'The Girl Next Door', cursive; /*originally with brain flower font*/ */
-/*         font-size: 1em; */
-/*         } */
-/*         .note:after { */
-/*         display: block; */
-/*         content: ""; */
-/*         position: absolute;  */
-/*         width: 110px; */
-/*         height: 30px; */
-/*         top: -21px; */
-/*         left: 30%;     */
-/*         border: 1px solid #fff; */
-/*         background: rgba(254, 254, 254, .6); */
-/*         -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
-/*         -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1); */
-/*         box-shadow: 0px 0 3px rgba(0,0,0,0.1);   */
-/*         } */
-/*        /*전체*/ */
-/*         h2{ */
-/*             text-align: center; */
-/*         } */
-/*         table{ */
-/*             margin-left: auto; */
-/*             margin-right: auto; */
-/*         } */
-
-/*         /**게시글**/ */
-/*         #title{ */
-/*             font-style: oblique; */
-/*             font-weight: bold; */
-/*         } */
-/*         #writer{ */
-/*             text-align: right; */
-/*             font-style: oblique; */
-/*         } */
-/*         .card{ */
-/*             margin-right: auto; */
-/*             margin-left: auto; */
-/*         } */
-/*         .active{ */
-/*             background: black; */
-/*         } */
-/*         .w-100{ */
-/*             height:200px; */
-/*         } */
-/*         .w-100:hover{ */
-/*             transition: .5s; */
-/*             transform: scale(1.1); */
-/*             opacity: 0.8; */
-/*         } */
-/*         .card-title{ */
-/*             text-align: center; */
-/*             font-weight: bolder; */
-/*         } */
-/*         .card-writer{ */
-/*             text-align: right; */
-/*         } */
-/*         .card-reg-date{ */
-/*             text-align: right; */
-/*         } */
-/*         .etc{ */
-/*             text-align: center; */
-/*         } */
-    
-/*         /**상세보기**/ */
-/*         .modal-image{ */
-/*             height: 200px; */
-/*             width:250px; */
-/*         } */
-/*         /**검색**/ */
-
-/*         /*검색분류*/ */
-/*         .mb-3{ */
-/*             margin-left: 70%; */
-/*         } */
-/*         .dropdown-toggle{ */
-/*             background: none; */
-/*         } */
-/*         .dropdown-toggle:hover{ */
-/*             background: saddlebrown; */
-/*             opacity: 0.5; */
-/*             color:white; */
-/*         } */
-/*         /*검색입력창*/ */
-/*         .input-search{ */
-/*             border:none; */
-/*             width: 280px; */
-/*             color: saddlebrown; */
-/*         } */
-/*         /*검색버튼*/ */
-/*         .btn-outline{ */
-/*             background: none; */
-/*             border:none; */
-/*             color: saddlebrown; */
-/*         } */
-/*         .btn-outline:hover{ */
-/*             opacity: 0.8; */
-/*             transition:.5s; */
-/*             background: saddlebrown; */
-/*             color: white; */
-/*         } */
-/*         /*글쓰기*/ */
-/*         .write-btn-form{ */
-/*             text-align: center; */
-/*         } */
-/*         .write-btn{ */
-/*             color:saddlebrown; */
-/*         } */
-/*         .write-btn:hover{ */
-/*             color:white; */
-/*             background: saddlebrown; */
-/*             opacity: 0.5; */
-/*         } */
-/*         /*detail*/ */
-/*         /*프로필 사진*/ */
-/*         .rounded-circle{ */
-/*             width: 50px; */
-/*             height: 50px; */
-/*         } */
-/*         td{ */
-/*         	padding-left: 10px; */
-/*         } */
 
     </style>
     <body>
@@ -247,7 +57,12 @@
             <br>
             <div class="card" >
                     <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                    <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}&memberNo=7'/>">
+                    <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}&memberNo=${user.memberNo}'/>">
+          
+          
+          
+          				
+          
                         <div id="carouselExampleIndicators${g.galleryNo}" class="carousel slide" data-ride="carousel" data-interval='false'>
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -256,7 +71,7 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test2.jpg" alt="First slide">
+                                    <img class="d-block w-100" src="${filePath}${sysName}" value="/myvet/gallery/${sysName}" alt="First slide">
                                 </div>
                                 <div class="carousel-item">
                                     <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test1.jpg" alt="Second slide">
@@ -367,6 +182,12 @@
    		 <c:import url="page.jsp"></c:import>
     </div>
     <script>
+    
+//     $('.write-btn-form').click(function(){
+//     	window.open("/myvet/gallery/writeForm.do","gallery","width=1300, height=700, right=100, top=10")
+//     })
+    
+    console.log("img : "+$('.no1').val())
     //carousel interval
 	   $('.carousel').carousel({
 	  interval: 0
