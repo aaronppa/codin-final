@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -27,8 +26,8 @@ import kr.co.codin.repository.domain.GalleryCommentRecommend;
 import kr.co.codin.repository.domain.GalleryRecommend;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
+import kr.co.codin.repository.domain.Pet;
 import kr.co.codin.repository.domain.SearchGallery;
-import kr.co.codin.repository.domain.SearchTip;
 
 @Controller
 @RequestMapping("gallery")
@@ -41,9 +40,11 @@ public class GalleryController{
 	@Autowired
 	private GalleryService service;
 	
+	
 	@RequestMapping("list.do")
 	public void list(Model model,Member member,HttpSession session, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{
 		FileInfo fileInfo = new FileInfo();
+		Pet pet = new Pet();
 		member = (Member)session.getAttribute("user");
 		System.out.println("memberNo : "+member.getMemberNo());
 		SearchGallery searchGallery = new SearchGallery(pageNo);
@@ -51,8 +52,8 @@ public class GalleryController{
 		searchGallery.setKeyword(keyword);
 		model.addAttribute("sort",sort);
 		model.addAttribute("keyword",keyword);
+		System.out.println("filePath : "+fileInfo.getFilePath());
 		model.addAttribute("filePath",fileInfo.getFilePath());
-		model.addAttribute("sysName",fileInfo.getSysName());
 		System.out.println("list");
 		model.addAttribute("gallery", service.galleryList(searchGallery));
 		model.addAttribute("count",service.countGallery());
@@ -127,9 +128,11 @@ public class GalleryController{
 	
 	
 	@RequestMapping("detail.do")
-	public void detail(int galleryNo,GalleryRecommend galleryRecommend,GalleryCommentRecommend galleryCommentRecommend, Model model) throws Exception{
+	public void detail(int galleryNo,HttpSession session, GalleryRecommend galleryRecommend,GalleryCommentRecommend galleryCommentRecommend, Model model) throws Exception{
+		Member member = (Member)session.getAttribute("user");
+		Gallery gallery = new Gallery();
+		model.addAttribute("nickname",gallery.getMemberNickname());
 		System.out.println("detail");
-		galleryRecommend.setMemberNo(7);
 		int sumRecommend = 0;
 		try {
 			sumRecommend = service.sumRecommend(galleryNo);

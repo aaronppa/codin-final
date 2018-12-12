@@ -56,7 +56,7 @@
     </style>
 </head>
 <body>
-   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+<%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
 	<div class="container">
     <form action="<c:url value='/tip/write.do' />" method="post">
     <br>

@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-   <link rel="stylesheet" href="/myvet/resources/css/gallery/updateForm.css">
-   <!--  -->
+   <link rel="stylesheet" href="/myvet/resources/css/gallery/writeForm.css">
+	<!--  -->
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -23,225 +23,235 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script>
   <style>
-/*     #thumbs {  */
-/*         padding-top: 10px;  */
-/*         overflow: hidden;  */
-/*     } */
-/*     #thumbs img, #largeImage { */
-/*     cursor: pointer; */
-/*     width: 500px; */
-/*     height: 400px; */
-/*     } */
-/*     #thumbs img { */
-/*     float: left; */
-/*     margin-right: 6px; */
-/*     width:120px; */
-/*     height: 120px; */
-/*     } */
-/*     #description { */
-/*     background: black; */
-/*     color: white; */
-/*     position: absolute; */
-/*     bottom: 0; */
-/*     padding: 10px 20px; */
-/*     margin: 5px; */
-/*     } */
-/*     #panel { */
-/*         position: relative; */
-/*     } */
-/*     #gallary{ */
-/*         float: left; */
-/*         width: 300px; */
+/*********************************
+   CUSTOM INPUT FILES FOR IMAGES
+ *********************************/
+/*** GENERAL STYLES ***/
+* {
+  box-sizing: border-box;
+}
 
-/*     } */
-/*     .content{ */
-/*         text-align: left; */
-/*     } */
-/*     #writer-img{ */
-/*         width: 60px; */
-/*         height: 60px; */
-/*     } */
-/*     #user-img{ */
-/*         width: 50px; */
-/*         height: 50px; */
-/*     } */
-/*     .content{ */
-/*         border: none; */
-        
-/*     } */
-/*     .col-sm-5{ */
-/* 		height: 590px; */
-/* 		overflow: hidden; */
-/* 		overflow: scroll; */
-/* 		overflow: auto; */
-/*     } */
+#page {
+  text-align: center;
+}
+#page h1 {
+  margin-bottom: 4rem;
+  font-family: 'Lemonada', cursive;
+  text-transform: uppercase;
+  font-weight: normal;
+  color: #fff;
+  font-size: 2rem;
+}
 
-/*     textarea{ */
-/*       border-top: none; */
-/*       border-left: none; */
-/*       border-right: none; */
-/*     } */
-/*     .btn-group{ */
-/*       float: right; */
-/*     } */
-/*     /*swiper*/ */
-/*     html, body { */
-/*       position: relative; */
-/*       height: 100%; */
-/*     } */
-/*     body { */
-/*       font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */
-/*       font-size: 14px; */
-/*       color:#000; */
-/*       margin: 0; */
-/*       padding: 0; */
-/*     } */
-/*     .swiper-container { */
-/*       width: 100%; */
-/*       height: 300px; */
-/*       margin-left: auto; */
-/*       margin-right: auto; */
-/*     } */
-/*     .swiper-slide { */
-/*       background-size: cover; */
-/*       background-position: center; */
-/*     } */
-/*     .gallery-top { */
-/*       height: 400px; */
-/*       width: 600px; */
-/*     } */
-/*     .gallery-thumbs { */
-/*       height: 25%; */
-/*       width: 600px; */
-/*       box-sizing: border-box; */
-/*       padding: 10px 0; */
-/*     } */
-/*     .gallery-thumbs .swiper-slide { */
-/*       height: 100%; */
-/*       opacity: 0.4; */
-/*     } */
-/*     .gallery-thumbs .swiper-slide-thumb-active { */
-/*       opacity: 1; */
-/*     } */
-/*     .top-img{ */
-/*         width: 600px; */
-/*         height: 400px; */
-/*     } */
-/*     .thumbs-img{ */
-/*         width:150px; */
-/*         height: 100px; */
-/*     } */
+/*** CUSTOM FILE INPUT STYE ***/
+.wrap-custom-file {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  margin: 0 0.5rem 1rem;
+  text-align: center;
+}
+.wrap-custom-file input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  overflow: hidden;
+  opacity: 0;
+}
+.wrap-custom-file label {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: -webkit-transform 0.4s;
+  transition: transform 0.4s;
+  transition: transform 0.4s, -webkit-transform 0.4s;
+}
+.wrap-custom-file label span {
+  display: block;
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  color: #777;
+  transition: color 0.4s;
+}
+.wrap-custom-file label .fa {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  -webkit-transform: translatex(-50%);
+  transform: translatex(-50%);
+  font-size: 1.5rem;
+  color: lightcoral;
+  transition: color 0.4s;
+}
+.wrap-custom-file label:hover {
+  -webkit-transform: translateY(-1rem);
+  transform: translateY(-1rem);
+}
+.wrap-custom-file label:hover span, .wrap-custom-file label:hover .fa {
+  color: #333;
+}
+.wrap-custom-file label.file-ok {
+  background-size: cover;
+  background-position: center;
+}
+.wrap-custom-file label.file-ok span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.3rem;
+  font-size: 1.1rem;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.wrap-custom-file label.file-ok .fa {
+  display: none;
+}
+
  
 
     </style>
 </head>
 <body>
    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
-	<form action="<c:url value='/gallery/update.do'/>" method="post">
+<br>
+<br>
+<form action="<c:url value='/gallery/write.do'/>" method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
-            <div class="col-sm-7" >
-                <!-- Swiper -->
-                <div class="swiper-container gallery-top">
-                        <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
-                        </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next swiper-button-white"></div>
-                        <div class="swiper-button-prev swiper-button-white"></div>
-                    </div>
-                    <div class="swiper-container gallery-thumbs">
-                        <div class="swiper-wrapper">
-                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
-                              <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
-                        </div>
-                    </div>
-                    <!--file-->
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon01"><i class="fas fa-camera-retro"></i></span>
-                        </div>
-                        <div class="custom-file">
-                          <input  type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
-                    </div>
-                    <div class="pet-add">
-                        <i class="fas fa-plus" ></i>
-                        <span data-toggle="tooltip" title="PONY">
-                          <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="petImg rounded-circle" >
-                        </span>
-                    </div>
-
-            </div>
-            <div class="col-sm-5" > 
+            <div class="col" >
+                <!---------------------------------
+  CUSTOM FILE INPUTS FOR IMAGES
+ ---------------------------------->
+		
+		  <!-- Our File Inputs -->
+           <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
+           <input type="hidden" name="writerNo" value="12">
+           <input type="hidden" name="boardCode" value="10">
+           <span class="writerNick">${user.memberNickname}</span>
+           <hr>
+		  <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image1" accept=".gif, .jpg, .png" />
+		    <label  for="image1">
+		      <span>One</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		  
+		  <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image2" accept=".gif, .jpg, .png" />
+		    <label  for="image2">
+		      <span>Two</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		  
+		  <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image3" accept=".gif, .jpg, .png" />
+		    <label  for="image3">
+		      <span>Three</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		  
+		   <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image4" accept=".gif, .jpg, .png" />
+		    <label  for="image4">
+		      <span>Four</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		   <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image5" accept=".gif, .jpg, .png" />
+		    <label  for="image5">
+		      <span>Five</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+		   <div class="wrap-custom-file">
+		    <input type="file" name="file" id="image6" accept=".gif, .jpg, .png" />
+		    <label  for="image6">
+		      <span>Six</span>
+		      <i class="fa fa-plus-circle"></i>
+		    </label>
+		  </div>
+          <div class="pet-add">
+              <i class="fas fa-plus" ></i>
+              <span data-toggle="tooltip" title="PONY">
+                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="petImg rounded-circle">
+              </span>
+          </div>
+		</div>
+		</div>
+            <div class="col" > 
                 <div class="detail-content" >
                     <br>
-                    <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
-                    <span class="writerNick">복순이</span>
-                    <hr>
-                    <br>
-                    <input type="hidden" name="galleryNo" value="${gallery.galleryNo}">
                     <!--제목-->
-                    <textarea cols="50" rows="1" name="title" placeholder="제목을 입력...">${gallery.title}</textarea>
+                    <textarea cols="150" rows="1" name="title" placeholder="제목을 입력...">${gallery.title}</textarea>
                     <br>
                     <br>
                     <!--내용-->
-                    <textarea cols="50" rows="5" name="content" placeholder="내용을 입력...">${gallery.content}</textarea>
+                    <textarea cols="150" rows="5" name="content" placeholder="내용을 입력...">${gallery.content}</textarea>
                 </div>
-                <br>
-<!--                 <div class="btn-group" role="group" aria-label="Basic example"> -->
-				<div class="buttons">
+                <div class="btn-group" role="group" aria-label="Basic example">
                   <a href="<c:url value='/gallery/list.do'/>">
                     <button type="button" class="btn btn-secondary">목록</button>
                   </a>
-                  <a href="<c:url value='/gallery/detail.do?galleryNo=${gallery.galleryNo}'/>">
-                    <button type="button" class="btn btn-secondary" >수정취소</button>
-                  </a>
-                    <input class="btn btn-primary" type="submit" value="제출">
-				</div>
-<!--                 </div> -->
+                    <input type="submit" class="btn btn-secondary">
+                </div>
             </div>
         </div>
-    </div>
 </form>
 
-  <!-- Swiper JS -->
-  <script src="../dist/js/swiper.min.js"></script>
 
     <script>
-        $('#thumbs img').click(function(){
-        $('#largeImage').attr('src',$(this).attr('src').replace('thumb','large'));
-        $('#description').html($(this).attr('alt'));
-    });
+    //
+    /**
+ * CUSTOM FILE INPUTS FOR IMAGES
+ *
+ * Version: 1.0.0
+ *
+ * Custom file inputs with image preview and 
+ * image file name on selection.
+ */
+$('input[type="file"]').each(function(){
+  // Refs
+  var $file = $(this),
+      $label = $file.next('label'),
+      $labelText = $label.find('span'),
+      labelDefault = $labelText.text();
+  
+  // When a new file is selected
+  $file.on('change', function(event){
+    var fileName = $file.val().split( '\\' ).pop(),
+        tmppath = URL.createObjectURL(event.target.files[0]);
+    //Check successfully selection
+		if( fileName ){
+      $label
+        .addClass('file-ok')
+        .css('background-image', 'url(' + tmppath + ')');
+			$labelText.text(fileName);
+    }else{
+      $label.removeClass('file-ok');
+			$labelText.text(labelDefault);
+    }
+  });
+  
+// End loop of file input elements  
+});
 
-    //swiper
-    var galleryThumbs = new Swiper('.gallery-thumbs', {
-      spaceBetween: 10,
-      slidesPerView: 4,
-      loop: true,
-      freeMode: true,
-      loopedSlides: 5, //looped slides should be the same
-      watchSlidesVisibility: true,
-      watchSlidesProgress: true,
-    });
-    var galleryTop = new Swiper('.gallery-top', {
-      spaceBetween: 10,
-      loop:true,
-      loopedSlides: 5, //looped slides should be the same
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      thumbs: {
-        swiper: galleryThumbs,
-      },
-    });
     //tooltip
     $(function () {
   $('[data-toggle="tooltip"]').tooltip()

@@ -52,6 +52,7 @@ public interface GalleryService {
 	
 //	//파일
 //	
+	void selectFile(List<Gallery> fileInfoList);
 	void uploadFile(FileInfo fileInfo);
 //	
 //	void deleteFile(FileInfo fileInfo);

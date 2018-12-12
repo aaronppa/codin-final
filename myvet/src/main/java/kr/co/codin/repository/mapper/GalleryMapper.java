@@ -40,7 +40,7 @@ public interface GalleryMapper {
 	
 	
 	//파일
-	void selectFile(List<FileInfo> selectFile);
+	void selectFile(List<FileInfo> fileInfoList);
 	void uploadFile(FileInfo fileInfo);
 //	void deleteFile(FileInfo fileInfo);
 	void updateFile(FileInfo fileInfo);

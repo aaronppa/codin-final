@@ -126,7 +126,8 @@
 </head>
 <body>
    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
-
+<br>
+<br>
 <form action="<c:url value='/gallery/write.do'/>" method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
@@ -136,6 +137,11 @@
  ---------------------------------->
 		
 		  <!-- Our File Inputs -->
+           <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
+           <input type="hidden" name="writerNo" value="12">
+           <input type="hidden" name="boardCode" value="10">
+           <span class="writerNick">${user.memberNickname}</span>
+           <hr>
 		  <div class="wrap-custom-file">
 		    <input type="file" name="file" id="image1" accept=".gif, .jpg, .png" />
 		    <label  for="image1">
@@ -192,12 +198,6 @@
             <div class="col" > 
                 <div class="detail-content" >
                     <br>
-                    <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
-                    <input type="hidden" name="writerNo" value="12">
-                    <input type="hidden" name="boardCode" value="10">
-                    <span class="writerNick">${user.memberNickname}</span>
-                    <hr>
-                    <br>
                     <!--제목-->
                     <textarea cols="150" rows="1" name="title" placeholder="제목을 입력..."></textarea>
                     <br>
@@ -215,8 +215,6 @@
         </div>
 </form>
 
-  <!-- Swiper JS -->
-  <script src="../dist/js/swiper.min.js"></script>
 
     <script>
     //
@@ -253,84 +251,7 @@ $('input[type="file"]').each(function(){
   
 // End loop of file input elements  
 });
-    
-    
-    
-    
-    //슬라이드 사진첨부
-    var file = document.querySelector('#inputGroupFile01');
-    
-    file.onchange = function(){
-    	var fileList = file.files;
-    	
-    	var reader = new FileReader();
-    	reader.readAsDataURL(fileList[0])
-    	
-	    reader.onload = function  () {
-    		document.querySelector('.thumbs-img').src = reader.result ;
-// 	        $("#prev").css("width","400px");
-// 	    	$("#prev").css("height","300px");
-	    }; 
-// 	    reader.onload = function  () {
-// 	        document.querySelector('.top-img').src = reader.result ;
-// // 	        $("#preview1").css("width","400px");
-// // 	    	$("#preview1").css("height","300px");
-// 	    }; 
-    }
-    //파일첨부
-    
-     function sendFile(file, ele) {
-    	var formData = new FormData();
-    	console.log("formData", formData)
-    	formData.append('file', file);
-    	console.log(file)
-    	console.log(ele)
-    	$.ajax({
-    		data : formData, 
-    		type : "POST",
-    		url : "/myvet/gallery/uploadFile.do",
-    		cache : false,
-    		contentType : false,
-    		enctype : "multipart/form-data",
-    		processData : false,
-    		//매개변수가 파일경로
-    		success : function(file) {
-    			console.log($(ele))
-    			console.log("upload-success");
-    		}
-    	})
-    }
-    
-    
-    //슬라이드 사진첨부 끝
-    
-        $('#thumbs img').click(function(){
-        $('#largeImage').attr('src',$(this).attr('src').replace('thumb','large'));
-        $('#description').html($(this).attr('alt'));
-    });
 
-    //swiper
-    var galleryThumbs = new Swiper('.gallery-thumbs', {
-      spaceBetween: 10,
-      slidesPerView: 4,
-      loop: true,
-      freeMode: true,
-      loopedSlides: 5, //looped slides should be the same
-      watchSlidesVisibility: true,
-      watchSlidesProgress: true,
-    });
-    var galleryTop = new Swiper('.gallery-top', {
-      spaceBetween: 10,
-      loop:true,
-      loopedSlides: 5, //looped slides should be the same
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      thumbs: {
-        swiper: galleryThumbs,
-      },
-    });
     //tooltip
     $(function () {
   $('[data-toggle="tooltip"]').tooltip()

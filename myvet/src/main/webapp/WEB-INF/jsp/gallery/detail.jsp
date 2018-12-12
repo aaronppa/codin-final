@@ -26,15 +26,17 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script> -->
   <style>
-
+	#title{
+		font-size:20px;
+	}
 
 
     </style>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
-	<div class="">            
-	<input type="hidden" name="memberNo" value="7">
+	<br>          
+	<input type="hidden" name="memberNo" value="${user.memberNo}">
     <div class="container-fluid">
         <div class="row">
          
@@ -76,20 +78,20 @@
                             <br>
                             <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
                             
-                            <span class="writerNick">복순이</span>
+                            <span class="writerNick">${nickname}</span>
                             <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">삭제</a>
                             <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">수정</a>
                             <br>
                             <br>
-                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
-                            <span class="view">view : ${gallery.viewCnt}</span>
                             <!-- <i class="far fa-comments" style="margin-left: 5%;">&nbsp;458</i> -->
                             <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
+                            <div id="title"><strong>${gallery.title}</strong></div>
                             <hr>
+                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
+                            <span class="view">view : ${gallery.viewCnt}</span>
                             <i class="fas fa-exclamation-triangle" id="galleryReport">신고하기</i>
                             <br>
                             <br>
-                            <div id="title"><strong>${gallery.title}</strong></div>
                             <br>
                             <br>
                             <div id="content">${gallery.content}</div>
@@ -111,12 +113,13 @@
                             <div class="comment">
                                     <div class="comments">
                                         <div class="comment-wrap writeComment">
-                                            <div class="photo">
+                                            <div class="photo" style='text-align:center;'>
                                                     <img src="/myvet/resources/img/gall&tip/pic2.jpg" id="writer-pic" class="rounded-circle" >
+                                                    <p class="writerNick">${user.memberNickname}</p>
                                                 </div>
                                                 <!-- 댓글 등록 -->
                                             	<div class="comment-block">
-                                                <input type="hidden" id="commenterNo" name="commenterNo" value="8">
+                                                <input type="hidden" id="commenterNo" name="commenterNo" value="${user.memberNo}">
                                                 <input type="hidden" id="galleryNo" name="galleryNo" value="${gallery.galleryNo}">
                                                     <textarea name="comment" id="input-comment" cols="30" rows="3" placeholder="Add comment..."></textarea>
                                                 	<span id="counter">###</span>

@@ -61,8 +61,6 @@
           
           
           
-          				
-          
                         <div id="carouselExampleIndicators${g.galleryNo}" class="carousel slide" data-ride="carousel" data-interval='false'>
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -71,7 +69,7 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="${filePath}${sysName}" value="/myvet/gallery/${sysName}" alt="First slide">
+                                    <img class="d-block w-100" src="/myvet${filePath}${sysName}" value="/myvet/gallery/${sysName}" alt="First slide">
                                 </div>
                                 <div class="carousel-item">
                                     <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test1.jpg" alt="Second slide">

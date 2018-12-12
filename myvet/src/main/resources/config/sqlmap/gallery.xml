@@ -55,7 +55,25 @@
 		<result column="file_path" property="filePath"/>
 		<result column="file_size" property="fileSize"/>
 	</resultMap>
-	
+	<resultMap id="petMap" type="pet">
+		<result column="pet_no" property="petNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="pet_name" property="petName"/>
+		<result column="pet_reg_no" property="petRegNo"/>
+		<result column="species" property="species"/>
+		<result column="breed" property="breed"/>
+		<result column="size" property="size"/>
+		<result column="pet_gender" property="petGender"/>
+		<result column="pet_age" property="petAge"/>
+		<result column="weight" property="weight"/>
+		<result column="remark" property="remark"/>
+		<result column="pet_ori_name" property="petOriName"/>
+		<result column="pet_sys_name" property="petSysName"/>
+		<result column="pet_file_path" property="petFilePath"/>
+		<result column="pet_file_size" property="petFileSize"/>
+		<result column="pet_file_reg_date" property="petFileRegDate"/>
+		<result column="petcol" property="petcol"/>
+	</resultMap>
 	<select id="countRecommend" parameterType="int" resultType="int">
 		select sum(recommend)
 		  from gallery_recommend
@@ -208,7 +226,7 @@
 		)
 	</insert>
 	<select id="selectFile" parameterType="fileInfo" resultMap="fileMap">
-		select *
+		select board_code, board_no
 		  from file_info
 		 where board_code = #{boardCode}
 		   and board_no = #{boardNo}

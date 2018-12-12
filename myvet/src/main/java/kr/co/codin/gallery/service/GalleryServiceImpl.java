@@ -22,6 +22,15 @@ public class GalleryServiceImpl implements GalleryService{
 	private GalleryMapper mapper;
 
 	
+	
+	
+
+	@Override
+	public void selectFile(List<Gallery> fileInfoList) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Override
 	public List<Gallery> galleryList(SearchGallery searchGallery) {
 		return mapper.selectGallery(searchGallery);
