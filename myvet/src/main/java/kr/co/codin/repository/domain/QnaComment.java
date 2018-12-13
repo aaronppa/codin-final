@@ -10,8 +10,16 @@ public class QnaComment {
 	private Date regDate;
 	private char pick;
 	private int recommendCnt;
+	private String memberNickname;
 	
 	
+	
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
 	public int getRecommendCnt() {
 		return recommendCnt;
 	}

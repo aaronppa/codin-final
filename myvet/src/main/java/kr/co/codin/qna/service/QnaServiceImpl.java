@@ -67,7 +67,7 @@ public class QnaServiceImpl implements QnaService{
 	@Override
 	public void insertRecommend(QnaRecommend QnaRecommend) {
 		// TODO Auto-generated method stub
-		 mapper.insertRecommend(QnaRecommend);
+		 mapper.insertRecommendlike(QnaRecommend);
 		
 	}
 	@Override

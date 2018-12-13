@@ -27,9 +27,9 @@
     <script>
     
     
-	console.log("${searchQuery}");
+	//console.log("${searchQuery}");
 	
-	alert("${pageNo}")
+	//alert("${pageNo}")
 	$(".pagination > li").click(function(e){
 		//alert("dd");
 		//alert($(this).val());

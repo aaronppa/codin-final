@@ -7,7 +7,6 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +17,7 @@ import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaComment;
+import kr.co.codin.repository.domain.QnaRecommend;
 import kr.co.codin.repository.domain.SearchQnA;
 
 
@@ -72,7 +72,7 @@ public class QnaController {
 			model.addAttribute("endPage",service.countTotalContent(searChQuery)/10);
 		}else {
 			System.out.println("22");
-			model.addAttribute("endPage",service.countTotalContent(searChQuery)/10);
+			model.addAttribute("endPage",service.countTotalContent(searChQuery)/10+1);
 		}
 		
 		if(service.countTotalContent(searChQuery)%10 == 0 ) {
@@ -95,10 +95,12 @@ public class QnaController {
 		}
 		
 		
-		if(pageNo > 10) {
-			model.addAttribute("next",(pageNo/10)*10+11);
-		}else {
+		if(pageNo <= 10) {
 			model.addAttribute("next",11);
+		}else if(pageNo > 10 && pageNo%10 == 0 ) {
+			model.addAttribute("next",pageNo + 1);
+		}else {
+			model.addAttribute("next",(pageNo/10)*10 + 11);
 		}
 		model.addAttribute("pageNo", pageNo);
 		System.out.println("dlsdjfsljdf:"+pageNo);	
@@ -189,10 +191,16 @@ public class QnaController {
 	
 	@RequestMapping("insertRecommend.do")
 	@ResponseBody
-	public String insertRecommend(Integer qnaNo,String data) throws Exception{
-		
-		System.out.println(data);
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"detail.do?qnaNo="+18;
+	public String insertRecommend(int qnaNo, int recommend, int memberNo,QnaRecommend QnaRecom) throws Exception{
+		System.out.println("insertRecom");
+		System.out.println(qnaNo);
+		System.out.println(recommend);
+		System.out.println(memberNo);
+		QnaRecom.setMemberNo(memberNo);
+		QnaRecom.setRecommend(recommend);
+		QnaRecom.setQnaNo(qnaNo);
+		service.insertRecommend(QnaRecom);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"detail.do?qnaNo="+qnaNo;
 	}
 	
 	@RequestMapping("deleteComment.do")

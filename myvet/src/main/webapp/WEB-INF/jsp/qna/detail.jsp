@@ -46,516 +46,10 @@
 
 
 <style>
-/* .notes-wrapper .saver-wrap { */
-/*    display: flex; */
-/*    align-items: center; */
-/*    justify-content: center; */
-/* } */
 
-/* *, *:before, *:after, h2, p { */
-/*    margin: 0; */
-/*    padding: 0; */
-/*    box-sizing: border-box; */
-/*    border: none; */
-/*    background-color: transparent; */
-/* } */
-
-/* *:focus, *:before:focus, *:after:focus, h2:focus, p:focus { */
-/*    outline: none; */
-/* } */
-
-
-
-/* .notes-wrapper { */
-/*    max-width: 1400px; */
-/*    width: 100%; */
-/*    margin: 0 auto; */
-/*    height: 700px; */
-/*    background-color: #fff; */
-/*    border-radius: 5px; */
-/*    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
-/*    position: relative; */
-   
-/*    overflow-y: scroll; */
-/*    overflow-x: hidden; */
-/* } */
-
-/* .notes-wrapper .saver-wrap { */
-/*    width: 60px; */
-/*    height: 60px; */
-/*    position: absolute; */
-/*    right: 0; */
-/*    top: 0; */
-/* } */
-
-/* .notes-wrapper .saver-wrap .notes-dot { */
-/*    width: 10px; */
-/*    height: 10px; */
-/*    background-color: #D1D3D6; */
-/*    border-radius: 50px; */
-/*    transition: .1s ease-in-out; */
-/* } */
-
-/* .notes-wrapper .saver-wrap .notes-dot.saved { */
-/*    background-color: #66cc8f; */
-/*    transition: .1s ease-in-out; */
-/*    transition-delay: 2.10s; */
-/* } */
-
-/* .notes-wrapper .saver-wrap .rest { */
-/*    -webkit-transform: scale(0); */
-/*    transform: scale(0); */
-/*    clip: rect(0, 30px, 30px, 15px); */
-/*    height: 30px; */
-/*    width: 30px; */
-/*    position: absolute; */
-/*    left: calc(50% - 15px); */
-/*    top: calc(50% - 15px); */
-/* } */
-
-/* .notes-wrapper .saver-wrap .rest.active { */
-/*    -webkit-animation: animate 1.05s linear 2; */
-/*    animation: animate 1.05s linear 2; */
-/* } */
-
-/* .notes-wrapper .saver-wrap .rest.active:after { */
-/*    -webkit-animation: animate2 1.05s linear 2; */
-/*    animation: animate2 1.05s linear 2; */
-/* } */
-
-/* .notes-wrapper .saver-wrap .rest:after { */
-/*    -webkit-transform: scale(0); */
-/*    transform: scale(0); */
-/*    clip: rect(0, 30px, 30px, 15px); */
-/*    content: ''; */
-/*    border-radius: 50%; */
-/*    height: 30px; */
-/*    width: 30px; */
-/*    position: absolute; */
-/* } */
-
-/* .notes-wrapper .writer { */
-/*    padding: 25px 30px; */
-/*    padding-right: 60px; */
-/*    font-weight: 600; */
-/*    /*   color: #000C2F; */ */
-/*    font-size: 13px; */
-/*    text-transform: uppercase; */
-/*    position: relative; */
-/* } */
-
-/* .notes-wrapper .title { */
-/*    padding: 25px 30px; */
-/*    padding-right: 60px; */
-/*    font-weight: 600; */
-/*    /*   color: #000C2F; */ */
-/*    font-size: 13px; */
-/*    text-transform: uppercase; */
-/*    position: relative; */
-/* } */
-
-/* .notes-wrapper .content { */
-/*    padding: 10px 30px; */
-/*    padding-bottom: 15px; */
-/*    font-weight: 400; */
-/*    /*   color: #666D82; */ */
-/*    line-height: 1.4; */
-/*    font-size: 14px; */
-/* } */
-
-/* .notes-wrapper .content span.bold { */
-/*    font-weight: 700; */
-/* } */
-
-/* .notes-wrapper .content img { */
-/*    width: 90%; */
-/*    border-radius: 5px; */
-/*    margin: 15px 5%; */
-/* } */
-
-/* .notes-wrapper .comment { */
-/*    height: 60px; */
-/*    line-height: 60px; */
-/*    text-align: left; */
-/*    font-size: 13px; */
-/*    /*   color: #999EAC; */ */
-/*    position: relative; */
-/* } */
-
-/* .notes-wrapper .getImg { */
-/*    width: 60px; */
-/*    height: 60px; */
-/*    /* position: left; */ */
-/*    /* position: absolute; */ */
-/*    bottom: 0; */
-/*    /* right: -15px; */ */
-/*    text-align: center; */
-/*    cursor: pointer; */
-/* } */
-
-/* .notes-wrapper { */
-/*    line-height: 60px; */
-/*    /* color: #999EAC; */ */
-/*    color: black; */
-/*    font-size: 30px; */
-/*    text-align: left; */
-/* } */
-
-/* .listnsub { */
-/*    max-width: 800px; */
-/*    width: 100%; */
-/*    text-align: center; */
-/*    height: auto; */
-/*    background-color: #fff; */
-/*    border-radius: 5px; */
-/*    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
-/*    /* position: relative; */ */
-/*    z-index: 999; */
-/*    font-size: 25px; */
-/* } */
-
-/* .rounded-circle { */
-/*    width: 50px; */
-/*    height: 50px; */
-/* } */
-
-/* @ */
-/* -webkit-keyframes animate { 0% { */
-/*    -webkit-transform: scale(1); */
-/*    transform: scale(1); */
-/*    -webkit-transform: rotate(0deg); */
-/*    transform: rotate(0deg); */
-/* } */
-
-/* 100% */
-/* { */
-/* -webkit-transform */
-/* : */
- 
-/* scale */
-/* (1); */
-
-            
-/* transform */
-/* : */
- 
-/* scale */
-/* (1); */
-
-    
-/* -webkit-transform */
-/* : */
- 
-/* rotate */
-/* (220deg); */
-
-            
-/* transform */
-/* : */
- 
-/* rotate */
-/* (220deg); */
-
-  
-/* } */
-/* } */
-/* @ */
-/* keyframes animate { 0% { */
-/*    -webkit-transform: scale(1); */
-/*    transform: scale(1); */
-/*    -webkit-transform: rotate(0deg); */
-/*    transform: rotate(0deg); */
-/* } */
-
-/* 100% */
-/* { */
-/* -webkit-transform */
-/* : */
- 
-/* scale */
-/* (1); */
-
-            
-/* transform */
-/* : */
- 
-/* scale */
-/* (1); */
-
-    
-/* -webkit-transform */
-/* : */
- 
-/* rotate */
-/* (220deg); */
-
-            
-/* transform */
-/* : */
- 
-/* rotate */
-/* (220deg); */
-
-  
-/* } */
-/* } */
-/* @ */
-/* -webkit-keyframes animate2 { 0% { */
-/*    box-shadow: inset #D1D3D6 0 0 0 2px; */
-/*    -webkit-transform: rotate(-140deg); */
-/*    transform: rotate(-140deg); */
-/* } */
-
-/* 100% */
-/* { */
-/* box-shadow */
-/* : */
- 
-/* inset */
- 
-/* #D1D3D6 */
- 
-/* 0 */
-/* 0 */
-/* 0 */
-/* 2 */
-/* px */
-/* ; */
-
-    
-/* -webkit-transform */
-/* : */
- 
-/* rotate */
-/* (140deg); */
-
-            
-/* transform */
-/* : */
- 
-/* rotate */
-/* (140deg); */
-
-  
-/* } */
-/* } */
-/* @ */
-/* keyframes animate2 { 0% { */
-/*    box-shadow: inset #D1D3D6 0 0 0 2px; */
-/*    -webkit-transform: rotate(-140deg); */
-/*    transform: rotate(-140deg); */
-/* } */
-
-/* 100% */
-/* { */
-/* box-shadow */
-/* : */
- 
-/* inset */
- 
-/* #D1D3D6 */
- 
-/* 0 */
-/* 0 */
-/* 0 */
-/* 2 */
-/* px */
-/* ; */
-
-    
-/* -webkit-transform */
-/* : */
- 
-/* rotate */
-/* (140deg); */
-
-            
-/* transform */
-/* : */
- 
-/* rotate */
-/* (140deg); */
-
-  
-/* } */
-/* } */
-
-/* /*Comment*/ */
-/* /* html, body { */
-/*    background-color: #f0f2fa; */
-/*    font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", */
-/*       sans-serif; */
-/*    color: #555f77; */
-/*    -webkit-font-smoothing: antialiased; */
-/* } */ */
-
-/* input, textarea { */
-/*    outline: none; */
-/*    border: none; */
-/*    display: block; */
-/*    margin: 0; */
-/*    padding: 0; */
-/*    -webkit-font-smoothing: antialiased; */
-/*    font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", */
-/*       sans-serif; */
-/*    font-size: 1rem; */
-/*    color: #555f77; */
-/* } */
-
-/* input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { */
-/*    color: #ced2db; */
-/* } */
-
-/* input::-moz-placeholder, textarea::-moz-placeholder { */
-/*    color: #ced2db; */
-/* } */
-
-/* input:-moz-placeholder, textarea:-moz-placeholder { */
-/*    color: #ced2db; */
-/* } */
-
-/* input:-ms-input-placeholder, textarea:-ms-input-placeholder { */
-/*    color: #ced2db; */
-/* } */
-
-/* p { */
-/*    line-height: 1.3125rem; */
-/* } */
-
-/* .comments { */
-/*    margin: 2.5rem auto 0; */
-/*    max-width: 60.75rem; */
-/*    padding: 0 1.25rem; */
-/* } */
-
-/* .comment-wrap { */
-/*    margin-bottom: 1.25rem; */
-/*    display: table; */
-/*    width: 100%; */
-/*    min-height: 5.3125rem; */
-/* } */
-
-/* .photo { */
-/*    padding-top: 0.625rem; */
-/*    display: table-cell; */
-/*    width: 3.5rem; */
-/* } */
-
-/* .photo .avatar { */
-/*    height: 2.25rem; */
-/*    width: 2.25rem; */
-/*    border-radius: 50%; */
-/*    background-size: contain; */
-/* } */
-
-/* .comment-block { */
-/*    padding: 1rem; */
-/*    background-color: #fff; */
-/*    display: table-cell; */
-/*    vertical-align: top; */
-/*    border-radius: 0.1875rem; */
-/*    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08); */
-/* } */
-
-/* .comment-block textarea { */
-/*    width: 100%; */
-/*    resize: none; */
-/* } */
-
-/* .comment-text { */
-/*    margin-bottom: 1.25rem; */
-/* } */
-
-/* .bottom-comment { */
-/*    color: #acb4c2; */
-/*    font-size: 0.875rem; */
-/* } */
-
-/* .comment-date { */
-/*    float: left; */
-/* } */
-
-/* .comment-actions { */
-/*    float: right; */
-/* } */
-
-/* .comment-actions li { */
-/*    display: inline; */
-/*    margin: -2px; */
-/*    cursor: pointer; */
-/* } */
-
-/* .comment-actions li.registration { */
-/*    color: 1px solid gray; */
-/* } */
-
-/* .comment-actions li.complain { */
-/*    padding-right: 0.75rem; */
-/*    border-right: 1px solid #e1e5eb; */
-/* } */
-
-/* .comment-actions li.reply { */
-/*    padding-left: 0.75rem; */
-/*    padding-right: 0.125rem; */
-/* } */
-
-/* .comment-actions li:hover { */
-/*    color: #0095ff; */
-/* } */
-
-/* /*댓글 제출*/ */
-/* .commentSubmit:hover { */
-/*    background: gray; */
-/*    color: white; */
-/*    transition: .5s; */
-/* } */
-
-/* #deleteCommentBtn:hover { */
-/*    background: gray; */
-/*    color: white; */
-/*    transition: .5s; */
-/* } */
-
-/* #comment::-webkit-scrollbar { */
-/*    display: none; */
-/* } */
-
-/* <!-- */
-/* 좋아요 -->.rating { */
-/*    text-align: center; */
-/* } */
-
-/* .like, .dislike { */
-/*    font-size: 10px; */
-/*    display: inline-block; */
-/*    cursor: pointer; */
-/*    margin: 10px; */
-
-/*    /*   color: gray; */ */
-/* } */
-
-/* .dislike:hover, .like:hover { */
-/*    color: blue; */
-/*    transition: all .2s ease-in-out; */
-/*    transform: scale(1.1); */
-/* } */
-
-
-/* .active { */
-/*    color: blue; */
-/* } */
-
-/* .comActive { */
-/*    color: red; */
-/*    transition: .5s; */
-/* } */
-/* .bodyContainer{ */
-/*          width:1100px; */
-/*          overflow: hidden; */
-/*          margin: auto; */
-/*          margin-top: 30px; */
-         
-/*       } */
+	.defaultHidden{
+		visibility:hidden;
+	}
 </style>
 </head>
 
@@ -608,20 +102,21 @@
 
       <!-- 삭제, 수정 -->
       <div id="delete-update">
-         <a href="<c:url value='/qna/list.do'/>"> 
-            <span id="list" data-toggle="tooltip" title="LIST" class="btn btn-primary"> 
-               <strong>List</strong>
-            </span> 
-         </a>
+        
          <a href="<c:url value='/qna/updateForm.do?qnaNo=${qna.qnaNo }'/>">
-            <span id="update" data-toggle="tooltip" title="UPDATE" class="btn btn-primary">
+            <span id="update" data-toggle="tooltip" title="UPDATE" class="btn btn-primary defaultHidden">
                   <strong>Update</strong>
             </span> 
          </a>
-         <a href="<c:url value='/qna/delete.do?qnaNo=${qna.qnaNo }'/>" class="btn btn-danger">
+         <a href="<c:url value='/qna/delete.do?qnaNo=${qna.qnaNo }'/>" class="btn btn-danger defaultHidden">
             <span id="delete" data-toggle="tooltip" title="DELETE"> 
                <strong>Delete</strong>
             </span>
+         </a>
+          <a href="<c:url value='/qna/list.do'/>"> 
+            <span id="list" data-toggle="tooltip" title="LIST" class="btn btn-primary"> 
+               <strong>List</strong>
+            </span> 
          </a>
       </div>
 
@@ -678,9 +173,14 @@
 //          });
         
 
-
+	if("${qna.writerNo}" == "${user.memberNo}" ){
+		
+		$(".defaultHidden").css("visibility","visible");
  
-        
+	} 
+	
+	
+	
         //댓글 글자 입력수
       $(function typing() {
             $('#comment').keyup(function (e){
@@ -847,7 +347,7 @@
                   console.log(result);
                   
                 $(".comment-list").append(
-                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;${user.memberNickname}"
+                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
                  +"<button class='com-like "+likeRecommend+"'data-comno='"+result[i].commenterNo+"'>"+"<i class='far fa-thumbs-up'></i>"+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"   
                +"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
                 +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
@@ -855,10 +355,21 @@
                    +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
                    +"<div class='comment' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
                  +"</div>"
-                 +"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
-                 +"<button class='updateCommentBtn' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
+                 +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
+                 +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
                  +"<hr>"
                 );
+                
+                if("${user.memberNo}" ==$(".recomDefaultHidden"+i).val()){
+            		
+            		$(".recomDefaultHidden"+i).css("visibility","visible");
+            		
+            	}else{
+            		$(".recomDefaultHidden"+i).css("visibility","hidden");
+            		
+            	}
+                
+              
          } 
            }).fail(function(result){
               console.log("실패 tipNo"+result)
@@ -866,6 +377,10 @@
         
         }
            
+        
+       
+        
+        
         function detail(){
            $.ajax({
               url:"/myvet/qna/detail.do",
@@ -901,6 +416,7 @@
            
            qnaRecomInfo.qnaNo=parseInt(qnaNo);
            qnaRecomInfo.recommend=parseInt(recommend);
+           var memberNo = '${user.memberNo}';
            qnaRecomInfo.memberNo=parseInt('${user.memberNo}');
            
            recom.push(qnaRecomInfo);
@@ -916,10 +432,9 @@
            //console.log(recom); 
            $.ajax({
               url:"/myvet/qna/insertRecommend.do",   
-              data:{data:recom},
+              data:{qnaNo : qnaNo, recommend:recommend, memberNo :memberNo},
                 
-              type:"post",
-              dataType:"json"
+              type:"post"
            }).done(function(result){
               console.log("insertRecommend-success")
            }).fail(function(result){

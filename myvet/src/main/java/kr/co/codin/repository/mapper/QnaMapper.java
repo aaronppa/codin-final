@@ -18,7 +18,7 @@ public interface QnaMapper {
 	void insertComment(QnaComment Qc);
 	List<QnaComment> selectCombyNo(int qnaNo);
 	List<QnaCategoryList> categoryList();
-	void insertRecommend(QnaRecommend QnaRecommend);
+	void insertRecommendlike(QnaRecommend QnaRecommend);
 	void deleteComment(QnaComment qc);
 	void updateQnaComment(QnaComment qc);
 	int qnaListCnt(SearchQnA QNA);

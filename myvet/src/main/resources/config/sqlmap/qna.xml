@@ -257,6 +257,7 @@
 				q.category_code) categoryName
 				,q.answered
 				,q.content
+				,q.writer_no 
 		from qna q
 		where q.qna_no = #{qnaNo}
 
@@ -289,12 +290,20 @@
 	</insert>
 
 	<select id="selectCombyNo" parameterType="QnaComment" resultMap="QnaCommentMap">
-		select q.* , (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
+		select q.* 
+		,(select member_nickname from member where member_no = q.commenter_no) memberNickname
+		, (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
 		from qna_comment q
 		where qna_no = #{qnaNo}
 	</select>
 	
-	<insert id="insertRecommend">
+	
+	<select id="QnaRecomCheck">
+		select *
+		from qna_recommend
+		where member_no =#{memberNo} and qna_no = #{qnaNo} 
+	</select>
+	<insert id="insertRecommendlike" parameterType="QnaRecommend">
 		insert into qna_recommend(member_no,qna_no,recommend) values(#{memberNo},#{qnaNo},#{recommend})
 	</insert>
 	

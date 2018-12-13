@@ -237,5 +237,10 @@ public class MainMapController {
 		return null;
 	}
 	
+	@RequestMapping("Centerajax.do")
+	@ResponseBody
+	public void CenterAjax(double x, double y) {
+		System.out.println("요기왔따");
+	}
 
 }
