@@ -225,10 +225,10 @@
 			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize}
 		)
 	</insert>
-	<select id="selectFile" parameterType="fileInfo" resultMap="fileMap">
-		select board_code, board_no
+	<select id="selectFile" parameterType="int" resultMap="fileMap">
+		select *
 		  from file_info
-		 where board_code = #{boardCode}
+		 where board_code = 10
 		   and board_no = #{boardNo}
 	</select>
 <!-- 	<delete id="deleteFile" parameterType="file"> -->

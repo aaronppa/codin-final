@@ -66,7 +66,7 @@
     <input name="tipNo" value="${tip.tipNo }" type="hidden">
     <input name="boardCode" type="hidden" value="11">
 <!--     <input name="categoryCode" type="hidden" value="1"> -->
-    <input name="memberNo" type="hidden" value="33">
+    <input name="memberNo" type="hidden" value="${user.memberNo}">
     
 <!--     <div id="titleForm" style="text-align:center;"> -->
 <!-- 	    <input name="title" type="text" style="width:500px;"> -->

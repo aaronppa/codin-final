@@ -56,57 +56,59 @@
         <td>
             <br>
             <div class="card" >
-                    <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                    <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}&memberNo=${user.memberNo}'/>">
-          
-          
-          
-                        <div id="carouselExampleIndicators${g.galleryNo}" class="carousel slide" data-ride="carousel" data-interval='false'>
-                            <ol class="carousel-indicators">
-                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img class="d-block w-100" src="/myvet${filePath}${sysName}" value="/myvet/gallery/${sysName}" alt="First slide">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test1.jpg" alt="Second slide">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test4.jpg" alt="Third slide">
-                                </div>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators${g.galleryNo}" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators${g.galleryNo}" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
+<!--                     <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> -->
+                <a href="<c:url value='/gallery/detail.do?galleryNo=${g.galleryNo}&memberNo=${user.memberNo}'/>">
+                <div id="carouselExampleIndicators${g.galleryNo}" class="carousel slide" data-ride="carousel" data-interval='false'>
+                    <ol class="carousel-indicators">
+                    	<c:if test="${empty g.fileInfoList}">
+                    		<li data-target="#carouselExampleIndicators${g.galleryNo}" data-slide-to="0"  class="active"></li>
+                    	</c:if>
+       					<c:forEach var="f" items="${g.fileInfoList}" varStatus="innerLoop">
+                            <li data-target="#carouselExampleIndicators${g.galleryNo}" data-slide-to="${innerLoop.index}"
+                            	<c:if test="${innerLoop.first}"> class="active" </c:if>
+                            ></li>
+         				</c:forEach>
+					</ol>
+                    <div class="carousel-inner">
+                        <c:if test="${empty g.fileInfoList}">
+                    		<div class="carousel-item active">
+	                            <img class="d-block w-100" src="/myvet/resources/img/gall&tip/myvet.png">
+	                        </div>
+						</c:if>
+						<c:forEach var="f" items="${g.fileInfoList}" varStatus="innerLoop">
+                        <div class="carousel-item <c:if test='${innerLoop.first}'>active</c:if>">
+                            <img class="d-block w-100" src="/myvet/upload${f.filePath}/${f.sysName}">
                         </div>
-                    </a>
-                    <div class="card-body">
-                        <div class="etc">
-                            <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
-                                    <i class="fas fa-heart">123</i>
-                                    <i class="fas fa-comments">54</i>
-                                    
-                                </div>
-                                <div class="card-content" >
-                                    <p class="card-title">${g.title} </p>
-                                    <span data-toggle="tooltip" title="포니, 포돌이">
-                                        <i class="fas fa-dog"></i>
-                                    </span>
-                                    <p class="card-writer">${g.writerNo}</p>
-                                    <p class="card-reg-date"><fmt:formatDate value="${g.regDate}" pattern="yyyy-MM-dd"/></p>
-                                </div>
-                            </div>
-                        </div>
-                       </div>
+                        </c:forEach>
                     </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators${g.galleryNo}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators${g.galleryNo}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                 </div>
+                 
+             	 </a>
+                 <div class="card-body">
+                     <div class="etc">
+                         <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
+                             <i class="fas fa-heart">${g.recomCnt}</i>
+                             <i class="fas fa-comments">54</i>
+                         </div>
+                         <div class="card-content" >
+                             <p class="card-title">${g.title} </p>
+                             <span data-toggle="tooltip" title="포니, 포돌이">
+                                 <i class="fas fa-dog"></i>
+                             </span>
+                             <p class="card-writer">${g.memberNickname}</p>
+                             <p class="card-reg-date"><fmt:formatDate value="${g.regDate}" pattern="yyyy-MM-dd"/></p>
+                         </div>
+                     </div>
+                    </div>
+                </div>
                 </td>
              <c:if test="${loop.count % 4 == 0}">
              </tr>
@@ -180,11 +182,10 @@
    		 <c:import url="page.jsp"></c:import>
     </div>
     <script>
-    
 //     $('.write-btn-form').click(function(){
 //     	window.open("/myvet/gallery/writeForm.do","gallery","width=1300, height=700, right=100, top=10")
 //     })
-    
+    console.log('${gallery}')
     console.log("img : "+$('.no1').val())
     //carousel interval
 	   $('.carousel').carousel({

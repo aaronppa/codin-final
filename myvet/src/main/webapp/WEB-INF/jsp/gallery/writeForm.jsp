@@ -127,7 +127,6 @@
 <body>
    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 <br>
-<br>
 <form action="<c:url value='/gallery/write.do'/>" method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
@@ -138,7 +137,7 @@
 		
 		  <!-- Our File Inputs -->
            <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
-           <input type="hidden" name="writerNo" value="12">
+           <input type="hidden" name="writerNo" value="${user.memberNo}">
            <input type="hidden" name="boardCode" value="10">
            <span class="writerNick">${user.memberNickname}</span>
            <hr>

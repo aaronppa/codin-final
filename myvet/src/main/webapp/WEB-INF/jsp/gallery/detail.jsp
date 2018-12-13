@@ -7,6 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+	    .carousel-3d-slide {
+        height: auto !important;
+        background-color: rgba(0, 0, 0, 0.25) !important;
+        }
+</style>
         <link rel="stylesheet" href="/myvet/resources/css/gallery/detail.css">
 
 
@@ -26,8 +32,8 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script> -->
   <style>
-	#title{
-		font-size:20px;
+	.photo{
+		text-align: center;
 	}
 
 
@@ -35,34 +41,53 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
-	<br>          
+	            
 	<input type="hidden" name="memberNo" value="${user.memberNo}">
     <div class="container-fluid">
         <div class="row">
-         
             <!-- <div class="col-md-7 col-md-offset-1"> -->
-                <div class="col-md-6" id="pic-form">
-                <!-- Swiper -->
-                <div class=" swiper-container gallery-top">
-                        <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
-                        <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
+                <div class="col-md-7" id="pic-form">
+                <!-- carousel -->
+                <div id="carousel">
+			    <carousel-3d :autoplay="true" :autoplay-timeout="2400">
+			      
+         <c:forEach var="f" items="${gallery.fileInfoList}" varStatus="loop">
+			      <slide :index="${loop.index}"><img src="/myvet/upload${f.filePath}/${f.sysName}"/></slide>
+         </c:forEach>
+<!-- 			      <slide :index="1"><img src="https://unsplash.it/400/300?image=456"/></slide> -->
+<!-- 			      <slide :index="2"><img src="https://unsplash.it/400/300?image=222"/></slide> -->
+<!-- 			      <slide :index="3"><img src="https://unsplash.it/400/300?image=1003"/></slide> -->
+<!-- 			      <slide :index="4"><img src="https://unsplash.it/400/300?image=940"/></slide> -->
+<!-- 			      <slide :index="5"><img src="https://unsplash.it/400/300?image=944"/></slide> -->
+<!-- 			      <slide :index="6"><img src="https://source.unsplash.com/mEr7U5yfYt8/400x300"/></slide> -->
+<!-- 			      <slide :index="7"><img src="https://unsplash.it/400/300?image=1041"/></slide> -->
+			    </carousel-3d>
+			  </div>
+<!--                 <div class=" swiper-container gallery-top"> -->
+<!--                         <div class="swiper-wrapper"> -->
+<%--                         <c:forEach var="f" items="${gallery.fileInfoList}"> --%>
+<%--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/upload/${f.filePath}/${f.sysName}"></div> --%>
+<%--                         </c:forEach> --%>
+<!-- <!--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div> --> 
+<!-- <!--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div> --> 
+<!-- <!--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div> --> 
 
-                        </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next swiper-button-white"></div>
-                        <div class="swiper-button-prev swiper-button-white"></div>
-                    </div>
-                    <div class="swiper-container gallery-thumbs">
-                        <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic1.jpg"></div>
-                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div>
-                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div>
-                                <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div>
-                        </div>
-                    </div>
+<!--                         </div> -->
+<!--                         Add Arrows -->
+<!--                         <div class="swiper-button-next swiper-button-white"></div> -->
+<!--                         <div class="swiper-button-prev swiper-button-white"></div> -->
+<!--                     </div> -->
+<!--                     <div class="swiper-container gallery-thumbs"> -->
+<!--                         <div class="swiper-wrapper"> -->
+<%--                             <c:forEach var="f" items="${gallery.fileInfoList}"> --%>
+<%--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/upload/${f.filePath}/${f.sysName}"></div> --%>
+<%-- 							</c:forEach> --%>
+<!--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div> -->
+<!--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div> -->
+<!--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+					
                     <div class="pet">
                         <span data-toggle="tooltip" title="PONY">
                             <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony01.jpg" id="pet-img" style="margin-right: 10px;">
@@ -70,27 +95,37 @@
                         <span data-toggle="tooltip" title="PODOL">
                             <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img">
                         </span>
+                        <br>
+                            <div>
+                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
+                            <br>
+                            <span class="view">view : ${gallery.viewCnt}</span>
+                            <!-- <i class="far fa-comments" style="margin-left: 5%;">&nbsp;458</i> -->
+                            <br>
+                            <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
+                            </div>
+                        	<div >
+                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">
+                            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success">수정</button>
+							</a>
+                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">
+                            <button type="button" class="btn btn-danger">삭제</button>
+                            </a>
+                        	</div>
+                        	<br>
                     </div>
                 </div>
 
-                <div class="col-md-6" id="comment"> 
+                <div class="col-md-5" id="comment"> 
                         <div class="detail-content"  >
                             <br>
-                            <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
-                            
-                            <span class="writerNick">${nickname}</span>
-                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">삭제</a>
-                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">수정</a>
-                            <br>
-                            <br>
-                            <!-- <i class="far fa-comments" style="margin-left: 5%;">&nbsp;458</i> -->
-                            <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
+                        	<div class="writer">
+								<img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
+	                            <span class="writerNick">${gallery.memberNickname}</span>
+							</div>
                             <div id="title"><strong>${gallery.title}</strong></div>
                             <hr>
-                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
-                            <span class="view">view : ${gallery.viewCnt}</span>
                             <i class="fas fa-exclamation-triangle" id="galleryReport">신고하기</i>
-                            <br>
                             <br>
                             <br>
                             <br>
@@ -113,18 +148,18 @@
                             <div class="comment">
                                     <div class="comments">
                                         <div class="comment-wrap writeComment">
-                                            <div class="photo" style='text-align:center;'>
+                                            <div class="photo">
                                                     <img src="/myvet/resources/img/gall&tip/pic2.jpg" id="writer-pic" class="rounded-circle" >
-                                                    <p class="writerNick">${user.memberNickname}</p>
-                                                </div>
-                                                <!-- 댓글 등록 -->
-                                            	<div class="comment-block">
-                                                <input type="hidden" id="commenterNo" name="commenterNo" value="${user.memberNo}">
-                                                <input type="hidden" id="galleryNo" name="galleryNo" value="${gallery.galleryNo}">
-                                                    <textarea name="comment" id="input-comment" cols="30" rows="3" placeholder="Add comment..."></textarea>
-                                                	<span id="counter">###</span>
-                                                </div>
+                                                	<p class="commenter"><strong>${user.memberNickname}</strong></p>
+                                            </div>&nbsp;&nbsp;
+                                            <!-- 댓글 등록 -->
+                                        	<div class="comment-block">
+                                            <input type="hidden" id="commenterNo" name="commenterNo" value="${user.memberNo}">
+                                            <input type="hidden" id="galleryNo" name="galleryNo" value="${gallery.galleryNo}">
+                                                <textarea name="comment" id="input-comment" cols="30" rows="3" placeholder="Add comment..."></textarea>
+                                            	<span id="counter">###</span>
                                             </div>
+                                        </div>
                                             <ul class="comment-actions">
                                                 <li class="registration">등록</li>
                                             </ul>
@@ -148,8 +183,23 @@
 
   <!-- Swiper JS -->
   <!-- <script src="../dist/js/swiper.min.js"></script> -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.7/vue.js"></script>
+  <script src="https://rawgit.com/Wlada/vue-carousel-3d/master/dist/vue-carousel-3d.min.js"></script>
     <script>
+    
+    //carousel
+      //https://github.com/Wlada/vue-carousel-3d
+    new Vue({
+    el: '#carousel',
+    data: {
+        slides: 7
+    },
+    components: {
+        'carousel-3d': Carousel3d.Carousel3d,
+        'slide': Carousel3d.Slide
+    }
+    })
+    //end carousel
     function detail(){
     	$.ajax({
     		url:"/myvet/gallery/detail.do",
@@ -184,7 +234,7 @@
        	 function insertRecommend(recommend){
         	$.ajax({
         		url:"/myvet/gallery/insertRecommend.do",
-        		data:"galleryNo=${gallery.galleryNo}&memberNo=7&recommend="+recommend
+        		data:"galleryNo=${gallery.galleryNo}&memberNo=${user.memberNo}&recommend="+recommend
         	}).done(function(){
         		console.log("insertRecommend-success")
         	})
@@ -314,7 +364,7 @@
 	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
 	            	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recomCnt+"</span>"
 	            
-	            	+"<i class='fas fa-exclamation-circle' data-comno='"+result[i].commentNo+"' style='margin-left:10px;'></i>"
+// 	            	+"<i class='fas fa-exclamation-circle' data-comno='"+result[i].commentNo+"' style='margin-left:10px;'></i>"
 	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno="+result[i].commenterNo+"></div>"
 	                +"<div class='comment-content'>" 
 		                +"<input type='hidden' class='commentval' data-commentno='"+result[i].commentNo+"'/>"

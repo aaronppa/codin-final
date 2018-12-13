@@ -44,25 +44,27 @@ public class GalleryController{
 	@RequestMapping("list.do")
 	public void list(Model model,Member member,HttpSession session, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{
 		FileInfo fileInfo = new FileInfo();
-		Pet pet = new Pet();
+		Gallery gallery = new Gallery();
 		member = (Member)session.getAttribute("user");
 		System.out.println("memberNo : "+member.getMemberNo());
+		System.out.println("nickname : "+gallery.getMemberNickname());
 		SearchGallery searchGallery = new SearchGallery(pageNo);
 		searchGallery.setSort(sort);
 		searchGallery.setKeyword(keyword);
+		model.addAttribute("nickname",member.getMemberNickname());
 		model.addAttribute("sort",sort);
 		model.addAttribute("keyword",keyword);
-		System.out.println("filePath : "+fileInfo.getFilePath());
-		model.addAttribute("filePath",fileInfo.getFilePath());
 		System.out.println("list");
 		model.addAttribute("gallery", service.galleryList(searchGallery));
 		model.addAttribute("count",service.countGallery());
-		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery()));
+		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery())); 
+		
+//		service.selectFile(fileInfoList);
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countgallery()));
 	}
 	
 	@RequestMapping("writeForm.do")
-	public void writeForm(Model model, String memberNickname) throws Exception{
+	public void writeForm(Model model) throws Exception{
 		
 		System.out.println("writeForm");
 	}
@@ -72,8 +74,8 @@ public class GalleryController{
 		System.out.println("write");
 		System.out.println("mFileList : "+mFileList);
 		
+
 		service.insertGallery(gallery);
-		
 		Date date = new Date();
 		System.out.println(date);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -110,7 +112,6 @@ public class GalleryController{
 			service.uploadFile(fileInfo);
 			}
 		
-		service.insertGallery(gallery);
 		
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
@@ -128,9 +129,9 @@ public class GalleryController{
 	
 	
 	@RequestMapping("detail.do")
-	public void detail(int galleryNo,HttpSession session, GalleryRecommend galleryRecommend,GalleryCommentRecommend galleryCommentRecommend, Model model) throws Exception{
-		Member member = (Member)session.getAttribute("user");
-		Gallery gallery = new Gallery();
+	public void detail(int galleryNo,Member member,HttpSession session, Gallery gallery,GalleryRecommend galleryRecommend,GalleryCommentRecommend galleryCommentRecommend, Model model) throws Exception{
+		member = (Member)session.getAttribute("user");
+		
 		model.addAttribute("nickname",gallery.getMemberNickname());
 		System.out.println("detail");
 		int sumRecommend = 0;
@@ -151,7 +152,8 @@ public class GalleryController{
 	}
 	
 	@RequestMapping("updateForm.do")
-	public void updateForm(int galleryNo, Model model) throws Exception{
+	public void updateForm(int galleryNo, Model model,Member member,HttpSession session) throws Exception{
+		member = (Member)session.getAttribute("user");
 		model.addAttribute("gallery",service.updateForm(galleryNo));
 	}
 	

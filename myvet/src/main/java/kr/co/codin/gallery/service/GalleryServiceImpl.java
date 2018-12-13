@@ -26,9 +26,8 @@ public class GalleryServiceImpl implements GalleryService{
 	
 
 	@Override
-	public void selectFile(List<Gallery> fileInfoList) {
-		// TODO Auto-generated method stub
-		
+	public void selectFile(List<FileInfo> fileInfoList) {
+		mapper.selectFile(fileInfoList);
 	}
 
 	@Override

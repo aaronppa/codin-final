@@ -97,7 +97,7 @@
 					</c:if>
 	                <td><fmt:formatDate value="${t.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	                <td>${t.viewCnt}</td>
-	                <td><i class="fas fa-heart">&nbsp;${t.recomCnt }</i> 
+	                <td><i class="fas fa-heart">&nbsp;${t.recomCnt}</i> 
 	                </td>
 	           	</tr>
      		</c:forEach>   	
