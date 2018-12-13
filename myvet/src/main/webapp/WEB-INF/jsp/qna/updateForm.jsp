@@ -74,12 +74,17 @@
 	  <div class="input-group-prepend">
 	    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
 	  </div>
+	  <input name="writerNo" type="hidden" value="${qna.writerNo }"/>
 	  <input name="title" id="title" type="text" class="form-control" aria-label="Sizing example input" value="${qna.title}" aria-describedby="inputGroup-sizing-default">
 		<select name="categoryCode" class="categoryCode">
-			<option selected value="">Category</option>
-			<option value="1">건강</option>
-			<option value="2">생활</option>
-			<option value="3">용품</option>
+			
+				<option selected value="" >Category</option>
+				
+			<c:forEach var="c" items="${category}" varStatus="loop">
+				
+				<option value="${c.categoryCode }">${c.categoryName }</option>
+				
+			</c:forEach>
 		</select>
 	</div>
 	<!-- 카테고리 -->

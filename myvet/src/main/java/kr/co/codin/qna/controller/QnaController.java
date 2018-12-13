@@ -151,17 +151,18 @@ public class QnaController {
 	public void updateForm(Model model, int qnaNo) {
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
 		
-		
+		model.addAttribute("category",service.cateList());
 	}
 	
 	@RequestMapping("update.do")
-	public String update(Model model,Qna qna) {
+	public String update(Model model,Qna qna,int writerNo) {
 		service.updateDetail(qna);
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
 	@RequestMapping("delete.do")
 	public String delete(Model model, Qna qna, int qnaNo) {
+		System.out.println("dd");
 		System.out.println("ddd:::;;;"+qnaNo);
 		service.deleteDetail(qna);
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";

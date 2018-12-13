@@ -103,12 +103,12 @@
       <!-- 삭제, 수정 -->
       <div id="delete-update">
         
-         <a href="<c:url value='/qna/updateForm.do?qnaNo=${qna.qnaNo }'/>">
+         <a href="<c:url value='/qna/updateForm.do?qnaNo=${qna.qnaNo }&writerNo=${qna.writerNo }'/>">
             <span id="update" data-toggle="tooltip" title="UPDATE" class="btn btn-primary defaultHidden">
                   <strong>Update</strong>
             </span> 
          </a>
-         <a href="<c:url value='/qna/delete.do?qnaNo=${qna.qnaNo }'/>" class="btn btn-danger defaultHidden">
+         <a href="<c:url value='/qna/delete.do?qnaNo=${qna.qnaNo }&writerNo=${qna.writerNo }'/>" class="btn btn-danger defaultHidden">
             <span id="delete" data-toggle="tooltip" title="DELETE"> 
                <strong>Delete</strong>
             </span>
