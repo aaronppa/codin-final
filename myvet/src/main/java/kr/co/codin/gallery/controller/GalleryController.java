@@ -52,7 +52,7 @@ public class GalleryController{
 		searchGallery.setSort(sort);
 		searchGallery.setKeyword(keyword);
 		model.addAttribute("nickname",member.getMemberNickname());
-		model.addAttribute("sort",sort);
+ 		model.addAttribute("sort",sort);
 		model.addAttribute("keyword",keyword);
 		System.out.println("list");
 		model.addAttribute("gallery", service.galleryList(searchGallery));

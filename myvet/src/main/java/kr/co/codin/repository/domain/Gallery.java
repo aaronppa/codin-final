@@ -15,9 +15,24 @@ public class Gallery {
 
 	private String memberNickname;
 	private List<FileInfo> fileInfoList;
-
+	private int comCnt;
+	private List<Pet> petList;
 	
 	
+	
+	
+	public List<Pet> getPetList() {
+		return petList;
+	}
+	public void setPetList(List<Pet> petList) {
+		this.petList = petList;
+	}
+	public int getComCnt() {
+		return comCnt;
+	}
+	public void setComCnt(int comCnt) {
+		this.comCnt = comCnt;
+	}
 	public List<FileInfo> getFileInfoList() {
 		return fileInfoList;
 	}

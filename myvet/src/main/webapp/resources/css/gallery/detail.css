@@ -146,6 +146,16 @@
     .pet{
     margin-left: 10%; text-align: center;
     }
+    .information{
+    margin-left: 10%; text-align: center;
+    
+    }
+    .view{
+    	margin-left: 5%;
+    }
+    .fa-clock{
+    	margin-left: 5%;
+    }
     /*사용자 프로필 이미지*/
     .petImg{
     width:80px;height:80px;
@@ -157,10 +167,10 @@
 	}
 	/*글 삭제,수정*/
 	#deleteGall{
-	font-size:20px;text-align:center;margin-right:2%;cursor:pointer;
+	font-size:20px;text-align:center;cursor:pointer;
 	}
 	#updateGall{
-	font-size:20px;text-align:center;margin-right:5%;cursor:pointer;
+	font-size:20px;text-align:center;cursor:pointer;
 	}
 	/*글 추천수*/
 	#galleryRecomHeart{
@@ -197,6 +207,7 @@
 	/*목록*/
 	.list{
 		float:right;
+		cursor: pointer;
 	}
 	
 	/****************댓글목록********************/
@@ -207,22 +218,25 @@
 	}
 	/*댓글 추천*/
 	.com-like{
-	background:none; border:none; color:black;margin-left:50%;cursor:pointer;
+	background:none; border:none; color:black;margin-left:74%;cursor:pointer;
 	}
 	.fa-thumbs-up{
 	font-size:25px;
 	}
 	/*댓글 비추*/
 	.com-dislike{
-	background:none; border:none;color:black; margin-left:5%;cursor:pointer;
+	background:none; border:none;color:black; margin-left:4%;cursor:pointer;
 	}
 	.fa-thumbs-down{
 	font-size:25px;
 	}
 	
 	/*댓글 추천카운트*/
+	.comheartform{
+		margin-left: 80%;
+	}
 	.comheart{
-		margin-left: 5%;color:red;
+		margin-left: 2%;color:red;
 	}
 	
 	/*댓글 수정*/

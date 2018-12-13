@@ -96,11 +96,14 @@
                      <div class="etc">
                          <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
                              <i class="fas fa-heart">${g.recomCnt}</i>
-                             <i class="fas fa-comments">54</i>
+                             <i class="fas fa-comments">${g.comCnt}</i>
                          </div>
                          <div class="card-content" >
                              <p class="card-title">${g.title} </p>
-                             <span data-toggle="tooltip" title="포니, 포돌이">
+<%--                              <span data-toggle="tooltip" title="<c:forEach var="p" items="${g.petList}" varStatus="innerLoop">${p.petName}</c:forEach>"> --%>
+<!--                                  <i class="fas fa-dog"></i> -->
+<!--                              </span> -->
+                             <span data-toggle="tooltip" title="PONY!">
                                  <i class="fas fa-dog"></i>
                              </span>
                              <p class="card-writer">${g.memberNickname}</p>

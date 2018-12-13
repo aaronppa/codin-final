@@ -13,6 +13,8 @@
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="member_nickname" property="memberNickname"/>
 		<association property="recomCnt" column="gallery_no" select="countRecommend"></association>
+		<association property="comCnt" column="gallery_no" select="countComment"></association>
+		<collection property="petList" column="member_no" select="selectPet"></collection>
 		<collection property="fileInfoList" column="gallery_no" select="selectFile"></collection>
 	</resultMap>
 	<resultMap type="Member" id="memberMap">
@@ -74,6 +76,12 @@
 		<result column="pet_file_reg_date" property="petFileRegDate"/>
 		<result column="petcol" property="petcol"/>
 	</resultMap>
+	
+	<select id="selectPet" parameterType="int" resultMap="petMap">
+		select *
+		  from pet
+		 where member_no = #{memberNo}
+	</select>
 	<select id="countRecommend" parameterType="int" resultType="int">
 		select sum(recommend)
 		  from gallery_recommend

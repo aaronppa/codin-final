@@ -7,12 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style>
-	    .carousel-3d-slide {
-        height: auto !important;
-        background-color: rgba(0, 0, 0, 0.25) !important;
-        }
-</style>
+
         <link rel="stylesheet" href="/myvet/resources/css/gallery/detail.css">
 
 
@@ -32,10 +27,33 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script> -->
   <style>
+    .carousel-3d-slide {
+      height: auto !important;
+      background-color: rgba(0, 0, 0, 0.25) !important;
+     }
+     .information{
+  	margin-left: 10%; text-align: center;
+  
+    }
+    .view{
+    	margin-left: 5%;
+    }
+    .fa-clock{
+    	margin-left: 5%;
+    }
 	.photo{
 		text-align: center;
 	}
-
+	.fa-heart{
+    	margin-left: 10%;
+    }
+ 	.fa-clock{
+    	margin-left: 10%;
+    }
+    .updateDel{
+    	text-align: center;
+    	margin-left: 5%;
+    }
 
     </style>
 </head>
@@ -49,7 +67,7 @@
                 <div class="col-md-7" id="pic-form">
                 <!-- carousel -->
                 <div id="carousel">
-			    <carousel-3d :autoplay="true" :autoplay-timeout="2400">
+			    <carousel-3d :autoplay="true" :autoplay-timeout="100000">
 			      
          <c:forEach var="f" items="${gallery.fileInfoList}" varStatus="loop">
 			      <slide :index="${loop.index}"><img src="/myvet/upload${f.filePath}/${f.sysName}"/></slide>
@@ -89,31 +107,39 @@
 <!--                     </div> -->
 					
                     <div class="pet">
-                        <span data-toggle="tooltip" title="PONY">
-                            <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony01.jpg" id="pet-img" style="margin-right: 10px;">
+                    <c:forEach var="p" items="${gallery.petList}" varStatus="loop">
+                        <span data-toggle="tooltip" title="${p.petName}">
+                            <img class="petImg rounded-circle" src="/myvet/upload${p.petFilePath}/${p.petSysName}" style="margin-right: 10px;">
                         </span>
+                    </c:forEach>
                         <span data-toggle="tooltip" title="PODOL">
                             <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img">
                         </span>
+                    </div>
                         <br>
-                            <div>
-                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
-                            <br>
+                            <div class="information">
+
                             <span class="view">view : ${gallery.viewCnt}</span>
+
+                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
+                            
                             <!-- <i class="far fa-comments" style="margin-left: 5%;">&nbsp;458</i> -->
-                            <br>
+                            
                             <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
                             </div>
                         	<div >
-                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">
-                            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success">수정</button>
-							</a>
-                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">
-                            <button type="button" class="btn btn-danger">삭제</button>
+                        	<br>
+                        	<div class="updateDel">
+	                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">
+	                            	<button type="button" class="btn btn-success">수정</button>
+								</a>
+	                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">
+	                            <button type="button" class="btn btn-danger">삭제</button>
                             </a>
                         	</div>
+                        	</div>
                         	<br>
-                    </div>
+                    
                 </div>
 
                 <div class="col-md-5" id="comment"> 
@@ -186,7 +212,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.7/vue.js"></script>
   <script src="https://rawgit.com/Wlada/vue-carousel-3d/master/dist/vue-carousel-3d.min.js"></script>
     <script>
-    
     //carousel
       //https://github.com/Wlada/vue-carousel-3d
     new Vue({
@@ -208,6 +233,7 @@
     		console.log("detail!");
     	})
     }
+//     console.log($('#writerNick').val())
     //게시글 추천
     $("#like").on('click',function(){
        		var isActive = $(this).hasClass('active');
@@ -362,8 +388,9 @@
 					"<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='commenterImg rounded-circle'/>&nbsp;"
 	              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
 	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
-	            	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recomCnt+"</span>"
-	            
+	            	+"<div class='comheartform'>"
+	              	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recomCnt+"</span>"
+	            	+"</div>"
 // 	            	+"<i class='fas fa-exclamation-circle' data-comno='"+result[i].commentNo+"' style='margin-left:10px;'></i>"
 	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno="+result[i].commenterNo+"></div>"
 	                +"<div class='comment-content'>" 
@@ -400,7 +427,7 @@
 	$("#comment-list").on("click","#updateCom",function(){
 		console.dir($(this).prev())
 		$(this).prev().replaceWith(
-         "<textarea id='textcom' placeholder='댓글수정..' cols='90' rows='2'>"+$(this).data('updatecombtn')+"</textarea>"		
+         "<textarea id='textcom' placeholder='댓글수정..' cols='70' rows='3'>"+$(this).data('updatecombtn')+"</textarea>"		
 		)
 		$(this).next().replaceWith(
         "<button class='btn btn-outline-danger' id='cancelupdatecom'>취소</button>"		
