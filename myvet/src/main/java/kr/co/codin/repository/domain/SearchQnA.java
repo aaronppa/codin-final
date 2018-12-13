@@ -14,6 +14,7 @@ public class SearchQnA extends Page{
 	
 	
 	
+	
 	private int order;
 	private int answered;
 	private int categoryCode;
@@ -21,9 +22,17 @@ public class SearchQnA extends Page{
 	private String keyword;
 	private int prev;
 	private int next;
+	private int presentPage;
 	
 	
-	
+	public int getPresentPage() {
+		return presentPage;
+	}
+
+	public void setPresentPage(int presentPage) {
+		this.presentPage = presentPage;
+	}
+
 	public int getPrev() {
 		return prev;
 	}

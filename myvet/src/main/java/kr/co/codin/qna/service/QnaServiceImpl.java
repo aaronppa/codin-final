@@ -84,6 +84,7 @@ public class QnaServiceImpl implements QnaService{
 	public int countTotalContent(SearchQnA QNA) {
 		// TODO Auto-generated method stub
 		return mapper.qnaListCnt(QNA);
+		
 	}
 	
 	

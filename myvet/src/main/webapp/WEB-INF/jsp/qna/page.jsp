@@ -11,15 +11,15 @@
 
     <nav id="nav" aria-label="Pagination">
         <ul class="pagination">
-            <li ><a <c:if test="${pageResult.pageNo == 1}">class='disabled'</c:if> id="first" href="list.do?pageNo=1">&laquo;&laquo;</a></li>
-            <li ><a <c:if test="${pageResult.pageNo-5 < 1}">class='disabled'</c:if> href='list.do?pageNo=${pageResult.beginPage-1 }'>&laquo;</a></li>
+            <li value="1" ><a <c:if test="${pageResult.pageNo == 1}">class='disabled'</c:if>  id="first" href="#">&laquo;&laquo;</a></li>
+            <li value="${prev}"><a <c:if test="${pageResult.pageNo-5 < 1}">class='disabled'</c:if> href='#'>&laquo;</a></li>
             
 			<c:forEach var="i" begin="${pageResult.beginPage}" end="${pageResult.endPage}">
-		    	<li <c:if test="${i eq pageResult.pageNo }">class="current"</c:if> ><a href="list.do?pageNo=${i}">${i}</a></li>
+		    	<li  class="pagingAtag${i}" value='${i}' <c:if test="${i eq pageResult.pageNo }">class="current"</c:if> ><a href="#">${i}</a></li>
 			</c:forEach>
             
-            <li ><a <c:if test="${pageResult.pageNo == pageResult.lastPage}">class='disabled'</c:if> href="list.do?pageNo=${pageResult.endPage+1 }">&raquo;</a></li>
-            <li ><a <c:if test="${pageResult.pageNo + 5 > pageResult.lastPage}">class='disabled'</c:if> href="list.do?pageNo=${pageResult.lastPage }">&raquo;&raquo;</a>
+            <li value="${next }"><a <c:if test="${pageResult.pageNo == pageResult.lastPage}">class='disabled'</c:if> href="#1">&raquo;</a></li>
+            <li class="PLastpage" value="${endPage}"><a <c:if test="${pageResult.pageNo + 5 > pageResult.lastPage}">class='disabled'</c:if> href="#">&raquo;&raquo;</a>
             </li>
         </ul>
     </nav>
@@ -27,44 +27,36 @@
     <script>
     
     
-    $('#nav a').on("click", function(e){
-    	if($(typeof "input#searchQuery")  !='undefined'){
-    	e.preventDefault();
-    	var searchParam= $("input#searchQuery").val();
-    	console.log("formData", formData);
-    	}
- 
-    	
-    });
-    /* paginlist(); */
-	function paginlist(){
-		console.log("시작")
-		  $.ajax({
-	            url: "/myvet/qna/listPaging.do",
-	            type:"post",
-	      
-	            data:{pageNo : ${pageNo},totalCnt:${totalCnt}}
-	          
-	         }).done(function(result){
-	            console.log("성공:"+result);
-	            console.log(result.length);
-	            console.log(result);
-	            
-	            alert('${pageNo}');
-	         
-	            
-	            
-	         /*    typing();
-	            list(); */
-	         }).fail(function(result,textStatus){
-	            console.log("실패");
-	            console.log(textStatus);
-	         /*    console.log($("#tipNo").val());
-	            console.log($("#commenterNo").val());
-	            console.log($("#comment").val()); */
-	            console.dir(result);
-	         });
-	      };
-       
+	console.log("${searchQuery}");
+	
+	alert("${pageNo}")
+	$(".pagination > li").click(function(e){
+		//alert("dd");
+		//alert($(this).val());
+		var pageNo = $(this).val();
+		
+		
+		$("#pageNo").val(pageNo);
+		$(".searchForm").submit();
+		//alert("${i}");
+		
+		/* alert($(this).attr("action")); */
+		/* $(".searchForm").on("submit",function(){
+			var searchQuery = "${searchQuery}";
+			
+			var url =$(this).attr("action");
+			alert(url);
+			var order=$("#order").val();
+			var answered = $("#answered").val();
+			var categoryCode =$("#categoryCode").val();
+			var sort = $("#sort").val();
+			var keyword= $("#keyword").val();
+			$.post(url, order , answered, categoryCode, sort, keyword, pageNo).done(function(data){
+				console.log("ㅋㅋ");
+			})
+		}) */
+		
+	})
+
     </script>
 </c:if>

@@ -36,7 +36,7 @@ public class QnaController {
 
 	@RequestMapping("list.do")
 	public void list(Model model
-			, @RequestParam(value="pageNo", defaultValue="1") int pageNo
+			, @RequestParam(value="pageNo", defaultValue="0") int pageNo
 			,Member member
 			,@RequestParam(value="order",defaultValue="0") int order
 			,@RequestParam(value="answered",defaultValue="0") int answered
@@ -45,22 +45,70 @@ public class QnaController {
 			,@RequestParam(value="keyword",defaultValue="0") String keyword
 		
 			) throws Exception{
+		System.out.println("--------------------------");
+		System.out.println("pageNo:"+pageNo);
 		SearchQnA searChQuery= new SearchQnA(pageNo);
 		searChQuery.setAnswered(answered);
+		System.out.println("answered :"+ answered);
 		searChQuery.setKeyword(keyword);
-		System.out.println("--------------------------");
-		System.out.println(keyword);
-		searChQuery.setOrder(order);
-		searChQuery.setCategoryCode(categoryCode);
-		searChQuery.setSort(sort);
-		searChQuery.setPageNo(pageNo);
 		
+		System.out.println(keyword);
+		
+		searChQuery.setOrder(order);
+		System.out.println("order:"+order);
+		searChQuery.setCategoryCode(categoryCode);
+		System.out.println("카테고리 코드 :"+categoryCode);
+		searChQuery.setSort(sort);
+		System.out.println("sort:"+sort);
+		searChQuery.setPageNo(pageNo);
+		if(pageNo == 0) {
+			searChQuery.setPresentPage(pageNo*10);
+		}else {
+			searChQuery.setPresentPage((pageNo-1)*10);
+		}
+		System.out.println("dlsjdlfjsldfjsldjflsjdflsj::::::"+searChQuery.getPresentPage());
+		if(service.countTotalContent(searChQuery)%10 == 0 ) {
+			System.out.println("11");
+			model.addAttribute("endPage",service.countTotalContent(searChQuery)/10);
+		}else {
+			System.out.println("22");
+			model.addAttribute("endPage",service.countTotalContent(searChQuery)/10);
+		}
+		
+		if(service.countTotalContent(searChQuery)%10 == 0 ) {
+			System.out.println("11");
+			model.addAttribute("lastpage",service.countTotalContent(searChQuery)/10-1);
+		}else {
+			System.out.println("22");
+			model.addAttribute("lastpage",service.countTotalContent(searChQuery)/10);
+		}
+		
+		
+		if(pageNo <= 10) {
+			model.addAttribute("prev", 1);
+		}else if(pageNo%10 == 0 && pageNo > 10) {
+			System.out.println(pageNo);
+			System.out.println("여기 걸려야 하는데");
+			model.addAttribute("prev", (pageNo-10));
+		}else {
+			model.addAttribute("prev", (pageNo/10)*10);
+		}
+		
+		
+		if(pageNo > 10) {
+			model.addAttribute("next",(pageNo/10)*10+11);
+		}else {
+			model.addAttribute("next",11);
+		}
 		model.addAttribute("pageNo", pageNo);
 		System.out.println("dlsdjfsljdf:"+pageNo);	
+		System.out.println("-----------------------------------------");
 		model.addAttribute("category",service.cateList());
 		model.addAttribute("qna", service.SelectList(searChQuery));
 		model.addAttribute("totalCnt",service.countTotalContent(searChQuery));
-		model.addAttribute("pageResult", new PageResult(pageNo, service.countTotalContent(searChQuery)));
+	
+			model.addAttribute("pageResult", new PageResult(pageNo, service.countTotalContent(searChQuery)));
+		
 		model.addAttribute("searchQuery", searChQuery);
 		
 	}

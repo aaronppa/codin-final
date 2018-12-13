@@ -175,21 +175,22 @@ tr:hover {
 	<div class="bodyContainer">
 		<div class="input-group mb-3">
 			<form class="searchForm" action="<c:url value='/qna/list.do'/>" method="post">
+				<input type="hidden" id="pageNo" name="pageNo" value="">
 				<!-- <div class="input-group-prepend"> -->
 				<select name="order" id="order" class="order">
 					<option selected value="0">조회순서</option>
-					<option value="1">조회수▲</option>
-					<option value="2">조회수▼</option>
-					<option value="3">추천수▲</option>
-					<option value="4">추천수▼</option>
-					<option value="5">작성일▲</option>
-					<option value="6">작성일▼</option>
+					<option value="1" <c:if test='${searchQuery.order == 1}'>selected</c:if>>조회수▲</option>
+					<option value="2" <c:if test='${searchQuery.order == 2}'>selected</c:if>>조회수▼</option>
+					<option value="3" <c:if test='${searchQuery.order == 3}'>selected</c:if>>추천수▲</option>
+					<option value="4" <c:if test='${searchQuery.order == 4}'>selected</c:if>>추천수▼</option>
+					<option value="5" <c:if test='${searchQuery.order == 5}'>selected</c:if>>작성일▲</option>
+					<option value="6" <c:if test='${searchQuery.order == 6}'>selected</c:if>>작성일▼</option>
 				</select> 
 				
 				<select name="answered" class="answered">
 					<option selected value="0">채택여부:Y/N</option>
-					<option value="1">채택여부:Y</option>
-					<option value="2">채택여부:N</option>
+					<option value="1" <c:if test='${searchQuery.answered == 1}'>selected</c:if>>채택여부:Y</option>
+					<option value="2" <c:if test='${searchQuery.answered == 2}'>selected</c:if>>채택여부:N</option>
 				</select> 
 				
 				<select name="categoryCode" class="categoryCode">
@@ -198,24 +199,24 @@ tr:hover {
 
 					<c:forEach var="c" items="${category}" varStatus="loop">
 
-						<option value="${c.categoryCode }">${c.categoryName }</option>
+						<option value="${c.categoryCode }" <c:if test='${searchQuery.categoryCode == c.categoryCode}'>selected</c:if>>${c.categoryName }</option>
 
 					</c:forEach>
 				</select> 
 				
 				<select name="sort" id="sort" class="sort">
 					<option selected value="0">검색조건</option>
-					<option value="1">제목</option>
-					<option value="2">내용</option>
-					<option value="3">작성자</option>
-					<option value="4">제목+내용</option>
+					<option value="1" <c:if test='${searchQuery.sort == 1}'>selected</c:if>>제목</option>
+					<option value="2" <c:if test='${searchQuery.sort == 2}'>selected</c:if>>내용</option>
+					<option value="3" <c:if test='${searchQuery.sort == 3}'>selected</c:if>>작성자</option>
+					<option value="4" <c:if test='${searchQuery.sort == 4}'>selected</c:if>>제목+내용</option>
 				</select>
 
 
 
 				<!--  </div> -->
-				<input name="keyword" id="keyword" type="text" class="input-search" placeholder="search">
-				<button type="submit" class="btn btn-outline">검색</button>
+				<input name="keyword" id="keyword" type="text" class="input-search" placeholder="search" value="<c:if test="${searchQuery.keyword != '0'}" >${searchQuery.keyword}</c:if>"  >
+				<button id="submitBtn" type="submit" class="btn btn-outline">검색</button>
 			</form>
 		</div>
 		<!--count-->
@@ -275,7 +276,7 @@ tr:hover {
 		<input type="hidden" id="searchQuery" value="${searchQuery }"> 
 </body>
 <script>
-
+console.log("${searchQuery}");
 
 
 </script>
