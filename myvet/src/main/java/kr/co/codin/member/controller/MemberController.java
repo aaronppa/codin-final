@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import kr.co.codin.hos.service.HosService;
 import kr.co.codin.member.service.MemberService;
 import kr.co.codin.pet.service.PetService;
+import kr.co.codin.repository.domain.HosPage;
+import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.VetAuth;
@@ -34,6 +37,9 @@ public class MemberController {
 	
 	@Autowired
 	private PetService pService;
+	
+	@Autowired
+	private HosService hService;
 	
 	@Autowired
 	private ServletContext context;
@@ -51,6 +57,8 @@ public class MemberController {
 	 */
 	@RequestMapping("/signup.do")
 	public String signup(Member member, MultipartFile fileV, VetAuth vetFile) throws Exception {
+		System.out.println(member);
+		
 		service.signup(member);
 		int memberNo = member.getMemberNo();
 		
@@ -235,7 +243,12 @@ public class MemberController {
 	@ResponseBody
 	public List<Hospital> retrieveHospital(String title) throws Exception {
 		System.out.println("retrieveHospital : " + title);
-		return service.retrieveHospital(title);
+		
+		HosPage page = new HosPage(1, 100000);
+		page.setSearchType(1);
+		page.setKeyWord(title);
+		
+		return hService.searchReg(page);
 	}
 	
 	@RequestMapping("/hosreg.do")
@@ -246,7 +259,14 @@ public class MemberController {
 		int memberNo = loginMember.getMemberNo();
 		member.setMemberNo(memberNo);
 		
+		HosStaff newStaff = new HosStaff();
+		newStaff.setHosCode(member.getHosCode());
+		newStaff.setStaffMemberNo(loginMember.getMemberNo());
+		
+		System.out.println(newStaff);
+		
 		service.registMemberHospital(member);
+		hService.insertStaff(newStaff);
 	}
 }
 

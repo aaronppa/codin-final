@@ -294,7 +294,7 @@
         	var date = new Date($(this).attr("href"));
         	date.setDate(date.getDate() -7);
         	var dateParam = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
-         	window.location.href = "/myvet/hos/bookingBlock.do?date="+dateParam
+         	window.location.href = "/myvet/hos/blockMaking.do?hosCode=" + ${hospital.hosCode} + "&date="+dateParam
         })
         
         $('#nextWeek').click(function(e) {
@@ -302,7 +302,7 @@
         	var date = new Date($(this).attr("href"));
         	date.setDate(date.getDate());
         	var dateParam = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
-         	window.location.href = "/myvet/hos/bookingBlock.do?date="+dateParam
+         	window.location.href = "/myvet/hos/blockMaking.do?hosCode=" + ${hospital.hosCode} + "&date="+dateParam
         })
 
         $('#submit').click(function(){

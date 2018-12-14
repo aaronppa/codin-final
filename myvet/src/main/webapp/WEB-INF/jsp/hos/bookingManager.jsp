@@ -15,6 +15,9 @@
 		width:1100px;
 		margin: auto;
 		margin-top: 30px;
+		height: 500px;
+		overflow: auto;
+		
 	}
 	
 	#bookingTable{
@@ -68,7 +71,8 @@
 		function getBookingList() {
 			$.ajax({
 				url:"/myvet/hos/bookingList.do",
-				data:{hosCode: ${hospital.hosCode }}
+				data:{hosCode: ${hospital.hosCode }},
+				async: false
 			}).done(function(bookingList){
 				console.dir(bookingList);
 				for(let i = 0; i < bookingList.length; i++) {

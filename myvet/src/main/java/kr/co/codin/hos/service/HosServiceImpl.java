@@ -15,6 +15,7 @@ import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.HosPage;
+import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Pet;
 import kr.co.codin.repository.mapper.HosMapper;
@@ -225,8 +226,88 @@ public class HosServiceImpl implements HosService{
 	}
 
 	@Override
-	public List<HosBoard> selectHosBoard(int hosCode) {
-		return mapper.selectHosBoard(hosCode);
+	public List<HosBoard> selectHosBoard(HosPage hosPage) {
+		return mapper.selectHosBoard(hosPage);
 	}
 	
+	@Override
+	public 	HosBoard selectHosBoardByNo(int hosBoardId) {
+		return mapper.selectHosBoardByNo(hosBoardId);
+	}
+	
+	@Override
+	public void updateBoard(HosBoard board) {
+		mapper.updateBoard(board);
+	}
+	
+	@Override
+	public int hosBoardCount(HosPage page) {
+		return mapper.hosBoardCount(page);
+	}
+
+	@Override
+	public List<HosStaff> selectStaffConfirm(int hosCode) {
+		return mapper.selectStaffConfirm(hosCode);
+	}
+
+	@Override
+	public List<HosStaff> selectStaffUnConfirm(int hosCode) {
+		return mapper.selectStaffUnConfirm(hosCode);
+	}
+	
+	@Override
+	public 	void insertStaff (HosStaff staff) {
+
+		if (mapper.isRegStaff(staff) > 0) {
+			return;
+		}
+		
+		mapper.insertStaff(staff);
+	}
+	
+	@Override
+	public 	void addStaff(HosStaff staff) {
+		mapper.addStaff(staff);
+	}
+	
+	@Override
+	public 	void editStaff(HosStaff staff) {
+		mapper.editStaff(staff);
+	}
+	
+	@Override
+	public void deleteStaff(HosStaff staff) {
+		mapper.deleteStaff(staff);
+		mapper.memberHosNull(staff.getStaffMemberNo());
+	}
+
+	@Override
+	public 	int maxBookingAtMedical(HosBlock block) {
+		return mapper.maxBookingAtMedical(block);
+	}
+	
+	@Override
+	public 	List<Integer> blockCodeAtMedical(HosBlock block) {
+		return mapper.blockCodeAtMedical(block);
+	}
+	
+	@Override
+	public 	int maxBookingAtBeauty(HosBlock block) {
+		return mapper.maxBookingAtBeauty(block);
+	}
+	
+	@Override
+	public 	List<Integer> blockCodeAtBeauty(HosBlock block) {
+		return mapper.blockCodeAtBeauty(block);
+	}
+	
+	@Override
+	public int bookingCount(int blockCode) {
+		return mapper.bookingCount(blockCode);
+	}
+	
+	@Override
+	public void memberHosAdd(HosStaff staff) {
+		mapper.memberHosAdd(staff);
+	}
 }

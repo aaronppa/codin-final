@@ -37,6 +37,7 @@ import kr.co.codin.repository.domain.HosChart;
 import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.HosPage;
+import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
@@ -51,6 +52,15 @@ public class HosController {
 	
 	@Autowired 
 	private ServletContext servletContext;
+	
+	@RequestMapping("hospital.do")
+	public void hospital(Model model, int hosCode) {
+		HosPage page = new HosPage(1, 5);
+		page.setHosCode(hosCode);
+		
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+		model.addAttribute("boardList", service.selectHosBoard(page));
+	}
 	
 	@RequestMapping("booking.do")
 	public void booking(
@@ -124,11 +134,6 @@ public class HosController {
 		return service.selectBlockList(block);
 	}
 	
-	@RequestMapping("hospital.do")
-	public void hospital(Model model, int hosCode) {
-		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
-	}
-	
 	@RequestMapping("bookingManager.do")
 	public void bookingManager(Model model, int hosCode) {
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
@@ -152,6 +157,8 @@ public class HosController {
 						   @RequestParam(value="date", defaultValue="null") 
 						   String date
 						   ) {
+		System.out.println(hosCode);
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		HosBlock block = new HosBlock();
 		
@@ -159,6 +166,7 @@ public class HosController {
 			date = sdf.format(new Date());
 		}
 		
+		block.setHosCode(hosCode);
 		block.setBlockDay(date);
 		
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
@@ -303,6 +311,99 @@ public class HosController {
 		
 	}
 	
+	@RequestMapping("checkBooking.do")
+	@ResponseBody
+	public Map<String, Object> checkBooking(HosBlock block) {
+		Map<String, Object> result = new HashMap<>();
+		
+		System.out.println(block);
+		int medicalMax = 0;
+		List<Integer> medicalCodeList = null;
+		
+		try {
+			medicalMax = service.maxBookingAtMedical(block);
+			medicalCodeList = service.blockCodeAtMedical(block);
+		} catch(BindingException e) {
+			;;
+		}
+		
+		int medicalSum = 0;
+		try {
+			for (int medicalCode : medicalCodeList) {
+				medicalSum = service.bookingCount(medicalCode) + medicalSum;
+			}
+		} catch(NullPointerException e) {
+			;;
+		}
+		
+		String medical = "휴무";
+		try {
+			double medicalNow = medicalSum / medicalMax;
+			medical = "혼잡";
+			
+			if (medicalNow > 0.95) {
+				medical = "꽉참";
+			}
+			
+			if (medicalNow < 0.8) {
+				medical = "보통";
+			}
+			
+			if (medicalNow < 0.5) {
+				medical = "여유";
+			}
+
+		} catch(Exception e) {
+			;;
+		}
+		
+		result.put("medical", medical);
+		
+		int beautyMax = 0;
+		List<Integer> beautyCodeList = null;
+		
+		try {
+			beautyMax = service.maxBookingAtBeauty(block);
+			beautyCodeList = service.blockCodeAtBeauty(block);
+		} catch(BindingException e) {
+			;;
+		}
+		
+		int beautySum = 0;
+		try {
+			for (int beautyCode : beautyCodeList) {
+				beautySum = service.bookingCount(beautyCode) + beautySum;
+			}
+		} catch(NullPointerException e) {
+			;;
+		}
+		
+		String beauty = "휴무";
+		try {
+			double beautyNow = beautySum / beautyMax;
+			beauty = "혼잡";
+			
+			if (beautyNow > 0.95) {
+				beauty = "꽉참";
+			}
+			
+			if (beautyNow < 0.8) {
+				beauty = "보통";
+			}
+			
+			if (beautyNow < 0.5) {
+				beauty = "여유";
+			}
+
+		} catch(Exception e) {
+			;;
+		}
+		
+		result.put("beauty", beauty);
+
+		return result;
+	}
+	
 	@RequestMapping("reception.do")
 	public void reception(String petCode) {
 		if (petCode == null) return;
@@ -406,6 +507,8 @@ public class HosController {
 				@RequestParam(value="searchType", defaultValue="1")int searchType
 			) {
 		
+		System.out.println("keyWord = " + keyWord + "pageNo = " + pageNo + ", searchType = " + searchType);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		HosPage page = new HosPage(pageNo, 4);
@@ -432,7 +535,7 @@ public class HosController {
 					String hosHomePage,
 					String hosComment,
 					List<MultipartFile> hosImg,
-					HttpServletRequest request
+					HttpSession session
 					) throws IllegalStateException, IOException {
 		
 		
@@ -493,6 +596,18 @@ public class HosController {
 			service.insertFileInfo(fileInfo);
 		}
 		
+		Member member = (Member) session.getAttribute("user");
+		HosStaff staff = new HosStaff();
+		
+		staff.setHosCode(hosCode);
+		staff.setStaffMemberNo(member.getMemberNo());
+		staff.setStaffTitle("수의사");
+		staff.setHosAdmin('Y');
+		
+		service.memberHosAdd(staff);
+		service.insertStaff(staff);
+		service.addStaff(staff);
+		service.editStaff(staff);
 	}
 	
 	@RequestMapping("hosList.do")
@@ -545,9 +660,31 @@ public class HosController {
 	}
 	
 	@RequestMapping("hosBoard.do")
-	public void hosBoard(Model model, int hosCode) {
+	public void hosBoard(Model model, 
+							int hosCode,
+							@RequestParam(value="keyWord", defaultValue="") String keyWord,
+							@RequestParam(value="pageNo", defaultValue="1") int pageNo,
+							@RequestParam(value="searchType", defaultValue="0") int searchType							
+						) {
+		HosPage hosPage = new HosPage(pageNo, 10);
+		hosPage.setHosCode(hosCode);
+		hosPage.setPageNo(pageNo);
+		hosPage.setKeyWord(keyWord);
+		hosPage.setSearchType(searchType);
+		
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
-		model.addAttribute("boardList", service.selectHosBoard(hosCode));
+		model.addAttribute("boardList", service.selectHosBoard(hosPage));
+		model.addAttribute("listCount", service.hosBoardCount(hosPage));
+		model.addAttribute("categoryList", service.selectCategory());
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("keyWord", keyWord);
+		model.addAttribute("searchType", searchType);
+	}
+	
+	@RequestMapping("hosBoardPage.do")
+	public void hosBoardPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int listCount, int hosCode) {
+		model.addAttribute("pageResult", new PageResult(pageNo, listCount, 10, 5));
+		model.addAttribute("hosCode", hosCode);
 	}
 
 	@RequestMapping("writeBoard.do")
@@ -586,6 +723,42 @@ public class HosController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/hos/hosBoard.do?hosCode=" + board.getHosCode();
 	}
 	
+	@RequestMapping("detailBoard.do")
+	public void detailBoard (Model model, int hosBoardId) {
+		
+		model.addAttribute("board", service.selectHosBoardByNo(hosBoardId));
+	}
+	
+	@RequestMapping("editBoard.do")
+	public void editBoard (Model model, int hosBoardId) {
+		model.addAttribute("board", service.selectHosBoardByNo(hosBoardId));
+		model.addAttribute("categoryList", service.selectCategory());
+	}
+	
+	@RequestMapping("updateBoard.do")
+	public String updateBoard(@RequestParam("fileId")int[] fileIdList,  
+ 							HosBoard board, 
+							@RequestParam(value="files", defaultValue="null")String files
+							) {
+		
+		System.out.println(board);
+		service.updateBoard(board);
+		
+		System.out.println(Arrays.toString(fileIdList));
+		for (int fileid : fileIdList) {
+			if(fileid == 0) break;
+			
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setBoardNo(board.getHosBoardId());
+			fileInfo.setFileId(fileid);
+			System.out.println(fileInfo);
+			service.updateFileBoardNo(fileInfo);
+		}
+
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/hos/detailBoard.do?hosBoardId=" + board.getHosBoardId();
+	}
+
+	
 	@RequestMapping("insertBoardImg.do")
 	@ResponseBody
 	public FileInfo uploadFile(@RequestParam("file") List<MultipartFile> mFileList) throws IllegalStateException,Exception{
@@ -623,6 +796,33 @@ public class HosController {
 		}
 		System.out.println(fileInfo);
 		return fileInfo;
+	}
+	
+	@RequestMapping("hosStaff.do")
+	public void hosStaff(Model model, int hosCode) {
+		
+		model.addAttribute("staff", service.selectStaffConfirm(hosCode));
+		model.addAttribute("staffWait", service.selectStaffUnConfirm(hosCode));
+	}
+	
+	@RequestMapping("addStaff.do")
+	@ResponseBody
+	public void addStaff(HosStaff staff) {
+		service.addStaff(staff);
+	}
+	
+	@RequestMapping("editStaff.do")
+	@ResponseBody
+	public void editStaff(HosStaff staff) {
+		System.out.println(staff);
+		service.editStaff(staff);
+	}
+	
+	@RequestMapping("deleteStaff.do")
+	@ResponseBody
+	public void deleteStaff(HosStaff staff) {
+		System.out.println(staff);
+		service.deleteStaff(staff);
 	}
 	
 	public Date setTimeToCal(Calendar cal, StringTokenizer st) {

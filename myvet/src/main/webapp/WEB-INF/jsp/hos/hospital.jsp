@@ -10,6 +10,7 @@
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=kxd0pvbof9"></script>
 <style>
 
    .hosfacility {
@@ -37,34 +38,39 @@
        margin-left: auto;
    }
    #map {
-       width: 40%;
-       height: 250px;
-       position: relative;
-       display: inline-block;
-       margin-top: 10px;
-       overflow: hidden;
-   }
-   #book {
-       width: 40%;
-       height: 250px;
-       position: relative;
-       display: inline-block;
-       margin-top: 10px;
-       overflow: hidden;
-   }
-   #hosBoard {
        width: 49%;
        height: 250px;
        position: relative;
        display: inline-block;
        margin-top: 10px;
+       overflow: hidden;
    }
+   
    #hosStaff {
        width: 49%;
        height: 250px;
        position: relative;
        display: inline-block;
        margin-top: 10px;
+       overflow: hidden;
+   }
+   
+   #hosBoard {
+       width: 30%;
+       height: 250px;
+       position: relative;
+       display: inline-block;
+       margin-top: 10px;
+       overflow: hidden;
+   }
+   
+   #book {
+       width: 69%;
+       height: 250px;
+       position: relative;
+       display: inline-block;
+       margin-top: 10px;
+       overflow: hidden;
    }
    #topContainer, #bottomContainer {
        width: 100%;
@@ -80,6 +86,14 @@
    #bodyContainer {
    		width: 1100px;
    		margin: auto;
+   }
+   
+   .date {
+   		width: 50px;
+   }
+   
+   #boardList {
+   		text-align: left; 
    }
 </style>
 </head>
@@ -115,63 +129,114 @@
         </tr>
     </table>
     <div id="topContainer">
-        <div id="map">
-            지도구역
+        <div id="map"></div>
+        <div id="hosStaff">
+            <a href="hosStaff.do?hosCode=${hospital.hosCode }">직원</a>
+        </div>
+        
+    </div>
+    <div id="bottomContainer">
+        <div id="hosBoard">
+            <a href="hosBoard.do?hosCode=${hospital.hosCode }">병원게시판</a><br>
+            <div id="boardList">
+            	<c:forEach items="${boardList }" var="board">
+		            <a href="/myvet/hos/detailBoard.do?hosBoardId=" + ${board.hosBoardId }>[${board.hosBoardCategoryCode }]${board.hosBoardTitle }</a><br>
+	            </c:forEach>
+            </div>
         </div>
         <div id="book">
-            오늘의 예약현황
+            예약현황
             <div id="bookTable">
             <table>
                 <tr>
                     <td></td>
-                    <td>10시</td>
-                    <td>11시</td>
-                    <td>12시</td>
-                    <td>13시</td>
-                    <td>14시</td>
-                    <td>15시</td>
-                    <td>16시</td>
-                    <td>17시</td>
+                    <td class="date"></td>
+                    <td class="date"></td>
+                    <td class="date"></td>
+                    <td class="date"></td>
+                    <td class="date"></td>
+                    <td class="date"></td>
+                    <td class="date"></td>
+                    <td class="date"></td>
                 </tr>
                 <tr>
                     <td style="width:100px;"><span>진료</span></td>
-                    <td>가능</td>
-                    <td>가능</td>
-                    <td>가능</td>
-                    <td>불가</td>
-                    <td>불가</td>
-                    <td>혼잡</td>
-                    <td>가능</td>
-                    <td>불가</td>
+                    <td class="medical"></td>
+                    <td class="medical"></td>
+                    <td class="medical"></td>
+                    <td class="medical"></td>
+                    <td class="medical"></td>
+                    <td class="medical"></td>
+                    <td class="medical"></td>
+                    <td class="medical"></td>
                 </tr>
                 <tr>
                     <td><span>미용</span></td>
-                    <td>가능</td>
-                    <td>가능</td>
-                    <td>가능</td>
-                    <td>불가</td>
-                    <td>불가</td>
-                    <td>혼잡</td>
-                    <td>가능</td>
-                    <td>불가</td>
+                    <td class="beauty"></td>
+                    <td class="beauty"></td>
+                    <td class="beauty"></td>
+                    <td class="beauty"></td>
+                    <td class="beauty"></td>
+                    <td class="beauty"></td>
+                    <td class="beauty"></td>
+                    <td class="beauty"></td>
                 </tr>
             </table>
             </div>
             <div><button id="booking">예약</button>
             <button id="bookingManager">예약관리</button></div>
         </div>
-    </div>
-    <div id="bottomContainer">
-        <div id="hosBoard">
-            <a href="hosBoard.do?hosCode=${hospital.hosCode }">병원게시판</a>
-        </div>
-        <div id="hosStaff">
-            직원
-        </div>
+        
     </div>
     </div>
     <script>
-    
+
+	    function formatDate (d, f) {
+	        if (!this.valueOf()) return "";
+	     
+	        return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+	            switch ($1) {
+	                case "yyyy": return d.getFullYear();
+	                case "MM": return (d.getMonth() + 1).zf(2);
+	                case "dd": return d.getDate().zf(2);
+	                default: return $1;
+	            }
+	        });
+	    };
+
+		String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+	    String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+	    Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+	    var mapDiv = document.getElementById('map'); // 'map'으로 선언해도 동일
+	
+		var map = new naver.maps.Map('map', {
+		    center: new naver.maps.LatLng(${hospital.mapy}, ${hospital.mapx}),
+		    zoom: 11
+		});    
+	    
+		var marker = new naver.maps.Marker({
+		    position: new naver.maps.LatLng(${hospital.mapy}, ${hospital.mapx}),
+		    map: map
+		});
+		
+		for (let i = 0; i < $(".date").length; i++) {
+			var date = new Date();
+			date = date.setDate(date.getDate()+i);
+			date = new Date(date);
+			$(".date:eq("+i+")").html(formatDate(date, "MM/dd"));
+			
+			$.ajax({
+				url: "/myvet/hos/checkBooking.do",
+				data: {hosCode: ${hospital.hosCode},
+					blockDay: formatDate(date, "yyyy-MM-dd")}
+			}).done(function(bookingMap){
+				console.log(bookingMap.medicalMax)
+				$(".medical:eq("+i+")").html(bookingMap.medical);
+				$(".beauty:eq("+i+")").html(bookingMap.beauty);
+			})
+		}
+	    
     	$("#chart").click(function(){
     		window.location.href = "/myvet/hos/chartHos.do?hosCode=" + $("#hosCode").val();
     	})

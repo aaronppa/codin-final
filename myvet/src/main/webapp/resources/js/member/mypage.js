@@ -230,6 +230,13 @@ $(function () {
 			}
 		});
 	});
+	
+	// 신규 병원 등록 시 팝업창 발생
+	$("#newHos").click(function(e) {
+		e.preventDefault();
+		
+		window.open("/myvet/hos/register.do", "newHos", "width=1400, height=700, location=no");
+	})
 })
 
 

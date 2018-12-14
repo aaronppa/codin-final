@@ -30,30 +30,31 @@
 	<!-- include summernote css/js-->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />     
 	       
 	<div id="bodyContainer">
-		<form id="form" action="/myvet/hos/insertBoard.do" method="post">
-		<input type="hidden" name="hosCode" value="${hospital.hosCode }">
-		<input type="hidden" name="hosBoardWriterNo" value="${user.memberNo }">
-		분류 : 
+	<form id="form" action="/myvet/hos/updateBoard.do" method="post">
+		<input type="hidden" name="hosBoardId" id="boardId" value="${board.hosBoardId }">
+		분류 :
 		<select id="category" name="hosBoardCategoryCode">
 			<c:forEach items="${categoryList }" var="category">
 				<option class="category" value="${category.hosBoardCategoryCode }">${category.hosBoardCategoryName }</option>
 			</c:forEach>
 		</select><br>
-		제목 : <input type="text" name="hosBoardTitle"><br>
+		제목 : <input type="text" name="hosBoardTitle" id="boardTitle" value="${board.hosBoardTitle }"><br>
 		내용<br>
-		<textarea id="summernote" name="hosBoardContent"></textarea>
+		<textarea id="summernote" name="hosBoardContent">${board.hosBoardContent }</textarea>
 		<div id="fileinfoContainer">
 			<div id="fileInfo">
 				<input type="hidden" name="fileId" class="fileId nullFile" value="0">
 			</div>
 		</div>
-		</form>
-		<button type="button" id="submit">제출</button>
+	</form>
+		<button type="button" id="edit">수정</button>
+		<button type="button" id="list">목록</button>
 	</div>
 	
 	<script>
@@ -62,11 +63,12 @@
 	
 	$(".disable").remove();
 	
+	$(".category[value=${board.hosBoardCategoryCode}]").attr("selected", "selected");
+	
     $('#summernote').summernote({
         width: 1000,
     	height: 500,                 // set editor height
-        placeholder: "내용을 입력해주세요",
-        focus: true,                  // set focus to editable area after initializing summernote
+    	focus: true,                  // set focus to editable area after initializing summernote
         callbacks: {
             onImageUpload: function(files, editor, welEditable) {
             for (var i = 0; i < files.length; i++) {
@@ -77,10 +79,15 @@
     });
 // });
 
-	$("#submit").click(function(){
+	$("#edit").click(function(){
 		$("#form")[0].submit();
 	})
 
+	$("#list").click(function(){
+		window.location.href="hosBoard.do?hosCode=${board.hosCode }"
+	})
+
+	
 	function sendFile(file, ele) {
 		var formData = new FormData();
 		console.log("formData", formData)

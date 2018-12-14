@@ -12,6 +12,7 @@ import kr.co.codin.repository.domain.HosFacility;
 import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.HosPage;
+import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.Pet;
@@ -57,6 +58,23 @@ public interface HosMapper {
 	List<HosBoardCategoryList> selectCategory();
 	void insertBoard(HosBoard board);
 	void updateFileBoardNo(FileInfo fileInfo);
-	List<HosBoard> selectHosBoard(int hosCode);
-
+	List<HosBoard> selectHosBoard(HosPage hosPage);
+	HosBoard selectHosBoardByNo(int hosBoardId);
+	void updateBoard(HosBoard board);
+	int hosBoardCount(HosPage page);
+	List<HosStaff> selectStaffConfirm(int hosCode);
+	List<HosStaff> selectStaffUnConfirm(int hosCode);
+	void insertStaff (HosStaff staff);
+	void addStaff(HosStaff staff);
+	void editStaff(HosStaff staff);
+	void deleteStaff(HosStaff staff);
+	int maxBookingAtMedical(HosBlock block);
+	List<Integer> blockCodeAtMedical(HosBlock block);
+	int bookingCount(int blockCode);
+	int maxBookingAtBeauty(HosBlock block);
+	List<Integer> blockCodeAtBeauty(HosBlock block);
+	void memberHosAdd(HosStaff staff);
+	
+	int isRegStaff (HosStaff staff);
+	void memberHosNull(int memberNo);
 }

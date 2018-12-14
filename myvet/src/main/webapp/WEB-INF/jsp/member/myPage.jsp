@@ -98,6 +98,34 @@
 		        </table>
 		    </div>
 		</c:if>
+		
+		
+		<%-- 병원 직원 추가정보 --%>
+		<c:if test="${member.memberGrade eq 'S'}">
+		    <div>
+		        <table class="table table-bordered" >
+		            <tr>
+		                <th>
+		                	병원
+		                	<button id="hosReg" class="btn btn-primary float--right" data-toggle="modal" data-target="#hosRegModal">병원등록</button>
+		                </th>
+		                <td>
+		                	<span id="hosTitleSpan">
+		                		<c:out value="${member.hosTitle}" default="등록된 병원이 없습니다." />
+		                	</span>
+		                </td>
+		            </tr>
+		            <tr><th style="width: 20%">약력</th>
+		                <td>
+		                	<div id="memberCareer" contenteditable="true" <c:if test="${empty member.memberCareer}">class='career--edit'</c:if>>
+	                			${member.memberCareer}
+		                	</div>
+		                </td>
+		            </tr>
+		        </table>
+		    </div>
+		</c:if>
+		
 
 	    <h2>반려동물 <button class="btn btn-warning float--right" id="pet-add" style="padding: 7px; margin: 10px 0px;">반려동물 정보 추가</button></h2>
 	    <hr>
@@ -179,6 +207,7 @@
 	        </div>
 	      </div>
 	      <div class="modal-footer">
+	      	<a id="newHos" href="#">신규병원 등록하기</a><br> 
 	        <button type="button" class="btn btn-primary" id="hosRegBtn">등록</button>
 	        <button type="button" class="btn btn-secondary" id="hosCloseBtn">닫기</button>
 	      </div>

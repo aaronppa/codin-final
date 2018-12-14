@@ -147,7 +147,19 @@
 		<result column="hos_board_title" property="hosBoardTitle"/>
 		<result column="hos_board_writer_no" property="hosBoardWriterNo"/>
 		<result column="hos_board_view_cnt" property="hosBoardViewCnt"/>
+		<result column="hos_board_reg_date" property="hosBoardRegDate"/>
 		<result column="hos_board_content" property="hosBoardContent"/>
+	</resultMap>
+	
+	<resultMap type="HosStaff" id="staffMap">
+		<result column="staff_no" property="staffNo"/>
+		<result column="hos_code" property="hosCode"/>
+		<result column="staff_member_no" property="staffMemberNo"/>
+		<result column="staff_reg_date" property="staffRegDate"/>
+		<result column="staff_title" property="staffTitle"/>
+		<result column="hos_admin" property="hosAdmin"/>
+		<result column="confirm" property="confirm"/>
+		<association column="staff_member_no" property="member" select="selectMember"></association>
 	</resultMap>
 	
 	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
@@ -409,6 +421,45 @@
 		where booking_no = #{bookingNo}
 	</update>
 	
+	<select id="maxBookingAtMedical" parameterType="HosBlock" resultType="int">
+		select sum(max_booking)
+		from hos_block
+		where hos_code = #{hosCode}
+			 and block_day = #{blockDay}
+			 and facility_no = 1
+	</select>
+	
+	<select id="blockCodeAtMedical" parameterType="HosBlock" resultType="Integer">
+		select block_code
+		from hos_block
+		where hos_code = #{hosCode}
+			 and block_day = #{blockDay}
+			 and facility_no = 1
+	</select>
+	
+	<select id="maxBookingAtBeauty" parameterType="HosBlock" resultType="int">
+		select sum(max_booking)
+		from hos_block
+		where hos_code = #{hosCode}
+			 and block_day = #{blockDay}
+			 and facility_no = 2
+	</select>
+	
+	<select id="blockCodeAtBeauty" parameterType="HosBlock" resultType="Integer">
+		select block_code
+		from hos_block
+		where hos_code = #{hosCode}
+			 and block_day = #{blockDay}
+			 and facility_no = 2
+	</select>
+	
+	<select id="bookingCount" parameterType="int" resultType="int">
+		select count(*)
+		from hos_booking
+		where block_code = #{blockCode}
+			and confirm = 'Y'
+	</select>
+	
 	<insert id="insertChart" parameterType="HosChart" useGeneratedKeys="true" keyProperty="chartNo">
 		insert into hos_chart
 		(hos_code, vet_no, disease, diagnosis, warning, member_no, pet_no, next_booking)
@@ -460,9 +511,129 @@
 		where file_id = #{fileId}
 	</update>
 	
-	<select id="selectHosBoard" parameterType="int" resultMap="boardMap">
+	<select id="selectHosBoard" parameterType="HosPage" resultMap="boardMap">
 		select *
 		from hos_board
-		where hos_code = #{hosCode}
+		where hos_board_delete = 'N' 
+		and hos_code = #{hosCode}
+		<if test="searchType != 0">
+		and (
+			<if test="searchType == 1">
+				hos_board_title like CONCAT('%',#{keyWord},'%')
+			</if>
+			<if test="searchType == 2">
+				hos_board_category_code like #{keyWord}
+			</if>
+			<if test="searchType == 3">
+				hos_board_writer_no in 
+					(select member_no
+					 from member
+					 where member_nickName like CONCAT('%',#{keyWord},'%')
+					) searchMember
+			</if>
+		)
+		</if>
+		limit #{begin}, #{pageNum}
 	</select>
+	
+	<select id="hosBoardCount" parameterType="HosPage" resultType="int">
+		select count(*)
+		from hos_board
+		where hos_board_delete = 'N' 
+		and hos_code = #{hosCode}
+		<if test="searchType != 0">
+		and (
+			<if test="searchType == 1">
+				hos_board_title like CONCAT('%',#{keyWord},'%')
+			</if>
+			<if test="searchType == 2">
+				hos_board_category_code like #{keyWord}
+			</if>
+			<if test="searchType == 3">
+				hos_board_writer_no in 
+					(select member_no
+					 from member
+					 where member_nickName like CONCAT('%',#{keyWord},'%')
+					) searchMember
+			</if>
+		)
+		</if>
+	</select>
+	
+	<select id="selectHosBoardByNo" parameterType="int" resultMap="boardMap">
+		select *
+		from hos_board
+		where hos_board_id = #{hosBoardId}
+	</select>
+	
+	<update id="updateBoard" parameterType="hosBoard">
+		update hos_board
+		set hos_board_category_code = #{hosBoardCategoryCode},
+			hos_board_title = #{hosBoardTitle},
+			hos_board_reg_date = now(),
+			hos_board_content = #{hosBoardContent}
+		where hos_board_id = #{hosBoardId}
+	</update>
+	
+	<select id="selectStaffConfirm" parameterType="int" resultMap="staffMap">
+		select *
+		from hos_staff
+		where hos_code = #{hosCode}
+			and confirm = 'Y'
+	</select>
+	
+	<select id="selectStaffUnConfirm" parameterType="int" resultMap="staffMap">
+		select *
+		from hos_staff
+		where hos_code = #{hosCode}
+			and confirm = 'N'
+	</select>
+	
+	<select id="isRegStaff" parameterType="HosStaff" resultType="int">
+		select count(*)
+		from hos_staff
+		where hos_code = #{hosCode}
+			and staff_member_no = #{staffMemberNo}
+	</select>
+	
+	<insert id="insertStaff" parameterType="HosStaff" useGeneratedKeys="true" keyProperty="staffNo">
+		insert into hos_staff
+		(hos_code, staff_member_no, staff_title)
+		values
+		(#{hosCode}, #{staffMemberNo}, '신규 직원')
+	</insert>
+	
+	<update id="addStaff" parameterType="HosStaff">
+		update hos_staff
+		set confirm = 'Y',
+			staff_title = #{staffTitle},
+			staff_reg_date = now()
+		where staff_no = #{staffNo}
+	</update>
+	
+	<update id="editStaff" parameterType="HosStaff">
+		update hos_staff
+		set staff_title = #{staffTitle},
+			hos_admin = #{hosAdmin}
+		where staff_no = #{staffNo}
+	</update>
+	
+	<delete id="deleteStaff" parameterType="HosStaff">
+		delete
+		from hos_staff
+		where staff_no = #{staffNo}
+	</delete>
+	
+	<update id="memberHosNull" parameterType="int">
+		update member
+		set hos_code = null
+		where member_no = #{memberNo}
+	</update>
+	
+	<update id="memberHosAdd" parameterType="HosStaff">
+		update member
+		set hos_code = #{hosCode}
+		where member_no = #{staffMemberNo}
+	</update>
+
 </mapper>

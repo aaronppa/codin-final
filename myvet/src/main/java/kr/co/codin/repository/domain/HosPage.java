@@ -2,6 +2,7 @@ package kr.co.codin.repository.domain;
 
 public class HosPage extends Page{
 
+	private int hosCode;
 	private String keyWord;
 	private int searchType;
 
@@ -12,7 +13,15 @@ public class HosPage extends Page{
 	public HosPage (int pageNo, int pageNum) {
 		super(pageNo, pageNum);
 	}
-	
+
+	public int getHosCode() {
+		return hosCode;
+	}
+
+	public void setHosCode(int hosCode) {
+		this.hosCode = hosCode;
+	}
+
 	public String getKeyWord() {
 		return keyWord;
 	}
@@ -29,6 +38,8 @@ public class HosPage extends Page{
 		this.searchType = searchType;
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "HosPage [hosCode=" + hosCode + ", keyWord=" + keyWord + ", searchType=" + searchType + "]";
+	}
 }
