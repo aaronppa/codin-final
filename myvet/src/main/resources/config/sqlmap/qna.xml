@@ -295,6 +295,7 @@
 		, (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
 		from qna_comment q
 		where qna_no = #{qnaNo}
+		order by comment_no asc
 	</select>
 	
 	
@@ -324,4 +325,30 @@
 			from qna
 	</select>
 	
+	<update id="updateAnswer" parameterType="Qna">
+			update qna
+		set answered='Y'
+		where qna_no = #{qnaNo} 
+	</update>
+	
+	<update id="updateCommentPick" parameterType="QnaComment">
+			update qna_comment
+		set pick = 'Y'
+		where comment_no = #{commentNo}
+	</update>
+	<select id="selectPickCom" parameterType="QnaComment" resultMap="QnaCommentMap">
+		select q.* 
+		,(select member_nickname from member where member_no = q.commenter_no) memberNickname
+		, (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
+		from qna_comment q
+		where qna_no = #{qnaNo} and pick='Y'
+		order by comment_no asc
+	</select>
+	
+	
+	<select id="selectPickCom111" parameterType="QnaComment" resultType="string">
+		select answered
+			from qna
+			where qna_no = #{qnaNo}
+	</select>
 </mapper>

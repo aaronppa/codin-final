@@ -34,7 +34,7 @@ public class QnaServiceImpl implements QnaService{
 	public Qna selectQnaByNo(int qnaNo) {
 		// TODO Auto-generated method stub
 		mapper.updateViewCnt(qnaNo);
-		System.out.println("ㅠ_ㅠ");
+	//	System.out.println("ㅠ_ㅠ");
 		return mapper.selectQnaByNo(qnaNo);
 	}
 	
@@ -86,7 +86,22 @@ public class QnaServiceImpl implements QnaService{
 		return mapper.qnaListCnt(QNA);
 		
 	}
-	
+	@Override
+	public void updateAnswerAndPick(Qna qna, QnaComment com) {
+		// TODO Auto-generated method stub
+		mapper.updateAnswer(qna);
+		mapper.updateCommentPick(com);
+	}
+	@Override
+	public QnaComment selectPickCom(QnaComment com) {
+		// TODO Auto-generated method stub
+		return mapper.selectPickCom(com);
+	}
+	@Override
+	public String selectPickCom111(int qna) {
+		// TODO Auto-generated method stub
+		return mapper.selectPickCom111(qna);
+	}
 	
 	
 	

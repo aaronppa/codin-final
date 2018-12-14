@@ -24,4 +24,7 @@ public interface QnaService {
 	void deleteComment(QnaComment com);
 	void updateQnaComment(QnaComment com);
 	int countTotalContent(SearchQnA qna);
+	void updateAnswerAndPick(Qna qna,QnaComment com );
+	QnaComment selectPickCom(QnaComment com );
+	String selectPickCom111(int qna);
 }

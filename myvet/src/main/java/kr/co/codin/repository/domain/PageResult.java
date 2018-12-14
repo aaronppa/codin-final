@@ -26,9 +26,9 @@ public class PageResult {
 		int currTab =(pageNo -1) / tabSize + 1;
 
 		beginPage = (currTab - 1) * tabSize + 1;
-		System.out.println("페이지 리절트:"+beginPage);
+	
 		endPage = (currTab * tabSize < lastPage) ? currTab * tabSize : lastPage;
-		System.out.println(lastPage);
+
 		prev = beginPage != 1;
 		next = endPage != lastPage;
 	}

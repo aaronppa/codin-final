@@ -109,27 +109,21 @@
 					data : $("#addr").val()
 				}
 			}).done(function(result) {
-				//	alert(result[0].mapx,result[0].mapy);
-				//console.log("성공");
-				//	alert(result.length);
+			
 				MainMap(result[0].mapx, result[0].mapy, result);
 			})
 		})
 		function geoLocation() {
-			console.log("geoLocation 진입");
+		
 			if (navigator.geolocation) {
-				console.log(navigator.geolocation);
-				console.log("if geoLocation 진입");
-				console.log(position);
+				
 				navigator.geolocation.getCurrentPosition(function(position) {//허용하면 여기옴
-					console.log("위치정보 허용 요기옴");
+					//센터 x
 					y = position.coords.latitude;
+					//센터 y
 					x = position.coords.longitude;
-					//console.log(position.coords.latitude+"  "+position.coords.longitude);
-					//		console.log("허용");
-					//		console.log(x,y);
-					console.log("센터 x"+x);
-					console.log("센터 y"+y);
+				
+					
 					$("#map").append(
 							"<div valueX='"+x+"' valueY='"+y+"' id='gotoCenter' style='position:absolute;z-index:100;margin-top:0px; margin-left:0px;'><button><img src='/myvet/resources/img/mapmark/goToCenTer.png'/></button>"
 									+ "</div>")
@@ -142,20 +136,9 @@
 							y : y
 						}
 					}).done(function(result) {
-						//	console.log(result);
-						//	console.log("됨");
-						//	console.log(x);		console.log(y);//위치정보 제공시의 중심점
-						//MainMap(x,y);
-						
-						
-						
-						console.log("ajax 통신성공");
+				
 						for (var i = 0; i < result.length; i++) {
-							//console.log(result[i]);
-							//console.log(result[i].title);
-							//console.log(result[i].address);
-							//console.log(result[i].mapx);
-							//console.log(result[i].mapy);
+					
 							var data = new Object();
 							data.number = i;
 							data.name = result[i].title;
@@ -169,17 +152,16 @@
 						centerPositionY=y;
 						MainMap(data.x, data.y, result,x,y);//넘어온 병원 정보를 지도 api에 넘겼음
 					}).fail(function(result) {
-						//	console.log("안됨");
-						//	console.log(result);
+		
 					})
 
 				}, function(error) {
 					//console.log(error.code);
-					console.log("에러코드"+error);
+		
 					switch (error.code) {
 					case error.PERMISSION_DENIED:
-						//console.log("위치정보 제공 x");
-						console.log("요기옴");
+						
+						//위치정보 제동 미동의시 도착;
 						$.ajax({
 							url : "<c:url value='/map/ajax.do'/>",
 							type : "post",
@@ -199,15 +181,11 @@
 								positionData.push(data);
 
 							}
-							
-							
-							
-							
-							// 아 왜 안되는거야 ㅡㅡ^;
+					
 							$("#gotoCenter").css("visibility","hidden");
 							
 							
-							// 아 왜 안되는거야 ㅡㅡ^;
+				
 							MainMap(result[0].mapx, result[0].mapy, result,null,null);//첫번째 매개변수 x값 두번째 매개변수 y값 , --> 중심좌표 , result 데이터의 갯수
 							//    	console.log("성공"+result);
 							
@@ -237,18 +215,12 @@
 		let myaddr=null;
 		let centerX=xx;
 		let centerY=yy;
-		console.log("호이쨔:"+jsondata);
+		let infowindow =null
 	
 		function MainMap(x, y, jsondata,xx,yy) {//x,y는 중심점 , jsondata는 병원 좌표
 			
-			console.log("x:"+x);
-			console.log("y:"+y);
-			console.log("xx:"+xx);
-			console.log("yy:"+yy);
-			
-			console.log(jsondata);
-			
-				//if($("#mapsearchdiv > select >option:selected").val()==1){
+		
+				
 						$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
 						for(let k = 0 ;  k < jsondata.length; k ++){
 							if(jsondata[k].hosRegister == 'N'){
@@ -268,49 +240,7 @@
 								
 							}
 						}
-				/* 	}else if($("#mapsearchdiv > select >option:selected").val()==2){
-						$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
-						
-						for(let k = 0 ;  k < jsondata.length; k ++){
-							var num= 0;
-							if(jsondata[k].hosRegister == 'Y'){
-							
-								$("#MapSearchlist >table > tbody").append(
-										
-										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+num+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+num)+".png'/><strong>"+jsondata[k].title +"</strong><br>"+jsondata[k].roadAddress+"</td>"
-										+"</tr>"
-										)
-								
-							}
-							num++;
-						}
-					}else if($("#mapsearchdiv > select >option:selected").val()==3){
-						$("#MapSearchlist >table > tbody").empty();//동적인 태그 생성
-						for(let k = 0 ;  k < jsondata.length; k ++){
-							var num = 0 ;
-							if(jsondata[k].hosRegister == 'N'){
-							
-								$("#MapSearchlist >table > tbody").append(
-										
-										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+num+"td'><img src='/myvet/resources/img/mapmark/RedFolder/redMarker"+String.fromCharCode(65+num)+".png'/><strong>"+jsondata[k].title +"</strong><br>"+jsondata[k].roadAddress+"</td>"
-										+"</tr>"
-										)
-								
-							}
-							num++;
-						}
-					} */
 			
-		/* 	$("#gotoCenter").click(function(e){
-				console.log("클릭");
-				console.log(x);
-				console.log(y);
-				xx=centerX;
-				yy=centerY;
-				MainMap(xx, yy);
-				//MainMap(xx, yy, jsondata);
-			})
-			 */
 		
 			
 			//console.log(jsondata.length);
@@ -327,24 +257,6 @@
 											+ '의 검색 결과가 없거나 기타 네트워크 에러');
 								}
 								let result = response.result;
-								// 검색 결과 갯수: result.total
-								// 첫번째 결과 결과 주소: result.items[0].address
-								// 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
-								//  var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
-								
-										
-								
-			
-		
-								
-							
-							//	console.log(x);
-							//	console.log(y);
-							//	console.log("273:"+xx);
-						//		console.log(yy);
-								
-							
-
 							
 								
 
@@ -352,21 +264,15 @@
 							map.setCenter(centerXY);						
 							let clickResult = jsondata;
 							$(".mapSearchResult").click(function(e){
-								//alert($(this).attr("value1"));
-								let resultX=$(this).attr("value1");
-								let resultY=$(this).attr("value2");
-								//alert($(this).attr("value2"));
-							//	MainMap($(this).attr("value1"),$(this).attr("value2"), clickResult,null,null);
-								//centerXY = new naver.maps.Point(x, y);
-							 	
+								let resultX=$(this).attr("value1");//x값
+								let resultY=$(this).attr("value2");//y주소값
+							
 								$.ajax({
 									url:"map/Centerajax.do",
 									type:"post",
 									data:{x:$(this).attr("value1"), y:$(this).attr("value2")}
 								}).done(function(result){
-									console.log("성공");
-									
-									
+					
 									centerXY = new naver.maps.Point(resultX, resultY);
 									map.setCenter(centerXY);
 									myaddr = new naver.maps.Point(centerPositionX, centerPositionY);//마커중심 좌표 설정(현재위치)
@@ -382,19 +288,12 @@
 											});
 									naver.maps.Event.addListener(marker, "click",
 											function(e) {
-												/* 	if (infowindow.getMap()) {
-														infowindow.close();
-													} else {
-														infowindow.open(map, marker);
-													} */
+												
 												alert("중심좌표입니다");
 											});
-								
-									console.log("elelelelelelele")
+			
 									map.setCenter(centerXY); // 검색된 좌표로 지도 이동
 
-									
-									
 								}).fail(function(result){
 									console.log("실패")
 								})
@@ -411,7 +310,7 @@
 									type:"post",
 									data:{x:$(this).attr("valuex"), y:$(this).attr("valuey")}
 								}).done(function(result){
-									console.log("성공");
+							
 									
 									
 									centerXY = new naver.maps.Point(resultCenterX, resultCenterY);
@@ -429,49 +328,15 @@
 											});
 									naver.maps.Event.addListener(marker, "click",
 											function(e) {
-												/* 	if (infowindow.getMap()) {
-														infowindow.close();
-													} else {
-														infowindow.open(map, marker);
-													} */
+					
 												alert("중심좌표입니다");
 											});
-								
-									console.log("elelelelelelele")
-									map.setCenter(centerXY); // 검색된 좌표로 지도 이동
-
-									
-									
+									map.setCenter(centerXY); // 검색된 좌표로 지도 이동	
 								}).fail(function(result){
 									console.log("실패")
 								})
 							})
-								
-								
-
-							//	if (xx == null && yy == null) {
-									//console.log("sdfghif")
-									
-									console.log("-------------------------");
-									console.log(x,y)//중심점으로 이동
-									console.log("-------------------------");
-							/* 	} else {
-									console.log("else");
-									centerXY = new naver.maps.Point(xx, yy);
-								} */
-							
-								
-								//-----------------------------------------------------------------------------
-								
-								//여기서부터 작업핡서
-						
-								console.log("fififififififi")
-								 // 검색된 좌표로 지도 이동
-
-								//    console.log(myaddr);
-
-								// 마커 표시
-								
+		
 								myaddr = new naver.maps.Point(centerPositionX, centerPositionY);//마커중심 좌표 설정(현재위치)
 								
 								marker = new naver.maps.Marker(
@@ -485,33 +350,16 @@
 										});
 								naver.maps.Event.addListener(marker, "click",
 										function(e) {
-											/* 	if (infowindow.getMap()) {
-													infowindow.close();
-												} else {
-													infowindow.open(map, marker);
-												} */
+									
 											alert("중심좌표입니다");
 										});
-							
-								console.log("elelelelelelele")
+						
 								map.setCenter(centerXY); // 검색된 좌표로 지도 이동
-
-								//    console.log(myaddr);
-
-								// 마커 표시
-								
 								hosaddr = new naver.maps.Point(x, y);//마커중심 좌표 설정(현재위치)
 								
-							
-							
-								
-								
-				let jsonDData = jsondata;
-								
-								
-								
-	
-						
+
+								let jsonDData = jsondata;
+
 								let MarkerClicklist = new Array();
 					
 								//병원의 마크점 생성
@@ -555,15 +403,12 @@
 													});
 	
 										}//if-else
-										
-										
-										
-										
+					
 									MarkerClicklist[k] = hosmarker;
 
 									//	console.log(jsondata[k].title);
 
-									let infowindow = new naver.maps.InfoWindow(
+									 infowindow = new naver.maps.InfoWindow(
 											{
 
 												content : '<p>병원이름:'
@@ -616,11 +461,7 @@
 
 								}//for
 
-							//	console.log("374번 줄 " + jsondata);
-							//	console.log(jsondata);
-								/* 	
-										 
-									}*/
+							
 									});
 			
 		}

@@ -22,4 +22,9 @@ public interface QnaMapper {
 	void deleteComment(QnaComment qc);
 	void updateQnaComment(QnaComment qc);
 	int qnaListCnt(SearchQnA QNA);
+	void updateAnswer(Qna qna);
+	void updateCommentPick(QnaComment Qc);
+	QnaComment selectPickCom(QnaComment Qc);
+	String selectPickCom111(int qna);
+	
 }
