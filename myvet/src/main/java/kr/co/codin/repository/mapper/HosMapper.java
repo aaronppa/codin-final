@@ -2,6 +2,7 @@ package kr.co.codin.repository.mapper;
 
 import java.util.List;
 
+import kr.co.codin.repository.domain.FavHos;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosBoard;
@@ -74,6 +75,11 @@ public interface HosMapper {
 	int maxBookingAtBeauty(HosBlock block);
 	List<Integer> blockCodeAtBeauty(HosBlock block);
 	void memberHosAdd(HosStaff staff);
+	void insertFavHos(FavHos favHos);
+	int selectFavHosbyMember(FavHos favHos);
+	void deleteFavHos (int favHosNo);
+	int followCnt(int hosCode);
+	List<HosFacility> selectFacilitybyHosCode (int hosCode);
 	
 	int isRegStaff (HosStaff staff);
 	void memberHosNull(int memberNo);

@@ -63,6 +63,7 @@
 		<result column="facility_bookable" property="facilityBookable"/>
 		<result column="staff_no" property="staffNo"/>
 		<result column="max_booking" property="maxBooking"/>
+		<association column="facility_code" property="facilityName" select="selectFacilityName"></association>
 	</resultMap>
 	
 	<resultMap type="HosFacilitylist" id="facilitylistMap">
@@ -206,6 +207,12 @@
 		order by facility_code
 	</select>
 	
+	<select id="selectFacilityName" parameterType="int" resultType="string">
+		select facility_name
+		from hos_facilitylist
+		where facility_code = #{facilityCode}
+	</select>
+	
 	<select id="searchReg" parameterType="HosPage" resultMap="hospitalMap">
 		select *
 		from hos_basic
@@ -283,6 +290,12 @@
 		values
 		(#{hosCode}, #{facilityCode})
 	</insert>
+
+	<select id="selectFacilitybyHosCode" parameterType="int" resultMap="facilityMap">
+		select *
+		from hos_facility
+		where hos_code = #{hosCode}
+	</select>
 	
 	<insert id="insertDayoff" parameterType="HosHours">
 		insert into hos_hours
@@ -635,5 +648,30 @@
 		set hos_code = #{hosCode}
 		where member_no = #{staffMemberNo}
 	</update>
-
+	
+	<select id="selectFavHosbyMember" parameterType="FavHos" resultType="int">
+		select fav_hos_no
+		from fav_hos
+		where member_no = #{memberNo}
+			and hos_code = #{hosCode}
+	</select>
+	
+	<insert id="insertFavHos" parameterType="FavHos">
+		insert into fav_hos
+		(member_no, hos_code)
+		values
+		(#{memberNo}, #{hosCode})
+	</insert>
+	
+	<delete id="deleteFavHos" parameterType="int">
+		delete
+		from fav_hos
+		where fav_hos_no = #{favHosNo}
+	</delete>
+	
+	<select id="followCnt" parameterType="int" resultType="int">
+		select count(*)
+		from fav_hos
+		where hos_code = #{hosCode}
+	</select>
 </mapper>

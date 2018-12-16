@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.codin.repository.domain.FavHos;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosBoard;
@@ -310,4 +311,30 @@ public class HosServiceImpl implements HosService{
 	public void memberHosAdd(HosStaff staff) {
 		mapper.memberHosAdd(staff);
 	}
+	
+	@Override
+	public void insertFavHos(FavHos favHos) {
+		mapper.insertFavHos(favHos);
+	}
+
+	@Override
+	public int selectFavHosbyMember(FavHos favHos) {
+		return mapper.selectFavHosbyMember(favHos);
+	}
+	
+	@Override
+	public void deleteFavHos (int favHosNo) {
+		mapper.deleteFavHos(favHosNo);
+	}
+
+	@Override
+	public 	int followCnt(int hosCode) {
+		return mapper.followCnt(hosCode);
+	}
+	
+	@Override
+	public List<HosFacility> selectFacilitybyHosCode (int hosCode) {
+		return mapper.selectFacilitybyHosCode(hosCode);
+	}
+
 }

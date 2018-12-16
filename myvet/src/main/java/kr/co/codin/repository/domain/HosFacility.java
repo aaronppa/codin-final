@@ -1,13 +1,13 @@
 package kr.co.codin.repository.domain;
 
 public class HosFacility {
-	int facilityNo;
-	int hosCode;
-	int facilityCode;
-	char facilityBookable;
-	int staffNo;
-	int maxBooking;
-	
+	private int facilityNo;
+	private int hosCode;
+	private int facilityCode;
+	private char facilityBookable;
+	private int staffNo;
+	private int maxBooking;
+	private String facilityName;
 	public int getFacilityNo() {
 		return facilityNo;
 	}
@@ -44,5 +44,10 @@ public class HosFacility {
 	public void setMaxBooking(int maxBooking) {
 		this.maxBooking = maxBooking;
 	}
-	
+	public String getFacilityName() {
+		return facilityName;
+	}
+	public void setFacilityName(String facilityName) {
+		this.facilityName = facilityName;
+	}
 }

@@ -18,10 +18,10 @@
        display: inline-block;
        border: 1px solid black;
        border-radius: 3px;
-       padding: 3px;
+       padding: 3px 5px;
    }
    
-   #fallow{
+   #follow{
        position: relative;
        display: inline-block;
    }
@@ -79,6 +79,14 @@
        border: 0px solid black;
    }
    
+   #facilityContainer {
+		width: 600px;
+   		height: 50px;
+	    overflow: hidden;
+	    overflow-x: scroll;
+	    white-space: nowrap;
+   }
+   
    #bookTable {
 		overflow: auto;
    }
@@ -95,6 +103,10 @@
    #boardList {
    		text-align: left; 
    }
+   
+   #followDiv {
+   		display: inline-block;
+   }
 </style>
 </head>
 <body>
@@ -105,10 +117,23 @@
             <td rowspan="2">
                 <h1 id="title">${hospital.title }</h1>
                 <input type="hidden" id="hosCode" value="${hospital.hosCode }">
-                <div id="fallow">즐겨찾기 버튼</div>
+                <div id="followDiv">
+					<c:choose>
+						<c:when test="${favHos == 0 }">
+		                	<button id="follow">
+				                즐겨찾기 버튼
+		                	</button>
+	                	</c:when>
+	                	<c:otherwise>
+		                	<button id="unfollow" data-fav="${favHos }">
+				                즐겨찾기 취소버튼
+		                	</button>
+	                	</c:otherwise>
+                	</c:choose>
+                </div>
             </td>
             <td>
-            <div class="hosTitle"><span>즐겨찾는 고객 수 : </span><span></span><span>명</span></div>
+            <div class="hosTitle"><span>즐겨찾는 고객 수 : </span><span>${followCnt }</span><span>명</span></div>
             </td>
             <td rowspan="2" style="text-align: center">
                 <button id="chart">진료차트</button>
@@ -120,10 +145,9 @@
         <tr>
             <td>
             	<div id="facilityContainer">
-	                <div class="hosfacility">24시간 진료</div>
-	                <div class="hosfacility">모든 동물 진료</div>
-	                <div class="hosfacility">미용 가능</div>
-	                <div class="hosfacility">주차장 완비</div>
+            		<c:forEach items="${facilityList }" var="facility">
+		                <div class="hosfacility">${facility.facilityName }</div>
+	                </c:forEach>
                 </div>
             </td>
         </tr>
@@ -237,6 +261,29 @@
 			})
 		}
 	    
+		$("#follow").click(function(){
+			$.ajax({
+				url: "/myvet/hos/insertFavHos.do",
+				data: {
+					hosCode: ${hospital.hosCode},
+					memberNo: ${user.memberNo}
+				}
+			}).done(function(){
+				window.location.reload()
+			})
+		})
+	    
+		$("#unfollow").click(function(){
+			$.ajax({
+				url: "/myvet/hos/deleteFavHos.do",
+				data: {
+					favHosNo: $(this).data("fav")
+				}
+			}).done(function(){
+				window.location.reload()
+			})
+		})
+		
     	$("#chart").click(function(){
     		window.location.href = "/myvet/hos/chartHos.do?hosCode=" + $("#hosCode").val();
     	})

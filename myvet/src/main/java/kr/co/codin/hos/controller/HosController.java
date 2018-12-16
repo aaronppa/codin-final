@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
+import kr.co.codin.repository.domain.FavHos;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosBoard;
@@ -54,12 +56,35 @@ public class HosController {
 	private ServletContext servletContext;
 	
 	@RequestMapping("hospital.do")
-	public void hospital(Model model, int hosCode) {
+	public void hospital(Model model, HttpSession session, int hosCode) {
 		HosPage page = new HosPage(1, 5);
+		FavHos favHos = new FavHos();
+		Member member = (Member) session.getAttribute("user");
 		page.setHosCode(hosCode);
 		
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
 		model.addAttribute("boardList", service.selectHosBoard(page));
+		
+		favHos.setMemberNo(member.getMemberNo());
+		favHos.setHosCode(hosCode);
+		
+		try {
+			model.addAttribute("followCnt", service.followCnt(hosCode));
+		}catch(BindingException e) {
+			model.addAttribute("followCnt", 0);
+		}
+		
+		try {
+			model.addAttribute("favHos", service.selectFavHosbyMember(favHos));
+		} catch(BindingException e) {
+			model.addAttribute("favHos", 0);
+		}
+		
+		try {
+			model.addAttribute("facilityList", service.selectFacilitybyHosCode(hosCode));
+		} catch(BindingException e) {
+			model.addAttribute("facilityList", new ArrayList<HosFacility>());
+		}
 	}
 	
 	@RequestMapping("booking.do")
@@ -823,6 +848,18 @@ public class HosController {
 	public void deleteStaff(HosStaff staff) {
 		System.out.println(staff);
 		service.deleteStaff(staff);
+	}
+	
+	@RequestMapping("insertFavHos.do")
+	@ResponseBody
+	public void insertFavHos(FavHos favHos) {
+		service.insertFavHos(favHos);
+	}
+	
+	@RequestMapping("deleteFavHos.do")
+	@ResponseBody
+	public void deleteFavHos(int favHosNo) {
+		service.deleteFavHos(favHosNo);;
 	}
 	
 	public Date setTimeToCal(Calendar cal, StringTokenizer st) {

@@ -2,6 +2,7 @@ package kr.co.codin.hos.service;
 
 import java.util.List;
 
+import kr.co.codin.repository.domain.FavHos;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
 import kr.co.codin.repository.domain.HosBoard;
@@ -73,4 +74,10 @@ public interface HosService {
 	List<Integer> blockCodeAtBeauty(HosBlock block);
 	int bookingCount(int blockCode);
 	void memberHosAdd(HosStaff staff);
+	void insertFavHos(FavHos favHos);
+	int selectFavHosbyMember(FavHos favHos);
+	void deleteFavHos (int favHosNo);
+	int followCnt(int hosCode);
+	List<HosFacility> selectFacilitybyHosCode (int hosCode);
+
 }
