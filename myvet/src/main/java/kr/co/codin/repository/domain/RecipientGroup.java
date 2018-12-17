@@ -10,10 +10,11 @@ public class RecipientGroup {
 	private Date dateRead;
 	private int trash;
 	
-	private String memberNickname;
+	private String recipientNickname;
 	private String hosTitle;
-	private String memberSysName;
-	private String memberFilePath;
+	private String recipientSysName;
+	private String recipientFilePath;
+	
 	public int getRecipientGroupId() {
 		return recipientGroupId;
 	}
@@ -44,29 +45,12 @@ public class RecipientGroup {
 	public void setTrash(int trash) {
 		this.trash = trash;
 	}
-	public String getMemberNickname() {
-		return memberNickname;
-	}
-	public void setMemberNickname(String memberNickname) {
-		this.memberNickname = memberNickname;
-	}
+	
 	public String getHosTitle() {
 		return hosTitle;
 	}
 	public void setHosTitle(String hosTitle) {
 		this.hosTitle = hosTitle;
-	}
-	public String getMemberSysName() {
-		return memberSysName;
-	}
-	public void setMemberSysName(String memberSysName) {
-		this.memberSysName = memberSysName;
-	}
-	public String getMemberFilePath() {
-		return memberFilePath;
-	}
-	public void setMemberFilePath(String memberFilePath) {
-		this.memberFilePath = memberFilePath;
 	}
 	public int getRecipientHosNo() {
 		return recipientHosNo;
@@ -74,12 +58,30 @@ public class RecipientGroup {
 	public void setRecipientHosNo(int recipientHosNo) {
 		this.recipientHosNo = recipientHosNo;
 	}
+	public String getRecipientNickname() {
+		return recipientNickname;
+	}
+	public void setRecipientNickname(String recipientNickname) {
+		this.recipientNickname = recipientNickname;
+	}
+	public String getRecipientSysName() {
+		return recipientSysName;
+	}
+	public void setRecipientSysName(String recipientSysName) {
+		this.recipientSysName = recipientSysName;
+	}
+	public String getRecipientFilePath() {
+		return recipientFilePath;
+	}
+	public void setRecipientFilePath(String recipientFilePath) {
+		this.recipientFilePath = recipientFilePath;
+	}
 	@Override
 	public String toString() {
 		return "RecipientGroup [recipientGroupId=" + recipientGroupId + ", recipientNo=" + recipientNo
 				+ ", recipientHosNo=" + recipientHosNo + ", recipientType=" + recipientType + ", dateRead=" + dateRead
-				+ ", trash=" + trash + ", memberNickname=" + memberNickname + ", hosTitle=" + hosTitle
-				+ ", memberSysName=" + memberSysName + ", memberFilePath=" + memberFilePath + "]";
+				+ ", trash=" + trash + ", recipientNickname=" + recipientNickname + ", hosTitle=" + hosTitle
+				+ ", recipientSysName=" + recipientSysName + ", recipientFilePath=" + recipientFilePath + "]";
 	}
 	
 	

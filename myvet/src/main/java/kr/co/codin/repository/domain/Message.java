@@ -4,14 +4,40 @@ import java.util.Date;
 import java.util.List;
 
 public class Message {
+	private int recipientNo;
 	private int msgId;
 	private int chatId;
 	private int senderNo;
+	private String senderNickname;
 	private String msgBody;
 	private Date dateSent;
 	private int msgType;
 	
-	List<RecipientGroup> RecipientGroup;
+	List<RecipientGroup> recipients;
+
+	public int getRecipientNo() {
+		return recipientNo;
+	}
+
+	public void setMemberNo(int recipientNo) {
+		this.recipientNo = recipientNo;
+	}
+
+	public List<RecipientGroup> getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(List<RecipientGroup> recipients) {
+		this.recipients = recipients;
+	}
+
+	public String getSenderNickname() {
+		return senderNickname;
+	}
+	
+	public void setSenderNickname(String senderNickname) {
+		this.senderNickname = senderNickname;
+	}
 
 	public int getMsgId() {
 		return msgId;
@@ -61,19 +87,12 @@ public class Message {
 		this.msgType = msgType;
 	}
 
-	public List<RecipientGroup> getRecipientGroup() {
-		return RecipientGroup;
-	}
-
-	public void setRecipientGroup(List<RecipientGroup> recipientGroup) {
-		RecipientGroup = recipientGroup;
-	}
-
 	@Override
 	public String toString() {
-		return "Message [msgId=" + msgId + ", chatId=" + chatId + ", senderNo=" + senderNo + ", msgBody=" + msgBody
-				+ ", dateSent=" + dateSent + ", msgType=" + msgType + ", RecipientGroup=" + RecipientGroup + "]";
+		return "Message [recipientNo=" + recipientNo + ", msgId=" + msgId + ", chatId=" + chatId + ", senderNo=" + senderNo
+				+ ", senderNickname=" + senderNickname + ", msgBody=" + msgBody + ", dateSent=" + dateSent
+				+ ", msgType=" + msgType + ", recipients=" + recipients + "]";
 	}
-	
+
 	
 }

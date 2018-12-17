@@ -10,7 +10,9 @@ public interface MsgService {
 
 	List<SearchMemberHospital> searchMember(String keyword);
 	List<SearchMemberHospital> searchHospital(String keyword);
-	void insertChatId();
+	void insertChatId(Message msg);
 	void insertMsg(Message msg);
 	void insertRecipientGroup(RecipientGroup rg);
+	List<Message> selectMyChat(int memberNo);
+	List<Message> selectChatMsg(RecipientGroup myRg);
 }

@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+	<!-- 
+		분명 문자열 비교 구문인데 NumberFormatException이 발생하는 상황이다.
+		결론적으로 위 현상은 myBatis 문제는 아니고 OGNL(Object Graph Navigation Language) 의 문제이다.
+		OGNL 인터프리터에서는 위 구문의 ‘Y’를 char 형으로 인식하고, ‘YY’나 “Y”는 String으로 인식한다. (따옴표를 잘보자)
+		그래서 <if test=”stringValue == ‘Y’”> 이와 같은 구문을 비교할 때  NumberFormat으로 비교를 시도하여 Exception이 발생한다.
+		이유는 java의 char형은 실제로 문자의 코드값을 저장하기 때문이다. 그래서 아래와 같은 형변환이 가능하다. 
+		1. <if test=’stringValue == “Y”‘> – 쌍따옴표와 홑따옴표의 위치를 변경
+		2. <if test=”stringValue == &quot;Y&quot;”> – 쌍따옴표를 HTML 코드로 변경
+		3. <if test=”stringValue == ‘Y’.toString()”> – toString() 함수를 사용해 String 형으로 변환
+		
+		http://t-ara72.blogspot.com/2013/10/mybatis-numberformatexception.html
+	-->
+	
 <mapper namespace="kr.co.codin.repository.mapper.MsgMapper">
 
 	<resultMap type="SearchMemberHospital" id="searchMemberHospitalMap">
@@ -17,22 +31,33 @@
 		<result column="ori_name" property="oriName"/>
 		<result column="sys_name" property="sysName"/>
 		<result column="file_path" property="filePath"/>
-		
+	</resultMap>
+	
+	<resultMap type="Message" id="messageMap">
+		<result column="msg_id" property="msgId"/>
+		<result column="recipient_no" property="recipientNo"/>
+		<result column="chat_id" property="chatId"/>
+		<result column="sender_no" property="senderNo"/>
+		<result column="sender_nickname" property="senderNickname"/>
+		<result column="msg_body" property="msgBody"/>
+		<result column="date_sent" property="dateSent"/>
+		<result column="msg_type" property="msgType"/>
+		<collection property="recipients" column="{chatId=chat_id,recipientNo=recipient_no}"  javaType="java.util.ArrayList" ofType="RecipientGroup" select="selectRecipients"></collection>
+	</resultMap>
+	
+	<resultMap type="RecipientGroup" id="recipientGroupMap">
+		<result column="recipient_group_id" property="recipientGroupId"/>
+		<result column="recipient_no" property="recipientNo"/>
+		<result column="recipient_type" property="recipientType"/>
+		<result column="date_read" property="dateRead"/>
+		<result column="trash" property="trash"/>
+		<result column="member_nickname" property="recipientNickname"/>
+		<result column="member_sys_name" property="recipientSysName"/>
+		<result column="member_file_path" property="recipientFilePath"/>
+		<!-- <result column="recipientHosNo" property="recipientHosNo"/> -->
+		<!-- <result column="title" property="hosTitle"/> -->
 	</resultMap>
 
-	<!-- 
-		분명 문자열 비교 구문인데 NumberFormatException이 발생하는 상황이다.
-		결론적으로 위 현상은 myBatis 문제는 아니고 OGNL(Object Graph Navigation Language) 의 문제이다.
-		OGNL 인터프리터에서는 위 구문의 ‘Y’를 char 형으로 인식하고, ‘YY’나 “Y”는 String으로 인식한다. (따옴표를 잘보자)
-		그래서 <if test=”stringValue == ‘Y’”> 이와 같은 구문을 비교할 때  NumberFormat으로 비교를 시도하여 Exception이 발생한다.
-		이유는 java의 char형은 실제로 문자의 코드값을 저장하기 때문이다. 그래서 아래와 같은 형변환이 가능하다. 
-		1. <if test=’stringValue == “Y”‘> – 쌍따옴표와 홑따옴표의 위치를 변경
-		2. <if test=”stringValue == &quot;Y&quot;”> – 쌍따옴표를 HTML 코드로 변경
-		3. <if test=”stringValue == ‘Y’.toString()”> – toString() 함수를 사용해 String 형으로 변환
-		
-		http://t-ara72.blogspot.com/2013/10/mybatis-numberformatexception.html
-	-->
-	
 	<select id="selectSearchMember" parameterType="string" resultMap="searchMemberHospitalMap">
 		select member_no, member_grade, member_nickname, hos_code, member_ori_name, member_sys_name, member_file_path
 		 from member
@@ -50,7 +75,7 @@
 		 					from file_info) as f on f.board_no = h.hos_code
 	</select>
 	
-	<insert id="insertChatId" useGeneratedKeys="true" keyProperty="chatId">
+	<insert id="insertChatId" parameterType="Message" useGeneratedKeys="true" keyProperty="chatId" keyColumn="CHAT_ID">
 		insert into chat () values ()
 	</insert>
 	
@@ -58,7 +83,7 @@
 		insert into message (
 				chat_id, sender_no, msg_body, msg_type
 			) values ( 
-				#(chatId), #{memberNo}, #{msgBody}, #{msgType}
+				#{chatId}, #{senderNo}, #{msgBody}, #{msgType}
 			)
 	</insert>
 	
@@ -69,4 +94,38 @@
 				#{recipientGroupId}, #{recipientNo}, #{recipientType}
 			)
 	</insert>
+	
+	<select id="selectRecipients" parameterType="java.util.Map" resultMap="recipientGroupMap">
+		select recipient_group_id, recipient_no, recipient_type, trash, member_nickname, member_file_path, member_sys_name
+		from recipient_group  r
+ 		inner join (select member_no, member_nickname, member_file_path, member_sys_name
+				    from member) mem on mem.member_no = r.recipient_no
+		where trash = 0
+        and recipient_group_id = #{chatId}
+        and recipient_no != #{recipientNo}
+	</select>
+	
+	<select id="selectMyChat" parameterType="int" resultMap="messageMap">
+		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no
+		from recipient_group r
+		inner join(select *
+	               from message m
+                    inner join (select MAX(date_sent) as latest_msg_date
+		                        from message
+                                group by chat_id
+                                ) max on max.latest_msg_date = m.date_sent) l on l.chat_id = r.recipient_group_id
+		where recipient_no = #{memberNo}
+		order by msg_id desc
+	</select>
+	
+	<select id="selectChatMsg" parameterType="RecipientGroup" resultMap="messageMap">
+		select msg_id, chat_id, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type, sender_no, mem.member_nickname sender_nickname
+		from recipient_group r
+			inner join message m on m.chat_id = r.recipient_group_id
+			inner join member mem on mem.member_no = m.sender_no
+		where chat_id = #{recipientGroupId}
+		and recipient_no = #{recipientNo}
+		and trash =0
+		order by msg_id asc
+	</select>
 </mapper>

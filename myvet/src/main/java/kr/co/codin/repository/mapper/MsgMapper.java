@@ -9,7 +9,9 @@ import kr.co.codin.repository.domain.SearchMemberHospital;
 public interface MsgMapper {
 	List<SearchMemberHospital> selectSearchMember(String keyword);
 	List<SearchMemberHospital> selectSearchHospital(String keyword);
-	void insertChatId();
+	void insertChatId(Message msg);
 	void insertMsg(Message msg);
 	void insertRecipientGroup(RecipientGroup rg);
+	List<Message> selectMyChat(int memberNo);
+	List<Message> selectChatMsg(RecipientGroup myRg);
 }

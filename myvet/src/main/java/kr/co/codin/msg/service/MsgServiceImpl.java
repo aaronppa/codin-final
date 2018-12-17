@@ -26,8 +26,8 @@ public class MsgServiceImpl implements MsgService{
 	}
 
 	@Override
-	public void insertChatId() {
-		mapper.insertChatId();
+	public void insertChatId(Message msg) {
+		mapper.insertChatId(msg);
 	}
 
 	@Override
@@ -39,6 +39,16 @@ public class MsgServiceImpl implements MsgService{
 	public void insertRecipientGroup(RecipientGroup rg) {
 		mapper.insertRecipientGroup(rg);
 		
+	}
+
+	@Override
+	public List<Message> selectMyChat(int memberNo) {
+		return mapper.selectMyChat(memberNo);
+	}
+
+	@Override
+	public List<Message> selectChatMsg(RecipientGroup myRg) {
+		return mapper.selectChatMsg(myRg);
 	}
 
 	

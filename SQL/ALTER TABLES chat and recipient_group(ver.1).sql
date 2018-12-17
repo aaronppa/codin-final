@@ -6,7 +6,7 @@ CREATE TABLE `recipient_group` (
   `recipient_type` int(11) NOT NULL,
   `date_read` datetime DEFAULT NULL,
   `trash` int(11) DEFAULT '0',
-  PRIMARY KEY (`recipient_group_id`, `recipient_no`)
+  PRIMARY KEY (`recipient_group_id`, `recipient_no`,`recipient_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 alter table `chat`

@@ -22,12 +22,13 @@ crossorigin="anonymous"></script>
 ul.pagination{
 	padding: 0px;
 }
+
+
 </style>
 
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
-	<div class="scroll-container">
     <div class="admin main container">
         <div class="listarea vetAuth">
             <h2><a id="vetAuthheader">수의사 인증 요청 리스트</a></h2>
@@ -309,7 +310,6 @@ ul.pagination{
 			        </ul>
 			    </nav>
         </div>
-    </div>
     </div>
 <script src="<c:url value='/resources/js/datetime/jquery-dateformat.js'/>"></script>
 <script>

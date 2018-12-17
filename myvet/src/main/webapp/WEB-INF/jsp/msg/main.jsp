@@ -25,9 +25,11 @@
 <style>
 body {
 	margin: 0;
+	overflow: auto !important;
 }
 
 .main-container {
+	top: 80px;
 	width: 1050px;
 	height: 620px;
 	margin: 30px auto;
@@ -270,6 +272,14 @@ span.addedRecipient {
 	margin-right: 5px;
 }
 
+span.headerRecipient {
+	line-height: 28px;
+	padding: 4px;
+	background: #f4e8e6;
+	border-radius: 3px;
+	margin-right: 5px;
+}
+
 span.addedRecipient:hover {
 	background: #8b787a;
 	cursor: pointer;
@@ -360,6 +370,7 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+	<div class="container">
 	<div class="main-container">
 		<div class="side-subcontainer">
 			<div class="top-side header">
@@ -371,23 +382,39 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 			</div>
 			<div class="left-panel scrollable">
 				<ul class="conversation list" id="chatroomlist">
-					<li class='conversation-chatroom' data-chatid='32'>
+				
+				<c:forEach var="myChat" items="${myChat}">
+					
+					<li class='conversation-chatroom' data-chatid='${myChat.chatId}'>
 				        <div class='chatroom'>
 					       	<div class='profile'>
-					       		<img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle">
+					       		<img src="<c:url value='/resources/img/test_image/test4.jpg*******'/>" class="rounded-circle">
 					       	</div>
 					       	<div class='chat-info'>
-					       		<div class='recipient new'>
-					       		원래 있는 메세지 
+					       	
+					       		<div class='recipient'>
+					       		<c:forEach var="recipients" items="${myChat.recipients}">
+					       			<c:choose>
+						       			<c:when test="${recipients.recipientType=='0' }">
+						       				<span class="addedRecipient" data-recipientno="${recipients.recipientNo}" data-hosno="" data-recipientname="${recipients.recipientNickname }">${recipients.recipientNickname }</span>
+						       			</c:when>
+						       			<c:when test="${recipients.recipientType=='1' }">
+						       				<span class="addedRecipient" data-recipientno="" data-hosno="${recipients.recipientNo}" data-recipientname="************">${recipients }</span>
+						       			</c:when>
+					       			</c:choose>
+					       		</c:forEach>
 					       		</div>
 					       		<div class='lastmsg brief'>
 					       		</div>
 					   		</div>
-					   		<div class="close-chat nodisplay">
+					   		<div class="close-chat nodisplay" data-chatid='*************'>
 					   		x
 					   		</div>
 				   		</div>
 			   		</li>
+			   	
+			 	</c:forEach>
+				
 				</ul>
 			</div>
 		</div>
@@ -417,33 +444,57 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 	<div class="recipientSearchLayer nodisplay">
 		<div class="recipientSearchBox scrollable"></div>
 	</div>
-	
+	</div>
 	<form action="/myvet/msg/insert.do" id="msgform">
 		
 	</form>
-	<script>
+
+<script src="<c:url value='/resources/js/datetime/jquery-dateformat.js'/>"></script>
+<script>
+
+/* 첫 로딩시 */ 
+var $messages = $('.messages-content'), 
+	form = $('form#msgform'), 
+	me = ${user.memberNo},
+	d = new Date(),
+	m = d.getMinutes(),
+	todayDate = $.format.date(d,'yyyy-MM-dd'),
+	h,
+i = 0;
+
+$(window).on("load", function () {
+	$messages.mCustomScrollbar();
+	console.log("first active chatroom", $("li:first-child > .chatroom"));
+	$("li:first-child > .chatroom").addClass("active");
+	activeDo();
+	// 삭제대상 
+	/* setTimeout(function() {
+	fakeMessage();
+	}, 100); */
+});
 
 /* Write Button Action */
 /* 신규메세지 버튼 한번만 작동시키기 위한 스위치 */
-var newMsgSwitch = false;
+var newMsgSwitch = true;
 
 $("#writemsgbtn").on("click", function(){
-	if(newMsgSwitch===false){
-		$(".messages-content").html("");
+	if(newMsgSwitch===true){
+		$("#mCSB_1_container").html("");
+		$(".chatroom.active").removeClass("active")
 		$messages.mCustomScrollbar();
-		var chatRoomHtml = `<li class='conversation-chatroom new' data-chatid=0>
+		var chatRoomHtml = `<li class='conversation-chatroom new' data-chatid='0'>
 						        <div class='chatroom active'>
 							       	<div class='profile'>
 							       		<img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle">
 							       	</div>
 							       	<div class='chat-info'>
 							       		<div class='recipient new'>
-							       		신규: 
+							       		<label id="newtag">신규:</label>
 							       		</div>
 							       		<div class='lastmsg brief'>
 							       		</div>
 							   		</div>
-							   		<div class="close-chat nodisplay">
+							   		<div class="close-chat nodisplay" data-chatid='0'>
 							   		x
 							   		</div>
 						   		</div>
@@ -459,8 +510,9 @@ $("#writemsgbtn").on("click", function(){
 		
 		$(".top-main.header").html(recipientInputHtml);
 		$("#send").attr("data-chatid",0);
-		newMsgSwitch = true;
+		newMsgSwitch = false;
 	};
+	$messages.mCustomScrollbar();
 });
 
 
@@ -498,23 +550,23 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 		// 수신자 중복 검색 결과에서 제거 하기 위한 작업 
 		// 등록된 수진사는 span 태그 내의 모든 데이터를 배열에 담아 검색결과와 대조 
 		// 중복확인시 검색결과의 객체의 배열에서 splice로 제거 
-		var addedRecipientList = document.querySelectorAll('.top-main.header > .recipients-input > .recipient.new > span.addedRecipient');
-			console.log("addedRecipientList:", addedRecipientList);
+		var addedRecipientListHeader = document.querySelectorAll('.top-main.header > .recipients-input > .recipient.new > span.addedRecipient');
+			console.log("addedRecipientListHeader:", addedRecipientListHeader);
 		var recipientResultList = result;
 			console.log("recipientResultList:", recipientResultList);
-		if(addedRecipientList.length){
-			for(var i=0;i<=addedRecipientList.length-1;i++){
-				if(addedRecipientList[i].dataset.recipientno){
+		if(addedRecipientListHeader.length){
+			for(var i=0;i<=addedRecipientListHeader.length-1;i++){
+				if(addedRecipientListHeader[i].dataset.recipientno){
 					for(var j=0; j<=recipientResultList.member.length-1;j++){	
-						if(recipientResultList.member[j].memberNo==addedRecipientList[i].dataset.recipientno){
+						if(recipientResultList.member[j].memberNo==addedRecipientListHeader[i].dataset.recipientno){
 							recipientResultList.member.splice(j, 1);
 							console.log("recipient removed");
 						};
 					};
 						
-				} else if(addedRecipientList[i].dataset.hosno){
+				} else if(addedRecipientListHeader[i].dataset.hosno){
 					for(var j=0; j<=recipientResultList.hospital.length-1;j++){
-						if(recipientResultList.hospital[j].hosCode==addedRecipientList[i].dataset.hosno){
+						if(recipientResultList.hospital[j].hosCode==addedRecipientListHeader[i].dataset.hosno){
 							recipientResultList.hospital.splice(j, 1);
 							console.log("hospitcal removed");
 						};
@@ -540,7 +592,7 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 				}
 				
 				searchResultHtml += `<li>
-					                    <div class="resultList" data-recipientno=`+member.memberNo+` data-hosno='' data-recipientname=`+member.memberNickname+`>
+					                    <div class="resultList member" data-recipientno=`+member.memberNo+` data-hosno='' data-recipientname=`+member.memberNickname+`>
 					                        <div class='profile-search'>
 					                                <img src=`+imgPath+` class="rounded-circle search-result">
 					                        </div>
@@ -569,7 +621,7 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 				}
 				
 				searchResultHtml += `<li>
-					                    <div class="resultList" data-recipientno="" data-hosno=`+hospital.hosCode+` data-recipientname="`+hospital.title+`">
+					                    <div class="resultList hospital" data-recipientno="" data-hosno=`+hospital.hosCode+` data-recipientname="`+hospital.title+`">
 					                        <div class='profile-search'>
 					                                <img src=`+imgPath+` class="rounded-circle search-result">
 					                        </div>
@@ -595,12 +647,12 @@ $(".recipientSearchLayer").on("mouseenter",function(e){
 });
 
 
-/* 검색 아이템 선택시 Event Action */
-$(".recipientSearchBox").on("click",".resultList",function(e){
+/* 검색 아이템 일반회원 선택시 Event Action */
+$(".recipientSearchBox").on("click",".resultList.member",function(e){
 	console.log("Search Result Select:", $(this));
 	
 	/* 두번째 수신자부터 콤마찍어주기 (앞 span에 , 추가하기) */
-	if($("li.conversation-chatroom.new").find(".recipient.new > span").length!=0){
+	if($("li.conversation-chatroom.new").find(".recipient.new > span")!=0){
 		var lastRecipient = $("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname");
 		/* console.log("Last Recipient:", lastRecipient); */
 		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html(lastRecipient+", ");		
@@ -622,20 +674,20 @@ $(".top-main.header").on("blur","#recipientSearch", function() {
 
 /* 선택된 수신자 마우스 올릴때 삭제 표시 */
 var spanText;
-$(".top-main.header").on("mouseenter", "span", function(e){
+$(".top-main.header").on("mouseenter", "span.addedRecipient", function(e){
 	spanText = $(this).html();
 	$(this).html(spanText+" x");
 });
 
 
 /* 선택된 수신자 마우스 내릴때 삭제 표시 제거 */
-$(".top-main.header").on("mouseleave", "span", function(e){
+$(".top-main.header").on("mouseleave", "span.addedRecipient", function(e){
 	$(this).html(spanText);
 });
 
 
 /* 수신자 클릭시 삭제 */
-$(".top-main.header").on("click", "span", function(e){
+$(".top-main.header").on("click", "span.addedRecipient", function(e){
 	console.log("clicked:", e.target);
 	console.log(e.target.dataset);
 	var hosNo = e.target.dataset.hosno;
@@ -653,31 +705,40 @@ $(".top-main.header").on("click", "span", function(e){
 	}
 }); 
 
-/* 채팅방 나가기 또는 신규작성 취소 */
+/* 채팅방 닫기 표시 */
 $("#chatroomlist").on("mouseenter",".chatroom", function(){
 	var $closeTarget = $(this)
-	console.log("close button",$closeTarget.find(".close-chat"));
-	$closeTarget.find(".close-chat.nodisplay").removeClass("nodisplay");
-	$(".close-chat").on("click", function(){
-		// sweetalert로 삭제 재확인 필요 
-		
-		// writebtn 다시 활성화 
-		newMsgSwitch=false;
-		// 대화방 사라짐 
-		$closeTarget.parent().remove();
-		// 수신자 등록 박스 초기화 
-		$(".new > span").remove();
-		// ajax로 대화방 수신자 그룹에서 block 처리 
-		
-	});
+	// console.log("close button",$closeTarget.find(".close-chat"));
+	$closeTarget.find(".close-chat.nodisplay").toggleClass("nodisplay");
 })
 
 /* 대화방에서 마우스 나가면 닫기 표시 없어짐 */
 $("#chatroomlist").on("mouseleave",".chatroom", function(){
-	console.log("close button",$(this).find(".close-chat"));
+	// console.log("close button",$(this).find(".close-chat"));
 	$(this).find(".close-chat").addClass("nodisplay");
 })
 
+/* 채팅방 나가기 또는 신규작성 취소 */
+$("#chatroomlist").on("click",".close-chat", function(e){
+		// sweetalert로 삭제 재확인 필요 
+		
+		// writebtn 다시 활성화 
+		newMsgSwitch=true;
+		// 대화방 사라짐 
+		console.log("closing Target:", $(e.target).closest("li"));
+	 	$(e.target).closest("li").remove();
+	 	$("#chatroomlist > li:first-child > .chatroom").addClass("active");
+	 	activeDo();
+	 	
+		// 수신자 등록 박스 초기화 (다른 대화방의 message-content와 header로 업데이트 필요)
+		$(".recipients-input").html("");
+		$("#mCSB_1_container").html("");
+		
+		// ajax로 대화방 수신자 그룹에서 trash 처리 
+// 		$messages.mCustomScrollbar();
+	});
+	
+/* Input Text가 공백일 경우 백스페이스누르면 이전 수신자 삭제 */
 $(".top-main.header").on("keydown","#recipientSearch", function(e){
 	if (!$("#recipientSearch").val() && e.key === "Backspace" || e.key === "Delete") {
 		console.log("Search Key:",$("#recipientSearch").val());
@@ -690,20 +751,7 @@ $(".top-main.header").on("keydown","#recipientSearch", function(e){
 console.log("bottom position:",document.querySelector(".main-container").getBoundingClientRect());
 
 
-
 <!-- Responsive Message Content -->
-var $messages = $('.messages-content'), form = $('form#msgform'),
-d, h, m, form,
-i = 0;
-
-$(window).on("change", function () {
-	$messages.mCustomScrollbar();
-	
-	// 삭제대상 
-	/* setTimeout(function() {
-	fakeMessage();
-	}, 100); */
-});
 
 /* 메세지 창 스크롤바 업데이트 */
 function updateMsgScrollBar() {
@@ -713,24 +761,14 @@ function updateMsgScrollBar() {
 	});
 }
 
-/* 대화방리스트 스크롤바 업데이트 */
-function updateMsgScrollBar() {
-	$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'top', {
-		scrollInertia: 10,
-		timeout: 0
-	});
-}
-
 function setDate(){
-	d = new Date()
-	m = d.getMinutes();
 	$('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));
 	/* $('<div class="checkmark-sent-delivered">&check;</div>').appendTo($('.message:last'));
 	$('<div class="checkmark-read">&check;</div>').appendTo($('.message:last')); */
 }
 
-/* 메세지 입력 */
-function insertMessage() {
+/* 메세지 입력 후 전송 함수 (AJAX Request) */
+function insertMessage(item) {
 	msg = $('#msgtextarea').val();
 	
 	if ($.trim(msg) == '') {
@@ -739,67 +777,168 @@ function insertMessage() {
 	$("<input type='hidden' name='msgBody' value='" + msg + "'>").appendTo(form);
 	var senderNo = ${user.memberNo};
 	$("<input type='hidden' name='senderNo' value='" + senderNo + "'>").appendTo(form);
-	
+	$("<input type='hidden' name='chatId' value='" + item.dataset.chatid + "'>").appendTo(form);
+	console.log("send btn chatid check:", item.dataset.chatid);
 	$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
 	setDate();
 	$('#msgtextarea').val(null);
 	updateMsgScrollBar();
 	
-	// 등록된 수신자 배열을 변수에 담는다. 
-	var addedRecipientList = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
-	for(var recipientArr of addedRecipientList){
-		console.log("recipientArr");
-		// 수신자 타임(일반회원/병원) 별 구분하여 data 심어줌 
-		if(!recipientArr.dataset.hosno){
-			$("<input type='hidden' name='recipientNo' value='" + recipientArr.dataset.recipientno + "'>").appendTo(form);
-			console.log("Member",recipientArr.dataset.recipientno);
+	// 신규 메세지인 경우 
+	if(item.dataset.chatid==0){
+		
+		// 등록된 수신자 배열을 변수에 담는다. 
+		var addedRecipientListChat = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
+		for(var recipientArr of addedRecipientListChat){
+			console.log("recipientArr");
+			// 수신자 타입(일반회원/병원) 별 구분하여 data 심어줌 
+			if(!recipientArr.dataset.hosno){
+				$("<input type='hidden' name='recipientNo' value='" + recipientArr.dataset.recipientno + "'>").appendTo(form);
+				console.log("Member",recipientArr.dataset.recipientno);
+				
+			} else if(!recipientArr.dataset.recipientno){
+				$("<input type='hidden' name='recipientHosNo' value='" + recipientArr.dataset.hosno + "'>").appendTo(form);
+				console.log("Hospital",recipientArr.dataset.hosno);
+				
+			}	
+		};
+		
+		console.dir($("form#msgform").attr("action"));
+		console.log("New Chatroom MsgFormData:", form.serialize());
+		
+		// 전송 AJAX
+		$.post(form.attr("action"), form.serialize())
+		.done(function(returnedChatId){
+			console.log("all chatid==0", $("*[data-chatid='0']"));
+			console.log("all new", $(".conversation-chatroom.new, .recipient.new"));
+			if($("*[data-chatid='0']").length>0){
+				$("*[data-chatid='0']").attr("data-chatid",returnedChatId);
+			}
 			
-		} else if(!recipientArr.dataset.recipientno){
-			$("<input type='hidden' name='recipientHosNo' value='" + recipientArr.dataset.hosno + "'>").appendTo(form);
-			console.log("Hospital",recipientArr.dataset.hosno);
-			
-		}	
-	};
-	console.log("MsgFormData:", form.serialize());
-	form.submit();
+			// 첫 메세지 성공하면 더이상 신규 메세지가 아님으로  new class명 제거 
+			$(".conversation-chatroom.new, .recipient.new").removeClass("new");
+			$("#newtag").remove();
+		});
+	} 
+	
+	// 기존 대화방 대화 메세지 전송인 경우 (chatid is not null or other than 0)
+	else{
+		// 기존 대화방 메세지인 경우 
+		console.log("기존 대화방 Chatid:", item.dataset.chatid)
+		
+		console.dir($("form#msgform").attr("action"));
+		console.log("Existing Chatroom MsgFormData:", form.serialize());
+		
+		$.post(form.attr("action"), form.serialize());
+		
+	}
+	console.log("formData after DONE:", form);
+	form.children().not("input[name='msgType']").remove();
+	newMsgSwitch=true;
 	
 	setTimeout(function() {
 		fakeMessage();
-	}, 1000 + (Math.random() * 20) * 100);
 
+	}, 1000 + (Math.random() * 20) * 100);
+	
 };
 
+/* 전송버튼 Action */
 $('#send').click(function(e) {
 	e.preventDefault();
 	sendClick(this);
 });
 
+/* 메세지 입력 input에서 엔터 누르면 */
 $('#msgtextarea').on('keydown', function(e) {
 	if (e.keyCode == 13) {
+		e.preventDefault();
 		sendClick(this);
-	return false;
 	}
 })
 
+/* 전송버튼 Action 함수 */
 function sendClick(item){
-	var addedRecipientList = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
-	if(addedRecipientList.length>0 && $('#msgtextarea').val()){
-		$('#send').data("chatid")
-		$("<input type='hidden' name='chatId' value='" + $('#send').data("chatid") + "'>").appendTo(form);
-		insertMessage();
-		console.log("send btn chatid check:", item.dataset.chatid);
-		if(item.dataset.chatid==0){
-			var topMainHtml = $(".top-main.header .recipient.new");
-			console.log("topMainHtml", topMainHtml);
-			$(".top-main.header").html(topMainHtml);
-		}
-	} else if(addedRecipientList.length==0){
-		alert("수신자를 입력해주세요.");
-		$('#msgtextarea').val(null);
-		$("#recipientSearch").focus();
+	console.log("sendClick item:", item);
+	updateMsgScrollBar();
+	
+	if(!item.dataset.chatid){
 		return false;
 	}
 	
+	if(item.dataset.chatid!=0 && $('#msgtextarea').val()){
+		insertMessage(item);
+		$("li.conversation-chatroom[data-chatid='"+item.dataset.chatid+"']").prependTo($("#chatroomlist"));
+	
+	}
+	
+	if(item.dataset.chatid==0 && $('#msgtextarea').val()){
+		var addedRecipientListNewChat = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
+		console.log("addedRecipientListNewChat",addedRecipientListNewChat);
+		// 수신자가 없는 경우 
+		if(addedRecipientListNewChat.length==0){
+			alert("수신자를 입력해주세요.");
+			$('#msgtextarea').val(null);
+			$("#recipientSearch").focus();
+			return false;
+		}
+		
+		console.log("첫 메세지 New sendClick btn chatid:",$('#send').data("chatid"));
+		
+		insertMessage(item);
+				
+		// 신규 메세지 일 경우 변경되는 elements
+		$("div.recipients.new").html(addedRecipientListNewChat);
+		$(".recipients-input span").removeClass("addedRecipient").addClass("headerRecipient");
+		$("#recipientSearch").remove();
+	}
+}
+
+/* 대화방선택 */ 
+$("#chatroomlist").on("click", ".chatroom", function(){	
+	// console.log("Chatroom changed", $(this).parent().data("chatid"));
+	$(".chatroom.active").removeClass('active');
+	$(this).toggleClass('active');
+	activeDo();
+	
+});
+
+/* Active한 대화방 번호 Send 버튼에 넣어주기 */
+function activeDo(){
+	// console.log("active", $(".chatroom.active"));
+	var activeChatId = $(".chatroom.active").parent().data("chatid");
+	console.log("active ChatId", activeChatId);
+	$("#send").attr("data-chatid", activeChatId);
+	$(".top-main.header > .recipients-input").html("<div>수신자:&nbsp;</div><div class='recipient'></div>");
+	var addedRecipientListChat = document.querySelectorAll('.chatroom.active span.addedRecipient');
+	$(".top-main.header .recipient").html($(addedRecipientListChat).clone());
+	$(".recipients-input span").removeClass("addedRecipient").addClass("headerRecipient");
+	
+	// 대화방 선택시 message-content 업데이트 필요!!!!!!
+	$.get(me+"/"+activeChatId+".do", function(result){
+		console.log("ChatMsgs:",result);		
+		$('.mCSB_container').html("");
+		var timeStamp;
+		
+		for(var msg of result){
+			
+			if($.format.date(msg.dateSent,'yyyy-MM-dd')==todayDate){
+				timeStamp = "오늘 " + $.format.date(msg.dateSent,'HH:mm:ss');
+			} else{
+				timeStamp = $.format.date(msg.dateSent,'yyyy-MM-dd HH:mm:ss');
+			}
+			
+			if(msg.senderNo==me){
+				$("<div class='message message-personal' data-msgid='"+msg.msgId+"'>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
+				$('<div class="timestamp nodisplay">' + timeStamp + '</div>').appendTo($(".message[data-msgid='"+msg.msgId+"']"));
+			} else{
+				$("<div class='message' data-msgid='"+msg.msgId+"'><figure class='avatar'><img src='http://askavenue.com/img/17.jpg' /></figure>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
+				$('<div class="timestamp nodisplay">' + timeStamp + '</div>').appendTo($(".message[data-msgid='"+msg.msgId+"']"));
+			}
+			
+		}
+		updateMsgScrollBar();
+	})
 }
 
 var Fake = [
@@ -837,11 +976,12 @@ i++;
 
 }
 
-$("#chatroomlist").on("click", ".chatroom", function(){
-	console.log("toggle");
-	$(".chatroom.active").removeClass('active');
-	$(this).toggleClass('active');
-});
+$(".main-panel").on("mouseenter",".message", function(){
+	$(this).children(".timestamp").toggleClass("nodisplay");
+})
+$(".main-panel").on("mouseleave",".message", function(){
+	$(this).children(".timestamp").toggleClass("nodisplay");
+})
 </script>
 </body>
 </html>

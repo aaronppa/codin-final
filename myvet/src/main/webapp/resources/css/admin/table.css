@@ -30,7 +30,7 @@ html {
      */
 body {
   margin: 0; 
-  overflow: hidden;
+  overflow: auto;
 }
 
 /**
@@ -2566,13 +2566,10 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
 .long-delay {
   animation-delay: 700ms !important; }
 
-.scroll-container{
-	width: auto;
-	height: 680px;
-	overflow-y: auto;
-}
 
 .admin.main.container{
+	top: 80px;
+	position: relative;
     width: 1100px;
     margin: auto;
     font-size: 13px;

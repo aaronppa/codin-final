@@ -139,13 +139,16 @@ Messages
   /*text-shadow: 0 1px 1px rgba(0, 0, 0, .2);*/
 }
 .messages .message .timestamp {
-  position: absolute;
-  bottom: -15px;
+  position: relative;
   font-size: 10px;
   color: #555;
-  right: 12px;
   /* color: rgba(255, 255, 255, .7);*/
 }
+
+.messages .message .timestamp:hover{
+	display: default;
+}
+
 .messages .message .checkmark-sent-delivered {
   position: absolute;
   bottom: -15px;
