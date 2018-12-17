@@ -12,7 +12,15 @@ public class QnaComment {
 	private int recommendCnt;
 	private String memberNickname;
 	
+	private char memberGrade;
 	
+	
+	public char getMemberGrade() {
+		return memberGrade;
+	}
+	public void setMemberGrade(char memberGrade) {
+		this.memberGrade = memberGrade;
+	}
 	
 	public String getMemberNickname() {
 		return memberNickname;

@@ -19,7 +19,7 @@ public class Qna {
 	private QnaCategoryList category;
 	private String memberNickname;
 	private QnaComment comment;
-	
+
 	public QnaComment getComment() {
 		return comment;
 	}

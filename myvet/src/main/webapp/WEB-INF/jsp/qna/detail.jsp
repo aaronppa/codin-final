@@ -49,13 +49,19 @@
 .defaultHidden {
 	visibility: hidden;
 }
-
+/* 
 .answer {
 	visibility: hidden;
-}
+} */
 
 .answerPosition {
-	margin-left: 90%;
+	margin-left: 88%;
+	
+	position: absolute;
+}
+.pickPicture{
+	margin-left: 80%;
+	
 	position: absolute;
 }
 </style>
@@ -338,9 +344,12 @@
               header:
                "content-type:text/html;charset=utf-8"
             ,
-           }).done(function(result){
+           }).done(function(result){// 341~ 526까지가 done임
+        	   
+        	   console.log(result);
+        	   
               //////console.log("코멘트 엠프티 1");
-              $("#comment").val("");
+              $("#comment").val("");//댓글 입력창 초기화
               //////console.log("코멘트 엠프티2");
               ////////console.log("성공 tipNo"+result);
                ////////console.log(result[1])
@@ -356,31 +365,12 @@
                   //////console.log(result);
                //   alert("sldjfsldjflsjdlfjsldjfsl");
                //   alert("${qnaChingg.answered}");
-                  if(result[i].pick=="Y"){
-                  $(".comment-list").prepend(
-                     		
-                          "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result[i].memberNickname+"<span>채택됨</span>"
-                           +"<button class='com-like "+likeRecommend+"'data-comno='"+result[i].commenterNo+"'>"
-                           +"<i class='far fa-thumbs-up'></i>"+"</button><button class='com-dislike "
-                           +dislikeRecommend+"' data-comno='"
-                           +result[i].commentNo
-                           +"'>"
-                           +"<i class='far fa-thumbs-down'></i>"+"</button>"
-                         +"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
-                          +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
-                          +"<div class='comment-content'>" +
-                          "<button class='answer answerPosition answeredY checking"+i+"'  value='"+result[i].pick+"'><i >채택</i> </button>"
-                             +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
-                             +"<div class='comment' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
-                           +"</div>"
-                           +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
-                           +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
-                           +"<hr>"
-                          );
-                           
+                  if(result[0].pick=="N"){
+           
+                     
                   
                   
-                  }else {    
+                     
 		                $(".comment-list").append(
 		                		
 		                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
@@ -392,8 +382,8 @@
 		                 +"<i class='far fa-thumbs-down'></i>"+"</button>"
 		               +"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
 		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
-		                +"<div class='comment-content'>" +
-		                "<button class='answer answerPosition checking"+i+"' value='"+result[i].pick+"'><i >채택</i> </button>"
+		                +"<div class='comment-content'>"  +
+		                "<button class='answer answerPosition checking"+i+"' value='"+result[i].pick+"'><i >채택</i> </button>" 
 		                   +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
 		                   +"<div class='comment' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
 		                 +"</div>"
@@ -401,27 +391,45 @@
 		                 +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
 		                 +"<hr>"
 		                );
+		                
+		                
+		                
+                  }else{
+                	   
+		                $(".comment-list").append(
+		                		
+		                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
+		                 +"<button class='com-like "+likeRecommend+"'data-comno='"+result[i].commenterNo+"'>"
+		                 +"<i class='far fa-thumbs-up'></i>"+"</button><button class='com-dislike "
+		                 +dislikeRecommend+"' data-comno='"
+		                 +result[i].commentNo
+		                 +"'>"
+		                 +"<i class='far fa-thumbs-down'></i>"+"</button>"
+		               +"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"+"<span class='checkedPick"+i+"'></span>"
+		                +"<div class='comment-content'>" 
+		                   +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
+		                   +"<div class='comment' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
+		                 +"</div>"
+		                 +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
+		                 +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
+		                 +"<hr>"
+		                );
+		                
                   }
-	                if(("${user.memberNo}" ==$(".recomDefaultHidden"+i).val()) &&('${qna.answered}'=='N')  ){
+                  
+                  	/*
+                  		접속자 아이이와 댓글 등록 아이디가 같지 않은 경우 댓글 수정,삭제 버튼을 hidden으로 바꿈
+                  	*/
+	                if("${user.memberNo}" !=  result[i].commenterNo   ){
 	            		
-	            		$(".recomDefaultHidden"+i).css("visibility","visible");
+	            		$(".recomDefaultHidden"+i).css("visibility","hidden");
+	            		
 	            		
 	            	}
-	     /*            //////console.log("-------------------------")
-	               	//////console.log(("${qna.writerNo}" == "${user.memberNo}"))
-	               	//////console.log((('${qna.answered}'=='N') ));
-	               	//////console.log(("${qna.writerNo}" == "${user.memberNo}") && (('${qna.answered}'=='N') ));
-	               	//////console.log(result[i].pick=="N"); */
-	                if(("${qna.writerNo}" == "${user.memberNo}") && (('${qna.answered}'=='N') ))  {
-	            	//	alert("여기 왜wsedrfgthyjkhgfds오냐고")
-	            		$(".answer").css("visibility","visible");
-	             
-	            	}
-	                
-	           /*      if(result[i].pick=="Y"){
-	                //	alert("여기 sdfgh왜오냐고")
-	                	$(".answer").css("visibility","hidden");
-	                } */
+                  	
+                  	
+             
 	                 CommentList =result; 
 	                $(".checking"+i).click(function(e){
 	                //	alert($(this));
@@ -430,97 +438,25 @@
 	                	alert(result[i].commentNo); */
 	                	$.ajax({
 	                		url:"/myvet/qna/selectAnswer.do",
-	                		type:"post",
-	                		data:{qnaNo:${qna.qnaNo},commentNo:result[i].commentNo}
+	                		data:{qnaNo:${qna.qnaNo},commentNo:result[i].commentNo},
+	                		type:"post"
 	                	}).done(function(result){
 	                		//alert("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ")
 	                	//	alert(result);
 	                		//////console.log(result);
 	                		//////console.log("------------------");
 	                		 $(".comment-list").empty();
-	                		 
-	                		  if(result.pick=="Y"){  
-		                           $(".comment-list").prepend(
-		                           		
-		                                   "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result.memberNickname+"<span>채택됨</span>"
-		                                    +"<button class='com-like "+likeRecommend+"'data-comno='"+result.commenterNo+"'>"
-		                                    +"<i class='far fa-thumbs-up'></i>"+"</button><button class='com-dislike "
-		                                    +dislikeRecommend+"' data-comno='"
-		                                    +result.commentNo
-		                                    +"'>"
-		                                    +"<i class='far fa-thumbs-down'></i>"+"</button>"
-		                                    +"<i class='fas fa-heart'></i><span id='recommendCnt"+result.commentNo+"'>"+result.recommendCnt+"</span>"
-		                                   +"<div class='commentNo' name='commentNo' data-commentno='"+result.commentNo+"'></div>"
-		                                   +"<div class='comment-content'>" +
-		                                   "<button class='answer answerPosition checking'><i >채택</i> </button>"
-		                                      +"<input type='hidden' class='commentval' data-commentval='"+result.commentNo+"' value='"+result.content+"'/>"
-		                                      +"<div class='comment' data-comment='"+result.commentNo+"' height:auto;'>"+result.content+"</div>"
-		                                    +"</div>"
-		                                    +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+result.commenterNo+"' data-deletecombtn='"+result.commentNo+"' type='button'>DELETE</button>"
-		                                    +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result.commenterNo+"' data-updatecombtn='"+result.content+"' data-updatecomno='"+result.commentNo+"' type='button'>UPDATE</button>"
-		                                    +"<hr>"
-		                                   );
-		                                   
-		                   	                if(("${user.memberNo}" ==$(".recomDefaultHidden"+i).val()) &&('${qna.answered}'=='N') ){
-		                   	            		
-		                   	            		$(".recomDefaultHidden"+i).css("visibility","visible");
-		                   	            		
-		                   	            	}else{
-		                   	            		$(".recomDefaultHidden"+i).css("visibility","hidden");
-		                   	            		
-		                   	            	}
-		                           }
+	                		 list();
 	                	
-	                         for (let i = 0; i < CommentList.length; i++) {
-			                           let likeRecommend = "", dislikeRecommend = "";
-			                           if(CommentList[i].recommend == 1){
-			                              likeRecommend = "comActive";
-			                           }else if(CommentList[i].recommend == -1){
-			                              dislikeRecommend = "comActive";
-			                          }
-	                            
-	                        //	   //////console.log("붸");
-	                        //	   alert("붸");
-	                        	   //////console.log(CommentList);
-	                        	   if(CommentList[i].pick=="N"){
-	                        		   if(CommentList[i].commentNo ==result.commentNo)continue;
-				                         $(".comment-list").append(
-				                         "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+CommentList[i].memberNickname
-				                          +"<button class='com-like "+likeRecommend+"'data-comno='"+CommentList[i].commenterNo+"'>"
-				                          +"<i class='far fa-thumbs-up'></i>"+"</button><button class='com-dislike "
-				                          +dislikeRecommend+"' data-comno='"
-				                          +CommentList[i].commentNo
-				                          +"'>"
-				                          +"<i class='far fa-thumbs-down'></i>"+"</button>"
-				                        +"<i class='fas fa-heart'></i><span id='recommendCnt"+CommentList[i].commentNo+"'>"+CommentList[i].recommendCnt+"</span>"
-				                         +"<div class='commentNo' name='commentNo' data-commentno='"+CommentList[i].commentNo+"'></div>"
-				                         +"<div class='comment-content'>" +
-				                         "<button class='answer answerPosition checking"+i+"'><i >채택</i> </button>"
-				                            +"<input type='hidden' class='commentval' data-commentval='"+CommentList[i].commentNo+"' value='"+CommentList[i].content+"'/>"
-				                            +"<div class='comment' data-comment='"+CommentList[i].commentNo+"' height:auto;'>"+CommentList[i].content+"</div>"
-				                          +"</div>"
-				                          +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+CommentList[i].commenterNo+"' data-deletecombtn='"+CommentList[i].commentNo+"' type='button'>DELETE</button>"
-				                          +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+CommentList[i].commenterNo+"' data-updatecombtn='"+CommentList[i].content+"' data-updatecomno='"+CommentList[i].commentNo+"' type='button'>UPDATE</button>"
-				                          +"<hr>"
-				                         );
-	                        	   }     
-	                      		 }
-	                     
-	         	                if("${user.memberNo}" ==$(".recomDefaultHidden"+i).val()  &&('${qna.answered}'=='N')){
-	         	            		
-	         	            		$(".recomDefaultHidden"+i).css("visibility","visible");
-	         	            		
-	         	            	}else{
-	         	            		$(".recomDefaultHidden"+i).css("visibility","hidden");
-	         	            		
-	         	            	}
-	         
-	                         
-	                	}).fail(function(result){
+	                	}).fail(function(result){//ajax
 	                		
 	                	})
 	                	
 	                })
+	                
+	                
+	                
+	                
 	                function detail(){
 	                   $.ajax({
 	                      url:"/myvet/qna/detail.do",
@@ -529,7 +465,34 @@
 	                     // //////console.log("detail!");
 	                   })
 	                }
-         		} 
+         		}//for
+         		
+         		
+         		
+         /*
+         	댓글 채택 여부에 따라서 글의 수정 삭제 버튼을 숨기고 
+         	해당 채택된 댓글 또한 수정,삭제 불가능
+         	채택마커 표시
+         */
+         console.log(result);
+         	if(result[0].pick=="Y"){	
+	         	if(result[0].memberGrade == "V"){
+	         		$(".defaultHidden").css("visibility","hidden");
+	         		$(".checkedPick0").addClass("pickPicture");
+	             	$(".checkedPick0").append("<img src='/myvet/resources/img/qna/DoctorMark.jpeg'/>");
+
+            		$(".recomDefaultHidden0").css("visibility","hidden");
+            		
+	         	}else{
+	         		$(".defaultHidden").css("visibility","hidden");
+	         		$(".checkedPick0").addClass("pickPicture");
+	             	$(".checkedPick0").append("<img src='/myvet/resources/img/qna/adopted.jpg'/>");
+
+            		$(".recomDefaultHidden0").css("visibility","hidden");
+            		
+	         		
+	         	}
+         	}	
            }).fail(function(result){
               //////console.log("실패 tipNo"+result)
            })
@@ -697,12 +660,7 @@
         
               //수정 폼
            $(".comment-list").on("click", ".updateCommentBtn",  function(){
-              //////console.log("updateForm!");
-              //////console.log("작성자 : "+$(".commenterNo").val());
-              //////console.log("댓글 번호 : "+$(this).data("updatecomno"));
-              //////console.log("댓글 내용 : "+ $(this).data("updatecombtn"));
-              //////console.log($(this).val());
-              //////console.dir($(this).prev().prev());
+             
               $(this).prev().prev().replaceWith(
                  "<textarea id='updateCommentForm' placeholder='댓글수정..' cols='100' rows='2'>"+$(this).data('updatecombtn')+"</textarea>"
                  
@@ -716,20 +674,13 @@
            })
               
                 $(".comment-list").on("click", ".cancelupdatecom", function(){
-                 //////console.log("cancel");
-                 //////console.log("textarea : "+$(this).prev().val());
-                   //////console.dir("this : "+$(this).prev().prev());
+               
                    $(".comment-list").children().remove();
                    list();
               })
               
               $(".comment-list").on("click", ".submitupdatecom", function(){
-                 //////console.log("submitcom")
-                 //////console.dir($(this).prev().prev())//댓글내용 경로
-                 //////console.log($(this).prev().prev().val())//댓글 내용
-                 //////console.log($(".commenterNo").val())//작성자
-               //////console.log($(this).prev().prev().prev().data("commentno"))//댓글번호 
-               //////console.log()
+             
                $.ajax({
                   url : "/myvet/qna/updateComment.do",
                   data : {commentNo:$(this).prev().prev().prev().data("commentno"),

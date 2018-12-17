@@ -293,9 +293,10 @@
 		select q.* 
 		,(select member_nickname from member where member_no = q.commenter_no) memberNickname
 		, (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
+		, (select member_grade from member where member_no = q.commenter_no) memberGrade
 		from qna_comment q
 		where qna_no = #{qnaNo}
-		order by comment_no asc
+		order by pick = 'Y' desc
 	</select>
 	
 	
