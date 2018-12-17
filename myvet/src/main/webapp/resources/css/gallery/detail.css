@@ -141,6 +141,10 @@
     .active{
     	color: blue;
     }
+    .comActive{
+		color: blue;
+		transition:.5s;
+	}
     
     /*pet 정보*/
     .pet{

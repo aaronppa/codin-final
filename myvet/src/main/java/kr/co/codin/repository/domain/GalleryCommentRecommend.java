@@ -4,7 +4,7 @@ public class GalleryCommentRecommend {
 	private int no;
 	private int commentNo;
 	private int memberNo;
-	private int recommend;
+	private Integer recommend;
 	
 	public int getNo() {
 		return no;

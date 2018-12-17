@@ -23,6 +23,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script>
   <style>
+  	.container{
+			width:1100px;
+			position:reletive;
+			top:80px;
+		}
 /*********************************
    CUSTOM INPUT FILES FOR IMAGES
  *********************************/

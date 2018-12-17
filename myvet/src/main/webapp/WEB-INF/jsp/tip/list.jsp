@@ -26,7 +26,11 @@
    <link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
    
     <style>
-
+	.container{
+			width:1100px;
+			position:reletive;
+			top:80px;
+		}
 
     </style>
     <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
@@ -62,7 +66,7 @@
     <!--count-->
     
     <!--list-->
-            <div class="totalCount">전체 ${count} 개</div>
+    <div class="totalCount">전체 ${count} 개</div>
     <table class="table">
     		
             <!-- <caption>List of users</caption> -->
@@ -78,6 +82,31 @@
             	</tr>
         </thead>
         <tbody>
+        <!-- 공지 -->
+        	<c:forEach var="top" items="${topTip}" varStatus="loop">
+        		<tr class="topRow" style="text-align: center;background: #e6e6e6;">
+	                <th scope="row"> ${top.tipNo} </th>
+	                <td>${top.memberNickname}</td>
+	                <td><a href="<c:url value='/tip/detail.do?tipNo=${top.tipNo}'/>">${top.title }</a><span id="countComment"></span></td>
+					<c:if test="${top.categoryCode eq 1}">
+		                <td>건강</td>
+					</c:if>
+					<c:if test="${top.categoryCode eq 2}">
+		                <td>생활</td>
+					</c:if>
+					<c:if test="${top.categoryCode eq 3}">
+		                <td>용품</td>
+					</c:if>
+					<c:if test="${top.categoryCode eq 4}">
+		                <td>기타</td>
+					</c:if>
+	                <td><fmt:formatDate value="${top.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+	                <td>${top.viewCnt}</td>
+	                <td><i class="fas fa-heart">&nbsp;${top.recomCnt}</i> 
+	                </td>
+	           	</tr>
+        	</c:forEach>
+        	<!-- 공지 끝 -->
      		<c:forEach var="t" items="${tip}" varStatus="loop">
 	            <tr style="text-align: center;">
 	                <th scope="row"> ${t.tipNo} </th>

@@ -27,6 +27,10 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script> -->
   <style>
+  .container{
+		position:reletive;
+		top:80px;
+	}
     .carousel-3d-slide {
       height: auto !important;
       background-color: rgba(0, 0, 0, 0.25) !important;
@@ -54,6 +58,10 @@
     	text-align: center;
     	margin-left: 5%;
     }
+      .comActive{
+		color: blue;
+		transition:.5s;
+	}
 
     </style>
 </head>
@@ -61,7 +69,7 @@
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
 	            
 	<input type="hidden" name="memberNo" value="${user.memberNo}">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <!-- <div class="col-md-7 col-md-offset-1"> -->
                 <div class="col-md-7" id="pic-form">
@@ -109,7 +117,7 @@
                     <div class="pet">
                     <c:forEach var="p" items="${gallery.petList}" varStatus="loop">
                         <span data-toggle="tooltip" title="${p.petName}">
-                            <img class="petImg rounded-circle" src="/myvet/upload${p.petFilePath}/${p.petSysName}" style="margin-right: 10px;">
+                            <img class="petImg rounded-circle" id="petImg" src="/myvet/upload${p.petFilePath}/${p.petSysName}" style="margin-right: 10px;">
                         </span>
                     </c:forEach>
                         <span data-toggle="tooltip" title="PODOL">
@@ -127,15 +135,15 @@
                             
                             <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
                             </div>
-                        	<div >
+                        	<div>
                         	<br>
                         	<div class="updateDel">
 	                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">
 	                            	<button type="button" class="btn btn-success">수정</button>
 								</a>
 	                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">
-	                            <button type="button" class="btn btn-danger">삭제</button>
-                            </a>
+	                            	<button type="button" class="btn btn-danger">삭제</button>
+                            	</a>
                         	</div>
                         	</div>
                         	<br>
@@ -212,6 +220,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.7/vue.js"></script>
   <script src="https://rawgit.com/Wlada/vue-carousel-3d/master/dist/vue-carousel-3d.min.js"></script>
     <script>
+    //petImg
+    
+    
+    
     //carousel
       //https://github.com/Wlada/vue-carousel-3d
     new Vue({
@@ -347,8 +359,8 @@
     		$('#input-comment').val('');
     		$('#comment-list').children().remove();
     		list();
-    		$('#counter').val().empty();
-    		typing();
+//     		$('#counter').val().empty();
+//     		typing();
     	})
     })
     
@@ -365,31 +377,22 @@
 // 	    	dataType : 'json'
 	    }).done(function(result){
 	    	console.log('댓글 불러오기')
-	    	for(let i=0; i < result.length; i++){
+	    	console.log(result)
 	    		let likeRecommend = "", dislikeRecommend = "";
+	    	for(let i=0; i < result.length; i++){
+	    		if(result[i].recommend == 1){
+	    			likeRecommend = "comActive";
+	    		}else if(result[i].recommend == -1){
+	    			dislikeRecommend = "comActive";
+	    		}
+	    		console.log(likeRecommend)
 			$('#comment-list').append(
 				//작성자 이미지
-// 				"<div class='photo'>"
-// 				+"<div class='commenter-pic' ><img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle' width='60px' height='60px'></div>"
-// 				+"<div class='comment-block'/>"
-// 				//댓글내용
-// 				+"<p class='comment-text'>"+result[i].comment+"</p>"
-// 				//댓글 정보 폼
-// 				+"<div class='bottom-comment'>"
-// 				//댓글 작성일
-// 				+"<div class='comment-date'>"+result[i].regDate+"</div>"
-// 				//댓글 삭제, 신고
-// 				+"<ul class='comment-actions'>"
-// 				+"<li class='delete-comment'>삭제</li>"
-// 				+"<li class='report-comment'>신고</li>"
-// 				+"</ul>"
-// 				+"</div>"
-// 				+"</div>"
 					"<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='commenterImg rounded-circle'/>&nbsp;"
 	              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
 	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
 	            	+"<div class='comheartform'>"
-	              	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recomCnt+"</span>"
+	              	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
 	            	+"</div>"
 // 	            	+"<i class='fas fa-exclamation-circle' data-comno='"+result[i].commentNo+"' style='margin-left:10px;'></i>"
 	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno="+result[i].commenterNo+"></div>"
@@ -474,7 +477,7 @@
 	//댓글 추천
 	
     	$('.comment-list').on('click', '.com-like', function(){
-//     		alert('com-like!')
+     		alert('com-like!')
 			var recomCnt = $('#recommendCnt'+$(this).data('comno'));
        		var isActive = $(this).hasClass('comActive');
 //        		alert(recomCnt);
@@ -521,16 +524,14 @@
        			insertCommentRecommend(-1, $(this).data('comno'));
        		}
        		$(this).toggleClass('comActive')
-    		
     	})
 	 	function insertCommentRecommend(recommend, commentNo){
 	       		console.log(recommend, commentNo)
 	    	$.ajax({
-	    		url:"/myvet/tip/insertCommentRecommend.do",
+	    		url:"/myvet/gallery/insertCommentRecommend.do",
 	    		data:"commentNo="+commentNo+"&recommend="+recommend
 	    	}).done(function(){
 	    		console.log("insertCommentRecommend-success")
-	    		
 	    	})
 	    }
 	

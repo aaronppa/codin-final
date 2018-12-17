@@ -41,21 +41,29 @@ public class GalleryController{
 	private GalleryService service;
 	
 	
+	
+
+	
+	
 	@RequestMapping("list.do")
-	public void list(Model model,Member member,HttpSession session, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{
+	public void list(Model model,Member member,HttpSession session, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{		
 		FileInfo fileInfo = new FileInfo();
 		Gallery gallery = new Gallery();
 		member = (Member)session.getAttribute("user");
+		System.out.println("petName : "+gallery.getPetList());
 		System.out.println("memberNo : "+member.getMemberNo());
 		System.out.println("nickname : "+gallery.getMemberNickname());
+		System.out.println("recomCnt : "+gallery.getRecomCnt());
 		SearchGallery searchGallery = new SearchGallery(pageNo);
 		searchGallery.setSort(sort);
 		searchGallery.setKeyword(keyword);
+//		model.addAttribute("topGallery",service.galleryTopList());
 		model.addAttribute("nickname",member.getMemberNickname());
  		model.addAttribute("sort",sort);
 		model.addAttribute("keyword",keyword);
-		System.out.println("list");
+		model.addAttribute("topGallery",service.galleryTopList());
 		model.addAttribute("gallery", service.galleryList(searchGallery));
+		System.out.println("gallery result: "+service.galleryList(searchGallery));
 		model.addAttribute("count",service.countGallery());
 		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery())); 
 		
@@ -65,7 +73,7 @@ public class GalleryController{
 	
 	@RequestMapping("writeForm.do")
 	public void writeForm(Model model) throws Exception{
-		
+
 		System.out.println("writeForm");
 	}
 	
@@ -148,7 +156,7 @@ public class GalleryController{
 		model.addAttribute("sumRecommend",sumRecommend);
 		model.addAttribute("comRecommend",service.selectRecommend(galleryRecommend));
 //		model.addAttribute("gallery", service.commentList(galleryNo));
-//		System.out.println("댓글조회");
+//		System.out.println("�뙎湲�議고쉶");
 	}
 	
 	@RequestMapping("updateForm.do")
@@ -181,10 +189,11 @@ public class GalleryController{
 	
 	@RequestMapping("commentList.do")
 	@ResponseBody
-	public List<GalleryComment> commentList(int galleryNo) throws Exception{
-		System.out.println("댓글조회 Controller");
-		
-		return service.commentList(galleryNo);
+	public List<GalleryComment> commentList(Gallery gallery) throws Exception{
+		System.out.println("�뙎湲�議고쉶 Controller");
+		gallery.setWriterNo(7);
+
+		return service.commentList(gallery);
 	}
 	@RequestMapping("updateComment.do")
 	@ResponseBody
@@ -217,7 +226,7 @@ public class GalleryController{
 	
 //	@RequestMapping("uploadFile.do")
 //	@ResponseBody
-	//filePath로 리턴
+	//filePath濡� 由ы꽩
 //	public FileInfo uploadFile(@RequestParam("file") List<MultipartFile> mFileList) throws IllegalStateException,Exception{
 //		System.out.println("mFileList : "+mFileList);
 //		String uploadPath = "/gallery";
@@ -238,7 +247,7 @@ public class GalleryController{
 //		System.out.println("realPath : " + realPath);
 //		
 //		for(MultipartFile mFile : mFileList) {
-//			System.out.println("for입장");
+//			System.out.println("for�엯�옣");
 //			if(mFile.isEmpty()==true) continue;
 //			fileExtension = getExtension(mFile.getOriginalFilename());
 //			sysName = newName + "." + fileExtension;
@@ -261,7 +270,7 @@ public class GalleryController{
 //			if(img.exists() == false) {
 //				img.mkdirs();
 //			}
-//			System.out.println("for나옴");
+//			System.out.println("for�굹�샂");
 //			System.out.println("realPath : "+ realPath);
 //			mFile.transferTo(img);
 //			fileList.add(fileInfo);

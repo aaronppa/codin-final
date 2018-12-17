@@ -14,7 +14,7 @@
 		<result column="member_nickname" property="memberNickname"/>
 		<association property="recomCnt" column="gallery_no" select="countRecommend"></association>
 		<association property="comCnt" column="gallery_no" select="countComment"></association>
-		<collection property="petList" column="member_no" select="selectPet"></collection>
+		<collection property="petList" column="writer_no" select="selectPet"></collection>
 		<collection property="fileInfoList" column="gallery_no" select="selectFile"></collection>
 	</resultMap>
 	<resultMap type="Member" id="memberMap">
@@ -40,6 +40,7 @@
 		<result column="commenter_no" property="commenterNo"/>		
 		<result column="comment" property="comment"/>		
 		<result column="reg_date" property="regDate"/>
+		<result column="recommendCnt" property="recommendCnt"/>		
 		<result column="member_nickname" property="memberNickname"/>		
 	</resultMap>
 	<resultMap type="GalleryRecommend" id="GalleryRecommendMap">
@@ -87,7 +88,17 @@
 		  from gallery_recommend
 		 where gallery_no = #{galleryNo}
 	</select>
-	
+	<!-- 공지 게시글 -->
+	<select id="selectTopGallery" resultMap="galleryMap">
+
+		select b.*, m.member_nickname
+		from (select a.*,  
+			(select sum(recommend) from gallery_recommend where gallery_no = a.gallery_no) 
+			recommend_cnt from gallery a ) b,gallery g, member m
+		where g.writer_no = m.member_no
+		 order by recommend_cnt desc 
+		 limit 0,4 
+	</select>
 	<select id="selectGallery" parameterType="SearchGallery" resultMap="galleryMap">
 		select g.*, m.member_nickname
 		  from gallery g, member m
@@ -125,7 +136,7 @@
 		)
 	</insert>
 	<update id="updateGallery" parameterType="gallery">
-		update gallery
+		update gallery 
 		   set title = #{title},
 		       content = #{content}
 		 where gallery_no = #{galleryNo}
@@ -155,9 +166,9 @@
 			#{galleryNo}, #{commenterNo}, #{comment}
 		)
 	</insert>
-	<select id="selectComment" parameterType="int" resultMap="galleryCommentMap">
+	<select id="selectComment" parameterType="gallery" resultMap="galleryCommentMap">
 		select *
-		  from gallery_comment
+		  from gallery_comment 
 		 where gallery_no=#{galleryNo}
 		 order by comment_no desc
 	</select>
@@ -209,7 +220,7 @@
 		select recommend
 		  from gallery_comment_recommend
 		 where comment_no = #{commentNo}
-			   member_no = #{memberNo}	
+		   and member_no = #{memberNo}	
 	</select>
 	<insert id="insertCommentRecommend" parameterType="galleryCommentRecommend">
 		insert into gallery_comment_recommend(

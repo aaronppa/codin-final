@@ -25,7 +25,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script></head>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Give+You+Glory|The+Girl+Next+Door|Gloria+Hallelujah|Indie+Flower);
-
+	.container{
+			width:1100px;
+			position:reletive;
+			top:80px;
+		}
     </style>
     <body>
     <c:import url="/WEB-INF/jsp/common/topBar.jsp" />    
@@ -48,8 +52,77 @@
     <br>
     
     <table>
-            <!-- 게시글-->
+    <!-- 공지 게시물 -->
+		<tr>
+		<c:forEach var="top" items="${topGallery}" varStatus="loop">
+			<td>
+			 <br>
+            <div class="card" >
+<!--                     <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> -->
+                <a href="<c:url value='/gallery/detail.do?galleryNo=${top.galleryNo}&memberNo=${user.memberNo}'/>">
+                <div id="carouselExampleIndicators${top.galleryNo}" class="carousel slide" data-ride="carousel" data-interval='false'>
+                    <ol class="carousel-indicators">
+                    	<c:if test="${empty top.fileInfoList}">
+                    		<li data-target="#carouselExampleIndicators${top.galleryNo}" data-slide-to="0"  class="active"></li>
+                    	</c:if>
+       					<c:forEach var="f" items="${top.fileInfoList}" varStatus="innerLoop">
+                            <li data-target="#carouselExampleIndicators${top.galleryNo}" data-slide-to="${innerLoop.index}"
+                            	<c:if test="${innerLoop.first}"> class="active" </c:if>
+                            ></li>
+         				</c:forEach>
+					</ol>
+                    <div class="carousel-inner">
+                        <c:if test="${empty top.fileInfoList}">
+                    		<div class="carousel-item active">
+	                            <img class="d-block w-100" src="/myvet/resources/img/gall&tip/myvet.png">
+	                        </div>
+						</c:if>
+						<c:forEach var="f" items="${top.fileInfoList}" varStatus="innerLoop">
+                        <div class="carousel-item <c:if test='${innerLoop.first}'>active</c:if>">
+                            <img class="d-block w-100" src="/myvet/upload${f.filePath}/${f.sysName}">
+                        </div>
+                        </c:forEach>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators${top.galleryNo}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators${top.galleryNo}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                 </div>
+                 
+             	 </a>
+                 <div class="card-body" style="background:#e6e6e6;">
+                     <div class="etc" >
+                         <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
+                             <i class="fas fa-heart">${top.recomCnt}</i>
+                             <i class="fas fa-comments">${top.comCnt}</i>
+                         </div>
+                         <div class="card-content" >
+                             <p class="card-title">${top.title} </p>
+                             <span data-toggle="tooltip" title="<c:forEach var="p" items="${top.petList}" varStatus="innerLoop">${p.petName}</c:forEach>">
+                                 <i class="fas fa-dog"></i>
+                             </span>
+<!--                              <span data-toggle="tooltip" title="PONY!"> -->
+<!--                                  <i class="fas fa-dog"></i> -->
+<!--                              </span> -->
+                             <p class="card-writer">${top.memberNickname}</p>
+                             <p class="card-reg-date"><fmt:formatDate value="${top.regDate}" pattern="yyyy-MM-dd"/></p>
+                         </div>
+                     </div>
+                    </div>
+                </div>
+			</td>
+		</c:forEach>	
+		</tr>
+    <!-- 공지 게시물 끝 -->
+    <hr>
+ 
+    <!-- 게시글-->
     <c:forEach var="g" items="${gallery}" varStatus="loop">
+    <!-- 일반게시물 -->
     <c:if test="${loop.count % 4 == 1}">
     	<tr>
     </c:if>
@@ -100,12 +173,12 @@
                          </div>
                          <div class="card-content" >
                              <p class="card-title">${g.title} </p>
-<%--                              <span data-toggle="tooltip" title="<c:forEach var="p" items="${g.petList}" varStatus="innerLoop">${p.petName}</c:forEach>"> --%>
-<!--                                  <i class="fas fa-dog"></i> -->
-<!--                              </span> -->
-                             <span data-toggle="tooltip" title="PONY!">
+                             <span data-toggle="tooltip" title="<c:forEach var="p" items="${g.petList}" varStatus="innerLoop">${p.petName},</c:forEach>">
                                  <i class="fas fa-dog"></i>
                              </span>
+<!--                              <span data-toggle="tooltip" title="PONY!"> -->
+<!--                                  <i class="fas fa-dog"></i> -->
+<!--                              </span> -->
                              <p class="card-writer">${g.memberNickname}</p>
                              <p class="card-reg-date"><fmt:formatDate value="${g.regDate}" pattern="yyyy-MM-dd"/></p>
                          </div>
@@ -120,43 +193,11 @@
            <c:if test="${gall.size() % 4 != 0}">
            </tr>
            </c:if>
-<!--                 <td> -->
-                <!-- 게시글-->
-<!--                 <br> -->
-<!--                 <div class="card" style="width: 18rem;"> -->
-<!--                         <input type="hidden" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> -->
-<!--                         <a href="./detail.html"> -->
-<!--                             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> -->
-<!--                                 <ol class="carousel-indicators"> -->
-<!--                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li> -->
-<!--                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li> -->
-<!--                                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> -->
-<!--                                 </ol> -->
-<!--                                 <div class="carousel-inner"> -->
-<!--                                     <div class="carousel-item active"> -->
-<!--                                         <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test2.jpg" alt="First slide"> -->
-<!--                                     </div> -->
-<!--                                     <div class="carousel-item"> -->
-<!--                                         <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test1.jpg" alt="Second slide"> -->
-<!--                                     </div> -->
-<!--                                     <div class="carousel-item"> -->
-<!--                                         <img class="d-block w-100" src="/myvet/resources/img/gall&tip/test4.jpg" alt="Third slide"> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> -->
-<!--                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
-<!--                                     <span class="sr-only">Previous</span> -->
-<!--                                 </a> -->
-<!--                                 <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> -->
-<!--                                     <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
-<!--                                     <span class="sr-only">Next</span> -->
-<!--                                 </a> -->
-<!--                             </div> -->
-<!--                         </a> -->
-<!--                     </div> -->
+
                 </td>
             </tr>
         </table>
+        <hr>
     <br><br><br>
         <!-- 글쓰기 -->
             <div class="write-btn-form">
@@ -168,19 +209,7 @@
        </div>
       </form>  
         <!--페이징-->
-<!--     <nav aria-label="Page navigation example"> -->
-<!--         <ul class="pagination justify-content-center"> -->
-<!--             <li class="page-item disabled"> -->
-<!--             <a class="page-link" href="#" tabindex="-1">Previous</a> -->
-<!--             </li> -->
-<!--             <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!--             <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!--             <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!--             <li class="page-item"> -->
-<!--             <a class="page-link" href="#">Next</a> -->
-<!--             </li> -->
-<!--         </ul> -->
-<!--     </nav> -->
+
     <div id="pagination">
    		 <c:import url="page.jsp"></c:import>
     </div>
@@ -188,7 +217,8 @@
 //     $('.write-btn-form').click(function(){
 //     	window.open("/myvet/gallery/writeForm.do","gallery","width=1300, height=700, right=100, top=10")
 //     })
-    console.log('${gallery}')
+
+    console.log('${gallery}');
     console.log("img : "+$('.no1').val())
     //carousel interval
 	   $('.carousel').carousel({

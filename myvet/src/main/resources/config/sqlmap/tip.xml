@@ -45,7 +45,6 @@
 		<result column="recommend" property="recommend"/>		
 		<result column="recommendCnt" property="recommendCnt"/>		
 		<result column="member_nickname" property="memberNickname"/>
-	
 	</resultMap>
 	
 	<resultMap type="tipRecommend" id="tipRecommendMap">
@@ -77,7 +76,18 @@
 		from tip_recommend
 		where tip_no = #{tipNo}
 	</select>
-	
+
+<select id="selectTopTip" resultMap="tipMap">
+	select b.*, m.member_nickname
+	from (select a.*,  
+		(select sum(recommend) from tip_recommend where tip_no = a.tip_no) 
+		recommend_cnt from tip a ) b,tip t, member m
+	where t.member_no = m.member_no
+	 order by recommend_cnt desc 
+	 limit 0,4 
+</select>
+
+
 <select id="selectTip" parameterType='SearchTip' resultMap="tipMap">
 		select t.*,m.member_nickname
 		  from tip t, member m

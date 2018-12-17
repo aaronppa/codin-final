@@ -24,6 +24,11 @@
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
     <style>
+    	.container{
+			width:1100px;
+			position:reletive;
+			top:80px;
+		}
 /*     	html,body{ */
 /*         	width:80%; */
 /*         	margin-left: auto; */

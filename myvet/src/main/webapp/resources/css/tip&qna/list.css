@@ -1,5 +1,12 @@
 @charset "UTF-8";
 /*.totalCount, mb-3(검색분류), 게시판 목록 열.. 인라인적용*/
+
+		/*topList*/
+		.topRow{
+			background: #f5e9c3;
+		}
+		
+		
         /*category*/
         @import "compass/css3";
         .container{

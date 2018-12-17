@@ -48,6 +48,7 @@ public class TipController {
 		searchTip.setKeyword(keyword);
 		searchTip.setSort(sort);
 		searchTip.setCategory(category);
+		model.addAttribute("topTip",service.tipTopList());
 		model.addAttribute("sort",sort);
 		model.addAttribute("category", category);
 		model.addAttribute("keyword",keyword);

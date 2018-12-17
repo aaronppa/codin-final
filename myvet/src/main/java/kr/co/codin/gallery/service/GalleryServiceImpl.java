@@ -24,12 +24,22 @@ public class GalleryServiceImpl implements GalleryService{
 	
 	
 	
+	
+
+	@Override
+	public List<Gallery> galleryTopList() {
+		return mapper.selectTopGallery();
+	}
+
+
 
 	@Override
 	public void selectFile(List<FileInfo> fileInfoList) {
 		mapper.selectFile(fileInfoList);
 	}
 
+	
+	
 	@Override
 	public List<Gallery> galleryList(SearchGallery searchGallery) {
 		return mapper.selectGallery(searchGallery);
@@ -79,15 +89,13 @@ public class GalleryServiceImpl implements GalleryService{
 		mapper.insertComment(galleryComment);
 	}
 
-	@Override
-	public List<GalleryComment> commentList(int galleryNo) {
-		return mapper.selectComment(galleryNo);
-	}
 
 //	@Override
 //	public void uploadFile(FileInfo fileInfo) {
 //		mapper.uploadFile(fileInfo);
 //	}
+
+	
 
 	@Override
 	public int countComment(int galleryNo) {
@@ -95,6 +103,11 @@ public class GalleryServiceImpl implements GalleryService{
 	}
 
 	
+	@Override
+	public List<GalleryComment> commentList(Gallery gallery) {
+		return mapper.selectComment(gallery);
+	}
+
 	@Override
 	public void updateComment(GalleryComment galleryComment) {
 		mapper.updateComment(galleryComment);

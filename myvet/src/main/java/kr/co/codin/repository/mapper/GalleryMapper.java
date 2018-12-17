@@ -13,6 +13,7 @@ import kr.co.codin.repository.domain.SearchGallery;
 
 public interface GalleryMapper {
 	List<Gallery> selectGallery(SearchGallery searchGallery);
+	List<Gallery> selectTopGallery();
 	Gallery selectGalleryByNo(int galleryNo);
 	void insertGallery(Gallery gallery);
 	void updateGallery(Gallery gallery);
@@ -23,7 +24,7 @@ public interface GalleryMapper {
 	
 //	//댓글
 	void insertComment(GalleryComment galleryComment);
-	List<GalleryComment> selectComment(int galleryNo);
+	List<GalleryComment> selectComment(Gallery gallery);
 	void deleteComment(GalleryComment galleryComment);
 	void updateComment(GalleryComment galleryComment);
 	int countComment(int galleryNo);
@@ -33,7 +34,7 @@ public interface GalleryMapper {
 	void deleteRecommend(GalleryRecommend galleryRecommend);
 	Integer sumRecommend(int galleryNo);
 	
-	//댓글 추천
+	//댓글추천
 	Integer selectCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
 	int insertCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);
 	void deleteCommentRecommend(GalleryCommentRecommend galleryCommentRecommend);

@@ -23,6 +23,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script>
   <style>
+  	.container{
+			width:1100px;
+			position:reletive;
+			top:80px;
+		}
 /*********************************
    CUSTOM INPUT FILES FOR IMAGES
  *********************************/
@@ -128,7 +133,7 @@
    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 <br>
 <br>
-<form action="<c:url value='/gallery/write.do'/>" method="post" enctype="multipart/form-data">
+<form action="<c:url value='/gallery/update.do'/>" method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
             <div class="col" >
@@ -138,7 +143,7 @@
 		
 		  <!-- Our File Inputs -->
            <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
-           <input type="hidden" name="writerNo" value="12">
+           <input type="hidden" name="writerNo" value="${gallery.writerNo}">
            <input type="hidden" name="boardCode" value="10">
            <span class="writerNick">${user.memberNickname}</span>
            <hr>

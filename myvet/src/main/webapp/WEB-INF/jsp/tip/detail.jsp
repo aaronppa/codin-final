@@ -28,7 +28,11 @@
     
 
     <style>
-
+	.container{
+			width:1100px;
+			position:reletive;
+			top:80px;
+		}
     </style>
 </head>
 

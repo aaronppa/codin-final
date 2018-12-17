@@ -13,6 +13,7 @@ import kr.co.codin.repository.domain.TipRecommend;
 
 public interface TipMapper {
 
+	List<Tip> selectTopTip();
 	List<Tip> selectTip(SearchTip searchTip);
 	Tip selectTipByNo(int tipNo);
 	void insertTip(Tip tip);

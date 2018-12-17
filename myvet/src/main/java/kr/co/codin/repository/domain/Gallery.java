@@ -93,6 +93,13 @@ public class Gallery {
 	public void setRecomCnt(int recomCnt) {
 		this.recomCnt = recomCnt;
 	}
+	@Override
+	public String toString() {
+		return "Gallery [galleryNo=" + galleryNo + ", boardCode=" + boardCode + ", writerNo=" + writerNo + ", content="
+				+ content + ", title=" + title + ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", recomCnt="
+				+ recomCnt + ", memberNickname=" + memberNickname + ", fileInfoList=" + fileInfoList + ", comCnt="
+				+ comCnt + ", petList=" + petList + "]";
+	}
 	
 	
 	

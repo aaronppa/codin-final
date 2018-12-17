@@ -12,6 +12,8 @@ import kr.co.codin.repository.domain.TipRecommend;
 
 public interface TipService {
 	
+	List<Tip> tipTopList();
+	
 	List<Tip> tipList(SearchTip searchTip);
 	
 	Tip detailTip(int tipNo);

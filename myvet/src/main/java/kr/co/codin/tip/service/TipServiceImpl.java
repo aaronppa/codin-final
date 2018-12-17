@@ -19,6 +19,13 @@ public class TipServiceImpl implements TipService{
 	@Autowired 
 	private TipMapper mapper;
 
+	
+	@Override
+	public List<Tip> tipTopList() {
+		return mapper.selectTopTip();
+	}
+
+
 	@Override
 	public List<Tip> tipList(SearchTip searchTip) {
 		return mapper.selectTip(searchTip);

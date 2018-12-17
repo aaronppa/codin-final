@@ -10,6 +10,8 @@ import kr.co.codin.repository.domain.GalleryRecommend;
 import kr.co.codin.repository.domain.SearchGallery;
 
 public interface GalleryService {
+	List<Gallery> galleryTopList();
+	
 	List<Gallery> galleryList(SearchGallery searchGallery);
 	
 	Gallery detailGallery(int galleryNo);
@@ -29,7 +31,7 @@ public interface GalleryService {
 	//댓글
 	void insertComment(GalleryComment galleryComment);
 //	
-	List<GalleryComment> commentList(int galleryNo);
+	List<GalleryComment> commentList(Gallery gallery);
 //	
 	void deleteComment(GalleryComment galleryComment);
 //	
