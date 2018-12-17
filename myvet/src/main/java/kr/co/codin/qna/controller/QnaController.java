@@ -188,7 +188,7 @@ public class QnaController {
 	@ResponseBody
 	public List<QnaComment> CommentList(int qnaNo,Model model, Qna qna){
 		
-		
+	
 		return service.selectCombyNo(qnaNo);
 	}
 	
@@ -219,8 +219,13 @@ public class QnaController {
 	
 	@RequestMapping("updateComment.do")
 	@ResponseBody
-	public void updateComment(QnaComment comment) throws Exception{
+	public void updateComment(QnaComment comment,int commentNo, int commenterNo, String content) throws Exception{
 	//	System.out.println("여기옴");
+	
+		comment.setContent(content);
+		comment.setCommenterNo(commenterNo);
+		comment.setCommentNo(commentNo);
+
 		service.updateQnaComment(comment);
 	}
 	

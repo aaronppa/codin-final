@@ -362,15 +362,8 @@
                      dislikeRecommend = "comActive";
                   }
                
-                  //////console.log(result);
-               //   alert("sldjfsldjflsjdlfjsldjfsl");
-               //   alert("${qnaChingg.answered}");
+               //댓글 리스트
                   if(result[0].pick=="N"){
-           
-                     
-                  
-                  
-                     
 		                $(".comment-list").append(
 		                		
 		                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
@@ -387,6 +380,8 @@
 		                   +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
 		                   +"<div class='comment' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
 		                 +"</div>"
+		                 
+		                 +"<div class='updateData' style='hidden' data-commentNo="+result[i].commentNo+" data-qnaNo="+result[i].qnaNo+" data-commenterNo="+result[i].commenterNo+"></div>"
 		                 +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
 		                 +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
 		                 +"<hr>"
@@ -411,6 +406,8 @@
 		                   +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
 		                   +"<div class='comment' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
 		                 +"</div>"
+		                 +"<div class='data' data-commenterNo='"+result[i].commenterNo+"' data-commentNo='"+result[i].commentNo+"'></div>"
+		                 +"<div class='updateData' style='hidden' data-commentNo="+result[i].commentNo+" data-qnaNo="+result[i].qnaNo+" data-commentorNo="+result[i].commentorNo+"></div>"
 		                 +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
 		                 +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
 		                 +"<hr>"
@@ -628,17 +625,10 @@
            
            //댓글 삭제
            $(".comment-list").on("click", ".deleteCommentBtn", function(){
-              //////console.log("delete!");
-              //////console.log("작성자 : "+$(".commenterNo").val());
-              //////console.log("댓글 번호 : "+$(this).data("deletecombtn"));
+          
               $.ajax({
                  url: "/myvet/qna/deleteComment.do",
-           /*       data: {
-                    commentNo: $(this).data("deletecombtn"),
-                    commenterNo: $(".commenterNo").val()
-                    },
-                dataType:"json" */
-                //data:"commentNo="+$(this).data("deletecombtn")+"&commenterNo="+$(".commenterNo").val()
+    
                 data:{commentNo:$(this).data("deletecombtn"),commenterNo:$(".commenterNo").val(),qnaNo:$("#qnaNo").val()},
                 dataType:"text",
                 type:"post",
@@ -660,6 +650,7 @@
         
               //수정 폼
            $(".comment-list").on("click", ".updateCommentBtn",  function(){
+          
              
               $(this).prev().prev().replaceWith(
                  "<textarea id='updateCommentForm' placeholder='댓글수정..' cols='100' rows='2'>"+$(this).data('updatecombtn')+"</textarea>"
@@ -673,30 +664,42 @@
               )
            })
               
-                $(".comment-list").on("click", ".cancelupdatecom", function(){
+             $(".comment-list").on("click", ".cancelupdatecom", function(){
                
                    $(".comment-list").children().remove();
                    list();
               })
+            
+              
+              //"<div class='updateData' style='hidden' data-commentNo="+result[i].commentNo+" data-qnaNo="+result[i].qnaNo+" data-commentorNo="+result[i].commentorNo+"></div>"
+              
               
               $(".comment-list").on("click", ".submitupdatecom", function(){
-             
-               $.ajax({
-                  url : "/myvet/qna/updateComment.do",
-                  data : {commentNo:$(this).prev().prev().prev().data("commentno"),
-                        commenterNo:$(".commenterNo").val(),
-                        content:$(this).prev().prev().val()},
-                  type:"post"
-            
-                  }).done(function(result){
-                     //////console.log("success");
-                     $(".comment-list").children().remove();
-                     list();
-                  }).fail(function(result){
-                     debugger;
-                     //////console.log("fail");
-                     //////console.log(result)
-                  })
+            	/* 	alert("여기옴");
+            		   alert("commentNo : "+$(this).prev().prev().prev().data("commentno"));
+            		   alert("commenterNo : "+$(this).prev().prev().prev().data("commenterno"));
+            		   alert("content : "+$(this).prev().prev().val()); */
+//             		   alert("commentNo :"+$(this).prev()prev().data("commentno"));
+		               $.ajax({
+		                  url : "/myvet/qna/updateComment.do",              
+		                  data : 
+		                  		{
+			                	  	commentNo:$(this).prev().prev().prev().data("commentno"),
+			                        commenterNo:$(this).prev().prev().prev().data("commenterno"),
+			                        content:$(this).prev().prev().val()
+		                        },
+		                  type:"post"    
+		            
+		                  }).done(function(result){
+		                     //////console.log("success");
+		                     $(".comment-list").children().remove();
+		                     list();
+		                  }).fail(function(result){
+		                    // debugger;
+		                    console.log(result);
+		                     //////console.log("fail");
+		                     //////console.log(result)
+		                  })
                   
               })
                   
