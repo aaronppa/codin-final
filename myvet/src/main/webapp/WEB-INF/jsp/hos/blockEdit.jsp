@@ -15,7 +15,7 @@
     #bodyContainer {
         width: 1100px;
         margin: auto;
-        margin-top: 30px;
+        margin-top: 110px;
     }
 
     .inline {
@@ -103,7 +103,10 @@
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="<c:url value='/resources/js/timepicker/jquery.timepicker.css'/>"/>
-	<script src="<c:url value='/resources/js/timepicker/jquery.timepicker.js'/>"></script>
+	<script src="<c:url value='/resources/js/datepicker/picker.js'/>"></script>
+	<script src="<c:url value='/resources/js/datepicker/picker.date.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.css'/>"/>
+	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.date.css'/>"/>
 	
 </head>
 <body>
@@ -115,7 +118,7 @@
             <input type="hidden" id="hosCode" name="hosCode" value="${hospital.hosCode }">
         </div>
         <div>
-        	<span id="date"></span>
+   	 	    <input type="text" class="date" id="date" value="${date }">
         	<table>
         		<tr>
         			<th>예약시간</th>
@@ -141,7 +144,7 @@
 						미용
 						<%} %>
         			</td>
-        			<td>0</td>							<!-- 예약 수 추가 예정 -->
+        			<td><%=block.getCountBooking() %></td>							<!-- 예약 수 추가 예정 -->
         			<td><%=block.getMaxBooking() %></td>
         			<td>
         				<button class="edit" data-code="<%=block.getBlockCode() %>">수정</button>
@@ -174,8 +177,23 @@
 	    String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 	    Number.prototype.zf = function(len){return this.toString().zf(len);};
     
-		$("#date").html(new Date().format("yyyy-MM-dd"));
-		
+   	    $('.date').pickadate({
+      	     monthsShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+          	 weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
+      	     showMonthsShort: true,
+   		 today: '오늘 선택',
+   		 clear: '',
+   		 close: '닫기',
+   		 labelMonthNext: '다음달로...',
+   		 labelMonthPrev: '이전달로...',
+   		 labelMonthSelect: '월 선택',
+   		 labelYearSelect: '연도 선택',
+   		 selectMonths: true,
+   		 selectYears: true,
+   		 format: 'yyyy-mm-dd',
+   		 formatSubmit: 'yyyy-mm-dd',
+      	    })
+
 		$(".edit").click(function() {
 			var blockCode = $(this).data("code");
 	    	window.open("/myvet/hos/blockEditForm.do?blockCode="+blockCode, "issue", "width=500, height=500, location=no");
@@ -191,6 +209,9 @@
 	    	})
 		})
 		
+		$("#date").change(function() {
+			window.location.href = `/myvet/hos/blockEdit.do?hosCode=${hospital.hosCode}&date=` + $("#date").val();
+		})
 		
     </script>
 </body>

@@ -12,10 +12,17 @@
 	  crossorigin="anonymous"></script>
     <script src="<c:url value='../resources/js/vendor/foundation.js'/>"></script>
 	<link rel="stylesheet" href="<c:url value='../resources/css/common/foundation.css'/>"/>
+	<script src="<c:url value='/resources/js/timepicker/jquery.timepicker.js'/>"></script>
+	<script src="<c:url value='/resources/js/datepicker/picker.js'/>"></script>
+	<script src="<c:url value='/resources/js/datepicker/picker.date.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.css'/>"/>
+	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.date.css'/>"/>
+	
     <style>
         #body {
             width:1100px;
             margin: auto;
+            margin-top: 110px;
         }
         #chartList {
             display: inline-block;
@@ -116,6 +123,9 @@
             </div>
         </div>
         <div id="patientList">
+        	<div>날짜<br>
+       	 	    <input type="text" class="date" id="date" value="${date }">
+        	</div>
            	<div class="booking">
 				<h5>예약 환자</h5>
                	<div class="columns">
@@ -129,7 +139,7 @@
                                 <span>동물 이름 : <span class="pet"></span></span><br>
                                 <input type="hidden" class="petNo">
                                 <input type="hidden" class="bookingNo">
-<!--                                 <span>최근 방문일 : 2018-11-30</span><br> -->
+<!--                            <span>최근 방문일 : 2018-11-30</span><br> -->
                             </div>
                         </div>
                     </li>
@@ -139,16 +149,15 @@
 			<div class="reception">
 				<h5>현장 접수 환자</h5>
 				<div class="columns">
-					<ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
-						<li class="accordion-item" data-accordion-item>
-							<a href="#" class="accordion-title">OOO님 / OOO</a>
-								<div class="accordion-content " data-tab-content >
-									<div id="chartDetail">
-										<span>진료 예약 시간 : </span>
-											<span>보호자 성명 : OOO님</span><br>
-										<span>동물 이름 : OO</span><br>
-									<span>최근 방문일 : 2018-11-30</span><br>
-								</div>
+					<ul id="receptionUl" class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+						<li class="accordion-item receptionRow disable" data-accordion-item>
+	                        <a href="#" class="accordion-title"><span class="owner"></span> 님 / <span class="pet"></span></a>
+	                        <div class="accordion-content " data-tab-content >
+							<div class="patientDetail">
+                                <span>보호자 성명 : <span class="owner"></span> 님</span><br>
+                                <span>동물 이름 : <span class="pet"></span></span><br>
+                                <input type="hidden" class="petNo">
+                                <input type="hidden" class="bookingNo">
 							</div>
 						</li>
 					</ul>
@@ -161,12 +170,42 @@
     <script>
     
         var $bookingRow = $(".bookingRow").clone().removeClass("disable");
+        var $receptionRow = $(".receptionRow").clone().removeClass("disable");
         var $chartRow = $(".chartRow").clone().removeClass("disable");
+        var triger1 = false;
+        var triger2 = false;
         
+		function doFoundation() {
+			if (triger1 == true && triger2 == true) {
+		        $(document).foundation();
+		        patientDetail();
+			}			
+		}
+
+   	    $('.date').pickadate({
+      	     monthsShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+          	 weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
+      	     showMonthsShort: true,
+   		 today: '오늘 선택',
+   		 clear: '',
+   		 close: '닫기',
+   		 labelMonthNext: '다음달로...',
+   		 labelMonthPrev: '이전달로...',
+   		 labelMonthSelect: '월 선택',
+   		 labelYearSelect: '연도 선택',
+   		 selectMonths: true,
+   		 selectYears: true,
+   		 format: 'yyyy-mm-dd',
+   		 formatSubmit: 'yyyy-mm-dd',
+      	    })
+
         $.ajax({
         	type: "post",
         	url: "/myvet/hos/bookingListByDay.do",
-        	data: {hosCode: ${hospital.hosCode}}
+        	data: {
+        		hosCode: ${hospital.hosCode},
+        		date: $("#date").val()
+        	}
         }).done(function(bookingList){
         	console.dir(bookingList)
 			for (let i = 0; i < bookingList.length; i++) {
@@ -178,11 +217,33 @@
 	        	$newRow.find(".time").text(bookingList[i].hosBlock.blockStart);
 				$("#bookingUl").append($newRow);
 			}        	
-    		$(document).foundation();
-
-            patientDetail();
+        	triger1 = true;
+        	doFoundation();
         })
         
+        $.ajax({
+        	type: "post",
+        	url: "/myvet/hos/receptionListByDay.do",
+        	data: {
+        		hosCode: ${hospital.hosCode},
+        		date: $("#date").val()
+        		}
+        }).done(function(receptionList){
+        	console.dir(receptionList)
+        	
+			for (let i = 0; i < receptionList.length; i++) {
+	        	var $newRow = $receptionRow.clone();
+	        	$newRow.find(".owner").text(receptionList[i].member.memberName);
+	        	$newRow.find(".pet").text(receptionList[i].pet.petName);
+	        	$newRow.find(".petNo").val(receptionList[i].bookingPet);
+	        	$newRow.find(".bookingNo").val(receptionList[i].bookingNo);
+				$("#receptionUl").append($newRow);
+			}        	
+        	
+        	triger2 = true;
+        	doFoundation();
+        })
+
        	function patientDetail() {
         	$(".patientDetail").parent().click(function(){
         		$(".selected").removeClass("selected");
@@ -238,9 +299,13 @@
         })
         
         $("#register").click(function(){
-        	window.open("/myvet/hos/reception.do", "reception", "width=850, height=1000, location=no");
+        	window.open("/myvet/hos/reception.do?hosCode="+${hospital.hosCode}, "reception", "width=850, height=1000, location=no");
         })
 
+        $("#date").change(function(){
+        	window.location.href = `/myvet/hos/chartHos.do?hosCode=${hospital.hosCode}&date=` + $("#date").val();
+        })
+        
     </script>
 </body>
 </html>

@@ -853,7 +853,7 @@ input::placeholder,
 textarea::placeholder {
   color: #cacaca; }
 
-input:disabled, input[readonly],
+input:disabled,
 textarea:disabled,
 textarea[readonly] {
   background-color: #e6e6e6;

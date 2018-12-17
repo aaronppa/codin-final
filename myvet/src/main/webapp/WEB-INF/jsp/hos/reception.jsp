@@ -56,6 +56,7 @@
 	            <td class="td1">
 	                <input class="radio" type="radio" id=petRadio name="pet-radio">
 	                <input type="hidden" name="pet-code" class="pet-code"/>
+	                <input type="hidden" name="member-no" class="member-no"/>
 	            </td>
 	            <th class="td2">
 	                <label class="label" for="petRadio"><h3 class="pet-name"></h3></label>
@@ -106,9 +107,10 @@
 	    			var $newRow = $petRow.clone();
 	    			$newRow.find(".radio").attr("id", "petList"+i);
 	    			$newRow.find(".label").attr("for", "petList"+i);
-	    			$newRow.find(".pet-code").val(petList[i].petCode);
+	    			$newRow.find(".pet-code").val(petList[i].petNo);
+	    			$newRow.find(".member-no").val(petList[i].memberNo);
 	    			$newRow.find(".pet-name").html(petList[i].petName);
-	    			$newRow.find(".pet-owner").html("보호자 성명 : " + petList[i].petOwner.memberName);
+	    			$newRow.find(".pet-owner").html("보호자 성명 : " + petList[i].member.memberName);
 	    			$newRow.find(".pet-species").html("동물 종류 : " + petList[i].species);
 	    			$newRow.find(".pet-breed").html("견/묘종 : " + petList[i].breed);
 	    			$("#resultTable").append($newRow);
@@ -121,10 +123,10 @@
     	})
     	
     	$("#submit").click(function(){
-    		var petCode = $(".radio:checked").parents(".petRow").find(".pet-code").val()
-    		console.dir($resultRow);
+    		var petCode = $(".radio:checked").parents(".petRow").find(".pet-code").val();
+    		console.dir(petCode);
     		
-    		if($resultRow.length == 0) {
+    		if(petCode == null) {
 				swal({
 					  type: 'error',
 					  title: 'ERROR!!',
@@ -134,8 +136,11 @@
     		}
     		
     		$.ajax({
-    			url: "<c:url value='/hos/reception.do'/>",
-    			data: {petCode: petCode}
+    			url: "/myvet/hos/receptionPet.do",
+    			data: {bookingPet: petCode,
+	    				bookingOwner: $(".radio:checked").parents(".petRow").find(".member-no").val(),
+	    				hosCode: ${hosCode}
+    			}
     		}).done(function() {
 	    		opener.parent.location.reload();
 				window.close();			

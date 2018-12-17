@@ -20,11 +20,11 @@ public class Pet {
 	private String petSysName;
 	private String petFilePath;
 	private int petFileSize;
+	private Member member;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date petFileRegDate;
 
-	
 	public int getPetNo() {
 		return petNo;
 	}
@@ -145,6 +145,14 @@ public class Pet {
 		this.petFileSize = petFileSize;
 	}
 
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
 	public Date getPetFileRegDate() {
 		return petFileRegDate;
 	}
@@ -153,15 +161,13 @@ public class Pet {
 		this.petFileRegDate = petFileRegDate;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Pet [petNo=" + petNo + ", memberNo=" + memberNo + ", petName=" + petName + ", petRegNo=" + petRegNo
 				+ ", species=" + species + ", breed=" + breed + ", size=" + size + ", petGender=" + petGender
 				+ ", petAge=" + petAge + ", weight=" + weight + ", remark=" + remark + ", petOriName=" + petOriName
 				+ ", petSysName=" + petSysName + ", petFilePath=" + petFilePath + ", petFileSize=" + petFileSize
-				+ ", petFileRegDate=" + petFileRegDate + "]";
+				+ ", member=" + member + ", petFileRegDate=" + petFileRegDate + "]";
 	}
 	
 }

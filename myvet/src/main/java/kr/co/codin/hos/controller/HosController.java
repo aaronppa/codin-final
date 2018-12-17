@@ -43,6 +43,7 @@ import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
+import kr.co.codin.repository.domain.Pet;
 import kr.co.codin.repository.domain.TempBooking;
 
 @Controller
@@ -84,6 +85,12 @@ public class HosController {
 			model.addAttribute("facilityList", service.selectFacilitybyHosCode(hosCode));
 		} catch(BindingException e) {
 			model.addAttribute("facilityList", new ArrayList<HosFacility>());
+		}
+		
+		try {
+			model.addAttribute("staffs", service.selectStaffConfirm(hosCode));
+		} catch(BindingException e) {
+			model.addAttribute("staffs", new ArrayList<HosStaff>());
 		}
 	}
 	
@@ -141,6 +148,27 @@ public class HosController {
 		return service.selectBookingByDate(booking);
 	}
 	
+	@RequestMapping("receptionListByDay.do")
+	@ResponseBody
+	public List<HosBooking> receptionList(Model model, 
+			int hosCode, 
+			@RequestParam(value="date", defaultValue="null")String date) {
+		
+		if (date.equals("null")) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			date = sdf.format(new Date());
+		}
+		
+		HosBooking booking = new HosBooking();
+		HosBlock block = new HosBlock();
+		
+		block.setBlockDay(date);
+		booking.setHosCode(hosCode);
+		booking.setHosBlock(block);
+		
+		return service.selectReceptionByDate(booking);
+	}
+	
 	@RequestMapping("bookingSubmit.do")
 	@ResponseBody
 	public void bookingSubmit(HosBooking booking) {
@@ -194,6 +222,10 @@ public class HosController {
 		block.setHosCode(hosCode);
 		block.setBlockDay(date);
 		
+		System.out.println(block);
+		System.out.println(service.selectBlockList(block));
+		
+		model.addAttribute("date", date);
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
 		model.addAttribute("blockList", service.selectBlockList(block));
 	}
@@ -430,12 +462,25 @@ public class HosController {
 	}
 	
 	@RequestMapping("reception.do")
-	public void reception(String petCode) {
-		if (petCode == null) return;
+	public void reception(Model model, int hosCode) {
+		model.addAttribute("hosCode", hosCode);
 	}
+	
+	@RequestMapping("receptionPet.do")
+	@ResponseBody
+	public void receptionPet(HosBooking booking) {
+		booking.setConfirm('R');
+		service.insertReception(booking);
+	}
+	
 
 	@RequestMapping("chartHos.do")
-	public void chartHos(Model model, int hosCode) {
+	public void chartHos(Model model, int hosCode, @RequestParam(value="date", defaultValue="null")String date) {
+		if(date.equals("null")) {
+			date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		}
+		
+		model.addAttribute("date", date);
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
 	}
 	
@@ -654,6 +699,11 @@ public class HosController {
 		return map;
 	}
 	
+	@RequestMapping("petListPage.do")
+	public void petListPage(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, int ListCount) {
+		model.addAttribute("pageResult", new PageResult(pageNo, ListCount, 5, 5));
+	}
+		
 	@RequestMapping("hosSearch.do")
 	@ResponseBody
 	public Map<String, Object> hosSearch(String keyWord, int pageNo) {
@@ -860,6 +910,27 @@ public class HosController {
 	@ResponseBody
 	public void deleteFavHos(int favHosNo) {
 		service.deleteFavHos(favHosNo);;
+	}
+	
+	@RequestMapping("indexFavHos.do")
+	@ResponseBody
+	public Map<String, Object> indexFavHos(int memberNo) {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		try {
+			map.put("favHos", service.indexFavHos(memberNo));
+		} catch(BindingException e) {
+			map.put("favHos", new ArrayList<FavHos>());
+		}
+		
+		try {
+			map.put("myPet", service.selectPetList(memberNo));
+		} catch(BindingException e) {
+			map.put("myPet", new ArrayList<Pet>());
+		}
+		
+		return map;
 	}
 	
 	public Date setTimeToCal(Calendar cal, StringTokenizer st) {

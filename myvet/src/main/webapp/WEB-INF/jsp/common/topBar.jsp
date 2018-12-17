@@ -199,7 +199,7 @@
                                 <input type="radio" name="memberGrade" id="option1" onchange="viewHideFile(1);" autocomplete="off" value="U" checked> 반려인
                             </label>
                             <label class="btn btn-outline-primary btn-lg">
-                                <input type="radio" name="memberGrade" id="option2" onchange="viewHideFile(2);" autocomplete="off" value="U"> 관계자
+                                <input type="radio" name="memberGrade" id="option2" onchange="viewHideFile(2);" autocomplete="off" value="S"> 관계자
                             </label>
                             <label class="btn btn-outline-primary btn-lg">
                                 <input type="radio" name="memberGrade" id="option3" onchange="viewHideFile(3);" autocomplete="off" value="P"> 수의사

@@ -12,6 +12,7 @@ public class HosBlock {
 	private Time blockEnd;
 	private int facilityNo;
 	private int maxBooking;
+	private int countBooking;
 	
 	public int getBlockCode() {
 		return blockCode;
@@ -61,11 +62,17 @@ public class HosBlock {
 	public void setMaxBooking(int maxBooking) {
 		this.maxBooking = maxBooking;
 	}
-	
+	public int getCountBooking() {
+		return countBooking;
+	}
+	public void setCountBooking(int countBooking) {
+		this.countBooking = countBooking;
+	}
 	@Override
 	public String toString() {
 		return "HosBlock [blockCode=" + blockCode + ", hosCode=" + hosCode + ", blockDay=" + blockDay + ", blockNo="
 				+ blockNo + ", blockStart=" + blockStart + ", blockEnd=" + blockEnd + ", facilityNo=" + facilityNo
-				+ ", maxBooking=" + maxBooking + "]";
+				+ ", maxBooking=" + maxBooking + ", countBooking=" + countBooking + "]";
 	}	
+
 }

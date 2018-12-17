@@ -337,4 +337,19 @@ public class HosServiceImpl implements HosService{
 		return mapper.selectFacilitybyHosCode(hosCode);
 	}
 
+	@Override
+	public 	List<FavHos> indexFavHos(int memberNo) {
+		return mapper.indexFavHos(memberNo);
+	}
+	
+	@Override
+	public void insertReception(HosBooking booking) {
+		mapper.insertReception(booking);
+	}
+	
+	@Override
+	public List<HosBooking> selectReceptionByDate(HosBooking booking) {
+		return mapper.selectReceptionByDate(booking);
+	}
+
 }

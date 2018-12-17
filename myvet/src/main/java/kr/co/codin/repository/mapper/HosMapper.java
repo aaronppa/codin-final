@@ -50,6 +50,7 @@ public interface HosMapper {
 	void confirmBooking(int bookingNo);
 	void banBooking(int bookingNo);
 	List<HosBooking> selectBookingByDate(HosBooking booking);
+	List<HosBooking> selectReceptionByDate(HosBooking booking);
 	HosBooking selectBooking(int bookingNo);
 	int insertChart(HosChart chart);
 	void insertFileInfoAtChart(FileInfo fileInfo);
@@ -80,6 +81,9 @@ public interface HosMapper {
 	void deleteFavHos (int favHosNo);
 	int followCnt(int hosCode);
 	List<HosFacility> selectFacilitybyHosCode (int hosCode);
+	List<FavHos> indexFavHos(int memberNo);
+	void insertReception(HosBooking booking);
+	int selectBookingByBlockCode(int blockCode);
 	
 	int isRegStaff (HosStaff staff);
 	void memberHosNull(int memberNo);

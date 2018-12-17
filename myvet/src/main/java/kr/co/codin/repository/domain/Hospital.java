@@ -15,7 +15,7 @@ public class Hospital {
 	Time lunchStart;
 	Time lunchEnd;
 	String hosComment;
-	
+	int followCnt;
 	public int getHosCode() {
 		return hosCode;
 	}
@@ -52,10 +52,10 @@ public class Hospital {
 	public void setMapy(double mapy) {
 		this.mapy = mapy;
 	}
-	public int getHosSeachCnt() {
+	public int getHosSearchCnt() {
 		return hosSearchCnt;
 	}
-	public void setHosSeachCnt(int hosSearchCnt) {
+	public void setHosSearchCnt(int hosSearchCnt) {
 		this.hosSearchCnt = hosSearchCnt;
 	}
 	public String getTelephone() {
@@ -88,13 +88,18 @@ public class Hospital {
 	public void setHosComment(String hosComment) {
 		this.hosComment = hosComment;
 	}
+	public int getFollowCnt() {
+		return followCnt;
+	}
+	public void setFollowCnt(int followCnt) {
+		this.followCnt = followCnt;
+	}
 	@Override
 	public String toString() {
 		return "Hospital [hosCode=" + hosCode + ", title=" + title + ", roadAddress=" + roadAddress + ", address="
-				+ address + ", mapx=" + mapx + ", mapy=" + mapy + ", hosSeachCnt=" + hosSearchCnt + ", telephone="
+				+ address + ", mapx=" + mapx + ", mapy=" + mapy + ", hosSearchCnt=" + hosSearchCnt + ", telephone="
 				+ telephone + ", hosRegister=" + hosRegister + ", lunchStart=" + lunchStart + ", lunchEnd=" + lunchEnd
-				+ ", hosComment=" + hosComment + "]";
+				+ ", hosComment=" + hosComment + ", followCnt=" + followCnt + "]";
 	}
-	
 	
 }

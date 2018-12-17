@@ -47,9 +47,6 @@
 	  <c:forEach items="${chartImgs }" var="chartImg" varStatus="status2" >
 	    <div class="item">
 	      <img class="img" src="/myvet/upload${chartImg.filePath }/${chartImg.sysName}"  >
-	      <div class="carousel-caption">
-	        ...
-	      </div>
 	    </div>
 	  </c:forEach>
 	    ...

@@ -31,6 +31,7 @@
         #body {
             width: 1100px;
             margin: auto;
+            margin-top: 110px;
         }
         
         .hos-name,
@@ -55,7 +56,7 @@
         
         .nomalHos{
         	display: inline-block;
-        	width: 300px;
+        	width: 270px;
         	height: 140px;
         	overflow: hidden;
         	position: relative;
@@ -98,7 +99,7 @@
                 <span class="hos-phone">031-123-4567</span>
             </td>
             <td>
-            	즐겨찾는 고객 수 : <span class="follower"></span>
+            	즐겨찾는 고객 수 : <span class="follow"></span>
             </td>
         </tr>
         <tr class="hosEmpty disable">
@@ -163,6 +164,7 @@
     			$newRow.find(".hos-addr1").html(hosList[i].roadAddress);
     			$newRow.find(".hos-addr2").html(hosList[i].address);
     			$newRow.find(".hos-phone").html(hosList[i].telephone);
+    			$newRow.find(".follow").html(hosList[i].followCnt);
 
     			$("#resultRegister").append($newRow);
 			}

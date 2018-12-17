@@ -50,6 +50,7 @@ public interface HosService {
 	void banBooking(int bookingNo);
 	List<HosBooking> selectBookingByDate(HosBooking booking);
 	HosBooking selectBooking(int bookingNo);
+	List<HosBooking> selectReceptionByDate(HosBooking booking);
 	int insertChart(HosChart chart);
 	void insertFileInfoAtChart(FileInfo fileInfo);
 	List<HosChart> chartListByPetNo(int petNo);
@@ -79,5 +80,7 @@ public interface HosService {
 	void deleteFavHos (int favHosNo);
 	int followCnt(int hosCode);
 	List<HosFacility> selectFacilitybyHosCode (int hosCode);
-
+	List<FavHos> indexFavHos(int memberNo);
+	void insertReception(HosBooking booking);
+	
 }

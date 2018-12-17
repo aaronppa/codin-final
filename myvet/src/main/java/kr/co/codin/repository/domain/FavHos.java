@@ -5,7 +5,7 @@ public class FavHos {
 	private int favHosNo;
 	private int memberNo;
 	private int hosCode;
-	
+	private Hospital hospital;
 	public int getFavHosNo() {
 		return favHosNo;
 	}
@@ -24,10 +24,16 @@ public class FavHos {
 	public void setHosCode(int hosCode) {
 		this.hosCode = hosCode;
 	}
-	
+	public Hospital getHospital() {
+		return hospital;
+	}
+	public void setHospital(Hospital hospital) {
+		this.hospital = hospital;
+	}
 	@Override
 	public String toString() {
-		return "FavHos [favHosNo=" + favHosNo + ", memberNo=" + memberNo + ", hosCode=" + hosCode + "]";
+		return "FavHos [favHosNo=" + favHosNo + ", memberNo=" + memberNo + ", hosCode=" + hosCode + ", hospital="
+				+ hospital + "]";
 	}
 	
 }

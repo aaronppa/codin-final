@@ -11,6 +11,12 @@
     crossorigin="anonymous"></script>
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=kxd0pvbof9"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/css/swiper.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/css/swiper.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/js/swiper.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/js/swiper.min.js"></script>
+
 <style>
 
    .hosfacility {
@@ -18,7 +24,7 @@
        display: inline-block;
        border: 1px solid black;
        border-radius: 3px;
-       padding: 3px 5px;
+       padding: 3px  5px;
    }
    
    #follow{
@@ -80,7 +86,7 @@
    }
    
    #facilityContainer {
-		width: 600px;
+		width: 500px;
    		height: 50px;
 	    overflow: hidden;
 	    overflow-x: scroll;
@@ -94,6 +100,7 @@
    #bodyContainer {
    		width: 1100px;
    		margin: auto;
+   		margin-top: 110px;
    }
    
    .date {
@@ -106,6 +113,10 @@
    
    #followDiv {
    		display: inline-block;
+   }
+   
+   .swiper-slide {
+   		padding-bottom: 30px;
    }
 </style>
 </head>
@@ -156,9 +167,30 @@
         <div id="map"></div>
         <div id="hosStaff">
             <a href="hosStaff.do?hosCode=${hospital.hosCode }">직원</a>
-        </div>
-        
-    </div>
+			<div class="swiper-container">
+			     <div class="swiper-wrapper">
+			     	<c:forEach items="${staffs }" var="staff">
+			          <div class="swiper-slide">
+			          	<div class="staffImg">
+			          		<img src="/myvet/upload${staff.member.memberFilePath }/${staff.member.memberSysName}">
+			          	</div>
+			          	<div class="staffInfo">
+			          		이름 : ${staff.member.memberName } <br>
+			          		${staff.staffTitle } <br>
+			          		약력 <br>
+			          		${staff.member.memberCareer }
+			          	</div>
+			          </div>
+			        </c:forEach>
+			      </div>
+			     <!-- Add Pagination -->
+			    <div class="swiper-pagination"></div>
+			    <!-- Add Arrows -->
+			    <div class="swiper-button-next"></div>
+			    <div class="swiper-button-prev"></div>
+    		</div>
+    	</div>
+   	</div>
     <div id="bottomContainer">
         <div id="hosBoard">
             <a href="hosBoard.do?hosCode=${hospital.hosCode }">병원게시판</a><br>
@@ -295,6 +327,25 @@
     	$("#bookingManager").click(function(){
     		window.location.href = "/myvet/hos/bookingManager.do?hosCode=" + $("#hosCode").val();
     	})
+    	
+  	  var swiper = new Swiper('.swiper-container', {
+			slidesPerView: 1,
+			spaceBetween: 30,
+			loop: true,
+			autoplay: {
+		        delay: 2500,
+		        disableOnInteraction: false,
+		    },
+		    navigation: {
+		        nextEl: '.swiper-button-next',
+		        prevEl: '.swiper-button-prev',
+		    },
+		    pagination: {
+	          el: '.swiper-pagination',
+	          dynamicBullets: true,
+	        },
+ 	  })
+</script>
     </script>
 </body>
 </html>

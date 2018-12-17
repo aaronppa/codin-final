@@ -13,7 +13,7 @@
     #bodyContainer {
         width: 1100px;
         margin: auto;
-        margin-top: 30px;
+        margin-top: 110px;
     }
 
     .inline {
