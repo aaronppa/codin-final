@@ -168,7 +168,7 @@
 				,(select member_nickname from member where member_no = q.writer_no) memberNickname
 				, (select count(qna_no) from qna_comment where qna_no=q.qna_no) 
 				commentCount
-				,(select sum(recommend) from qna_recommend where qna_no = q.qna_no) recomCnt
+				,ifnull((select sum(recommend) from qna_recommend where qna_no = q.qna_no),0) recomCnt
 				, q.view_cnt
 				,q.reg_date
 				,(select category_name from qna_category_list where category_code=
@@ -218,10 +218,10 @@
 					order by q.view_cnt asc
 				</when>
 				<when test="order==3">
-					order by recomCnt  desc
+					order by ifnull(recomCnt,0)  desc
 				</when>
 				<when test="order==4">
-					order by recomCnt  asc
+					order by ifnull(recomCnt,0)  asc
 				</when>
 				<when test="order==5">
 					order by q.reg_date desc
@@ -263,7 +263,18 @@
 
 
 	</select>
-
+	<select id="selectRecommend" parameterType="QnaRecommend" resultType="int">
+		select recommend
+		  from qna_recommend
+		 where member_no = #{memberNo}
+		   and qna_no=#{qnaNo} 
+	</select>
+	
+	<select id="deleteRecommend" parameterType="QnaRecommend" >
+		delete from qna_recommend
+		 where member_no = #{memberNo}
+		   and qna_no=#{qnaNo} 
+	</select>
 	<update id="updateViewCnt" parameterType="Qna">
 		update qna
 		set
@@ -288,7 +299,11 @@
 		qna_comment(qna_no,commenter_no,content)
 		values(#{qnaNo},#{commenterNo},#{content})
 	</insert>
-
+	<select id="sumrecommend" parameterType="int" resultType="int">
+		select sum(recommend) recommend
+			from qna_recommend
+			where qna_no = #{qnaNo}
+	</select>
 	<select id="selectCombyNo" parameterType="QnaComment" resultMap="QnaCommentMap">
 		select q.* 
 		,(select member_nickname from member where member_no = q.commenter_no) memberNickname

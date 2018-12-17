@@ -162,6 +162,10 @@ tr:hover {
 }
 .searchForm{
 	width:100%;
+	postion:absolute;
+	margin-top: 100px;
+	
+	
 }
 </style>
 <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>

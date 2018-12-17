@@ -27,4 +27,7 @@ public interface QnaService {
 	void updateAnswerAndPick(Qna qna,QnaComment com );
 	QnaComment selectPickCom(QnaComment com );
 	String selectPickCom111(int qna);
+	int selectRecommend(QnaRecommend qnaRecommend);
+	void deleteRecommend(QnaRecommend re);
+	int sumrecommend(int recommend);
 }

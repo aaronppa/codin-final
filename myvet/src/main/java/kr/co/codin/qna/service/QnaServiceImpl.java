@@ -102,6 +102,33 @@ public class QnaServiceImpl implements QnaService{
 		// TODO Auto-generated method stub
 		return mapper.selectPickCom111(qna);
 	}
+	@Override
+	public int selectRecommend(QnaRecommend qnaRecommend) {
+		// TODO Auto-generated method stub
+		try {
+			return mapper.selectRecommend(qnaRecommend);
+		}catch(Exception e) {
+			return 0;
+		}
+		
+	}
+	@Override
+	public void deleteRecommend(QnaRecommend re) {
+		// TODO Auto-generated method stub
+		mapper.deleteRecommend(re);
+	}
+	@Override
+	public int sumrecommend(int recommend) {
+		// TODO Auto-generated method stub
+	//	return mapper.sumrecommend(recommend);
+		
+		try {	
+			return mapper.sumrecommend(recommend);
+				
+		}catch(Exception e) {
+			return 0;
+		}
+	}
 	
 	
 	

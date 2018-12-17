@@ -80,7 +80,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div style="border:red 1px solid;position:absolute; bottom:0px;width:100%;">페이징 디아브</div>
+				
 			</div>
 
 		</div>

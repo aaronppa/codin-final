@@ -3,6 +3,7 @@ package kr.co.codin.qna.controller;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,41 +46,34 @@ public class QnaController {
 			,@RequestParam(value="keyword",defaultValue="0") String keyword
 		
 			) throws Exception{
-		//System.out.println("--------------------------");
-		//System.out.println("pageNo:"+pageNo);
+
 		SearchQnA searChQuery= new SearchQnA(pageNo);
 		searChQuery.setAnswered(answered);
-		//System.out.println("answered :"+ answered);
 		searChQuery.setKeyword(keyword);
-		
-		//System.out.println(keyword);
-		
 		searChQuery.setOrder(order);
-		//System.out.println("order:"+order);
-		searChQuery.setCategoryCode(categoryCode);
-		//System.out.println("카테고리 코드 :"+categoryCode);
+		searChQuery.setCategoryCode(categoryCode);	
 		searChQuery.setSort(sort);
-		//System.out.println("sort:"+sort);
+	
 		searChQuery.setPageNo(pageNo);
 		if(pageNo == 0) {
 			searChQuery.setPresentPage(pageNo*10);
 		}else {
 			searChQuery.setPresentPage((pageNo-1)*10);
 		}
-		//System.out.println("dlsjdlfjsldfjsldjflsjdflsj::::::"+searChQuery.getPresentPage());
+		
 		if(service.countTotalContent(searChQuery)%10 == 0 ) {
-			//System.out.println("11");
+		
 			model.addAttribute("endPage",service.countTotalContent(searChQuery)/10);
 		}else {
-			//System.out.println("22");
+			
 			model.addAttribute("endPage",service.countTotalContent(searChQuery)/10+1);
 		}
 		
 		if(service.countTotalContent(searChQuery)%10 == 0 ) {
-		//	System.out.println("11");
+		
 			model.addAttribute("lastpage",service.countTotalContent(searChQuery)/10-1);
 		}else {
-		//	System.out.println("22");
+		
 			model.addAttribute("lastpage",service.countTotalContent(searChQuery)/10);
 		}
 		
@@ -87,8 +81,7 @@ public class QnaController {
 		if(pageNo <= 10) {
 			model.addAttribute("prev", 1);
 		}else if(pageNo%10 == 0 && pageNo > 10) {
-		//	System.out.println(pageNo);
-		//	System.out.println("여기 걸려야 하는데");
+	
 			model.addAttribute("prev", (pageNo-10));
 		}else {
 			model.addAttribute("prev", (pageNo/10)*10);
@@ -103,8 +96,6 @@ public class QnaController {
 			model.addAttribute("next",(pageNo/10)*10 + 11);
 		}
 		model.addAttribute("pageNo", pageNo);
-		/*System.out.println("dlsdjfsljdf:"+pageNo);	
-		System.out.println("-----------------------------------------");*/
 		model.addAttribute("category",service.cateList());
 		model.addAttribute("qna", service.SelectList(searChQuery));
 		model.addAttribute("totalCnt",service.countTotalContent(searChQuery));
@@ -119,19 +110,15 @@ public class QnaController {
 	@RequestMapping("listPaging.do")
 	@ResponseBody
 	public void QnaListPaging(Model model, int pageNo,int totalCnt ){
-		/*System.out.println("listPaging.do");
-		System.out.println(pageNo);
-		System.out.println(totalCnt);*/
 		if(pageNo == 0) {pageNo=1;}
 		model.addAttribute("pageResult", new PageResult(pageNo, totalCnt));
 	}
 	
 	@RequestMapping("writeForm.do")
 	public void writeForm(Model model,String memberNickname ) {
-		//System.out.println("라이트폼");
+	
 		model.addAttribute("category",service.cateList());
-		//System.out.println(memberNickname);
-		//System.out.println("dd:"+session.toString());
+	
 	}
 	
 	@RequestMapping("write.do")
@@ -142,8 +129,24 @@ public class QnaController {
 	}
 	
 	@RequestMapping("detail.do")
-	public void detail(Model model, int qnaNo) {
+	public void detail(Model model, int qnaNo,QnaRecommend recom,HttpSession session) {
+		//
+		Member member = (Member) session.getAttribute("user");
+		System.out.println(member.getMemberNo());
+		recom.setMemberNo(member.getMemberNo());
+		recom.setQnaNo(qnaNo);
+		try {
+			model.addAttribute("recom",service.selectRecommend(recom));
+		} catch (Exception e) {
+			model.addAttribute("recom",0);
+		}
 		
+		try {		
+			model.addAttribute("recommend",service.sumrecommend(qnaNo));
+		}catch(Exception e) {
+			model.addAttribute("recommend",0);
+		}
+	
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
 	}
 	
@@ -162,8 +165,7 @@ public class QnaController {
 	
 	@RequestMapping("delete.do")
 	public String delete(Model model, Qna qna, int qnaNo) {
-		/*System.out.println("dd");
-		System.out.println("ddd:::;;;"+qnaNo);*/
+
 		service.deleteDetail(qna);
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 		
@@ -173,13 +175,7 @@ public class QnaController {
 	@ResponseBody
 	public List<QnaComment> writeComment(Model model,int qnaNo,QnaComment qnaComment,Qna qna) throws Exception{
 		service.writeComment(qnaComment);
-		/*System.out.println("dddd");
-		System.out.println(qnaNo);
-		System.out.println(qnaComment.getContent());
-		System.out.println(qnaComment.getQnaNo());
-		System.out.println(qnaComment.getCommenterNo());
-		System.out.println(UrlBasedViewResolver.REDIRECT_URL_PREFIX+"/myvet/qna/detail.do?qnaNo="+qnaNo);*/
-		
+
 		return service.selectCombyNo(qnaNo);
 		
 	}
@@ -194,16 +190,31 @@ public class QnaController {
 	
 	@RequestMapping("insertRecommend.do")
 	@ResponseBody
-	public String insertRecommend(int qnaNo, int recommend, int memberNo,QnaRecommend QnaRecom) throws Exception{
-		/*System.out.println("insertRecom");
-		System.out.println(qnaNo);
-		System.out.println(recommend);
-		System.out.println(memberNo);*/
+	public int insertRecommend(Model model,int qnaNo, int recommend, int memberNo,QnaRecommend QnaRecom) throws Exception{
+	
 		QnaRecom.setMemberNo(memberNo);
 		QnaRecom.setRecommend(recommend);
 		QnaRecom.setQnaNo(qnaNo);
-		service.insertRecommend(QnaRecom);
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"detail.do?qnaNo="+qnaNo;
+
+		
+		try {		
+			if( service.selectRecommend(QnaRecom)==0) {
+				service.insertRecommend(QnaRecom);
+			}else {
+				service.deleteRecommend(QnaRecom);
+			}
+		}catch(Exception e) {
+			
+		}
+			
+		try {	
+			return service.sumrecommend(qnaNo);
+		}catch(Exception e) {
+		
+			return 0;
+		}
+			
+	
 	}
 	
 	@RequestMapping("deleteComment.do")
@@ -211,9 +222,7 @@ public class QnaController {
 	public void deleteComment(QnaComment comment,int qnaNo) throws Exception{
 		
 		service.deleteComment(comment);
-		
-		//return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"/myvet/qna/detail.do?qnaNo="+qnaNo;
-		
+
 	}
 	
 	
@@ -225,16 +234,11 @@ public class QnaController {
 		comment.setContent(content);
 		comment.setCommenterNo(commenterNo);
 		comment.setCommentNo(commentNo);
-
+		
 		service.updateQnaComment(comment);
 	}
 	
 	
-/*	@RequestMapping("page.do")
-	@ResponseBody
-	public void paging(Qna qna) {
-		
-	}*/
 	@RequestMapping("selectAnswer.do")
 	@ResponseBody
 	public QnaComment selectAnswer(Model model,QnaComment comment,Qna qna) throws Exception{

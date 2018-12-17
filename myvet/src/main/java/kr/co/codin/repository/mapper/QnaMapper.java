@@ -26,5 +26,8 @@ public interface QnaMapper {
 	void updateCommentPick(QnaComment Qc);
 	QnaComment selectPickCom(QnaComment Qc);
 	String selectPickCom111(int qna);
+	int selectRecommend(QnaRecommend QnaRecommend);
+	void deleteRecommend(QnaRecommend re);
+	int sumrecommend(int recommend);
 	
 }

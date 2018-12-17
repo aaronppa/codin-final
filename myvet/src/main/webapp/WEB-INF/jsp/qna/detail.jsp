@@ -53,7 +53,10 @@
 .answer {
 	visibility: hidden;
 } */
-
+.container{
+	postion:absolute;
+	margin-top:100px;
+}
 .answerPosition {
 	margin-left: 88%;
 	
@@ -83,7 +86,7 @@
 
 				<i class="category">category : ${qna.categoryName}</i> <i
 					class="fas fa-heart" id="tipRecomHeart">&nbsp;</i><span
-					id="tipRecomCnt">${qna.recomCnt}</span>
+					id="qnaRecomCnt"><%-- ${qna.recomCnt} --%>${recommend }</span>
 
 				<%--  <i class="fas fa-heart" id="tipRecomCnt" style="margin-left: 5%;color:red;">&nbsp;${countRecomment}</i>  --%>
 				<i class="far fa-eye">&nbsp; ${qna.viewCnt}</i> <i
@@ -101,6 +104,7 @@
 				<input type="hidden" name="memberNo" id="memberNo" value="8">
 				<input type="hidden" name="recommend" id="recommend"
 					value="${recom}">
+				
 				<!-- Thumbs up -->
 				<div class="like grow">
 					<i id="like"
@@ -168,25 +172,7 @@
 	<script
 		src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
-        //좋아요, 싫어요 토글
-           
-//            $('.like, .dislike').on('click', function() {
-//              event.preventDefault();
-             /* $('.active').removeClass('active');
-             
-             $(this).addClass('active');
-             $(this).on('click', function(){
-                $(this).css("color", "black");
-             }) */
-             
-//              $(this).toggleClass("active")
-//              if($(this).hasClass("active")){
-//                 $(this).removeClass("active")
-//              }else{
-//                 $(this).addClass("active")
-//              }
-//          });
-   
+
  let CommentList =null;
 	if("${qna.writerNo}" == "${user.memberNo}" ){
 		
@@ -294,32 +280,27 @@
         
            $(".commentSubmit").click(function(){
          //////console.log("function");
-         $.ajax({
-            url: "/myvet/qna/writeComment.do",
-            type:"post",
-            dataType:"json",
-            header:
-               "content-type:text/html;charset=utf-8"
-            ,
-            data: /* "tipNo="+$("#tipNo").val()+"&commenterNo="+$(".commenterNo").val()+"&comment="+$("#comment").val() */
-               {qnaNo : location.search.substring(6).substring(1), commenterNo: $("#commenterNo").val(),content:$("#comment").val()}
-         }).done(function(result){
-            //////console.log("성공:"+result);
-            //////console.log(result.length);
-            
-            
-         
-            list();
-         /*    typing();
-            list(); */
-         }).fail(function(result,textStatus){
-            //////console.log("실패");
-            //////console.log(textStatus);
-         /*    //////console.log($("#tipNo").val());
-            //////console.log($("#commenterNo").val());
-            //////console.log($("#comment").val()); */
-            //////console.dir(result);
-         });
+        
+         if($("#comment").val() ==''){
+        	 alert("댓글을 입력해주세요")
+         }else{
+	         $.ajax({
+	            url: "/myvet/qna/writeComment.do",
+	            type:"post",
+	            dataType:"json",
+	            header:
+	               "content-type:text/html;charset=utf-8"
+	            ,
+	            data: /* "tipNo="+$("#tipNo").val()+"&commenterNo="+$(".commenterNo").val()+"&comment="+$("#comment").val() */
+	               {qnaNo : location.search.substring(6).substring(1), commenterNo: $("#commenterNo").val(),content:$("#comment").val()}
+	         }).done(function(result){
+	 
+	            list();
+	    
+	         }).fail(function(result,textStatus){
+	 
+	         });
+         }//if-else
       });
    
         //댓글 목록
@@ -328,14 +309,7 @@
       
         let commenterNo=null;
         function list(){
-           
-           
-           
-           
-           
-           
-           //////console.log(location.search.substring(6).substring(1));
-           
+
            $.ajax({
               url:"/myvet/qna/commentList.do",
               type: "post",
@@ -347,12 +321,9 @@
            }).done(function(result){// 341~ 526까지가 done임
         	   
         	   console.log(result);
-        	   
-              //////console.log("코멘트 엠프티 1");
+
               $("#comment").val("");//댓글 입력창 초기화
-              //////console.log("코멘트 엠프티2");
-              ////////console.log("성공 tipNo"+result);
-               ////////console.log(result[1])
+         
                $(".comment-list").empty();
              for (let i = 0; i < result.length; i++) {
                   let likeRecommend = "", dislikeRecommend = "";
@@ -368,12 +339,12 @@
 		                		
 		                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
 		                 +"<button class='com-like "+likeRecommend+"'data-comno='"+result[i].commenterNo+"'>"
-		                 +"<i class='far fa-thumbs-up'></i>"+"</button><button class='com-dislike "
+		                 +"<i style='display:none;' class='far fa-thumbs-up'></i>"+"</button><button style='display:none;' class='com-dislike "
 		                 +dislikeRecommend+"' data-comno='"
 		                 +result[i].commentNo
 		                 +"'>"
-		                 +"<i class='far fa-thumbs-down'></i>"+"</button>"
-		               +"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+		                 +"<i style='display:none;' class='far fa-thumbs-down'></i>"+"</button>"
+		               +"<i style='display:none;' class='fas fa-heart'></i><span style='display:none;' id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
 		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
 		                +"<div class='comment-content'>"  +
 		                "<button class='answer answerPosition checking"+i+"' value='"+result[i].pick+"'><i >채택</i> </button>" 
@@ -395,12 +366,12 @@
 		                		
 		                "<img src='/myvet/images/pony01.jpg' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
 		                 +"<button class='com-like "+likeRecommend+"'data-comno='"+result[i].commenterNo+"'>"
-		                 +"<i class='far fa-thumbs-up'></i>"+"</button><button class='com-dislike "
+		                 +"<i style='display:none;' class='far fa-thumbs-up'></i>"+"</button><button style='display:none;' class='com-dislike "
 		                 +dislikeRecommend+"' data-comno='"
 		                 +result[i].commentNo
 		                 +"'>"
-		                 +"<i class='far fa-thumbs-down'></i>"+"</button>"
-		               +"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+		                 +"<i style='display:none;' class='far fa-thumbs-down'></i>"+"</button>"
+		               +"<i style='display:none;' class='fas fa-heart'></i><span style='display:none;' id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
 		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"+"<span class='checkedPick"+i+"'></span>"
 		                +"<div class='comment-content'>" 
 		                   +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
@@ -454,17 +425,10 @@
 	                
 	                
 	                
-	                function detail(){
-	                   $.ajax({
-	                      url:"/myvet/qna/detail.do",
-	                      data:"qnaNo=${qna.qnaNo}"
-	                   }).done(function(){
-	                     // //////console.log("detail!");
-	                   })
-	                }
+	              
          		}//for
          		
-         		
+
          		
          /*
          	댓글 채택 여부에 따라서 글의 수정 삭제 버튼을 숨기고 
@@ -495,38 +459,45 @@
            })
         
         }
-           
       
-       
 
-        //추천
         
           $("#like").on("click",function(){
-             
+      
+         
              var isActive = $(this).hasClass('active');
-             if(isActive == true){
+         
+             if(parseInt($("#recommend").attr("value")) == "1"){
+            	
+            	 $("#recommend").attr("value","0");
+            
                 insertRecommend(0, $('#qnaNo').val());
-             }else{
+                $("#tipRecomCnt").val();
+                $(this).toggleClass('active')
+             }else if(parseInt($("#recommend").attr("value")) == "0"){
+            	 $("#recommend").attr("value","1");
                 insertRecommend(1, $('#qnaNo').val());
+                $("#tipRecomCnt").val();
+                $(this).toggleClass('active')
+             }else{
+            	
+            	 alert('이미 싫어요를 누르셨잖아여');
              }
-             $("#tipRecomCnt").val();
-             $(this).toggleClass('active')
+     
           })
           
           
           let qnaNo = $("#qnaNo").val();
           //  let commenterNo1 = ${user.memberNo};
        function insertRecommend(recommend ){
-           //////console.log("insertRecome:"+$(commenterNo).val());
-           //////console.log(recommend);
-           //////console.log(qnaNo);
-           ////////console.log(commenterNo);
+    	
            var recom=new Array();
            var qnaRecomInfo = new Object();
            
            qnaRecomInfo.qnaNo=parseInt(qnaNo);
            qnaRecomInfo.recommend=parseInt(recommend);
            var memberNo = '${user.memberNo}';
+           
            qnaRecomInfo.memberNo=parseInt('${user.memberNo}');
            
            recom.push(qnaRecomInfo);
@@ -535,11 +506,7 @@
            
            recom = JSON.stringify(recom[0]);
             recom = JSON.parse(recom);
-        //   recom={qnaRecommend:recom}; 
-           //////console.log(recom);
-            
-           //////console.log(typeof(recom));
-           ////////console.log(recom); 
+  
            $.ajax({
               url:"/myvet/qna/insertRecommend.do",   
               data:{qnaNo : qnaNo, recommend:recommend, memberNo :memberNo},
@@ -547,24 +514,40 @@
               type:"post"
            }).done(function(result){
               //////console.log("insertRecommend-success")
+              console.log(result);
+              console.log('${recommend}');
+              $("#qnaRecomCnt").empty();
+              $("#qnaRecomCnt").html(result); 
+              console.log("--------------------");
+            
            }).fail(function(result){
-              //////console.log("실패");
-              //////console.log(result);
+        	   
+     
            })
         }
         
         $('#dislike').on('click',function(){
            var isActive = $(this).hasClass('active');
            $("#tipRecomCnt").remove();
-             detail();
+         //    detail();
 //            alert(isActive);
-           if(isActive == true){
-              insertRecommend(0, $('#tipNo').val());
+			
+           if(parseInt($("#recommend").attr("value")) == -1){
+        	   $("#recommend").attr("value","0");
+              insertRecommend(0, $('#qnaNo').val());
+              $(this).toggleClass('active');
+           }else if(parseInt($("#recommend").attr("value"))  == 0){
+        	   $("#recommend").attr("value","-1");
+              insertRecommend(-1, $('#qnaNo').val());
+              $(this).toggleClass('active');
            }else{
-              insertRecommend(-1, $('#tipNo').val());
+        	   alert("이미 좋아요를 누르셨잖아요")
            }
-           $(this).toggleClass('active')
+          
         })
+        
+        
+        
           //댓글 추천
           //댓글 좋아요
        $('.comment-list').on('click', '.com-like', function(){
@@ -616,12 +599,14 @@
           $.ajax({
              url:"/myvet/qna/insertCommentRecommend.do",
              data:"commentNo="+commentNo+"&recommend="+recommend
-          }).done(function(){
+          }).done(function(result){
+        	// console.log(result);
+        	  //detail();
              //////console.log("insertCommentRecommend-success")
           })
        }
     
-    
+    	
            
            //댓글 삭제
            $(".comment-list").on("click", ".deleteCommentBtn", function(){
@@ -645,10 +630,7 @@
               })
            });
         
-       
-        
-        
-              //수정 폼
+       //수정 폼
            $(".comment-list").on("click", ".updateCommentBtn",  function(){
           
              
@@ -670,16 +652,9 @@
                    list();
               })
             
-              
-              //"<div class='updateData' style='hidden' data-commentNo="+result[i].commentNo+" data-qnaNo="+result[i].qnaNo+" data-commentorNo="+result[i].commentorNo+"></div>"
-              
-              
+     
               $(".comment-list").on("click", ".submitupdatecom", function(){
-            	/* 	alert("여기옴");
-            		   alert("commentNo : "+$(this).prev().prev().prev().data("commentno"));
-            		   alert("commenterNo : "+$(this).prev().prev().prev().data("commenterno"));
-            		   alert("content : "+$(this).prev().prev().val()); */
-//             		   alert("commentNo :"+$(this).prev()prev().data("commentno"));
+
 		               $.ajax({
 		                  url : "/myvet/qna/updateComment.do",              
 		                  data : 
@@ -695,12 +670,8 @@
 		                     $(".comment-list").children().remove();
 		                     list();
 		                  }).fail(function(result){
-		                    // debugger;
 		                    console.log(result);
-		                     //////console.log("fail");
-		                     //////console.log(result)
-		                  })
-                  
+		                  })                  
               })
                   
         
@@ -709,23 +680,6 @@
         window.open("/myvet/report/reportQnaForm.do?qnaNo="+location.search.substring(6).substring(1),"report","width=1000, height=600, left=500, top=10")
      })
         
-        //like-dislike
-//       $("#like").toggle(
-//           function(){$("i").css({"color": "red"})}
-//       });
-        
-//       if($("#layer").css("display") == "none"){
-//          $("#layer").show();
-//       }else{
-//          $("#layer").hide();
-//       }
-//    }
-        
-        //tooltip
-//         $(function(){
-//            $('[data-toggle="tooltip"]').tooltip()
-           
-//         })
 
         </script>
 </body>
