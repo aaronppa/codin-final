@@ -14,11 +14,11 @@ public interface GalleryService {
 	
 	List<Gallery> galleryList(SearchGallery searchGallery);
 	
-	Gallery detailGallery(int galleryNo);
+	Gallery detailGallery(Gallery gallery);
 	
 	void insertGallery(Gallery gallery);
 	
-	Gallery updateForm(int galleryNo);
+	Gallery updateForm(Gallery gallery);
 
 	void updateGallery(Gallery gallery);
 	

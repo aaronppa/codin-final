@@ -87,7 +87,7 @@
         		<tr class="topRow" style="text-align: center;background: #e6e6e6;">
 	                <th scope="row"> ${top.tipNo} </th>
 	                <td>${top.memberNickname}</td>
-	                <td><a href="<c:url value='/tip/detail.do?tipNo=${top.tipNo}'/>">${top.title }</a><span id="countComment"></span></td>
+	                <td><a href="<c:url value='/tip/detail.do?tipNo=${top.tipNo}'/>">${top.title }</a>&nbsp;&nbsp;<i class="fas fa-comments">${top.comCnt}</i><span id="countComment"></span></td>
 					<c:if test="${top.categoryCode eq 1}">
 		                <td>건강</td>
 					</c:if>
@@ -111,7 +111,7 @@
 	            <tr style="text-align: center;">
 	                <th scope="row"> ${t.tipNo} </th>
 	                <td>${t.memberNickname}</td>
-	                <td><a href="<c:url value='/tip/detail.do?tipNo=${t.tipNo}'/>">${t.title }</a><span id="countComment"></span></td>
+	                <td><a href="<c:url value='/tip/detail.do?tipNo=${t.tipNo}'/>">${t.title }</a>&nbsp;&nbsp;<i class="fas fa-comments">${t.comCnt}</i><span id="countComment"></span></td>
 					<c:if test="${t.categoryCode eq 1}">
 		                <td>건강</td>
 					</c:if>

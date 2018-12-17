@@ -148,7 +148,7 @@ public class GalleryController{
 			;;		
 		}
 		service.updateViewCnt(galleryNo);
-		model.addAttribute("gallery",service.detailGallery(galleryNo));
+		model.addAttribute("gallery",service.detailGallery(gallery));
 		model.addAttribute("countComment",service.countComment(galleryNo));
 		model.addAttribute("recommend",service.selectRecommend(galleryRecommend));
 		System.out.println(galleryRecommend);
@@ -159,9 +159,10 @@ public class GalleryController{
 	}
 	
 	@RequestMapping("updateForm.do")
-	public void updateForm(int galleryNo, Model model,Member member,HttpSession session) throws Exception{
+	public void updateForm(Gallery gallery, Model model,Member member,HttpSession session) throws Exception{
 		member = (Member)session.getAttribute("user");
-		model.addAttribute("gallery",service.updateForm(galleryNo));
+		model.addAttribute("gallery",service.updateForm(gallery));
+		
 	}
 	
 	@RequestMapping("update.do")

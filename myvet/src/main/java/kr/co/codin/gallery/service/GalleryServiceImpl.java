@@ -46,9 +46,9 @@ public class GalleryServiceImpl implements GalleryService{
 	}
 
 	@Override
-	public Gallery detailGallery(int galleryNo) {
+	public Gallery detailGallery(Gallery gallery) {
 		// TODO Auto-generated method stub
-		return mapper.selectGalleryByNo(galleryNo);
+		return mapper.selectGalleryByNo(gallery);
 	}
 
 	@Override
@@ -57,10 +57,13 @@ public class GalleryServiceImpl implements GalleryService{
 		
 	}
 
+
 	@Override
-	public Gallery updateForm(int galleryNo) {
-		return mapper.selectGalleryByNo(galleryNo);
+	public Gallery updateForm(Gallery gallery) {
+		return mapper.selectGalleryByNo(gallery);
 	}
+
+
 
 	@Override
 	public void updateGallery(Gallery gallery) {

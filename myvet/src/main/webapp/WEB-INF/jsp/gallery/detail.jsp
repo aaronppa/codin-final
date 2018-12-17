@@ -80,49 +80,19 @@
          <c:forEach var="f" items="${gallery.fileInfoList}" varStatus="loop">
 			      <slide :index="${loop.index}"><img src="/myvet/upload${f.filePath}/${f.sysName}"/></slide>
          </c:forEach>
-<!-- 			      <slide :index="1"><img src="https://unsplash.it/400/300?image=456"/></slide> -->
-<!-- 			      <slide :index="2"><img src="https://unsplash.it/400/300?image=222"/></slide> -->
-<!-- 			      <slide :index="3"><img src="https://unsplash.it/400/300?image=1003"/></slide> -->
-<!-- 			      <slide :index="4"><img src="https://unsplash.it/400/300?image=940"/></slide> -->
-<!-- 			      <slide :index="5"><img src="https://unsplash.it/400/300?image=944"/></slide> -->
-<!-- 			      <slide :index="6"><img src="https://source.unsplash.com/mEr7U5yfYt8/400x300"/></slide> -->
-<!-- 			      <slide :index="7"><img src="https://unsplash.it/400/300?image=1041"/></slide> -->
+
 			    </carousel-3d>
 			  </div>
-<!--                 <div class=" swiper-container gallery-top"> -->
-<!--                         <div class="swiper-wrapper"> -->
-<%--                         <c:forEach var="f" items="${gallery.fileInfoList}"> --%>
-<%--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/upload/${f.filePath}/${f.sysName}"></div> --%>
-<%--                         </c:forEach> --%>
-<!-- <!--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div> --> 
-<!-- <!--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div> --> 
-<!-- <!--                         <div class="swiper-slide"><img class = "top-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div> --> 
 
-<!--                         </div> -->
-<!--                         Add Arrows -->
-<!--                         <div class="swiper-button-next swiper-button-white"></div> -->
-<!--                         <div class="swiper-button-prev swiper-button-white"></div> -->
-<!--                     </div> -->
-<!--                     <div class="swiper-container gallery-thumbs"> -->
-<!--                         <div class="swiper-wrapper"> -->
-<%--                             <c:forEach var="f" items="${gallery.fileInfoList}"> --%>
-<%--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/upload/${f.filePath}/${f.sysName}"></div> --%>
-<%-- 							</c:forEach> --%>
-<!--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic2.jpg"></div> -->
-<!--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic3.jpg"></div> -->
-<!--                                 <div class="swiper-slide"><img class = "thumbs-img" src="/myvet/resources/img/gall&tip/pic4.jpg"></div> -->
-<!--                         </div> -->
-<!--                     </div> -->
-					
                     <div class="pet">
                     <c:forEach var="p" items="${gallery.petList}" varStatus="loop">
                         <span data-toggle="tooltip" title="${p.petName}">
                             <img class="petImg rounded-circle" id="petImg" src="/myvet/upload${p.petFilePath}/${p.petSysName}" style="margin-right: 10px;">
                         </span>
                     </c:forEach>
-                        <span data-toggle="tooltip" title="PODOL">
-                            <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img">
-                        </span>
+<!--                         <span data-toggle="tooltip" title="PODOL"> -->
+<!--                             <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img"> -->
+<!--                         </span> -->
                     </div>
                         <br>
                             <div class="information">

@@ -12,8 +12,17 @@ public class Tip {
 	private int viewCnt;
 	private int categoryCode;
 	private int recomCnt;
+	private int comCnt;
 	private String memberNickname;
+
 	
+	
+	public int getComCnt() {
+		return comCnt;
+	}
+	public void setComCnt(int comCnt) {
+		this.comCnt = comCnt;
+	}
 	public String getMemberNickname() {
 		return memberNickname;
 	}

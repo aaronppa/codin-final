@@ -16,11 +16,11 @@ public interface TipService {
 	
 	List<Tip> tipList(SearchTip searchTip);
 	
-	Tip detailTip(int tipNo);
+	Tip detailTip(Tip tip);
 	
 	void insertTip(Tip tip);
 	
-	Tip updateForm(int tipNo);
+	Tip updateForm(Tip tip);
 
 	void updateTip(Tip tip);
 	

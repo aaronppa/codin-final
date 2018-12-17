@@ -14,7 +14,7 @@ import kr.co.codin.repository.domain.SearchGallery;
 public interface GalleryMapper {
 	List<Gallery> selectGallery(SearchGallery searchGallery);
 	List<Gallery> selectTopGallery();
-	Gallery selectGalleryByNo(int galleryNo);
+	Gallery selectGalleryByNo(Gallery gallery);
 	void insertGallery(Gallery gallery);
 	void updateGallery(Gallery gallery);
 	void deleteGallery(int galleryNo);

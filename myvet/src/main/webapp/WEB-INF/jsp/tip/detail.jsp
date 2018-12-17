@@ -71,11 +71,11 @@
             <div class="content" >
 				${tip.content }
             </div>
-            <span data-toggle="tooltip" title="포니, 포돌이">
-            </span>
+<!--             <span data-toggle="tooltip" title="포니, 포돌이"> -->
+<!--             </span> -->
           <!-- 좋아요,싫어요 -->
 			 <div class="rating">
-			 <input type="hidden" name="memberNo" id="memberNo" value="8">
+			 <input type="hidden" name="memberNo" id="memberNo" value="${user.memberNo}">
 			 <input type="hidden" name="recommend" id="recommend" value="${recom}">
 			  <!-- Thumbs up -->
 			  <div class="like grow">
@@ -343,21 +343,22 @@
        			return false;
        		}
        		if(isActive == true){
+       			console.log('싫어요')
        			tipRecomCnt.text(parseInt(tipRecomCnt.text()) - 1) ;
        			insertRecommend(0);
        		}else{
+       			console.log('좋아요')
        			tipRecomCnt.text(parseInt(tipRecomCnt.text()) + 1) ;
-       			
        			insertRecommend(1);
-
        		}
        		$(this).toggleClass('active')
        	})
         
        function insertRecommend(recommend){
+        	console.log("insertRecom")
         	$.ajax({
         		url:"/myvet/tip/insertRecommend.do",
-        		data:"tipNo=${tip.tipNo}&recommend="+recommend
+        		data:"tipNo=${tip.tipNo}&recommend="+recommend+"&memberNo=${user.memberNo}"
         	}).done(function(){
         		console.log("insertRecommend-success")
         	})

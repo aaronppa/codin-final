@@ -146,7 +146,7 @@
            <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
            <input type="hidden" name="writerNo" value="${gallery.writerNo}">
            <input type="hidden" name="boardCode" value="10">
-           <span class="writerNick">${user.memberNickname}</span>
+           <span class="writerNick">${gallery.memberNickname}</span>
            <hr>
 		  <div class="wrap-custom-file">
 		    <input type="file" name="file" id="image1" accept=".gif, .jpg, .png" />
@@ -195,9 +195,11 @@
 		  </div>
           <div class="pet-add">
               <i class="fas fa-plus" ></i>
-              <span data-toggle="tooltip" title="PONY">
-                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="petImg rounded-circle">
-              </span>
+                    <c:forEach var="p" items="${gallery.petList}" varStatus="loop">
+                        <span data-toggle="tooltip" title="${p.petName}">
+                            <img class="petImg rounded-circle" id="petImg" src="/myvet/upload${p.petFilePath}/${p.petSysName}" style="margin-right: 10px;">
+                        </span>
+                    </c:forEach>
           </div>
 		</div>
 		</div>

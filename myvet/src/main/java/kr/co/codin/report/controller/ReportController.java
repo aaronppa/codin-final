@@ -63,13 +63,13 @@ public class ReportController {
 	}
 	
 	@RequestMapping("reportGalleryForm.do")
-	public void reportGalleryForm(int galleryNo,HttpSession session,Model model) throws Exception{
+	public void reportGalleryForm(Gallery gallery,HttpSession session,Model model) throws Exception{
 		Member member = (Member)session.getAttribute("user");
 		model.addAttribute("nickname",member.getMemberNickname());
-		model.addAttribute("gallery",galleryService.detailGallery(galleryNo));
+		model.addAttribute("gallery",galleryService.detailGallery(gallery));
 		System.out.println("gallReport!");
-		System.out.println("galleryNo : "+galleryNo);
-		model.addAttribute("reportGallery",service.detailReportGallery(galleryNo));
+//		System.out.println("galleryNo : "+galleryNo);
+//		model.addAttribute("reportGallery",service.detailReportGallery(galleryNo));
 
 	}
 	

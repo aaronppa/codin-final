@@ -60,7 +60,7 @@ public class TipController {
 	}
 	
 	@RequestMapping("detail.do")
-	public void detail(Model model,int tipNo, HttpSession session, TipRecommend tipRecommend,TipCommentRecommend tipCommentRecommend) throws Exception{
+	public void detail(Model model,int tipNo,Tip tip, HttpSession session, TipRecommend tipRecommend,TipCommentRecommend tipCommentRecommend) throws Exception{
 		
 		Member member = (Member)session.getAttribute("user");
 		model.addAttribute("nickname",member.getMemberNickname());
@@ -78,7 +78,7 @@ public class TipController {
 		System.out.println(tipNo);
 		model.addAttribute("countComment",service.countComment(tipNo));
 		service.updateViewCnt(tipNo);
-		model.addAttribute("tip", service.detailTip(tipNo));
+		model.addAttribute("tip", service.detailTip(tip));
 		model.addAttribute("recom",service.selectRecommend(tipRecommend));
 		model.addAttribute("comRecom",service.selectCommentRecommend(tipCommentRecommend));
 		model.addAttribute("sumRecommend", sumRecommend);
@@ -88,9 +88,9 @@ public class TipController {
 	
 	
 	@RequestMapping("updateForm.do")
-	public void updateForm(Model model,int tipNo,HttpSession session) throws Exception{
+	public void updateForm(Model model,Tip tip,int tipNo,HttpSession session) throws Exception{
 		System.out.println("updateForm");
-		model.addAttribute("tip", service.updateForm(tipNo));
+		model.addAttribute("tip", service.updateForm(tip));
 		Member member = (Member)session.getAttribute("user");
 		
 		model.addAttribute("nickname",member.getMemberNickname());
@@ -152,7 +152,6 @@ public class TipController {
 //		int memberNo = member.getMemberNo();
 //		tipCommentRecommend.setMemberNo(memberNo);
 		
-		tip.setMemberNo(7);
 		return service.commentList(tip);
 	}
 	
@@ -256,8 +255,10 @@ public class TipController {
 	public void insertRecommend(TipRecommend tipRecommend, HttpSession session) throws Exception{
 		System.out.println("insertRecommend");
 //		Member member = (Member)session.getAttribute("user");
-		tipRecommend.setMemberNo(7);
 		service.insertRecommend(tipRecommend);
+		System.out.println("memberNo : "+tipRecommend.getMemberNo());
+		System.out.println("recommend : "+tipRecommend.getRecommend());
+		System.out.println("tipNo : "+tipRecommend.getTipNo());
 	}
 	
 	@RequestMapping("insertCommentRecommend.do")
@@ -265,7 +266,6 @@ public class TipController {
 	public void insertCommentRecommend(TipCommentRecommend tipCommentRecommend, HttpSession session) throws Exception{
 		System.out.println("insertCommentRecommend!");
 //		Member member = (Member)session.getAttribute("user");
-		tipCommentRecommend.setMemberNo(7);
 		service.insertCommentRecommend(tipCommentRecommend);
 		
 	}

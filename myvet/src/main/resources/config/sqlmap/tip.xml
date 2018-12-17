@@ -14,6 +14,7 @@
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="category_code" property="categoryCode"/>
 		<result column="member_nickname" property="memberNickname"/>
+		<association property="comCnt" column="tip_no" select="countComment"></association>
 		<association property="recomCnt" column="tip_no" select="countRecommend"></association>
 	</resultMap>
 
@@ -129,10 +130,11 @@
 		 limit #{begin}, #{pageNum}		
 	</select>
   		
-	<select id="selectTipByNo" parameterType="int" resultMap="tipMap">
-		select *, (select member_nickname from member where member_no = t.member_no)
-		  from tip t
+	<select id="selectTipByNo" parameterType="tip" resultMap="tipMap">
+		select t.*, m.member_nickname
+		  from tip t,member m
 		 where t.tip_no = #{tipNo}
+		   and t.member_no = m.member_no
 	</select>
 	<insert id="insertTip" parameterType="tip" useGeneratedKeys="true" keyProperty="tipNo">
 		insert into tip(
@@ -259,7 +261,7 @@
 	
 	<!-- 추천 -->
 	<select id="selectRecommend" parameterType="tipRecommend" resultType="int">
-		select recommend
+		select recommend 
 		  from tip_recommend
 		 where member_no = #{memberNo}
 		   and tip_no=#{tipNo} 

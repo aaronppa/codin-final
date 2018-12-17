@@ -33,8 +33,8 @@ public class TipServiceImpl implements TipService{
 	
 
 	@Override
-	public Tip detailTip(int tipNo) {
-		return mapper.selectTipByNo(tipNo);
+	public Tip detailTip(Tip tip) {
+		return mapper.selectTipByNo(tip);
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class TipServiceImpl implements TipService{
 	}
 
 	@Override
-	public Tip updateForm(int tipNo) {
-		return mapper.selectTipByNo(tipNo);
+	public Tip updateForm(Tip tip) {
+		return mapper.selectTipByNo(tip);
 	}
 
 	@Override
@@ -118,11 +118,13 @@ public class TipServiceImpl implements TipService{
 
 	@Override
 	public Integer selectRecommend(TipRecommend tipRecommend) {
+		System.out.println("serviceImplSelectRecom");
 		return mapper.selectRecommend(tipRecommend);
 	}
 	
 	@Override
 	public void insertRecommend(TipRecommend tipRecommend) {
+		System.out.println("serviceImplRecom");
 		mapper.deleteRecommend(tipRecommend);
 		int recommend = tipRecommend.getRecommend();
 		if(recommend == 1 || recommend == -1) {

@@ -15,7 +15,7 @@ public interface TipMapper {
 
 	List<Tip> selectTopTip();
 	List<Tip> selectTip(SearchTip searchTip);
-	Tip selectTipByNo(int tipNo);
+	Tip selectTipByNo(Tip tip);
 	void insertTip(Tip tip);
 	void updateTip(Tip tip);
 	void deleteTip(int tipNo);

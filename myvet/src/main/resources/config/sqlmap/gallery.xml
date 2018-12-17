@@ -123,10 +123,11 @@
 		 order by gallery_no desc		
 		 limit #{begin}, #{pageNum}
 	</select>
-	<select id="selectGalleryByNo" parameterType="int" resultMap="galleryMap">
-		select *
-		  from gallery
-		 where gallery_no = #{galleryNo}
+	<select id="selectGalleryByNo" parameterType="gallery" resultMap="galleryMap">
+		select g.*, m.member_nickname
+		  from gallery g, member m
+		 where g.gallery_no = #{galleryNo}
+		   and g.writer_no = m.member_no
 	</select>
 	<insert id="insertGallery" parameterType="gallery" useGeneratedKeys="true" keyProperty="galleryNo">
 		insert into gallery(
@@ -136,10 +137,11 @@
 		)
 	</insert>
 	<update id="updateGallery" parameterType="gallery">
-		update gallery 
-		   set title = #{title},
-		       content = #{content}
-		 where gallery_no = #{galleryNo}
+		update gallery g, member m 
+		   set g.title = #{title},
+		       g.content = #{content}
+		 where g.gallery_no = #{galleryNo}
+		   and g.writer_no = m.member_no
 	</update>
 	<delete id="deleteGallery" parameterType="int">
 		delete 
