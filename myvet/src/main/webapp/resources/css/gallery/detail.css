@@ -1,6 +1,12 @@
 @charset "UTF-8";
 
 /*petImg margin, fa-exclamation-circle(댓글 신고) 인라인태그*/
+   .container{
+		width:1100px;
+		position:relative;
+		top:80px;
+	}
+   
     #thumbs { 
         padding-top: 10px; 
         overflow: hidden; 
@@ -190,7 +196,7 @@
 	}
 	/*글 신고*/
 	#galleryReport{
-		margin-left: 85%;cursor:pointer;
+		margin-left: 80%;cursor:pointer;
 	}
 	/*글 제목*/
 	#title{
@@ -222,7 +228,7 @@
 	}
 	/*댓글 추천*/
 	.com-like{
-	background:none; border:none; color:black;margin-left:74%;cursor:pointer;
+	background:none; border:none; color:black;margin-left:68%;cursor:pointer;
 	}
 	.fa-thumbs-up{
 	font-size:25px;
@@ -245,7 +251,7 @@
 	
 	/*댓글 수정*/
 	#updateCom{
-	margin-left:60%;
+	margin-left:55%;
 	}
 	#deleteCom{
 	margin-left:5%;

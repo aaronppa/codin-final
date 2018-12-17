@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script> -->
   <style>
   .container{
-		position:reletive;
+		position:relative;
 		top:80px;
 	}
     .carousel-3d-slide {
@@ -392,7 +392,7 @@
 	              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
 	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
 	            	+"<div class='comheartform'>"
-	              	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+	              	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+(result[i].recommendCnt == true?result[i].recommendCnt:0)+"</span>"
 	            	+"</div>"
 // 	            	+"<i class='fas fa-exclamation-circle' data-comno='"+result[i].commentNo+"' style='margin-left:10px;'></i>"
 	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno="+result[i].commenterNo+"></div>"

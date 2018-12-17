@@ -23,45 +23,14 @@
         <style>
         	.container{
 			width:1100px;
-			position:reletive;
+			position:relative;
 			top:80px;
 		}
-/*          .container{  */
-/*          	width:1100px;  */
-/*          	margin-left: auto;  */
-/*          	margin-right: auto;  */
-/*          	background-color: none;  */
-/*          }  */
-        
-/*         /*글제목*/ */
-/*         .title{ */
-/*             font:bolder; */
-/*             font-size: 60px; */
-/*             text-align: center; */
-/*         } */
-/*         /*글쓴이 사진*/ */
-/*         #writer-img{ */
-/*             width: 60px; */
-/*             height: 60px; */
-/*         } */
-/*         /*글 작성자 id*/ */
-/*         .writer-id{ */
-/*             font-weight: bold; */
-/*         } */
-/*         /*글 정보*/ */
-/*         .information{ */
-/*             text-align: center;  */
-/*         } */
-/*         .write-btn-form{ */
-/*             text-align: center;  */
-/*         } */
-
-
-       
+ 
     </style>
 </head>
 <body>
-<%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
+   	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
 	<div class="container">
     <form action="<c:url value='/tip/write.do' />" method="post">
     <br>
@@ -115,6 +84,8 @@
     </div>    
     </form>
     </div>
+    <br>
+    <br>
 	<script>
 // 	console.log("memberNo : "+${user.memberNo})
 

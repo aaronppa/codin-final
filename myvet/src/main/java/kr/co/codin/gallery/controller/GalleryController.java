@@ -57,7 +57,6 @@ public class GalleryController{
 		SearchGallery searchGallery = new SearchGallery(pageNo);
 		searchGallery.setSort(sort);
 		searchGallery.setKeyword(keyword);
-//		model.addAttribute("topGallery",service.galleryTopList());
 		model.addAttribute("nickname",member.getMemberNickname());
  		model.addAttribute("sort",sort);
 		model.addAttribute("keyword",keyword);

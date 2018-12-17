@@ -46,7 +46,7 @@ public class PetController {
 		SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMMdd");
 		String datePath = sdf.format(new Date());
 		
-		pet.setPetFilePath("/upload/pet" + datePath);
+		pet.setPetFilePath("/pet" + datePath);
 		
 		UUID uid = UUID.randomUUID();
 		String petSysName = uid.toString() + "_" + petOriName;

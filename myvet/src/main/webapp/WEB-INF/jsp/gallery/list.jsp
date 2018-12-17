@@ -27,7 +27,7 @@
         @import url(https://fonts.googleapis.com/css?family=Give+You+Glory|The+Girl+Next+Door|Gloria+Hallelujah|Indie+Flower);
 	.container{
 			width:1100px;
-			position:reletive;
+			position:relative;
 			top:80px;
 		}
     </style>
@@ -50,7 +50,11 @@
      </div>
     <div id="galleryCount" >전체 ${count} 개</div>
     <br>
-    
+                <div class="write-btn-form">
+            <a href="<c:url value='/gallery/writeForm.do'/>">
+           	    <button type="button" class="btn btn-outline write-btn">글쓰기</button>
+            </a>
+            </div>
     <table>
     <!-- 공지 게시물 -->
 		<tr>
@@ -197,22 +201,14 @@
                 </td>
             </tr>
         </table>
-        <hr>
-    <br><br><br>
+    <br><br><br><br>
         <!-- 글쓰기 -->
-            <div class="write-btn-form">
-            <a href="<c:url value='/gallery/writeForm.do'/>">
-           	    <button type="button" class="btn btn-outline write-btn">글쓰기</button>
-            </a>
-            </div>
-        <br>
-       </div>
-      </form>  
         <!--페이징-->
-
     <div id="pagination">
    		 <c:import url="page.jsp"></c:import>
     </div>
+       </div>
+      </form>  
     <script>
 //     $('.write-btn-form').click(function(){
 //     	window.open("/myvet/gallery/writeForm.do","gallery","width=1300, height=700, right=100, top=10")

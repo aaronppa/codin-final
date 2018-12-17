@@ -1,6 +1,6 @@
 package kr.co.codin.repository.domain;
 
-public class SearchGallery extends Page{
+public class SearchGallery extends GalleryPage{
 	
 	public SearchGallery() {
 		super(1);

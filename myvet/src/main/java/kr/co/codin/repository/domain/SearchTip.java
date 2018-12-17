@@ -1,6 +1,6 @@
 package kr.co.codin.repository.domain;
 
-public class SearchTip extends Page{
+public class SearchTip extends TipPage{
 	
 	public SearchTip() {
 		super(1);

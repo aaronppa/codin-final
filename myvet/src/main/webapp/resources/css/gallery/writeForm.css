@@ -8,6 +8,12 @@
    CUSTOM INPUT FILES FOR IMAGES
  *********************************/
 /*** GENERAL STYLES ***/
+.container{
+		width:1100px;
+		position:relative;
+		top:80px;
+	}
+
 * {
   box-sizing: border-box;
 }

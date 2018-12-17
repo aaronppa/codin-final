@@ -135,7 +135,7 @@
 	    	</c:if>
 	    	<c:forEach var="pet" items="${pet}">
 				<div class="pet-info" data-pet-no="${pet.petNo}">
-					<img alt="강아지 사진" src="<c:url value='${pet.petFilePath}/${pet.petSysName}' />" class="img-thumbnail">
+					<img alt="강아지 사진" src="<c:url value='/upload${pet.petFilePath}/${pet.petSysName}' />" class="img-thumbnail">
 					<div>${pet.petName}</div>
 				</div>
 			</c:forEach>

@@ -84,7 +84,7 @@
 		recommend_cnt from tip a ) b,tip t, member m
 	where t.member_no = m.member_no
 	 order by recommend_cnt desc 
-	 limit 0,4 
+	 limit 0,2
 </select>
 
 

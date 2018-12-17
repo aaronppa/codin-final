@@ -26,7 +26,7 @@
     <style>
     	.container{
 			width:1100px;
-			position:reletive;
+			position:relative;
 			top:80px;
 		}
 /*     	html,body{ */
