@@ -42,6 +42,7 @@
 		<result column="msg_body" property="msgBody"/>
 		<result column="date_sent" property="dateSent"/>
 		<result column="msg_type" property="msgType"/>
+		<result column="my_date_read" property="myDateRead"/>
 		<collection property="recipients" column="{chatId=chat_id,recipientNo=recipient_no}"  javaType="java.util.ArrayList" ofType="RecipientGroup" select="selectRecipients"></collection>
 	</resultMap>
 	
@@ -79,7 +80,7 @@
 		insert into chat () values ()
 	</insert>
 	
-	<insert id="insertMsg" parameterType="Message">
+	<insert id="insertMsg" parameterType="Message" useGeneratedKeys="true" keyProperty="msgId" keyColumn="msg_id">
 		insert into message (
 				chat_id, sender_no, msg_body, msg_type
 			) values ( 
@@ -106,7 +107,7 @@
 	</select>
 	
 	<select id="selectMyChat" parameterType="int" resultMap="messageMap">
-		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no
+		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no, date_read as my_date_read
 		from recipient_group r
 		inner join(select *
 	               from message m
@@ -128,4 +129,40 @@
 		and trash =0
 		order by msg_id asc
 	</select>
+	
+	<select id="countUnreadMsg" parameterType="int" resultType="int">
+		select count(*)
+		from(select *
+		from recipient_group r
+			inner join message m on m.chat_id = r.recipient_group_id
+			inner join member mem on mem.member_no = m.sender_no
+		where date_read is null
+		and recipient_no = #{recipientNo}
+		and mem.member_no !=#{recipientNo}
+        group by chat_id) as t
+	</select>
+	
+	<update id="selfRead" parameterType="RecipientGroup">
+		update recipient_group r
+			inner join message m on m.chat_id = r.recipient_group_id
+			inner join member mem on mem.member_no = m.sender_no
+		   set date_read=now()
+		where chat_id = #{recipientGroupId}
+		and msg_id = #{msgId}
+		and trash =0
+		and recipient_no = #{recipientNo};
+	</update>
+	
+	<update id="resetDateRead" parameterType="int">
+		update recipient_group
+		set date_read=null
+		where recipient_group_id = #{recipient_group_id}
+	</update>
+	
+	<update id="updateMyReadDate" parameterType="RecipientGroup">
+		update recipient_group
+		   set date_read = now()
+		where recipient_group_id = #{recipientGroupId}
+		and recipient_no = #{recipientNo}
+	</update>
 </mapper>

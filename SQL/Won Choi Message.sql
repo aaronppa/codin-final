@@ -69,3 +69,25 @@ select recipient_group_id, recipient_no, trash, member_no, member_nickname, memb
 				    from member) mem on mem.member_no = r.recipient_no
 		where trash = 0
         and recipient_group_id = 1;
+        
+-- update test 나만 뺴고
+select msg_id, chat_id, sender_no, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type, mem.member_nickname 
+from recipient_group r
+inner join message m on m.chat_id = r.recipient_group_id
+inner join member mem on mem.member_no = m.sender_no
+-- where chat_id = 1
+-- and msg_id = 67
+and trash =0
+-- and recipient_no = 3
+order by date_sent asc;
+
+-- 읽은 메세지 있는 지 확인 
+select msg_id, chat_id, sender_no, mem.member_nickname as sender_nickname, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type
+from recipient_group r
+inner join message m on m.chat_id = r.recipient_group_id
+inner join member mem on mem.member_no = m.sender_no
+where date_read is null
+and recipient_no= 3;
+
+
+

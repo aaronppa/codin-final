@@ -46,6 +46,9 @@ public class MsgController {
 		myRg.setRecipientNo(me);
 		myRg.setRecipientGroupId(chatId);
 		
+		// 메세지 읽음 날짜 Stamp찍기 
+		service.updateMyReadDate(myRg);
+		
 		return service.selectChatMsg(myRg);
 	}
 	
@@ -71,7 +74,7 @@ public class MsgController {
 						  @RequestParam(value="recipientNo", required = false) List<Integer> memberRecipients, 
 					      @RequestParam(value="recipientHosNo", required = false) List<Integer> hosRecipients) throws Exception {
 		int chatId=0;
-			
+		RecipientGroup self = new RecipientGroup();
 		msg.setMsgType(1);
 		
 		System.out.println(msg+", "+memberRecipients+", "+hosRecipients);
@@ -84,11 +87,13 @@ public class MsgController {
 			System.out.println("New ChatId: "+chatId);
 			
 			// 본인도 수신자 그룹 리스트에 포함시켜야함. 
-			RecipientGroup self = new RecipientGroup();
+			
 			self.setRecipientGroupId(chatId);
 			self.setRecipientNo(msg.getSenderNo());
-			service.insertRecipientGroup(self);
 			
+			// 본인 수신자그룹에 포함 
+			service.insertRecipientGroup(self);
+	
 			if(memberRecipients!=null) {
 				for(int member : memberRecipients) {
 					RecipientGroup rg = new RecipientGroup();
@@ -114,13 +119,37 @@ public class MsgController {
 			}
 			System.out.println("Insert Msg param: "+msg);
 			service.insertMsg(msg);
-			
+			// 읽음 날짜 모두 리셋 
+			service.resetDateRead(chatId);
+			// 본인 메세지는 바로 읽은 날짜 Stamp 찍기 
+			service.selfRead(self);
 		} 
 		// 기존 대화방인 경우 
 		else{
-			service.insertMsg(msg);
+			service .insertMsg(msg);
+			// 읽음 날짜 모두 리셋 
+			service.resetDateRead(msg.getChatId());
+			// 본인 메세지는 바로 읽은 날짜 Stamp 찍기 
+			self.setRecipientGroupId(msg.getChatId());
+			self.setRecipientNo(msg.getSenderNo());
+			self.setMsgId(msg.getMsgId());
+			service.selfRead(self);
 		}
+		
 		return chatId;
 	} // insert.do
+	
+	// 신규 메세지 도착 알림
+	@RequestMapping("alertnew.do")
+	@ResponseBody
+	public Map<String, Object> alertNew(int memberNo) throws Exception{
+		System.out.println("updating unread Cnt");
+		Map<String, Object> map = new HashMap<>();
+		map.put("NewMsgCnt", service.countUnreadMsg(memberNo));
+		map.put("NewMsg", service.selectMyChat(memberNo));
+		return map;
+	}
+	
+	// 대화방 나가면 수신자 그룹에서 trash 처리 
 	
 } // End Class

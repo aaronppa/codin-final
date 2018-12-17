@@ -291,7 +291,7 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 	padding: 0;
 	border-radius: unset;
 	margin: 0;
-	line-height: 10px;
+	line-height: 22px;
 }
 
 .messages-content {
@@ -360,10 +360,15 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 	width: 700px;
 	height: 32px;
 	padding: 5px;
-	/* border-style: none; */
-	border-color: black;
+	border-style: none;
+	/* border-color: black; */
 	overflow: hidden;
 	box-sizing: border-box;
+}
+
+.newmsg{
+font-weight: 900;
+background: #f5e9c3;
 }
 
 </style>
@@ -384,8 +389,7 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 				<ul class="conversation list" id="chatroomlist">
 				
 				<c:forEach var="myChat" items="${myChat}">
-					
-					<li class='conversation-chatroom' data-chatid='${myChat.chatId}'>
+					<li class='conversation-chatroom <c:if test="${myChat.myDateRead==null}">newmsg</c:if>' data-chatid='${myChat.chatId}'>
 				        <div class='chatroom'>
 					       	<div class='profile'>
 					       		<img src="<c:url value='/resources/img/test_image/test4.jpg*******'/>" class="rounded-circle">
@@ -455,12 +459,16 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 /* 첫 로딩시 */ 
 var $messages = $('.messages-content'), 
 	form = $('form#msgform'), 
-	me = ${user.memberNo},
 	d = new Date(),
 	m = d.getMinutes(),
 	todayDate = $.format.date(d,'yyyy-MM-dd'),
 	h,
+	me,
 i = 0;
+
+<c:if test="${ not empty user.memberNo}">
+ me =${user.memberNo};
+</c:if>
 
 $(window).on("load", function () {
 	$messages.mCustomScrollbar();
@@ -735,7 +743,7 @@ $("#chatroomlist").on("click",".close-chat", function(e){
 		$("#mCSB_1_container").html("");
 		
 		// ajax로 대화방 수신자 그룹에서 trash 처리 
-// 		$messages.mCustomScrollbar();
+		$.get()
 	});
 	
 /* Input Text가 공백일 경우 백스페이스누르면 이전 수신자 삭제 */
@@ -836,11 +844,13 @@ function insertMessage(item) {
 	form.children().not("input[name='msgType']").remove();
 	newMsgSwitch=true;
 	
+	/*
+	// Test용 자동 대답봇
 	setTimeout(function() {
 		fakeMessage();
 
 	}, 1000 + (Math.random() * 20) * 100);
-	
+	*/
 };
 
 /* 전송버튼 Action */
@@ -853,7 +863,8 @@ $('#send').click(function(e) {
 $('#msgtextarea').on('keydown', function(e) {
 	if (e.keyCode == 13) {
 		e.preventDefault();
-		sendClick(this);
+		console.log("enter pressed to send");
+		sendClick($("#send")[0]);
 	}
 })
 
@@ -892,15 +903,31 @@ function sendClick(item){
 		$(".recipients-input span").removeClass("addedRecipient").addClass("headerRecipient");
 		$("#recipientSearch").remove();
 	}
+	$("#msgtextarea").focus();
 }
 
 /* 대화방선택 */ 
 $("#chatroomlist").on("click", ".chatroom", function(){	
 	// console.log("Chatroom changed", $(this).parent().data("chatid"));
 	$(".chatroom.active").removeClass('active');
-	$(this).toggleClass('active');
+	$(this).toggleClass('active')
 	activeDo();
 	
+	var newMsgCnt = $(".userid.msgbadge span.badge").text();
+	console.log("newMsgCnt:", newMsgCnt);
+	
+	// 만약 안읽은 메세지가 있는 대화방을 선택했을 경우 안읽은 메세지수 -1 처리 
+	if($(this).closest("li").hasClass("newmsg")){
+		if(newMsgCnt>0){
+		 	var zeroCntCheck = newMsgCnt-1;
+		 	if(zeroCntCheck!=0){
+				$(".msgbadge span.badge").text(zeroCntCheck);
+		 	} else {
+		 		$(".msgbadge span.badge").text('');
+		 	}
+		}
+		$(this).closest("li").removeClass("newmsg");
+	}
 });
 
 /* Active한 대화방 번호 Send 버튼에 넣어주기 */
@@ -941,6 +968,7 @@ function activeDo(){
 	})
 }
 
+/* Test용 자동 대답봇 */
 var Fake = [
 'Hi there, I\'m Jesse and you?',
 'Nice to meet you',

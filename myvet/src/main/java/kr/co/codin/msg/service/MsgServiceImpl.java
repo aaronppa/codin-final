@@ -51,5 +51,25 @@ public class MsgServiceImpl implements MsgService{
 		return mapper.selectChatMsg(myRg);
 	}
 
+	@Override
+	public void selfRead(RecipientGroup myRg) {
+		mapper.selfRead(myRg);	
+	}
+
+	@Override
+	public void resetDateRead(int chatId) {
+		mapper.resetDateRead(chatId);
+	}
+
+	@Override
+	public void updateMyReadDate(RecipientGroup myRg) {
+		mapper.updateMyReadDate(myRg);
+	}
+
+	@Override
+	public int countUnreadMsg(int recipientNo) {
+		return mapper.countUnreadMsg(recipientNo);
+	}
+
 	
 }

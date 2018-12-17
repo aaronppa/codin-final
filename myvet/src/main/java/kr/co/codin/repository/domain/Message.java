@@ -12,6 +12,7 @@ public class Message {
 	private String msgBody;
 	private Date dateSent;
 	private int msgType;
+	private Date myDateRead;
 	
 	List<RecipientGroup> recipients;
 
@@ -19,24 +20,8 @@ public class Message {
 		return recipientNo;
 	}
 
-	public void setMemberNo(int recipientNo) {
+	public void setRecipientNo(int recipientNo) {
 		this.recipientNo = recipientNo;
-	}
-
-	public List<RecipientGroup> getRecipients() {
-		return recipients;
-	}
-
-	public void setRecipients(List<RecipientGroup> recipients) {
-		this.recipients = recipients;
-	}
-
-	public String getSenderNickname() {
-		return senderNickname;
-	}
-	
-	public void setSenderNickname(String senderNickname) {
-		this.senderNickname = senderNickname;
 	}
 
 	public int getMsgId() {
@@ -63,6 +48,14 @@ public class Message {
 		this.senderNo = senderNo;
 	}
 
+	public String getSenderNickname() {
+		return senderNickname;
+	}
+
+	public void setSenderNickname(String senderNickname) {
+		this.senderNickname = senderNickname;
+	}
+
 	public String getMsgBody() {
 		return msgBody;
 	}
@@ -87,12 +80,26 @@ public class Message {
 		this.msgType = msgType;
 	}
 
-	@Override
-	public String toString() {
-		return "Message [recipientNo=" + recipientNo + ", msgId=" + msgId + ", chatId=" + chatId + ", senderNo=" + senderNo
-				+ ", senderNickname=" + senderNickname + ", msgBody=" + msgBody + ", dateSent=" + dateSent
-				+ ", msgType=" + msgType + ", recipients=" + recipients + "]";
+	public Date getMyDateRead() {
+		return myDateRead;
 	}
 
-	
+	public void setMyDateRead(Date myDateRead) {
+		this.myDateRead = myDateRead;
+	}
+
+	public List<RecipientGroup> getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(List<RecipientGroup> recipients) {
+		this.recipients = recipients;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [recipientNo=" + recipientNo + ", msgId=" + msgId + ", chatId=" + chatId + ", senderNo="
+				+ senderNo + ", senderNickname=" + senderNickname + ", msgBody=" + msgBody + ", dateSent=" + dateSent
+				+ ", msgType=" + msgType + ", myDateRead=" + myDateRead + ", recipients=" + recipients + "]";
+	}
 }

@@ -14,4 +14,8 @@ public interface MsgMapper {
 	void insertRecipientGroup(RecipientGroup rg);
 	List<Message> selectMyChat(int memberNo);
 	List<Message> selectChatMsg(RecipientGroup myRg);
+	void selfRead(RecipientGroup myRg);
+	void resetDateRead(int chatId);
+	void updateMyReadDate(RecipientGroup myRg);
+	int countUnreadMsg(int recipientNo);
 }

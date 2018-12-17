@@ -2610,8 +2610,8 @@ table.list{
 
 }
 
-.listarea:nth-of-type(3) > h2 {
-    float: left;
+h2.notice-h2 {
+    float: left !important;
 }
 
 .listcnt{
@@ -2660,7 +2660,7 @@ tbody > tr:not(.focus-search):hover{
 
 hr{
     margin-top: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 30px !important;
 }
 
 select {

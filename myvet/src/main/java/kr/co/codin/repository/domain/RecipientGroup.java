@@ -3,6 +3,7 @@ package kr.co.codin.repository.domain;
 import java.util.Date;
 
 public class RecipientGroup {
+	private int msgId;
 	private int recipientGroupId;
 	private int recipientNo;
 	private int recipientHosNo;
@@ -14,7 +15,12 @@ public class RecipientGroup {
 	private String hosTitle;
 	private String recipientSysName;
 	private String recipientFilePath;
-	
+	public int getMsgId() {
+		return msgId;
+	}
+	public void setMsgId(int msgId) {
+		this.msgId = msgId;
+	}
 	public int getRecipientGroupId() {
 		return recipientGroupId;
 	}
@@ -26,6 +32,12 @@ public class RecipientGroup {
 	}
 	public void setRecipientNo(int recipientNo) {
 		this.recipientNo = recipientNo;
+	}
+	public int getRecipientHosNo() {
+		return recipientHosNo;
+	}
+	public void setRecipientHosNo(int recipientHosNo) {
+		this.recipientHosNo = recipientHosNo;
 	}
 	public int getRecipientType() {
 		return recipientType;
@@ -45,24 +57,17 @@ public class RecipientGroup {
 	public void setTrash(int trash) {
 		this.trash = trash;
 	}
-	
-	public String getHosTitle() {
-		return hosTitle;
-	}
-	public void setHosTitle(String hosTitle) {
-		this.hosTitle = hosTitle;
-	}
-	public int getRecipientHosNo() {
-		return recipientHosNo;
-	}
-	public void setRecipientHosNo(int recipientHosNo) {
-		this.recipientHosNo = recipientHosNo;
-	}
 	public String getRecipientNickname() {
 		return recipientNickname;
 	}
 	public void setRecipientNickname(String recipientNickname) {
 		this.recipientNickname = recipientNickname;
+	}
+	public String getHosTitle() {
+		return hosTitle;
+	}
+	public void setHosTitle(String hosTitle) {
+		this.hosTitle = hosTitle;
 	}
 	public String getRecipientSysName() {
 		return recipientSysName;
@@ -78,10 +83,11 @@ public class RecipientGroup {
 	}
 	@Override
 	public String toString() {
-		return "RecipientGroup [recipientGroupId=" + recipientGroupId + ", recipientNo=" + recipientNo
-				+ ", recipientHosNo=" + recipientHosNo + ", recipientType=" + recipientType + ", dateRead=" + dateRead
-				+ ", trash=" + trash + ", recipientNickname=" + recipientNickname + ", hosTitle=" + hosTitle
-				+ ", recipientSysName=" + recipientSysName + ", recipientFilePath=" + recipientFilePath + "]";
+		return "RecipientGroup [msgId=" + msgId + ", recipientGroupId=" + recipientGroupId + ", recipientNo="
+				+ recipientNo + ", recipientHosNo=" + recipientHosNo + ", recipientType=" + recipientType
+				+ ", dateRead=" + dateRead + ", trash=" + trash + ", recipientNickname=" + recipientNickname
+				+ ", hosTitle=" + hosTitle + ", recipientSysName=" + recipientSysName + ", recipientFilePath="
+				+ recipientFilePath + "]";
 	}
 	
 	

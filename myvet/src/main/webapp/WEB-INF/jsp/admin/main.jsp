@@ -97,6 +97,7 @@ ul.pagination{
 			    </nav>
              
         </div>
+        <!-- 
         <hr>
         <div class="listarea report">
             <h2><a id="reportheader">신고 접수 리스트</a></h2>
@@ -178,9 +179,10 @@ ul.pagination{
                 </tbody>
             </table>
         </div>
+         -->
         <hr>
         <div class="listarea notice">
-            <h2><a id="noticeheader">사이트 전체 공지사항</a></h2>
+            <h2 class="notice-h2"><a id="noticeheader">사이트 전체 공지사항</a></h2>
             <button type="button" id="write">글작성</button>
             <div class="search">
                 <form action="#" id="notice-search" method="post" data-boardtype="notice">

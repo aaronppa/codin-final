@@ -46,6 +46,10 @@
         .is-dropdown-submenu{
         z-index: 200
         }
+        
+    .msgbadge span{
+    
+    }
     </style>
 	<link rel="stylesheet" href="<c:url value='../resources/css/common/topbar.css'/>"/>
 <!-- <script -->
@@ -92,10 +96,11 @@
 			                <c:choose>
 			                	<c:when test="${user.memberGrade == 'A'}">
 					                <li>
-					                	<a href="<c:url value='/admin/main.do'/>">관리자</a>
+					                	<a class="userid msgbadge" href="<c:url value='/admin/main.do'/>">관리자<span class="nbsp">&nbsp;</span><span class='badge badge-dark'></span></a>
+					                	
 					                	<ul class="menu vertical">
 											<li><a href="<c:url value='/member/myPage.do'/>">마이페이지</a></li>
-											<li><a href="<c:url value='/msg/main.do'/>">메신저</a></li>
+											<li><a class="msgbadge" href="<c:url value='/msg/main.do'/>">메신저<span class="nbsp">&nbsp;</span><span class='badge badge-dark'></span></a></li>
                 							<li><a href="#">즐겨찾는 병원</a></li>
 											<li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
 										</ul>
@@ -103,10 +108,10 @@
 			                	</c:when>
 			                	<c:otherwise>
 					                <li>
-						                <a href="#">${user.memberNickname}</a>                	
+						                <a class="userid msgbadge" href="#">${user.memberNickname}<span class="nbsp">&nbsp;</span><span class='badge badge-dark'></span></a>                	
 										<ul class="menu vertical">
 											<li><a href="<c:url value='/member/myPage.do'/>">마이페이지</a></li>
-											<li><a href="<c:url value='/msg/main.do'/>">메신저</a></li>
+											<li><a class="msgbadge" href="<c:url value='/msg/main.do'/>">메신저<span class="nbsp">&nbsp;</span><span class='badge badge-dark'></span></a></li>
                 							<li><a href="#">즐겨찾는 병원</a></li>
 											<li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
 										</ul>
@@ -249,12 +254,33 @@
         </div>
     </div>
     
-    <script>
+<script>
+    var me;
+    <c:if test="${ not empty user.memberNo}">
+  	 me =${user.memberNo};
+    </c:if>
+    
         $(document).foundation();
+        
+        $(function(){
+        	updateNewMsg(me);
+        	
+        	setInterval(function(){updateNewMsg(me)}, 180000);
+        });
         
         $("#input-file").hide();
     	var emailCheck = 0;
     	
+    	function updateNewMsg(me){
+    		if(me){
+	        	$.get("/myvet/msg/alertnew.do?memberNo="+me)
+	        	.done(function(result){
+	        		if(result.NewMsgCnt!=0){
+	        		$(".msgbadge span.badge").text(result.NewMsgCnt);
+	        		}
+	        	});
+        	}
+        };
     	// 로그인 처리
     	$("#loginBtnPop").click(function () {
     		let memberEmail = $("input[name='memberEmail']");
