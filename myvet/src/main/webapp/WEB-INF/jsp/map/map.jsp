@@ -27,7 +27,7 @@
 #resultDiv {
 	border: 1px solid black;
 	width: 299px;
-	height: 473.8px;
+	height: 469px;
 	position:relative;
 }
 
@@ -38,7 +38,8 @@
 
 #MapSearchlist{
 	postion:absolute;
-	height:450px;
+	height:100%;
+	width: 299px;
 }
 
 #MapSearchlist >table{
