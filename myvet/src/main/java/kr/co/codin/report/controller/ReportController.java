@@ -54,7 +54,7 @@ public class ReportController {
 	@RequestMapping("reportTipForm.do")
 	public void reportTipForm(int tipNo,HttpSession session,Model model) throws Exception{
 		Member member = (Member)session.getAttribute("user");
-		model.addAttribute("tip",tipService.detailTip(tipNo));
+//		model.addAttribute("tip",tipService.detailTip(tipNo));
 		model.addAttribute("nickname",member.getMemberNickname());
 		System.out.println("tipReport!");
 		System.out.println(tipNo);
