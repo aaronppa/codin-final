@@ -13,8 +13,10 @@ public class RecipientGroup {
 	
 	private String recipientNickname;
 	private String hosTitle;
-	private String recipientSysName;
-	private String recipientFilePath;
+	private String memberSysName;
+	private String memberFilePath;
+	private String hosSysName;
+	private String hosFilePath;
 	public int getMsgId() {
 		return msgId;
 	}
@@ -69,28 +71,38 @@ public class RecipientGroup {
 	public void setHosTitle(String hosTitle) {
 		this.hosTitle = hosTitle;
 	}
-	public String getRecipientSysName() {
-		return recipientSysName;
+	public String getMemberSysName() {
+		return memberSysName;
 	}
-	public void setRecipientSysName(String recipientSysName) {
-		this.recipientSysName = recipientSysName;
+	public void setMemberSysName(String memberSysName) {
+		this.memberSysName = memberSysName;
 	}
-	public String getRecipientFilePath() {
-		return recipientFilePath;
+	public String getMemberFilePath() {
+		return memberFilePath;
 	}
-	public void setRecipientFilePath(String recipientFilePath) {
-		this.recipientFilePath = recipientFilePath;
+	public void setMemberFilePath(String memberFilePath) {
+		this.memberFilePath = memberFilePath;
+	}
+	public String getHosSysName() {
+		return hosSysName;
+	}
+	public void setHosSysName(String hosSysName) {
+		this.hosSysName = hosSysName;
+	}
+	public String getHosFilePath() {
+		return hosFilePath;
+	}
+	public void setHosFilePath(String hosFilePath) {
+		this.hosFilePath = hosFilePath;
 	}
 	@Override
 	public String toString() {
 		return "RecipientGroup [msgId=" + msgId + ", recipientGroupId=" + recipientGroupId + ", recipientNo="
 				+ recipientNo + ", recipientHosNo=" + recipientHosNo + ", recipientType=" + recipientType
 				+ ", dateRead=" + dateRead + ", trash=" + trash + ", recipientNickname=" + recipientNickname
-				+ ", hosTitle=" + hosTitle + ", recipientSysName=" + recipientSysName + ", recipientFilePath="
-				+ recipientFilePath + "]";
+				+ ", hosTitle=" + hosTitle + ", memberSysName=" + memberSysName + ", memberFilePath=" + memberFilePath
+				+ ", hosSysName=" + hosSysName + ", hosFilePath=" + hosFilePath + "]";
 	}
-	
-	
-	
+
 	
 }

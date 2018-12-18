@@ -14,14 +14,17 @@
 <script
 	src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
 
-<script src="<c:url value='/resources/js/waitme/waitMe.js'/>"></script>
+<script src="<c:url value='/resources/js/common/tooltipster/tooltipster.bundle.js'/>"></script>
 
-<link rel="stylesheet"
-	href="<c:url value='/resources/js/waitme/waitMe.css'/>" />
 <link rel="stylesheet"
 	href="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css">
 <link rel="stylesheet"
-	href="<c:url value='/resources/css/msg/small-chat-responsive.css'/>" />
+	href="<c:url value='/resources/css/msg/small-chat-responsive.css'/>" />'
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/common/tooltipster/tooltipster.bundle.css'/>" />
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/common/tooltipster/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css'/>" />
+
 <style>
 body {
 	margin: 0;
@@ -371,6 +374,18 @@ font-weight: 900;
 background: #f5e9c3;
 }
 
+.tooltip-container{
+	display: none;
+}
+
+.button{
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.button.member-recipient-option{
+	margin-right: 10px;
+}
 </style>
 </head>
 <body>
@@ -382,7 +397,7 @@ background: #f5e9c3;
 				<div class="headerblock">
 					<i class="fas fa-cog fa-lg"></i>
 					<h5>Messenger</h5>
-					<i class="far fa-edit fa-lg" id="writemsgbtn"></i>
+					<i class="far fa-edit fa-lg" id="writemsgbtn" data-tooltip-content="#recipientOption"></i>
 				</div>
 			</div>
 			<div class="left-panel scrollable">
@@ -391,19 +406,31 @@ background: #f5e9c3;
 				<c:forEach var="myChat" items="${myChat}">
 					<li class='conversation-chatroom <c:if test="${myChat.myDateRead==null}">newmsg</c:if>' data-chatid='${myChat.chatId}'>
 				        <div class='chatroom'>
+				        
 					       	<div class='profile'>
-					       		<img src="<c:url value='/resources/img/test_image/test4.jpg*******'/>" class="rounded-circle">
+						       	<c:forEach var="profiles" items="${myChat.recipients}">
+						       	<c:choose>
+						       	<c:when test="${profiles.recipientType=='0'}">
+						       		<img src="<c:url value='"${profiles.memberFilePath}"+"${profiles.memberSysName}"'/>" class="rounded-circle">
+						       	</c:when>
+						       	<c:when test="${profiles.recipientType=='1'}">
+						       		<img src="<c:url value='"${profiles.hosFilePath}"+"${profiles.hosSysName}"'/>" class="rounded-circle">
+						       	</c:when>
+						       	</c:choose>
+						       	</c:forEach>
 					       	</div>
+					     
 					       	<div class='chat-info'>
 					       	
 					       		<div class='recipient'>
 					       		<c:forEach var="recipients" items="${myChat.recipients}">
+					       		
 					       			<c:choose>
 						       			<c:when test="${recipients.recipientType=='0' }">
-						       				<span class="addedRecipient" data-recipientno="${recipients.recipientNo}" data-hosno="" data-recipientname="${recipients.recipientNickname }">${recipients.recipientNickname }</span>
+						       				<span class="addedRecipient" data-recipientno="${recipients.recipientNo}" data-recipienttype="${recipients.recipientType}" data-recipientname="${recipients.recipientNickname }">${recipients.recipientNickname }</span>
 						       			</c:when>
 						       			<c:when test="${recipients.recipientType=='1' }">
-						       				<span class="addedRecipient" data-recipientno="" data-hosno="${recipients.recipientNo}" data-recipientname="************">${recipients }</span>
+						       				<span class="addedRecipient" data-recipientno="${recipients.recipientNo}" data-recipienttype="${recipients.recipientType}" data-recipientname="${recipients.hosTitle }">${recipients.hosTitle }</span>
 						       			</c:when>
 					       			</c:choose>
 					       		</c:forEach>
@@ -411,7 +438,7 @@ background: #f5e9c3;
 					       		<div class='lastmsg brief'>
 					       		</div>
 					   		</div>
-					   		<div class="close-chat nodisplay" data-chatid='*************'>
+					   		<div class="close-chat nodisplay" data-chatid='${myChat.chatId}'>
 					   		x
 					   		</div>
 				   		</div>
@@ -452,10 +479,18 @@ background: #f5e9c3;
 	<form action="/myvet/msg/insert.do" id="msgform">
 		
 	</form>
+	
+
+
+   <div class="tooltip-container">
+   	<div id="recipientOption" >
+   		<button class="button member-recipient-option" id="member-recipient-option" data-type="member">회원</button>
+   		<button class="button hospital-recipient-option" id="hospital-recipient-option" data-type="hospital">병원</button>
+   	</div>
+   	</div>
 
 <script src="<c:url value='/resources/js/datetime/jquery-dateformat.js'/>"></script>
 <script>
-
 /* 첫 로딩시 */ 
 var $messages = $('.messages-content'), 
 	form = $('form#msgform'), 
@@ -470,11 +505,26 @@ i = 0;
  me =${user.memberNo};
 </c:if>
 
+$(document).ready(function(){
+	console.log("Docu Ready")
+	$("#writemsgbtn").tooltipster({
+		theme: 'tooltipster-shadow',
+		animation: 'fade',
+		trigger: 'click',
+		interactive: 'true',
+		side: 'bottom',
+		contentCloing: 'true',
+		zIndex: '250',		
+	}).tooltipster("reposition");
+});
+
+
 $(window).on("load", function () {
 	$messages.mCustomScrollbar();
-	console.log("first active chatroom", $("li:first-child > .chatroom"));
-	$("li:first-child > .chatroom").addClass("active");
-	activeDo();
+	
+	makeFirstListActive();
+
+	
 	// 삭제대상 
 	/* setTimeout(function() {
 	fakeMessage();
@@ -485,10 +535,34 @@ $(window).on("load", function () {
 /* 신규메세지 버튼 한번만 작동시키기 위한 스위치 */
 var newMsgSwitch = true;
 
-$("#writemsgbtn").on("click", function(){
+ $("#recipientOption button").on("click", function(e){
+	e.preventDefault();
+	
+	console.log("write to who?");
+	console.dir($(e.target).data("type"));
+	$(".recipients-input").html("");
+	$(".conversation-chatroom.new .recipient.new").html("");
+	var recipientInputHtml;
+	
+	if($(e.target).data('type')=='member'){
+		recipientInputHtml = `<div class='recipients-input member-recipient'>
+								<div>회원:&nbsp;</div><div class='recipient new'>
+								</div>
+								<input autocomplete='off' id='recipientSearch' class='recipient' placeholder='수신자 닉네임을 입력해주세요' spellcheck='false' type='text' data-type='member'>
+							  </div>`;
+	} else if($(e.target).data('type')=='hospital'){
+		recipientInputHtml = `<div class='recipients-input hospital-recipient'>
+								<div>병원:&nbsp;</div><div class='recipient new'>
+								</div><input autocomplete='off' id='recipientSearch' class='recipient' placeholder='수신병원을 입력해주세요' spellcheck='false' type='text' data-type='hospital'>
+							  </div>`;
+	};
+	$(".top-main.header").html(recipientInputHtml);
+	$(".top-main.header #recipientSearch").focus();
+	$("#writemsgbtn").tooltipster('close');
+	
 	if(newMsgSwitch===true){
 		$("#mCSB_1_container").html("");
-		$(".chatroom.active").removeClass("active")
+		$(".chatroom.active").removeClass("active");
 		$messages.mCustomScrollbar();
 		var chatRoomHtml = `<li class='conversation-chatroom new' data-chatid='0'>
 						        <div class='chatroom active'>
@@ -509,30 +583,28 @@ $("#writemsgbtn").on("click", function(){
 					   		</li>`;
 		$("#chatroomlist").prepend(chatRoomHtml);
 		
-		var recipientInputHtml = ` <div class="recipients-input">
-							        	<div>수신자:&nbsp;</div>
-							        	<div class='recipient new'>
-							       	 	</div>
-							        	<input autocomplete="off" id="recipientSearch" class="recipient" placeholder="수신자 닉네임 또는 수신단체명을 입력해주세요" spellcheck="false" type="text">
-							        </div>`;
-		
-		$(".top-main.header").html(recipientInputHtml);
 		$("#send").attr("data-chatid",0);
 		newMsgSwitch = false;
+		
 	};
 	$messages.mCustomScrollbar();
 });
 
 
 /* 수신자 검색 */
-$(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
+// click 되거나 keyup시 작동 
+$(".top-main.header").on("click keyup","#recipientSearch", function(e){
 	$(".recipientSearchLayer.nodisplay").removeClass("nodisplay");
+	
+	// input 커서의 위치에 따라 검색 결과 div 이동 
 	var searchBoxPosition = this.getBoundingClientRect();
 	console.log(searchBoxPosition);
 	$(".recipientSearchLayer").css({'left' : searchBoxPosition.left, 'top' : searchBoxPosition.bottom,'border-style' : 'none'});
 	
 	var keyword = $(this).val();
+	var recipientType = $(this).data("type");
 	console.log("Recipient Search Input Keyup this:",keyword);
+	console.log("Recipient Type:",recipientType);
 	
 	// 검색 키워드에 아무 value가 없으면 아무것도 보이지 않음
 	// 검색 키워드에 value가 없는 상태에서 Backspace 키 누르면 수신자로 등록되어있는 수신자 삭제 
@@ -542,14 +614,14 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 		return false;
 	};
 	
-	$.get("searchMember.do?keyword="+keyword)
+	$.get("searchMember.do?type="+recipientType+"&keyword="+keyword)
 	.done(function(result){
-			console.log("Msg Search:",result);
+			console.log("Msg Recipient Search:",result);
 		var searchResultHtml="";
 		
 		// 검색 결과 없을 시 
-		if(result.member.length==0 && result.hospital.length==0){
-			console.log("검색결과가 없음.")
+		if(!result.member && !result.hospital ){
+			// console.log("검색결과가 없음.")
 			$(".recipientSearchBox").text("검색결과가 없습니다.");
 			$(".recipientSearchLayer").css('border-style', 'outset');
 			return false;
@@ -562,32 +634,26 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 			console.log("addedRecipientListHeader:", addedRecipientListHeader);
 		var recipientResultList = result;
 			console.log("recipientResultList:", recipientResultList);
+			
 		if(addedRecipientListHeader.length){
 			for(var i=0;i<=addedRecipientListHeader.length-1;i++){
-				if(addedRecipientListHeader[i].dataset.recipientno){
+				if(addedRecipientListHeader[i].dataset.recipienttype=='0'){
 					for(var j=0; j<=recipientResultList.member.length-1;j++){	
 						if(recipientResultList.member[j].memberNo==addedRecipientListHeader[i].dataset.recipientno){
 							recipientResultList.member.splice(j, 1);
-							console.log("recipient removed");
+							 console.log("recipient removed");
 						};
 					};
 						
-				} else if(addedRecipientListHeader[i].dataset.hosno){
-					for(var j=0; j<=recipientResultList.hospital.length-1;j++){
-						if(recipientResultList.hospital[j].hosCode==addedRecipientListHeader[i].dataset.hosno){
-							recipientResultList.hospital.splice(j, 1);
-							console.log("hospitcal removed");
-						};
-					};
-				};
-					console.log("removed element of result");
-					console.log(result);
+				} 
 			};
-			
+					// console.log("removed element of result");
+					// console.log(result);
 		};
-		
+			
+
 		// 수신자가 일반회원인 경우 겸색결과 필터 
-		if(result.member.length){
+		if(result && result.member){
 			
 			searchResultHtml+=`<div class="recipientResultType member"><span>회원</span></div><ul class="recipientSearchList member">`;
 			
@@ -600,7 +666,7 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 				}
 				
 				searchResultHtml += `<li>
-					                    <div class="resultList member" data-recipientno=`+member.memberNo+` data-hosno='' data-recipientname=`+member.memberNickname+`>
+					                    <div class="resultList member" data-recipientno=`+member.memberNo+` data-recipienttype='0' data-recipientname=`+member.memberNickname+`>
 					                        <div class='profile-search'>
 					                                <img src=`+imgPath+` class="rounded-circle search-result">
 					                        </div>
@@ -615,7 +681,7 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 			
 		
 		// 수신자가 병원인 경우 겸색결과 필터
-		if(result.hospital.length){
+		if(result && result.hospital){
 			searchResultHtml+=`<div class="recipientResultType hospital"><span>병원</span></div><ul class="recipientSearchList hospital">`;
 			
 			for(var hospital of result.hospital){
@@ -629,7 +695,7 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 				}
 				
 				searchResultHtml += `<li>
-					                    <div class="resultList hospital" data-recipientno="" data-hosno=`+hospital.hosCode+` data-recipientname="`+hospital.title+`">
+					                    <div class="resultList hospital" data-recipientno=`+hospital.hosCode+` data-recipienttype="1" data-recipientname="`+hospital.title+`">
 					                        <div class='profile-search'>
 					                                <img src=`+imgPath+` class="rounded-circle search-result">
 					                        </div>
@@ -646,6 +712,8 @@ $(".top-main.header").on("focus click keyup","#recipientSearch", function(e){
 		$(".recipientSearchBox").html(searchResultHtml);
 		$(".recipientSearchLayer").css('border-style', 'outset');
 	}); // done
+	
+	
 }); // keyup event
 
 
@@ -655,21 +723,30 @@ $(".recipientSearchLayer").on("mouseenter",function(e){
 });
 
 
-/* 검색 아이템 일반회원 선택시 Event Action */
-$(".recipientSearchBox").on("click",".resultList.member",function(e){
+/* 검색 아이템 선택시 Event Action */
+$(".recipientSearchBox").on("click",".resultList",function(e){
 	console.log("Search Result Select:", $(this));
 	
-	/* 두번째 수신자부터 콤마찍어주기 (앞 span에 , 추가하기) */
-	if($("li.conversation-chatroom.new").find(".recipient.new > span")!=0){
-		var lastRecipient = $("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname");
-		/* console.log("Last Recipient:", lastRecipient); */
-		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html(lastRecipient+", ");		
-	} 
-	$("div.recipient.new").append("<span class='addedRecipient' data-recipientno='"+$(this).data("recipientno")+"' data-hosno='"+$(this).data("hosno")+"' data-recipientname='"+$(this).data("recipientname")+"'>"+$(this).data("recipientname")+"</span>");
-	$("#recipientSearch").val("");
-	$(".recipientSearchBox").html("");
-	$("#recipientSearch").focus();
+	if($(this).hasClass("member")){
+		/* 두번째 수신자부터 콤마찍어주기 (앞 span에 , 추가하기) */
+		if($("li.conversation-chatroom.new").find(".recipient.new > span")!=0){
+			var lastRecipient = $("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname");
+			/* console.log("Last Recipient:", lastRecipient); */
+			$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html(lastRecipient+", ");	
+		} 
+		$("div.recipient.new").append("<span class='addedRecipient' data-recipientno='"+$(this).data("recipientno")+"' data-recipienttype='"+$(this).data("recipienttype")+"' data-recipientname='"+$(this).data("recipientname")+"'>"+$(this).data("recipientname")+"</span>");
+		$("#recipientSearch").val("");
+		$("#recipientSearch").focus();
+	} else if($(this).hasClass("hospital")){
+		$("div.recipient.new").append("<span class='addedRecipient' data-recipientno='"+$(this).data("recipientno")+"' data-recipienttype='"+$(this).data("recipienttype")+"' data-recipientname='"+$(this).data("recipientname")+"'>"+$(this).data("recipientname")+"</span>");
+		$("#recipientSearch").remove();
+		
+	}
+	
+ 	/* $(".recipientSearchBox").html(""); */
 });
+
+
 
 
 /* 검색중 다른곳으로 blur하면 검색결과 div 숨기기 */
@@ -698,18 +775,18 @@ $(".top-main.header").on("mouseleave", "span.addedRecipient", function(e){
 $(".top-main.header").on("click", "span.addedRecipient", function(e){
 	console.log("clicked:", e.target);
 	console.log(e.target.dataset);
-	var hosNo = e.target.dataset.hosno;
+	var recipientType = e.target.dataset.recipienttype;
 	var recipientNo = e.target.dataset.recipientno;
 	
 	/* 일반회원인지 병원인지 따짐 */
 	/*  */
-	if(!hosNo){
+	if(recipientType=='0'){
 		$("span[data-recipientno='"+recipientNo+"']").remove();
 		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html($("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname"));
-	}
-	if(!recipientNo){
-		$("span[data-hosno='"+hosNo+"']").remove();
+	} else if(recipientType=='1'){
+		$("span[data-recipientno='"+recipientNo+"']").remove();
 		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html($("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname"));
+		$("<input autocomplete='off' id='recipientSearch' class='recipient' placeholder='수신병원을 입력해주세요' spellcheck='false' type='text' data-type='hospital'>").appendTo($(".recipients-input.hospital-recipient"))
 	}
 }); 
 
@@ -726,26 +803,6 @@ $("#chatroomlist").on("mouseleave",".chatroom", function(){
 	$(this).find(".close-chat").addClass("nodisplay");
 })
 
-/* 채팅방 나가기 또는 신규작성 취소 */
-$("#chatroomlist").on("click",".close-chat", function(e){
-		// sweetalert로 삭제 재확인 필요 
-		
-		// writebtn 다시 활성화 
-		newMsgSwitch=true;
-		// 대화방 사라짐 
-		console.log("closing Target:", $(e.target).closest("li"));
-	 	$(e.target).closest("li").remove();
-	 	$("#chatroomlist > li:first-child > .chatroom").addClass("active");
-	 	activeDo();
-	 	
-		// 수신자 등록 박스 초기화 (다른 대화방의 message-content와 header로 업데이트 필요)
-		$(".recipients-input").html("");
-		$("#mCSB_1_container").html("");
-		
-		// ajax로 대화방 수신자 그룹에서 trash 처리 
-		$.get()
-	});
-	
 /* Input Text가 공백일 경우 백스페이스누르면 이전 수신자 삭제 */
 $(".top-main.header").on("keydown","#recipientSearch", function(e){
 	if (!$("#recipientSearch").val() && e.key === "Backspace" || e.key === "Delete") {
@@ -759,21 +816,7 @@ $(".top-main.header").on("keydown","#recipientSearch", function(e){
 console.log("bottom position:",document.querySelector(".main-container").getBoundingClientRect());
 
 
-<!-- Responsive Message Content -->
-
-/* 메세지 창 스크롤바 업데이트 */
-function updateMsgScrollBar() {
-	$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
-		scrollInertia: 10,
-		timeout: 0
-	});
-}
-
-function setDate(){
-	$('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));
-	/* $('<div class="checkmark-sent-delivered">&check;</div>').appendTo($('.message:last'));
-	$('<div class="checkmark-read">&check;</div>').appendTo($('.message:last')); */
-}
+/* Responsive Message Content */ 
 
 /* 메세지 입력 후 전송 함수 (AJAX Request) */
 function insertMessage(item) {
@@ -783,8 +826,7 @@ function insertMessage(item) {
 		return false;
 	}
 	$("<input type='hidden' name='msgBody' value='" + msg + "'>").appendTo(form);
-	var senderNo = ${user.memberNo};
-	$("<input type='hidden' name='senderNo' value='" + senderNo + "'>").appendTo(form);
+	$("<input type='hidden' name='senderNo' value='" + me + "'>").appendTo(form);
 	$("<input type='hidden' name='chatId' value='" + item.dataset.chatid + "'>").appendTo(form);
 	console.log("send btn chatid check:", item.dataset.chatid);
 	$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
@@ -798,18 +840,12 @@ function insertMessage(item) {
 		// 등록된 수신자 배열을 변수에 담는다. 
 		var addedRecipientListChat = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
 		for(var recipientArr of addedRecipientListChat){
-			console.log("recipientArr");
-			// 수신자 타입(일반회원/병원) 별 구분하여 data 심어줌 
-			if(!recipientArr.dataset.hosno){
-				$("<input type='hidden' name='recipientNo' value='" + recipientArr.dataset.recipientno + "'>").appendTo(form);
-				console.log("Member",recipientArr.dataset.recipientno);
-				
-			} else if(!recipientArr.dataset.recipientno){
-				$("<input type='hidden' name='recipientHosNo' value='" + recipientArr.dataset.hosno + "'>").appendTo(form);
-				console.log("Hospital",recipientArr.dataset.hosno);
-				
-			}	
-		};
+			console.log("recipientArr", recipientArr);
+			// 수신자 타입(일반회원/병원 별) 구분하여 data 심어줌 
+			// console.log("Recipient, Type:",recipientArr.dataset.recipientno, recipientArr.dataset.recipienttype);
+			$("<input type='hidden' name='recipientNo' value='" + recipientArr.dataset.recipientno + "'>").appendTo(form);
+			$("<input type='hidden' name='recipientType' value='" + recipientArr.dataset.recipienttype + "'>").appendTo(form);
+		}	
 		
 		console.dir($("form#msgform").attr("action"));
 		console.log("New Chatroom MsgFormData:", form.serialize());
@@ -828,20 +864,17 @@ function insertMessage(item) {
 			$("#newtag").remove();
 		});
 	} 
-	
 	// 기존 대화방 대화 메세지 전송인 경우 (chatid is not null or other than 0)
 	else{
-		// 기존 대화방 메세지인 경우 
-		console.log("기존 대화방 Chatid:", item.dataset.chatid)
-		
+		console.log("기존 대화방 Chatid:", item.dataset.chatid)	
 		console.dir($("form#msgform").attr("action"));
 		console.log("Existing Chatroom MsgFormData:", form.serialize());
 		
 		$.post(form.attr("action"), form.serialize());
 		
 	}
-	console.log("formData after DONE:", form);
-	form.children().not("input[name='msgType']").remove();
+	console.log("formData after AJAX.DONE:", form);
+	form.html("");
 	newMsgSwitch=true;
 	
 	/*
@@ -853,11 +886,13 @@ function insertMessage(item) {
 	*/
 };
 
+
 /* 전송버튼 Action */
 $('#send').click(function(e) {
 	e.preventDefault();
 	sendClick(this);
 });
+
 
 /* 메세지 입력 input에서 엔터 누르면 */
 $('#msgtextarea').on('keydown', function(e) {
@@ -867,6 +902,111 @@ $('#msgtextarea').on('keydown', function(e) {
 		sendClick($("#send")[0]);
 	}
 })
+
+
+/* 대화방선택 */ 
+$("#chatroomlist").on("click", ".chatroom", function(e){
+	e.preventDefault();
+	console.log("Chatroom changed", $(this).parent().data("chatid"));
+	$(".chatroom.active").removeClass('active');
+	$(this).toggleClass('active')
+	activeDo();
+	
+	var newMsgCnt = $(".userid.msgbadge span.badge").text();
+	console.log("newMsgCnt:", newMsgCnt);
+	
+	// 만약 안읽은 메세지가 있는 대화방을 선택했을 경우 안읽은 메세지수 -1 처리 
+	if($(this).closest("li").hasClass("newmsg")){
+		if(newMsgCnt>0){
+		 	var zeroCntCheck = newMsgCnt-1;
+		 	if(zeroCntCheck!=0){
+				$(".msgbadge span.badge").text(zeroCntCheck);
+		 	} else {
+		 		$(".msgbadge span.badge").text('');
+		 	}
+		}
+		$(this).closest("li").removeClass("newmsg");
+	}
+});
+
+
+/* 채팅방 나가기 또는 신규작성 취소 */
+$("#chatroomlist").on("click",".close-chat", function(e){
+	    // 대화방 선택과 중복되어 이전 함수 호출 차단해야 함 
+		e.stopPropagation();
+		// sweetalert로 삭제 재확인 필요 
+		
+		// writebtn 다시 활성화 
+		newMsgSwitch=true;
+		// 대화방 사라짐 
+		console.log("closing Target:", $(e.target).closest("li"));
+	 	$(e.target).closest("li").remove();
+	 		
+		// 수신자 등록 박스 초기화 (다른 대화방의 message-content와 header로 업데이트 필요)
+		$(".recipients-input").html("");
+		$("#mCSB_1_container").html("");
+		
+		// ajax로 대화방 수신자 그룹에서 trash 처리 
+		//$.get()
+
+		makeFirstListActive();	 	
+	});
+	
+/* Functions 모음 */
+/* 메세지 창 스크롤바 업데이트 */
+function updateMsgScrollBar() {
+	$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
+		scrollInertia: 10,
+		timeout: 0
+	});
+}
+
+function setDate(){
+	$('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));
+	/* $('<div class="checkmark-sent-delivered">&check;</div>').appendTo($('.message:last'));
+	$('<div class="checkmark-read">&check;</div>').appendTo($('.message:last')); */
+}
+
+// 첫 로딩, 대화방 삭제, 글쓰기 취소시 대화방리스트 최상단의 것이 선택되게 함 
+function makeFirstListActive(){
+	console.log("first active chatroom", $("li:first-child > .chatroom"));
+ 	$("#chatroomlist li:first-child > .chatroom").addClass("active");
+	activeDo();
+};
+
+// Active한 대화방이 선택되었을때 처리 함수 
+//   Active한 대화방 번호 Send 버튼에 넣어주기 & active한 대화방 대화 불러오기 
+function activeDo(){
+	var activeChatId = $(".chatroom.active").parent().data("chatid");
+	// console.log("active", $(".chatroom.active"));
+	console.log("active ChatId", activeChatId);
+	var addedRecipientListChat = document.querySelectorAll('.chatroom.active span.addedRecipient');
+	console.log("addedRecipientListChat",addedRecipientListChat);
+	// 신규 메세지창 다시 선택해서 active 했을때 
+	if(activeChatId=='0'){
+		// console.log("신규 대화방 다시 들어옴");
+		$('.mCSB_container').html("");
+		if(!addedRecipientListChat.length){
+			// console.log("등록된 수신자 없음");
+			$(".recipients-input").html("");
+			$('#writemsgbtn').tooltipster('open');
+		} else{
+			$(".top-main.header > .recipients-input").html("<div>수신자:&nbsp;</div><div class='recipient new'></div>");
+			$(".top-main.header .recipient.new").html($(addedRecipientListChat).clone());
+			$("<input autocomplete='off' id='recipientSearch' class='recipient' placeholder='수신자 닉네임을 입력해주세요' spellcheck='false' type='text' data-type='member'>").appendTo($(".recipients-input.member-recipient"))
+		}
+		return false;
+	}
+	
+	$("#send").attr("data-chatid", activeChatId);
+	$(".top-main.header > .recipients-input").html("<div>수신자:&nbsp;</div><div class='recipient'></div>");
+	
+	$(".top-main.header .recipient").html($(addedRecipientListChat).clone());
+	$(".recipients-input span").removeClass("addedRecipient").addClass("headerRecipient");
+	
+	/* 대화방의 메세지 가져오기 */
+	retrieveMsgs(activeChatId);
+};
 
 /* 전송버튼 Action 함수 */
 function sendClick(item){
@@ -906,42 +1046,9 @@ function sendClick(item){
 	$("#msgtextarea").focus();
 }
 
-/* 대화방선택 */ 
-$("#chatroomlist").on("click", ".chatroom", function(){	
-	// console.log("Chatroom changed", $(this).parent().data("chatid"));
-	$(".chatroom.active").removeClass('active');
-	$(this).toggleClass('active')
-	activeDo();
+/* 대화방의 메세지 가져오기 */
+function retrieveMsgs(activeChatId){
 	
-	var newMsgCnt = $(".userid.msgbadge span.badge").text();
-	console.log("newMsgCnt:", newMsgCnt);
-	
-	// 만약 안읽은 메세지가 있는 대화방을 선택했을 경우 안읽은 메세지수 -1 처리 
-	if($(this).closest("li").hasClass("newmsg")){
-		if(newMsgCnt>0){
-		 	var zeroCntCheck = newMsgCnt-1;
-		 	if(zeroCntCheck!=0){
-				$(".msgbadge span.badge").text(zeroCntCheck);
-		 	} else {
-		 		$(".msgbadge span.badge").text('');
-		 	}
-		}
-		$(this).closest("li").removeClass("newmsg");
-	}
-});
-
-/* Active한 대화방 번호 Send 버튼에 넣어주기 */
-function activeDo(){
-	// console.log("active", $(".chatroom.active"));
-	var activeChatId = $(".chatroom.active").parent().data("chatid");
-	console.log("active ChatId", activeChatId);
-	$("#send").attr("data-chatid", activeChatId);
-	$(".top-main.header > .recipients-input").html("<div>수신자:&nbsp;</div><div class='recipient'></div>");
-	var addedRecipientListChat = document.querySelectorAll('.chatroom.active span.addedRecipient');
-	$(".top-main.header .recipient").html($(addedRecipientListChat).clone());
-	$(".recipients-input span").removeClass("addedRecipient").addClass("headerRecipient");
-	
-	// 대화방 선택시 message-content 업데이트 필요!!!!!!
 	$.get(me+"/"+activeChatId+".do", function(result){
 		console.log("ChatMsgs:",result);		
 		$('.mCSB_container').html("");
@@ -957,16 +1064,31 @@ function activeDo(){
 			
 			if(msg.senderNo==me){
 				$("<div class='message message-personal' data-msgid='"+msg.msgId+"'>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
-				$('<div class="timestamp nodisplay">' + timeStamp + '</div>').appendTo($(".message[data-msgid='"+msg.msgId+"']"));
+				$("<div class='timestamp-right'>" + timeStamp + "</div>").appendTo($(".message[data-msgid='"+msg.msgId+"']"));
 			} else{
 				$("<div class='message' data-msgid='"+msg.msgId+"'><figure class='avatar'><img src='http://askavenue.com/img/17.jpg' /></figure>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
-				$('<div class="timestamp nodisplay">' + timeStamp + '</div>').appendTo($(".message[data-msgid='"+msg.msgId+"']"));
+				$("<div class='sender-nickname'>"+msg.senderNickname+"</div><div class='timestamp-left'>" + timeStamp + "</div>").appendTo($(".message[data-msgid='"+msg.msgId+"']"));
 			}
 			
 		}
 		updateMsgScrollBar();
-	})
+		$(".messages").on("mouseenter", ".message", function(){
+			console.log("대화풍선 마우스 올라감");
+			console.log($(".messages .message .timestamp-left, .timestamp-right"));
+			$(".messages .message .timestamp-left, .timestamp-right").show();
+		});
+		$(".messages").on("mouseleave", ".message", function(){
+			console.log("대화풍선 마우스 올라감");
+			console.log($(".messages .message .timestamp-left, .timestamp-right"));
+			$(".messages .message .timestamp-left, .timestamp-right").hide();
+		});
+	});
 }
+
+
+
+
+/* 불필요 */
 
 /* Test용 자동 대답봇 */
 var Fake = [
@@ -1004,9 +1126,11 @@ i++;
 
 }
 
+// 메세지 보낸시간 보여주기 
 $(".main-panel").on("mouseenter",".message", function(){
 	$(this).children(".timestamp").toggleClass("nodisplay");
 })
+// 메세지 보낸시간 가리기 
 $(".main-panel").on("mouseleave",".message", function(){
 	$(this).children(".timestamp").toggleClass("nodisplay");
 })

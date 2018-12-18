@@ -31,7 +31,7 @@ select *
 where recipient_group_id = 11;
 
 -- 내 대화방 불러오기 
-select msg_id, chat_id, msg_body, latest_msg_date, msg_type, recipient_no
+select msg_id, chat_id, msg_body, latest_msg_date, msg_type, recipient_no, date_read, recipient_type
 from recipient_group r
 inner join(select *
 	            from message m

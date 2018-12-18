@@ -41,7 +41,7 @@ public class MsgController {
 	@RequestMapping(value="/{me}/{chatId}.do")
 	@ResponseBody
 	public List<Message> retrieveChat(@PathVariable int me, @PathVariable int chatId) throws Exception{
-		System.out.println("내대화방 메세지 불러오기 접근");
+		System.out.println("내대화방 메세지 불러오기 접근 대화방 ID: "+chatId);
 		RecipientGroup myRg = new RecipientGroup();
 		myRg.setRecipientNo(me);
 		myRg.setRecipientGroupId(chatId);
@@ -52,32 +52,40 @@ public class MsgController {
 		return service.selectChatMsg(myRg);
 	}
 	
+	
 	// 수신자 검색 
 	@RequestMapping("searchMember.do")
 	@ResponseBody
-	public Map<String, Object> searchMember(String keyword) throws Exception{
+	public Map<String, Object> searchMember(String type, String keyword) throws Exception{
 		Map<String, Object> map = new HashMap<>();
-		if(keyword!="") {
-			// System.out.println("Msg Search Member: "+keyword);
-			map.put("member", service.searchMember(keyword));
-			// System.out.println("Msg Search Member Result: "+service.searchMember(keyword));
-			map.put("hospital", service.searchHospital(keyword));
-			// System.out.println("Msg Search Hospital Result: "+service.searchHospital(keyword));
+		System.out.println("수신자 찾기 들어옴");
+		System.out.println("Type: "+type);
+		System.out.println("Keyword: "+keyword);
+		switch(type) {
+		case "member": map.put("member", service.searchMember(keyword));
+		               break;
+		case "hospital": map.put("hospital", service.searchHospital(keyword));
+						 break;
+		default: return null;
 		}
 		return map;
 	} // searchMember.do
 	
+	
 	// 메세지 입력
 	@RequestMapping(value="/insert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public int insertMsg(Message msg, 
-						  @RequestParam(value="recipientNo", required = false) List<Integer> memberRecipients, 
-					      @RequestParam(value="recipientHosNo", required = false) List<Integer> hosRecipients) throws Exception {
+	public int insertMsg(Message msg, int recipientType,
+						 @RequestParam(value="recipientNo", required = false) List<Integer> recipients) throws Exception {
 		int chatId=0;
 		RecipientGroup self = new RecipientGroup();
-		msg.setMsgType(1);
-		
-		System.out.println(msg+", "+memberRecipients+", "+hosRecipients);
+		if(recipientType==0) {
+			msg.setMsgType(1);			
+		} else if(recipientType==1) {
+			msg.setMsgType(5);
+		}
+		System.out.println("insert.do 들어옴");
+		System.out.println("메세지: "+msg+", 수신자: "+recipients);
 		
 		// 신규메세지인 경우 
 		if(msg.getChatId()==0) {
@@ -86,37 +94,20 @@ public class MsgController {
 			chatId = msg.getChatId();
 			System.out.println("New ChatId: "+chatId);
 			
-			// 본인도 수신자 그룹 리스트에 포함시켜야함. 
-			
+			// 본인도 수신자 그룹 리스트에 포함시켜야함. 			
 			self.setRecipientGroupId(chatId);
 			self.setRecipientNo(msg.getSenderNo());
-			
 			// 본인 수신자그룹에 포함 
 			service.insertRecipientGroup(self);
 	
-			if(memberRecipients!=null) {
-				for(int member : memberRecipients) {
-					RecipientGroup rg = new RecipientGroup();
-					rg.setRecipientGroupId(chatId);
-					rg.setRecipientNo(member);
-					service.insertRecipientGroup(rg);
-				}
+			for(int recipient : recipients) {
+				RecipientGroup rg = new RecipientGroup();
+				rg.setRecipientType(recipientType);			
+				rg.setRecipientGroupId(chatId);
+				rg.setRecipientNo(recipient);
+				service.insertRecipientGroup(rg);
 			}
 			
-			if(hosRecipients!=null) {
-//				RecipientGroup self = new RecipientGroup();
-//				self.setRecipientGroupId(chatId);
-//				// Sender 가 병원직원일 경우.. 문제 발생...
-//				self.setRecipientNo(msg.getSenderNo());
-//				service.insertRecipientGroup(self);
-				for(int hos : hosRecipients) {
-					RecipientGroup rg = new RecipientGroup();
-					rg.setRecipientGroupId(chatId);
-					rg.setRecipientNo(hos);
-					rg.setRecipientType(1);
-					service.insertRecipientGroup(rg);
-				}
-			}
 			System.out.println("Insert Msg param: "+msg);
 			service.insertMsg(msg);
 			// 읽음 날짜 모두 리셋 

@@ -53,10 +53,12 @@
 		<result column="date_read" property="dateRead"/>
 		<result column="trash" property="trash"/>
 		<result column="member_nickname" property="recipientNickname"/>
-		<result column="member_sys_name" property="recipientSysName"/>
-		<result column="member_file_path" property="recipientFilePath"/>
+		<result column="member_sys_name" property="memberSysName"/>
+		<result column="member_file_path" property="memberFilePath"/>
+		<result column="hos_sys_name" property="hosSysName"/>
+		<result column="hos_file_path" property="hosFilePath"/>
+		<result column="title" property="hosTitle"/>
 		<!-- <result column="recipientHosNo" property="recipientHosNo"/> -->
-		<!-- <result column="title" property="hosTitle"/> -->
 	</resultMap>
 
 	<select id="selectSearchMember" parameterType="string" resultMap="searchMemberHospitalMap">
@@ -97,17 +99,23 @@
 	</insert>
 	
 	<select id="selectRecipients" parameterType="java.util.Map" resultMap="recipientGroupMap">
-		select recipient_group_id, recipient_no, recipient_type, trash, member_nickname, member_file_path, member_sys_name
+		select recipient_group_id, recipient_no, recipient_type, trash, member_nickname, member_file_path, member_sys_name, hos_code, title, file_path as hos_file_path, sys_name as hos_sys_name
 		from recipient_group  r
- 		inner join (select member_no, member_nickname, member_file_path, member_sys_name
-				    from member) mem on mem.member_no = r.recipient_no
-		where trash = 0
+		left outer join (select member_no, member_nickname, member_file_path, member_sys_name
+				         from member) mem on mem.member_no = r.recipient_no
+		left outer join (select hos_code, title,file_path, sys_name
+						 from hos_basic hb
+						  left outer join (select file_path, sys_name, board_no
+						 			 from file_info
+						 			 where board_code = 30) f on f.board_no = hb.hos_code
+						 where hos_register = 'Y') h on h.hos_code = r.recipient_no
+        where trash = 0
         and recipient_group_id = #{chatId}
         and recipient_no != #{recipientNo}
 	</select>
 	
 	<select id="selectMyChat" parameterType="int" resultMap="messageMap">
-		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no, date_read as my_date_read
+		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
 		from recipient_group r
 		inner join(select *
 	               from message m

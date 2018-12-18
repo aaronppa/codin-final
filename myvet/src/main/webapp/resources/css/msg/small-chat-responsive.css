@@ -130,7 +130,7 @@ Messages
   border-radius: 20px 20px 20px 0;
   background: #eee;
   /*rgba(0, 0, 0, 0.1);*/
-  margin: 8px 0;
+  margin: 8px 0 14px;
   font-size: 14px;
   line-height: 1.4;
   margin-left: 35px;
@@ -138,14 +138,41 @@ Messages
   border: 1px solid #ccc;
   /*text-shadow: 0 1px 1px rgba(0, 0, 0, .2);*/
 }
-.messages .message .timestamp {
-  position: relative;
-  font-size: 10px;
-  color: #555;
+.messages .message .timestamp-left{
+	position: absolute;
+    bottom: 0px;
+    font-size: 10px;
+    color: #555;
+    right: -118px;
+    width: 111px;
+    display: none;
   /* color: rgba(255, 255, 255, .7);*/
 }
 
-.messages .message .timestamp:hover{
+.messages .message .timestamp-right{
+	position: absolute;
+    bottom: 0px;
+    font-size: 10px;
+    color: #555;
+    left: -126px;
+    width: 120px;
+    display: none;
+  /* color: rgba(255, 255, 255, .7);*/
+}
+
+.messages .message .sender-nickname{ 
+    position: absolute;
+    bottom: -18px;
+    color: #555;
+    left: -40px;
+    font-size: 14px;
+    width: 120px;
+}
+
+.messages .message .timestamp-left:hover{
+	display: default;
+}
+.messages .message .timestamp-right:hover{
 	display: default;
 }
 
@@ -172,17 +199,17 @@ Messages
     border-right: 7px solid transparent;*/
 }
 .messages .message .avatar {
-  position: absolute;
-  z-index: 1;
-  bottom: -15px;
-  left: -35px;
-  border-radius: 30px;
-  width: 30px;
-  height: 30px;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+	position: absolute;
+    z-index: 1;
+    bottom: -3px;
+    left: -35px;
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 2px solid rgba(255, 255, 255, 0.5);
 }
 .messages .message .avatar img {
   width: 100%;
