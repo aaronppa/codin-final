@@ -46,9 +46,12 @@
         }
  */
  	.container{
-			width:1100px;
-			position:relative;
+			width:1100px;			
 			top:80px;
+			width:100%;
+			postion:absolute;
+			margin-top: 110px;
+	
 		}
        
     </style>

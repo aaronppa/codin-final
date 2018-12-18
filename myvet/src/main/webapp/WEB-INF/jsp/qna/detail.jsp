@@ -54,8 +54,10 @@
 	visibility: hidden;
 } */
 .container{
+		width:100%;
 	postion:absolute;
-	margin-top:100px;
+	margin-top: 110px;
+	
 }
 .answerPosition {
 	margin-left: 88%;

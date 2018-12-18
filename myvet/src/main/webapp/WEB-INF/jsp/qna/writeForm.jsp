@@ -52,12 +52,21 @@
 	/* 	.summernote{
 			maring-left:20%;
 		} */
+		.container{
+			width:1100px;			
+			top:80px;
+			width:100%;
+			postion:absolute;
+			margin-top: 110px;
+			margin-left:-30px;
+		}
        
     </style>
 </head>
 <body>
 <%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />  
+	<div class="container">
     <form action="<c:url value='/qna/write.do' />" method="post">
     <br>
     <input name="boardCode" type="hidden" value="10">
@@ -119,6 +128,7 @@
 		</a>
     </div>    
     </form>
+    </div>
 	<script>
 	
 
