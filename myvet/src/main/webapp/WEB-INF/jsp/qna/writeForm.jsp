@@ -54,10 +54,10 @@
 		} */
 		.container{
 			width:1100px;			
-			top:80px;
+			
 			width:100%;
 			postion:absolute;
-			margin-top: 110px;
+			margin-top: 130px;
 			margin-left:-30px;
 		}
        

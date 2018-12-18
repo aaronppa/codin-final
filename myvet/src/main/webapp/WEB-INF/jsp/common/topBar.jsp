@@ -50,7 +50,7 @@
         }
         
         .is-dropdown-submenu{
-        z-index: 200
+        z-index: 1000
         }
         
     .msgbadge span{
