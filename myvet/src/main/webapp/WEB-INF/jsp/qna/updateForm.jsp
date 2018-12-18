@@ -23,36 +23,40 @@
     <style>
  
         /*글제목*/
-        .title{
+     /*    .title{
             font:bolder;
             font-size: 60px;
             text-align: center;
-        }
+        } */
         /*글쓴이 사진*/
-        #writer-img{
+ /*        #writer-img{
             width: 60px;
-            height: 60px;
+            height: 60px; */
         }
         /*글 작성자 id*/
-        .writer-id{
-            font-weight: bold;
+   /*      .writer-id{
+            font-weight: bold; */
         }
         /*글 정보*/
-        .information{
+    /*     .information{
             text-align: center;
         }
         .write-btn-form{
             text-align: center;
         }
-
-
+ */
+ 	.container{
+			width:1100px;
+			position:relative;
+			top:80px;
+		}
        
     </style>
 </head>
 <body>
 <%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
-
+	<div class="container">
     <form action="<c:url value='/qna/update.do' />" method="post">
     <br>
     <input name=qnaNo value="${qna.qnaNo }" id="qnaNo" type="hidden">
@@ -87,13 +91,14 @@
 			</c:forEach>
 			
 		</select>
-		<input id="fileId" name="fileId" style="visibility:hidden;" value="">
+		
 	</div>
 	<!-- 카테고리 -->
 	
     <hr>
         <div style="margin-left:8%;">
           <textarea name="content" id="summernote">${qna.content }</textarea>
+          <input id="fileId" name="fileId" style="visibility:hidden;" value="${fileId}">
         </div>
         <br>
     <div style="text-align: center;margin-left: 5%;">
@@ -105,6 +110,7 @@
     </div>    
 
     </form>
+    </div>
 	<script>
     
     $(document).ready(function () {
@@ -124,31 +130,38 @@
     
     function sendFile(file, ele) {
     	var formData = new FormData();
-    	console.log("formData", formData)
+    	//console.log("formData", formData)
     	formData.append('file', file);
+    	formData.append('fileId', $("#fileId").attr("value"));
+    	formData.append("qnaNo",$("#qnaNo").attr("value"));
+   
+  
     	console.log(file)
     	console.log(ele)
     	$.ajax({
     		data : formData, 
     		type : "POST",
-    		url : "/myvet/qna/uploadFile.do",
+    		url : "/myvet/qna/updateFileinfo.do",
     		cache : false,
     		contentType : false,
-    		enctype : "multipart/form-data",
+    		
     		processData : false,
     		//매개변수가 파일경로
     		success : function(file) {
+    			console.log(file);
+    			console.log("----------------");
     			console.log($(ele))
+    			console.log("----------------");
     			console.log("upload-success");
     			console.log("file.url : "+ '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
     			
     			$("input#url").val('${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
-    			$("input#oriName").val(file.oriName)
-    			$("input#sysName").val(file.sysName)
+    			$("input#oriName").val(file.name)
+    			$("input#sysName").val(file.name)
     			$("input#filePath").val(file.filePath)
     			$("input#fileSize").val(file.fileSize)
     			$(ele).summernote("editor.insertImage", '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName);
-    			$("#fileId").val(file.fileId);
+    	
     		
     		}
     	})//ajax

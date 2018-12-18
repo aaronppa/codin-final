@@ -11,10 +11,24 @@ public class QnaComment {
 	private char pick;
 	private int recommendCnt;
 	private String memberNickname;
-	
+	private String filePath;
 	private char memberGrade;
+	private String sysname;
 	
 	
+	
+	public String getSysname() {
+		return sysname;
+	}
+	public void setSysname(String sysname) {
+		this.sysname = sysname;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 	public char getMemberGrade() {
 		return memberGrade;
 	}

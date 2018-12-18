@@ -35,4 +35,8 @@ public interface QnaService {
 	int selectFileId(FileInfo fileInfo);
 	void updateFileid(FileInfo fileInfo);
 	int selectQnaNo(Qna qna);
+	void updateFileDb(FileInfo fileinfo);
+	void deleteFileDb(int boardNo);
+	int forModelAttributeFIleInfo(int fileinfo);
+	FileInfo selectFIle(FileInfo info);
 }

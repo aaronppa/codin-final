@@ -151,6 +151,26 @@ public class QnaServiceImpl implements QnaService{
 		// TODO Auto-generated method stub
 		return mapper.selectQnaNo(qna);
 	}
+	@Override
+	public void updateFileDb(FileInfo fileinfo) {
+		// TODO Auto-generated method stub
+		mapper.updateFileDb(fileinfo);
+	}
+	@Override
+	public void deleteFileDb(int boardNo) {
+		// TODO Auto-generated method stub
+		mapper.deleteFileDb(boardNo);
+	}
+	@Override
+	public int forModelAttributeFIleInfo(int fileinfo) {
+		// TODO Auto-generated method stub
+		return mapper.forModelAttributeFIleInfo(fileinfo);
+	}
+	@Override
+	public FileInfo selectFIle(FileInfo info) {
+		// TODO Auto-generated method stub
+		return mapper.selectFIle(info);
+	}
 	
 	
 	

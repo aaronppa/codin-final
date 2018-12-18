@@ -19,7 +19,22 @@ public class Qna {
 	private QnaCategoryList category;
 	private String memberNickname;
 	private QnaComment comment;
-
+	private String filePath;
+	private String sysname;
+	
+	
+	public String getSysname() {
+		return sysname;
+	}
+	public void setSysname(String sysname) {
+		this.sysname = sysname;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 	public QnaComment getComment() {
 		return comment;
 	}

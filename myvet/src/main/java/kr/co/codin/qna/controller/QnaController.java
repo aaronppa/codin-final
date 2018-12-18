@@ -124,7 +124,7 @@ public class QnaController {
 	
 	@RequestMapping("writeForm.do")
 	public void writeForm(Model model,String memberNickname ) {
-	
+		
 		model.addAttribute("category",service.cateList());
 	
 	}
@@ -166,19 +166,20 @@ public class QnaController {
 	@RequestMapping("updateForm.do")
 	public void updateForm(Model model, int qnaNo) {
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
-		
+		model.addAttribute("fileId",service.forModelAttributeFIleInfo(qnaNo));
 		model.addAttribute("category",service.cateList());
 	}
 	
-	@RequestMapping("update.do")
-	public String update(Model model,Qna qna,int writerNo) {
+	@RequestMapping("update.do")//업데이트가 문제구나 문제여
+	public String update(Model model,Qna qna,int writerNo,FileInfo fileInfo,int fileId) throws Exception{
 		service.updateDetail(qna);
+		/**/
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
 	@RequestMapping("delete.do")
 	public String delete(Model model, Qna qna, int qnaNo) {
-
+		service.deleteFileDb( qnaNo);
 		service.deleteDetail(qna);
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 		
@@ -301,6 +302,7 @@ public class QnaController {
 			fileInfo.setBoardCode(boardCode);
 			fileInfo.setBoardNo(boardNo);
 			fileInfo.setOriName(mFile.getOriginalFilename());
+			System.out.println(fileInfo.getOriName());
 			fileInfo.setSysName(sysName);
 			fileInfo.setFilePath(uploadPath+datePath);
 			fileInfo.setFileSize((int)mFile.getSize());
@@ -319,6 +321,72 @@ public class QnaController {
 			fileList.add(fileInfo);
 			service.uploadFile(fileInfo);
 			fileInfo.setFileId(service.selectFileId(fileInfo));
+		}
+		
+	//	return service.selectFileId(fileInfo);
+		return fileInfo;
+	}
+
+	@RequestMapping("updateFileinfo.do")
+	@ResponseBody
+	//filePath로 리턴
+	public FileInfo updateFileinfo(@RequestParam("file") List<MultipartFile> mFileList,@RequestParam("fileId") int fileId,@RequestParam("fileId") int qnaNo) throws IllegalStateException,Exception{
+		System.out.println("mFileList : "+mFileList);
+		String uploadPath = "/qna";
+		SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMMdd");
+		String datePath = sdf.format(new Date());
+		FileInfo fileInfo = new FileInfo();
+		System.out.println(fileId);
+		int boardCode = 20;
+		System.out.println("-------------------------------");
+		fileInfo.setFileId(fileId);
+		/*int boardNo = boardNo;*/
+		
+		String newName = UUID.randomUUID().toString();
+		newName = newName.replace("-", "");
+		
+		String fileExtension = "";
+		String sysName = "";
+		
+		String realPath = context.getRealPath("/upload/qna");
+		System.out.println("realPath : " + realPath);
+		
+		for(MultipartFile mFile : mFileList) {
+			System.out.println("for입장");
+			if(mFile.isEmpty()==true) continue;
+			fileExtension = getExtension(mFile.getOriginalFilename());
+			sysName = newName + "." + fileExtension;
+			
+			System.out.println("boardCode : "+boardCode);
+			System.out.println("boardNo : "+qnaNo);
+			System.out.println("file.getOriName() : "+mFile.getOriginalFilename());
+			System.out.println("sysName : "+sysName);
+			System.out.println("filePath : "+uploadPath+datePath);
+			System.out.println("getSize"+(int)mFile.getSize());
+			
+			fileInfo.setFileId(fileId);
+			fileInfo.setBoardCode(boardCode);
+			fileInfo.setBoardNo(qnaNo);
+			fileInfo.setOriName(mFile.getOriginalFilename());
+			System.out.println(fileInfo.getOriName());
+			fileInfo.setSysName(sysName);
+			fileInfo.setFilePath(uploadPath+datePath);
+			fileInfo.setFileSize((int)mFile.getSize());
+			File img = new File(realPath + datePath, sysName);
+			System.out.println(img);
+			if(img.exists() == false) {
+				img.mkdirs();
+			}
+			System.out.println("for나옴");
+			System.out.println("realPath : "+ realPath);
+			mFile.transferTo(img);
+//			fileInfo.getUrl();
+//			System.out.println("getUrl:"+fileInfo.getUrl());
+//			fileInfo.setUrl("/myvet/upload"+uploadPath+datePath+"/"+sysName);
+//			System.out.println(realPath+datePath+"/"+sysName);
+			fileList.add(fileInfo);
+			service.updateFileDb(fileInfo);
+			
 		}
 		
 	//	return service.selectFileId(fileInfo);

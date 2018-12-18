@@ -72,7 +72,7 @@
 
 	</resultMap>
 
-		<resultMap id="fileMap" type="fileInfo">
+		<resultMap id="fileMap" type="FileInfo">
 		<result column="file_id" property="fileId"/><!-- 파일번호(auto) -->
 		<result column="board_code" property="boardCode"/><!-- 게시판 테이블 고유 번호(FK(code_list(board_code))) -->
 		<result column="board_no" property="boardNo"/><!-- 각 테이블 라인 아이템 번호 -->
@@ -182,6 +182,7 @@
 				,(select category_name from qna_category_list where category_code=
 				q.category_code) categoryName
 				,q.answered
+				
 			from qna q
 			<where>
 				<choose>
@@ -273,6 +274,9 @@
 				,q.answered
 				,q.content
 				,q.writer_no 
+				,(select member_file_path from member where member_no = q.writer_no) filePath
+				,(select member_sys_name from member where member_no = q.writer_no) sysname
+				
 		from qna q
 		where q.qna_no = #{qnaNo}
 
@@ -320,10 +324,12 @@
 			where qna_no = #{qnaNo}
 	</select>
 	<select id="selectCombyNo" parameterType="QnaComment" resultMap="QnaCommentMap">
-		select q.* 
-		,(select member_nickname from member where member_no = q.commenter_no) memberNickname
-		, (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
-		, (select member_grade from member where member_no = q.commenter_no) memberGrade
+			select q.* 
+			,(select member_nickname from member where member_no = q.commenter_no) memberNickname
+			, (select sum(recommend) from qna_comment_recommend where comment_no=q.comment_no) recommendCnt
+			, (select member_grade from member where member_no = q.commenter_no) memberGrade
+			,(select member_file_path from member where member_no = q.commenter_no) filePath
+			,(select member_sys_name from member where member_no = q.commenter_no) sysname
 		from qna_comment q
 		where qna_no = #{qnaNo}
 		order by pick = 'Y' desc
@@ -347,8 +353,8 @@
 	
 	<update id="updateQnaComment" >
 		update qna_comment
-		set content= #{content}
-		where comment_no = #{commentNo} and commenter_no= #{commenterNo}
+			set content= #{content}
+			where comment_no = #{commentNo} and commenter_no= #{commenterNo}
 	</update>
 	
 	<select id="countTotalContent" resultType="int">
@@ -358,8 +364,8 @@
 	
 	<update id="updateAnswer" parameterType="Qna">
 			update qna
-		set answered='Y'
-		where qna_no = #{qnaNo} 
+				set answered='Y'
+				where qna_no = #{qnaNo} 
 	</update>
 	
 	<update id="updateCommentPick" parameterType="QnaComment">
@@ -383,7 +389,7 @@
 			where qna_no = #{qnaNo}
 	</select>
 	
-	<insert id="uploadFile" parameterType="fileInfo" useGeneratedKeys="true" keyProperty="fileId">
+	<insert id="uploadFile" parameterType="FileInfo" useGeneratedKeys="true" keyProperty="fileId">
 	
 		insert into file_info(
 			board_code, board_no, ori_name, sys_name, file_path, file_size
@@ -392,17 +398,38 @@
 		)
 	</insert>
 	
-	<select id="selectFileId" parameterType="fileInfo" resultType="int">
+	<select id="selectFileId" parameterType="FileInfo" resultType="int">
 	
 		select file_id
 			from file_info
 			where board_code = #{boardCode} and board_no =#{boardNo} and ori_name =#{oriName} and sys_name =#{sysName} and file_path = #{filePath} and file_size =#{fileSize}
 	</select>
-	<update id="updateFileid" parameterType="fileInfo">
+	<update id="updateFileid" parameterType="FileInfo">
 			update file_info
 		set board_no = #{boardNo}
 		where file_id = #{fileId}
 	</update>
 	
+	<update id="updateFileDb" parameterType="FileInfo">
+		update file_info
+		set  ori_name =#{oriName} , sys_name =#{sysName} , file_path = #{filePath} , file_size =#{fileSize}
+		where file_id = #{fileId} and board_code=20
+	</update>
+	<delete id="deleteFileDb" parameterType="int">
+		delete from file_info
+			where board_no = #{boardNo} and board_code=20
+	</delete>
+	
+	<select id="forModelAttributeFIleInfo" parameterType="int" resultType="int">
+		select file_id
+		from file_info
+		where board_code =20 and board_no = #{boardNo}
+	</select>
+	
+	<select id="selectFIle" parameterType="FileInfo" resultType="FileInfo">
+		select *
+		from file_info
+		where board_code =20 and board_no = #{boardNo}
+	</select>
 
 </mapper>
