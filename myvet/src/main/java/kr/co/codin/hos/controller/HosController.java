@@ -800,7 +800,7 @@ public class HosController {
 	
 	@RequestMapping("detailBoard.do")
 	public void detailBoard (Model model, int hosBoardId) {
-		
+		service.increaseViewCnt(hosBoardId);
 		model.addAttribute("board", service.selectHosBoardByNo(hosBoardId));
 	}
 	

@@ -10,6 +10,7 @@
 		#bodyContainer{
 			width: 1100px;
 			margin: auto;
+			margin-top: 110px;
 		}
 		
 		disable {

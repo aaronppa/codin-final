@@ -15,6 +15,17 @@
 
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
     <style>
+       	#background {
+       		width: 100%;
+       		height: 100%;
+       		position: absolute;
+       		z-index: -1;
+       		top:0;
+       		left:0;
+       		opacity: 0.3;
+    		background-image: url('/myvet/resources/img/common/background.jpg');
+    	}
+    
     	.registerHos:nth-child(2n-1) {
     		background: #f5e9c3;
     	}
@@ -77,6 +88,7 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<div id="background"></div>
 
     <div id="body">
     <h1>동물병원 찾기</h1>

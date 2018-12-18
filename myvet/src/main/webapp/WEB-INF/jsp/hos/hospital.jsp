@@ -13,6 +13,7 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=kxd0pvbof9"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/css/swiper.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/css/swiper.min.css">
+<link href="https://fonts.googleapis.com/css?family=Gamja+Flower" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/js/swiper.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/js/swiper.min.js"></script>
@@ -85,8 +86,13 @@
        border: 0px solid black;
    }
    
+   #facilityTd {
+   		width:1100px;
+   }
+   
    #facilityContainer {
-		width: 500px;
+ 		width: 1100px;
+/* 		width: 100%; */
    		height: 50px;
 	    overflow: hidden;
 	    overflow-x: scroll;
@@ -101,6 +107,8 @@
    		width: 1100px;
    		margin: auto;
    		margin-top: 110px;
+   		font-family: 'Gamja Flower', cursive;
+   		font-size: 15px;
    }
    
    .date {
@@ -118,6 +126,11 @@
    .swiper-slide {
    		padding-bottom: 30px;
    }
+   
+   #hosImg {
+   		width: 50px;
+   		height: 50px;
+   }
 </style>
 </head>
 <body>
@@ -125,7 +138,10 @@
 	<div id="bodyContainer">
     <table id="hosTable">
         <tr>
-            <td rowspan="2">
+        	<td>
+        		<img id="hosImg" src="...">
+        	</td>
+            <td>
                 <h1 id="title">${hospital.title }</h1>
                 <input type="hidden" id="hosCode" value="${hospital.hosCode }">
                 <div id="followDiv">
@@ -146,15 +162,15 @@
             <td>
             <div class="hosTitle"><span>즐겨찾는 고객 수 : </span><span>${followCnt }</span><span>명</span></div>
             </td>
-            <td rowspan="2" style="text-align: center">
+            <td style="text-align: center">
                 <button id="chart">진료차트</button>
             </td>
-            <td rowspan="2" style="text-align: center">
-                관리
+            <td style="text-align: center">
+                <button id="edit">관리</button>
             </td>
         </tr>
         <tr>
-            <td>
+            <td id="facilityTd" colspan="5">
             	<div id="facilityContainer">
             		<c:forEach items="${facilityList }" var="facility">
 		                <div class="hosfacility">${facility.facilityName }</div>
@@ -319,6 +335,10 @@
     	$("#chart").click(function(){
     		window.location.href = "/myvet/hos/chartHos.do?hosCode=" + $("#hosCode").val();
     	})
+		
+    	$("#edit").click(function(){
+	    	window.open("/myvet/hos/edit.do?hosCode="+ $("#hosCode").val(), "issue", "width=500, height=500, location=no");
+    	})
     	
     	$("#booking").click(function(){
     		window.location.href = "/myvet/hos/booking.do?hosCode=" + $("#hosCode").val();
@@ -343,7 +363,7 @@
 		    pagination: {
 	          el: '.swiper-pagination',
 	          dynamicBullets: true,
-	        },
+	        }
  	  })
 </script>
     </script>

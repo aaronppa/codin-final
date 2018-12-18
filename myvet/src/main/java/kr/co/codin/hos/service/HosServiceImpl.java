@@ -351,5 +351,10 @@ public class HosServiceImpl implements HosService{
 	public List<HosBooking> selectReceptionByDate(HosBooking booking) {
 		return mapper.selectReceptionByDate(booking);
 	}
+	
+	@Override
+	public 	void increaseViewCnt(int hosBoardId) {
+		mapper.increaseViewCnt(hosBoardId);
+	}
 
 }

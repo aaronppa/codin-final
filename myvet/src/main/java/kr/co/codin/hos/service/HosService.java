@@ -82,5 +82,6 @@ public interface HosService {
 	List<HosFacility> selectFacilitybyHosCode (int hosCode);
 	List<FavHos> indexFavHos(int memberNo);
 	void insertReception(HosBooking booking);
+	void increaseViewCnt(int hosBoardId);
 	
 }

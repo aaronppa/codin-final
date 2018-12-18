@@ -1,16 +1,19 @@
 package kr.co.codin.repository.domain;
 
 public class HosBoard {
-	int hosBoardId;
-	int boardCode;
-	int hosCode;
-	int hosBoardNo;
-	int hosBoardCategoryCode;
-	String hosBoardTitle;
-	String hosBoardContent;
-	int hosBoardWriterNo;
-	int hosBoardViewCnt;
-	String hosBoardRegDate;
+	private int hosBoardId;
+	private int boardCode;
+	private int hosCode;
+	private int hosBoardNo;
+	private int hosBoardCategoryCode;
+	private String hosBoardTitle;
+	private String hosBoardContent;
+	private int hosBoardWriterNo;
+	private int hosBoardViewCnt;
+	private String hosBoardRegDate;
+	private Member writer;
+	private String categoryName;
+	
 	public int getHosBoardId() {
 		return hosBoardId;
 	}
@@ -71,13 +74,17 @@ public class HosBoard {
 	public void setHosBoardRegDate(String hosBoardRegDate) {
 		this.hosBoardRegDate = hosBoardRegDate;
 	}
-	@Override
-	public String toString() {
-		return "HosBoard [hosBoardId=" + hosBoardId + ", boardCode=" + boardCode + ", hosCode=" + hosCode
-				+ ", hosBoardNo=" + hosBoardNo + ", hosBoardCategoryCode=" + hosBoardCategoryCode + ", hosBoardTitle="
-				+ hosBoardTitle + ", hosBoardContent=" + hosBoardContent + ", hosBoardWriterNo=" + hosBoardWriterNo
-				+ ", hosBoardViewCnt=" + hosBoardViewCnt + ", hosBoardRegDate=" + hosBoardRegDate + "]";
+	public Member getWriter() {
+		return writer;
 	}
-	
+	public void setWriter(Member writer) {
+		this.writer = writer;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 	
 }

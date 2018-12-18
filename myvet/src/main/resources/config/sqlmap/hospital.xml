@@ -152,6 +152,8 @@
 		<result column="hos_board_view_cnt" property="hosBoardViewCnt"/>
 		<result column="hos_board_reg_date" property="hosBoardRegDate"/>
 		<result column="hos_board_content" property="hosBoardContent"/>
+		<association column="hos_board_writer_no" property="writer" select="selectMember"></association>
+		<association column="hos_board_category_code" property="categoryName" select="selectCategoryName"></association>
 	</resultMap>
 	
 	<resultMap type="HosStaff" id="staffMap">
@@ -541,6 +543,12 @@
 		from hos_board_category_list
 	</select>
 	
+	<select id="selectCategoryName" parameterType="int" resultType="string">
+		select hos_board_category_name
+		from hos_board_category_list
+		where hos_board_category_code = #{hosBoardCategoryCode}
+	</select>
+	
 	<select id="lastBoardNo" parameterType="int" resultType="int">
 		select max(hos_board_no)
 		from hos_board
@@ -584,6 +592,12 @@
 		</if>
 		limit #{begin}, #{pageNum}
 	</select>
+	
+	<update id="increaseViewCnt" parameterType="int">
+		update hos_board
+		set hos_board_view_cnt = hos_board_view_cnt + 1
+		where hos_board_id = #{hosBoardId}
+	</update>
 	
 	<select id="hosBoardCount" parameterType="HosPage" resultType="int">
 		select count(*)
