@@ -111,6 +111,7 @@
         <div style="margin-left: 20%;">
           <textarea name="content" class="content" id="summernote" value="" cols="100" rows="15">
           </textarea>
+          <input id="fileId" name="fileId" style="visibility:hidden;" value="">
         </div>
         <div id="hidden-file">
 <!--         	<input id="url" name="url" type="hidden"> -->
@@ -183,14 +184,15 @@
     		success : function(file) {
     			console.log($(ele))
     			console.log("upload-success");
-    			console.log("file.url : "+file.url)
-    			$("input#url").val(file.url)
+    			console.log("file.url : "+ '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
+    			
+    			$("input#url").val('${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
     			$("input#oriName").val(file.oriName)
     			$("input#sysName").val(file.sysName)
     			$("input#filePath").val(file.filePath)
     			$("input#fileSize").val(file.fileSize)
-    			$(ele).summernote("editor.insertImage", file.url);
-    		
+    			$(ele).summernote("editor.insertImage", '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName);
+    			$("#fileId").val(file.fileId);
     		
     		}
     	})//ajax

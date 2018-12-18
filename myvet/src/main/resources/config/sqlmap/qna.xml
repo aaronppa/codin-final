@@ -72,7 +72,15 @@
 
 	</resultMap>
 
-
+		<resultMap id="fileMap" type="fileInfo">
+		<result column="file_id" property="fileId"/><!-- 파일번호(auto) -->
+		<result column="board_code" property="boardCode"/><!-- 게시판 테이블 고유 번호(FK(code_list(board_code))) -->
+		<result column="board_no" property="boardNo"/><!-- 각 테이블 라인 아이템 번호 -->
+		<result column="ori_name" property="oriName"/>
+		<result column="sys_name" property="sysName"/>
+		<result column="file_path" property="filePath"/>
+		<result column="file_size" property="fileSize"/>
+	</resultMap>
 
 
 
@@ -239,6 +247,13 @@
 		values(#{title},20,#{writerNo},#{content},#{categoryCode})
 	</insert>
 	
+		<select id="selectQnaNo" parameterType="Qna" resultType="int">
+		select qna_no
+		from qna
+		where title=#{title} and board_code = 20 and writer_no = #{writerNo} and content = #{content} and category_code = #{categoryCode}
+		
+	</select>
+	
 	<select id="categoryList" resultMap="QnaCategoryMap">
 		select *
 			from qna_category_list		
@@ -367,4 +382,27 @@
 			from qna
 			where qna_no = #{qnaNo}
 	</select>
+	
+	<insert id="uploadFile" parameterType="fileInfo" useGeneratedKeys="true" keyProperty="fileId">
+	
+		insert into file_info(
+			board_code, board_no, ori_name, sys_name, file_path, file_size
+		)values(
+			#{boardCode}, #{boardNo}, #{oriName}, #{sysName}, #{filePath}, #{fileSize}
+		)
+	</insert>
+	
+	<select id="selectFileId" parameterType="fileInfo" resultType="int">
+	
+		select file_id
+			from file_info
+			where board_code = #{boardCode} and board_no =#{boardNo} and ori_name =#{oriName} and sys_name =#{sysName} and file_path = #{filePath} and file_size =#{fileSize}
+	</select>
+	<update id="updateFileid" parameterType="fileInfo">
+			update file_info
+		set board_no = #{boardNo}
+		where file_id = #{fileId}
+	</update>
+	
+
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaCategoryList;
 import kr.co.codin.repository.domain.QnaComment;
@@ -128,6 +129,27 @@ public class QnaServiceImpl implements QnaService{
 		}catch(Exception e) {
 			return 0;
 		}
+	}
+	@Override
+	public void uploadFile(FileInfo fileInfo) {
+		// TODO
+		mapper.uploadFile(fileInfo);
+		
+	}
+	@Override
+	public int selectFileId(FileInfo fileInfo) {
+		// TODO Auto-generated method stub
+		return mapper.selectFileId(fileInfo);
+	}
+	@Override
+	public void updateFileid(FileInfo fileInfo) {
+		// TODO Auto-generated method stub
+		mapper.updateFileid(fileInfo);
+	}
+	@Override
+	public int selectQnaNo(Qna qna) {
+		// TODO Auto-generated method stub
+		return mapper.selectQnaNo(qna);
 	}
 	
 	

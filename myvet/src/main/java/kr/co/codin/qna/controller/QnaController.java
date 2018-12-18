@@ -1,6 +1,11 @@
 package kr.co.codin.qna.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -11,9 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.qna.service.QnaService;
+import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Member;
 import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.Qna;
@@ -34,6 +41,7 @@ public class QnaController {
 	@Autowired
 	private QnaService service;
 	
+	private List<FileInfo> fileList = new ArrayList<>();
 
 	@RequestMapping("list.do")
 	public void list(Model model
@@ -100,7 +108,7 @@ public class QnaController {
 		model.addAttribute("qna", service.SelectList(searChQuery));
 		model.addAttribute("totalCnt",service.countTotalContent(searChQuery));
 	
-			model.addAttribute("pageResult", new PageResult(pageNo, service.countTotalContent(searChQuery)));
+		model.addAttribute("pageResult", new PageResult(pageNo, service.countTotalContent(searChQuery)));
 		
 		model.addAttribute("searchQuery", searChQuery);
 		
@@ -122,9 +130,14 @@ public class QnaController {
 	}
 	
 	@RequestMapping("write.do")
-	public String write(Model model,Qna qna) {
-		service.InsertQna(qna);
+	public String write(Model model,Qna qna,int fileId,FileInfo fileInfo) {
+			service.InsertQna(qna);
+			
 		
+			
+			fileInfo.setBoardNo(service.selectQnaNo(qna));
+			fileInfo.setFileId(fileId);
+			service.updateFileid(fileInfo);
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
@@ -175,7 +188,8 @@ public class QnaController {
 	@ResponseBody
 	public List<QnaComment> writeComment(Model model,int qnaNo,QnaComment qnaComment,Qna qna) throws Exception{
 		service.writeComment(qnaComment);
-
+			
+		
 		return service.selectCombyNo(qnaNo);
 		
 	}
@@ -248,7 +262,78 @@ public class QnaController {
 		return service.selectPickCom(comment);
 	}
 	
-
+	@RequestMapping("uploadFile.do")
+	@ResponseBody
+	//filePath로 리턴
+	public FileInfo uploadFile(@RequestParam("file") List<MultipartFile> mFileList) throws IllegalStateException,Exception{
+		System.out.println("mFileList : "+mFileList);
+		String uploadPath = "/qna";
+		SimpleDateFormat sdf = new SimpleDateFormat("/yyyyMMdd");
+		String datePath = sdf.format(new Date());
+		FileInfo fileInfo = new FileInfo();
+		
+		int boardCode = 20;
+		int boardNo = 0;
+		
+		String newName = UUID.randomUUID().toString();
+		newName = newName.replace("-", "");
+		
+		String fileExtension = "";
+		String sysName = "";
+		
+		String realPath = context.getRealPath("/upload/qna");
+		System.out.println("realPath : " + realPath);
+		
+		for(MultipartFile mFile : mFileList) {
+			System.out.println("for입장");
+			if(mFile.isEmpty()==true) continue;
+			fileExtension = getExtension(mFile.getOriginalFilename());
+			sysName = newName + "." + fileExtension;
+			
+			System.out.println("boardCode : "+boardCode);
+			System.out.println("boardNo : "+boardNo);
+			System.out.println("file.getOriName() : "+mFile.getOriginalFilename());
+			System.out.println("sysName : "+sysName);
+			System.out.println("filePath : "+uploadPath+datePath);
+			System.out.println("getSize"+(int)mFile.getSize());
+			
+			fileInfo.setBoardNo(boardNo);
+			fileInfo.setBoardCode(boardCode);
+			fileInfo.setBoardNo(boardNo);
+			fileInfo.setOriName(mFile.getOriginalFilename());
+			fileInfo.setSysName(sysName);
+			fileInfo.setFilePath(uploadPath+datePath);
+			fileInfo.setFileSize((int)mFile.getSize());
+			File img = new File(realPath + datePath, sysName);
+			System.out.println(img);
+			if(img.exists() == false) {
+				img.mkdirs();
+			}
+			System.out.println("for나옴");
+			System.out.println("realPath : "+ realPath);
+			mFile.transferTo(img);
+//			fileInfo.getUrl();
+//			System.out.println("getUrl:"+fileInfo.getUrl());
+//			fileInfo.setUrl("/myvet/upload"+uploadPath+datePath+"/"+sysName);
+//			System.out.println(realPath+datePath+"/"+sysName);
+			fileList.add(fileInfo);
+			service.uploadFile(fileInfo);
+			fileInfo.setFileId(service.selectFileId(fileInfo));
+		}
+		
+	//	return service.selectFileId(fileInfo);
+		return fileInfo;
+	}
+	
+	 private static String getExtension(String fileName) {
+	        int dotPosition = fileName.lastIndexOf('.');
+	        
+	        if (dotPosition != -1 && fileName.length() - 1 > dotPosition) {
+	            return fileName.substring(dotPosition + 1);
+	        } else {
+	            return "";
+	        }
+	 }
 	
 	
 	

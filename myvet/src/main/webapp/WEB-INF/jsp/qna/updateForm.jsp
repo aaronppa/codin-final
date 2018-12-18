@@ -81,11 +81,13 @@
 				<option selected value="" >Category</option>
 				
 			<c:forEach var="c" items="${category}" varStatus="loop">
-				
+				 
 				<option value="${c.categoryCode }">${c.categoryName }</option>
 				
 			</c:forEach>
+			
 		</select>
+		<input id="fileId" name="fileId" style="visibility:hidden;" value="">
 	</div>
 	<!-- 카테고리 -->
 	
@@ -121,23 +123,33 @@
     });
     
     function sendFile(file, ele) {
-    	var form_data = new FormData();
-    	console.log("form_data", form_data)
-    	form_data.append('file', file);
+    	var formData = new FormData();
+    	console.log("formData", formData)
+    	formData.append('file', file);
     	console.log(file)
     	console.log(ele)
     	$.ajax({
-    		data : form_data, 
+    		data : formData, 
     		type : "POST",
     		url : "/myvet/qna/uploadFile.do",
     		cache : false,
     		contentType : false,
-    		enctype : "multipart/form_data",
+    		enctype : "multipart/form-data",
     		processData : false,
     		//매개변수가 파일경로
     		success : function(file) {
-    			console.log(file.url);
-    			$(ele).summernote("editor.insertImage", file.url);
+    			console.log($(ele))
+    			console.log("upload-success");
+    			console.log("file.url : "+ '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
+    			
+    			$("input#url").val('${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName)
+    			$("input#oriName").val(file.oriName)
+    			$("input#sysName").val(file.sysName)
+    			$("input#filePath").val(file.filePath)
+    			$("input#fileSize").val(file.fileSize)
+    			$(ele).summernote("editor.insertImage", '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName);
+    			$("#fileId").val(file.fileId);
+    		
     		}
     	})//ajax
     }

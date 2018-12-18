@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaCategoryList;
 import kr.co.codin.repository.domain.QnaComment;
@@ -30,4 +31,8 @@ public interface QnaService {
 	int selectRecommend(QnaRecommend qnaRecommend);
 	void deleteRecommend(QnaRecommend re);
 	int sumrecommend(int recommend);
+	void uploadFile(FileInfo fileInfo);
+	int selectFileId(FileInfo fileInfo);
+	void updateFileid(FileInfo fileInfo);
+	int selectQnaNo(Qna qna);
 }

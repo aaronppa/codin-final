@@ -2,6 +2,7 @@ package kr.co.codin.repository.mapper;
 
 import java.util.List;
 
+import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.Qna;
 import kr.co.codin.repository.domain.QnaCategoryList;
 import kr.co.codin.repository.domain.QnaComment;
@@ -29,5 +30,8 @@ public interface QnaMapper {
 	int selectRecommend(QnaRecommend QnaRecommend);
 	void deleteRecommend(QnaRecommend re);
 	int sumrecommend(int recommend);
-	
+	void uploadFile(FileInfo fileInfo);
+	int selectFileId(FileInfo fileInfo);
+	void updateFileid(FileInfo fileInfo);
+	int selectQnaNo(Qna qna);
 }
