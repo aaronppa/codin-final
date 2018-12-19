@@ -63,7 +63,7 @@ and recipient_no = 3
 order by date_sent asc;
 
 -- 각 대화방별 대화 불러오기 병원 포함 Test
-		select msg_id, chat_id, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type, sender_no, mem.member_nickname sender_nickname, title
+		select msg_id, chat_id, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type, sender_no, mem.member_nickname sender_nickname, title as sender_nickname
 		from recipient_group r
 			inner join message m on m.chat_id = r.recipient_group_id
 			left outer join member mem on mem.member_no = m.sender_no
@@ -107,12 +107,12 @@ select recipient_group_id, recipient_no, recipient_type, trash, member_nickname,
 				         from member) mem on mem.member_no = r.recipient_no
 		left outer join (select hos_code, title,file_path, sys_name
 						 from hos_basic hb
-						  left outer join (select file_path, sys_name, board_no
+						  left outer join (select file_id, file_path, sys_name, board_no
 						 			 from file_info
-						 			 where board_code = 30) f on f.board_no = hb.hos_code
+						 			 where board_code = 30) f on f.file_id = hb.thumb_img
 						 where hos_register = 'Y') h on h.hos_code = r.recipient_no
         where trash = 0
-        and recipient_group_id = 1
+        and recipient_group_id = 60
         and recipient_no != 3;
 
 

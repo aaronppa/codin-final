@@ -145,10 +145,11 @@
 		from(select *
 		from recipient_group r
 			inner join message m on m.chat_id = r.recipient_group_id
-			inner join member mem on mem.member_no = m.sender_no
+			left outer join (select member_no from member) mem on mem.member_no = m.sender_no
+            left outer join hos_basic h on h.hos_code = m.sender_no
 		where date_read is null
 		and recipient_no = #{recipientNo}
-		and mem.member_no !=#{recipientNo}
+		and mem.member_no !=#{recipientNo} or mem.member_no is null
         group by chat_id) as t
 	</select>
 	

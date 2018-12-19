@@ -139,6 +139,7 @@ public class MsgController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("NewMsgCnt", service.countUnreadMsg(memberNo));
 		map.put("NewMsg", service.selectMyChat(memberNo));
+		System.out.println("new unread: "+map);
 		return map;
 	}
 	

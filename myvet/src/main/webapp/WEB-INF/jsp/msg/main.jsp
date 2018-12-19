@@ -20,7 +20,7 @@
 <link rel="stylesheet"
 	href="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css">
 <link rel="stylesheet"
-	href="<c:url value='/resources/css/msg/small-chat-responsive.css'/>" />'
+	href="<c:url value='/resources/css/msg/small-chat-responsive.css'/>" />
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/common/tooltipster/tooltipster.bundle.css'/>" />
 <link rel="stylesheet"
