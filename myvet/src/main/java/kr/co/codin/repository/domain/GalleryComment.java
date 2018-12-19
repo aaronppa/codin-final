@@ -8,6 +8,16 @@ public class GalleryComment {
 	private int commenterNo;
 	private String comment;
 	private Date regDate;
+	private Member member;
+	
+	
+	
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	public int getCommentNo() {
 		return commentNo;
 	}

@@ -6,8 +6,9 @@
 		position:relative;
 		top:80px;
 	}
-   
     #thumbs { 
+    	text-align:center;
+    	font-size:15px;
         padding-top: 10px; 
         overflow: hidden; 
     }
@@ -53,16 +54,18 @@
         border: none;
         
     }
-    #comment{
-		height: 590px;
-		overflow: hidden;
-		overflow: scroll;
-		overflow: auto;
-    }
+/*     #comment{ */
+/* 		height: 590px; */
+/* 		overflow: hidden; */
+/* 		overflow: scroll; */
+/* 		overflow: auto; */
+/*     } */
 
     /*swiper*/
 
-
+	#title{
+		text-align: center;
+	}
     .comments {
     margin: 2.5rem auto 0;
     max-width: 60.75rem;
@@ -145,46 +148,57 @@
     color: #0095ff;
     }
     .active{
-    	color: blue;
+    	color: #a56e50;
     }
     .comActive{
 		color: blue;
 		transition:.5s;
 	}
-    
     /*pet 정보*/
     .pet{
     margin-left: 10%; text-align: center;
     }
     .information{
-    margin-left: 10%; text-align: center;
+     text-align: center;
     
     }
     .view{
-    	margin-left: 5%;
+    	margin-left: 2%;
     }
     .fa-clock{
-    	margin-left: 5%;
+    	margin-left: 2%;
     }
     /*사용자 프로필 이미지*/
     .petImg{
     width:80px;height:80px;
     }
+    .petImg:hover{
+    width:90px;height:90px;transition:.3s;
+    }
     
     /*글쓴이 닉네임*/
 	.writerNick{
-		font-weight:bolder
+		font-weight:bolder;
+		font-size: 30px;
 	}
 	/*글 삭제,수정*/
+	#updateDel{
+		float:right;
+	}
 	#deleteGall{
-	font-size:20px;text-align:center;cursor:pointer;
+	font-size:20px;cursor:pointer;
 	}
 	#updateGall{
-	font-size:20px;text-align:center;cursor:pointer;
+	font-size:20px;cursor:pointer;
 	}
 	/*글 추천수*/
 	#galleryRecomHeart{
 	color:red;
+	}
+	#galleryRecomHeart:hover{
+	
+	font-size: 25px;
+	transition:.6s;
 	}
 	/*조회수*/
 	.view{
@@ -200,7 +214,7 @@
 	}
 	/*글 제목*/
 	#title{
-	font-size:25px;
+	font-size:40px;
 	}
 	
 	/*글 추천*/
@@ -209,6 +223,12 @@
 	}
 	.dislike{
 	margin-left:20px;cursor:pointer;
+	}
+	.like:hover{
+		font-size: 50px; color:#8b787a; transition:.5s;
+	}
+	.dislike:hover{
+		font-size: 50px; color:#8b787a; transition:.5s;
 	}
 	/*댓글 수*/
 	.fa-comments{
@@ -221,21 +241,26 @@
 	}
 	
 	/****************댓글목록********************/
-	
+	.commenter{
+		width:150px;
+	}
 	/*댓글 사용자 사진*/
 	.commenterImg{
 	width:45px;height:45px;
 	}
 	/*댓글 추천*/
+	.recommendForm{
+		text-align: right;
+	}
 	.com-like{
-	background:none; border:none; color:black;margin-left:68%;cursor:pointer;
+	background:none; border:none; color:black;cursor:pointer;
 	}
 	.fa-thumbs-up{
 	font-size:25px;
 	}
 	/*댓글 비추*/
 	.com-dislike{
-	background:none; border:none;color:black; margin-left:4%;cursor:pointer;
+	background:none; border:none;color:black; margin-left:5%;cursor:pointer;
 	}
 	.fa-thumbs-down{
 	font-size:25px;
@@ -243,27 +268,29 @@
 	
 	/*댓글 추천카운트*/
 	.comheartform{
-		margin-left: 80%;
+		text-align: right;
 	}
 	.comheart{
 		margin-left: 2%;color:red;
 	}
 	
 	/*댓글 수정*/
-	#updateCom{
-	margin-left:55%;
-	}
-	#deleteCom{
-	margin-left:5%;
+
+	.btnForm{
+		text-align: right;
 	}
 	#textcom{
 		border: gray;
+		background: #f4e8e6;
 	}
+/* 	.dis{ */
+/* 		visibility: hidden; */
+/* 	} */
 	#cancelupdatecom{
-	cursor:pointer;margin-left:5%;
+	cursor:pointer;
 	}
 	#submitupdatecom{
-	cursor:pointer;margin-left:70%;
+	cursor:pointer;
 	}
 	
 	.fa-exclamation-circle{

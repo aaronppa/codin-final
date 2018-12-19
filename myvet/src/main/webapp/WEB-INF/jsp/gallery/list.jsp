@@ -101,8 +101,8 @@
                  <div class="card-body" style="background:#e6e6e6;">
                      <div class="etc" >
                          <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
-                             <i class="fas fa-heart">${top.recomCnt}</i>
-                             <i class="fas fa-comments">${top.comCnt}</i>
+                             <i class="fas fa-heart" style="color:#f4e8e6">${top.recomCnt}</i>
+                             <i class="fas fa-comments" style="color:#f4e8e6">${top.comCnt}</i>
                          </div>
                          <div class="card-content" >
                              <p class="card-title">${top.title} </p>
@@ -172,9 +172,9 @@
                  <div class="card-body">
                      <div class="etc">
                          <div class="emo" style="position: absolute;top: 80px;left:80px; color:white; font-size:25px;">
-                             <i class="fas fa-heart">${g.recomCnt}</i>
-                             <i class="fas fa-comments">${g.comCnt}</i>
-                         </div>
+                             <i class="fas fa-heart" style="color:#f4e8e6">${g.recomCnt}</i>
+                             <i class="fas fa-comments" style="color:#f4e8e6">${g.comCnt}</i>
+                         </div> 
                          <div class="card-content" >
                              <p class="card-title">${g.title} </p>
                              <span data-toggle="tooltip" title="<c:forEach var="p" items="${g.petList}" varStatus="innerLoop">${p.petName},</c:forEach>">

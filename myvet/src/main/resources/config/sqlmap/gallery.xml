@@ -41,7 +41,8 @@
 		<result column="comment" property="comment"/>		
 		<result column="reg_date" property="regDate"/>
 		<result column="recommendCnt" property="recommendCnt"/>		
-		<result column="member_nickname" property="memberNickname"/>		
+		<result column="member_nickname" property="memberNickname"/>	
+		<association property="member" column="commenter_no" select="selectMember"></association>	
 	</resultMap>
 	<resultMap type="GalleryRecommend" id="GalleryRecommendMap">
 		<result column="no" property="no"/>
@@ -77,6 +78,12 @@
 		<result column="pet_file_reg_date" property="petFileRegDate"/>
 		<result column="petcol" property="petcol"/>
 	</resultMap>
+	
+	<select id="selectMember" parameterType="int" resultMap="memberMap">
+		select *
+		from member
+		where member_no = #{member_no}
+	</select>
 	
 	<select id="selectPet" parameterType="int" resultMap="petMap">
 		select *

@@ -64,8 +64,8 @@ public class TipController {
 		
 		Member member = (Member)session.getAttribute("user");
 		model.addAttribute("nickname",member.getMemberNickname());
-//		int memberNo = member.getMemberNo();
-//		tipRecommend.setMemberNo(memberNo);
+		int memberNo = member.getMemberNo();
+		tipRecommend.setMemberNo(memberNo);
 		
 		int sumRecommend = 0;
 		try {
@@ -73,13 +73,13 @@ public class TipController {
 		} catch(Exception e) {
 			;;
 		}
-		
 		System.out.println("detail");
 		System.out.println(tipNo);
 		model.addAttribute("countComment",service.countComment(tipNo));
 		service.updateViewCnt(tipNo);
 		model.addAttribute("tip", service.detailTip(tip));
 		model.addAttribute("recom",service.selectRecommend(tipRecommend));
+		System.out.println("recommend : "+service.selectRecommend(tipRecommend));
 		model.addAttribute("comRecom",service.selectCommentRecommend(tipCommentRecommend));
 		model.addAttribute("sumRecommend", sumRecommend);
 		System.out.println("cnt:"+ service.sumRecommend(tipNo));
@@ -146,9 +146,8 @@ public class TipController {
 	
 	@RequestMapping("commentList.do")
 	@ResponseBody
-	public List<TipComment> commentList(Tip tip) throws Exception{
+	public List<TipComment> commentList(Tip tip, HttpSession session,Model model) throws Exception{
 		System.out.println("commentList");
-//		Member member = (Member)session.getAttribute("user");
 //		int memberNo = member.getMemberNo();
 //		tipCommentRecommend.setMemberNo(memberNo);
 		

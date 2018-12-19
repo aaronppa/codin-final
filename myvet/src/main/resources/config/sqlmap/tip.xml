@@ -46,6 +46,7 @@
 		<result column="recommend" property="recommend"/>		
 		<result column="recommendCnt" property="recommendCnt"/>		
 		<result column="member_nickname" property="memberNickname"/>
+		<association property="member" column="commenter_no" select="selectMember"></association>
 	</resultMap>
 	
 	<resultMap type="tipRecommend" id="tipRecommendMap">
@@ -71,6 +72,12 @@
 		<result column="file_path" property="filePath"/>
 		<result column="file_size" property="fileSize"/>
 	</resultMap>
+
+	<select id="selectMember" parameterType="int" resultMap="memberMap">
+		select *
+		from member
+		where member_no = #{member_no}
+	</select>
 
 	<select id="countRecommend" parameterType="int" resultType="int">
 		select sum(recommend)
@@ -231,16 +238,15 @@
 			#{tipNo}, #{commenterNo}, #{comment}
 		)
 	</insert>
-	<select id="selectComment" parameterType="tip" resultMap="tipCommentMap">
-			select a.*,
-			(select count(*) from tip_comment_recommend where recommend = 1 and comment_no = a.comment_no) 
-			- 
-			(select count(*) from tip_comment_recommend where recommend = -1 and comment_no = a.comment_no) as recommendCnt,
-			(select recommend from tip_comment_recommend where comment_no = a.comment_no and member_no=#{memberNo}) as recommend
-			from tip_comment a 
-			where a.tip_no=#{tipNo}
-			order by a.comment_no desc
-	</select>
+<select id="selectComment" resultMap="tipCommentMap" parameterType="tip">
+		select a.*,
+		(select count(*) from tip_comment_recommend where recommend = 1 and comment_no = a.comment_no) 
+		- (select count(*) from tip_comment_recommend where recommend = -1 and comment_no = a.comment_no)as recommendCnt,
+		(select recommend from tip_comment_recommend where comment_no = a.comment_no and member_no=#{memberNo}) 
+		as recommend
+		from tip_comment a
+		where a.tip_no=#{tipNo}
+		order by a.comment_no desc </select>
 	<delete id="deleteComment" parameterType="tipComment">
 		delete 
 		  from tip_comment

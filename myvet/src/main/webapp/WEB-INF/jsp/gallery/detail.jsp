@@ -8,9 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-        <link rel="stylesheet" href="/myvet/resources/css/gallery/detail.css">
-
-
+    <link rel="stylesheet" href="/myvet/resources/css/gallery/detail.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <!--     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
@@ -27,36 +25,34 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.esm.bundle.js"></script> -->
   <style>
-  .container{
-		position:relative;
-		top:80px;
-	}
+/*   .container{ */
+/* 		position:relative; */
+/* 		top:80px; */
+/* 	} */
+/* 	@media */
+/* 	.container { */
+/* 	    max-width: 100% !important; */
+/* 	} */
     .carousel-3d-slide {
       height: auto !important;
       background-color: rgba(0, 0, 0, 0.25) !important;
      }
      .information{
-  	margin-left: 10%; text-align: center;
+  	 text-align: right;
   
     }
-    .view{
-    	margin-left: 5%;
+    .regDate{
+    	text-align: right;
     }
-    .fa-clock{
+	.fa-heart{
     	margin-left: 5%;
     }
 	.photo{
 		text-align: center;
 	}
-	.fa-heart{
-    	margin-left: 10%;
-    }
- 	.fa-clock{
-    	margin-left: 10%;
-    }
+
     .updateDel{
-    	text-align: center;
-    	margin-left: 5%;
+    	text-align: right;
     }
       .comActive{
 		color: blue;
@@ -68,11 +64,21 @@
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
 	            
-	<input type="hidden" name="memberNo" value="${user.memberNo}">
+	<input type="hidden" name="memberNo" id="memberNo" value="${user.memberNo}">
     <div class="container">
-        <div class="row">
+           <div class="writer" style="text-align: center;">
+				<img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle" id="writer-img">
+             	<span class="writerNick">${gallery.memberNickname}</span>
+			</div>
+			<hr>
+            <div id="title" style="text-align: center;"><strong>${gallery.title}</strong></div>
+<!--         <div id="row"> -->
+            <hr>
+			<div class="regDate">
+		       <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
+			</div>
             <!-- <div class="col-md-7 col-md-offset-1"> -->
-                <div class="col-md-7" id="pic-form">
+             <div id="pic-form">
                 <!-- carousel -->
                 <div id="carousel">
 			    <carousel-3d :autoplay="true" :autoplay-timeout="100000">
@@ -83,65 +89,65 @@
 
 			    </carousel-3d>
 			  </div>
-
+              <div id="content" style="text-align: center;font-size:20px;">${gallery.content}</div>
+			<br>
+			<br>
+	        <div class="information">
+		         <span class="view">view : ${gallery.viewCnt}</span>
+		         <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
+	         </div>
+			<hr>
                     <div class="pet">
                     <c:forEach var="p" items="${gallery.petList}" varStatus="loop">
                         <span data-toggle="tooltip" title="${p.petName}">
-                            <img class="petImg rounded-circle" id="petImg" src="/myvet/upload${p.petFilePath}/${p.petSysName}" style="margin-right: 10px;">
+                            <img class="petImg rounded-circle" id="petImg" src="/myvet/upload${p.petFilePath}/${p.petSysName}" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'" style="margin-right: 10px;">
                         </span>
                     </c:forEach>
 <!--                         <span data-toggle="tooltip" title="PODOL"> -->
 <!--                             <img class="petImg rounded-circle" src="/myvet/resources/img/gall&tip/pony02.jpg" id="pet-img"> -->
 <!--                         </span> -->
                     </div>
-                        <br>
-                            <div class="information">
-
-                            <span class="view">view : ${gallery.viewCnt}</span>
-
-                            <i class="fas fa-heart" id="galleryRecomHeart"></i><span id="galleryRecomCnt">${sumRecommend}</span> 
-                            
-                            <!-- <i class="far fa-comments" style="margin-left: 5%;">&nbsp;458</i> -->
-                            
-                            <i class="far fa-clock">&nbsp;<fmt:formatDate value="${gallery.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
-                            </div>
-                        	<div>
-                        	<br>
-                        	<div class="updateDel">
-	                            <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">
-	                            	<button type="button" class="btn btn-success">수정</button>
-								</a>
-	                            <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">
-	                            	<button type="button" class="btn btn-danger">삭제</button>
-                            	</a>
-                        	</div>
-                        	</div>
-                        	<br>
-                    
-                </div>
-
-                <div class="col-md-5" id="comment"> 
-                        <div class="detail-content"  >
-                            <br>
-                        	<div class="writer">
-								<img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
-	                            <span class="writerNick">${gallery.memberNickname}</span>
-							</div>
-                            <div id="title"><strong>${gallery.title}</strong></div>
-                            <hr>
-                            <i class="fas fa-exclamation-triangle" id="galleryReport">신고하기</i>
-                            <br>
-                            <br>
-                            <br>
-                            <div id="content">${gallery.content}</div>
-                            <br>
-                            <input type="hidden" name="recommend" id="recommend" value="${recommend}">
-                            <div id="thumbs">
+                    <hr>
+                    <br>
+                   	<div>
+                   	<input type="hidden" name="recommend" id="recommend" value="${recommend}">
+                            <div id="thumbs" >
                            	  <i id="like" class="fa fa-thumbs-up fa-3x like <c:if test='${recommend == 1}'>active</c:if>"
 							     aria-hidden="true" data-like=""></i>
 							  <i id="dislike" class="fa fa-thumbs-down fa-3x dislike <c:if test='${recommend == -1}'>active</c:if>" 
 							     aria-hidden="true" data-dislike=""></i>
                             </div>
+               		<div class="updateDel">
+               			<c:if test="${gallery.writerNo == user.memberNo}">
+	                        <a href="<c:url value='/gallery/updateForm.do?galleryNo=${gallery.galleryNo}'/>" id="updateGall">
+	                           	<button type="button" class="btn btn-success">수정</button>
+							</a>
+               			</c:if>
+               			<c:if test="${gallery.writerNo == user.memberNo}">
+	                        <a href="<c:url value='/gallery/delete.do?galleryNo=${gallery.galleryNo}'/>" id="deleteGall">
+	                           	<button type="button" class="btn btn-danger">삭제</button>
+	                        </a>
+                        </c:if>
+                        <a href="<c:url value='/gallery/list.do'/>">
+                           	<button type="button" class="btn btn-light">목록</button>
+                        </a>
+                                     
+                	</div>
+                </div>
+                <br>
+                    
+<!--                 </div> -->
+<!-- 				<div class="w-100"></div> -->
+                <div id="comment"> 
+                        <div class="detail-content"  >
+                            <br>
+      
+<!--                             <i class="fas fa-exclamation-triangle" id="galleryReport">신고하기</i> -->
+<!--                             <br> -->
+<!--                             <br> -->
+<!--                             <br> -->
+                            <br>
+
                             <!--유저 댓글-->
                             <!-- <img src="/myvet/resources/img/gall&tip/pic3.jpg" class="rounded-circle" id="user-img">
                             <span style="font-weight:bolder">복돌이</span>
@@ -153,7 +159,7 @@
                                     <div class="comments">
                                         <div class="comment-wrap writeComment">
                                             <div class="photo">
-                                                    <img src="/myvet/resources/img/gall&tip/pic2.jpg" id="writer-pic" class="rounded-circle" >
+                                                    <img src="/myvet/resources/img/gall&tip/profile.png" id="writer-pic" class="rounded-circle" >
                                                 	<p class="commenter"><strong>${user.memberNickname}</strong></p>
                                             </div>&nbsp;&nbsp;
                                             <!-- 댓글 등록 -->
@@ -167,8 +173,10 @@
                                             <ul class="comment-actions">
                                                 <li class="registration">등록</li>
                                             </ul>
+                                            <br>
 									<!-- 댓글 수 -->
                                     <i class="far fa-comments"></i><span id="">&nbsp;${countComment}</span>
+                                            <hr>
                                     <!-- 댓글 목록-->
                                      
                                         <div class="comment-wrap comment-list" id="comment-list">
@@ -178,11 +186,10 @@
                                 </div>
                         </div>
                     </div>
-                </div>
+<!--                 </div> -->
         </div>
-             <a href="<c:url value='/gallery/list.do'/>">
-             <button class="list">목록</button>
-             </a>         
+        </div>
+  
     </div>
 
   <!-- Swiper JS -->
@@ -191,7 +198,9 @@
   <script src="https://rawgit.com/Wlada/vue-carousel-3d/master/dist/vue-carousel-3d.min.js"></script>
     <script>
     //petImg
-    
+//     $("#updateGall").click(function(){
+//     	if()
+//     })
     
     
     //carousel
@@ -358,12 +367,15 @@
 	    		console.log(likeRecommend)
 			$('#comment-list').append(
 				//작성자 이미지
-					"<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='commenterImg rounded-circle'/>&nbsp;"
-	              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
-	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
-	            	+"<div class='comheartform'>"
-	              	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+(result[i].recommendCnt == true?result[i].recommendCnt:0)+"</span>"
-	            	+"</div>"
+					"<img src='/myvet/resources/img/gall&tip/profile.png' class='commenterImg rounded-circle'/>&nbsp;"+"<p>"+result[i].member.memberNickname+"</p>"
+// 					+"<span>"+result[i].member.memberNickname+"</span>"
+// 	              	+"<div class='recommendForm'>"
+// 	              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
+// 	              	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
+// 	            	+"</div>"
+// 	              	+"<div class='comheartform'>"
+// 	              	+"<i class='fas fa-heart comheart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+(result[i].recommendCnt == true?result[i].recommendCnt:0)+"</span>"
+// 	            	+"</div>"
 // 	            	+"<i class='fas fa-exclamation-circle' data-comno='"+result[i].commentNo+"' style='margin-left:10px;'></i>"
 	            	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno="+result[i].commenterNo+"></div>"
 	                +"<div class='comment-content'>" 
@@ -371,27 +383,27 @@
 		                +"<input type='hidden' class='commentval' data-commenterno='"+result[i].commenterNo+"'/>"		                
 		                +"<div class='comment' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
 	              	+"</div>"
-// 	              	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button' style='cursor:pointer;margin-right:20%;'>DELETE</button>"
-// 	              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' style='cursor:pointer;'>UPDATE</button>"
-	              	+"<button type='button' id='updateCom' class='btn btn-outline-success' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"'>UPDATE</button>"
-	              	+"<button type='button' id='deleteCom' class='btn btn-outline-danger' data-deletecombtn='"+result[i].commentNo+"' >DELETE</button>"
-	              	+"<hr>"
+// 	              	+"<div class='btnForm'>"
+
+	              	+"<button type='button' id='updateCom' class='btn btn-outline-primary up"+result[i].commenterNo+"' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"'>UPDATE</button>"
+		            +"<button type='button' id='deleteCom' class='btn btn-outline-danger del"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' >DELETE</button>"	              		
+// 	              	+"</div>"
+		            +"<hr>"
 			);
+	    		console.log("memberNo : "+$("#memberNo").val());
+	    		console.log("commenterNo : "+result[i].commenterNo);
+	    		if($("#memberNo").val() != result[i].commenterNo){
+
+					console.log("ininin")
+					$('.up'+result[i].commenterNo).css('visibility','hidden');
+					$('.del'+result[i].commenterNo).css('visibility','hidden');
+	    		}
 	    	}
 	    })
     }
-//     $("#comment-list").on("click","#updateCom",function(){
-//     	$.ajax({
-//     		url: "/myvet/gallery/updateComment.do",
-//     		data: "commentNo="+$(this).data("updatecombtn")+"&commenterNo="+$("#commenterNo").val()
-//     	}).done(function(result){
-//     		console.log("댓글삭제 완료")
-//     		$("#comment-list").children().remove();
-//     		list();
-//     	})
-//     })
-	//댓글 신고
 	
+   
+    
 	$(".comment-list").on("click",".fa-exclamation-circle",function(){
 		window.open("/myvet/report/reportCommentForm.do?boardCode=10&commentNo="+$(this).data("comno"),"report","width=1000, height=600, left=500, top=10")
 	})
@@ -403,10 +415,11 @@
          "<textarea id='textcom' placeholder='댓글수정..' cols='70' rows='3'>"+$(this).data('updatecombtn')+"</textarea>"		
 		)
 		$(this).next().replaceWith(
-        "<button class='btn btn-outline-danger' id='cancelupdatecom'>취소</button>"		
+		"<button class='btn btn-outline-dark' id='cancelupdatecom'>취소</button>"		
 		)
 		$(this).replaceWith(
-		"<button class='btn btn-outline-success' id='submitupdatecom'>제출<button>"		
+		"<br><br>"
+		+"<button class='btn btn-outline-primary' id='submitupdatecom'>제출<button>"		
 		)
 	})
 
@@ -428,16 +441,16 @@
     })
     //댓글 수정 제출
    $("#comment-list").on("click","#submitupdatecom",function(){
-		console.dir($(this).prev())//댓글수정내용
-		console.dir($(this).prev().prev())//댓글 번호
-		console.log($(this).prev().prev().data("commenterno"))//댓글 작성자
-		console.log($(this).prev().prev().data("commentno"))//댓글 번호
+		console.dir($(this).prev().prev().prev())//댓글수정내용
+		console.dir($(this).prev().prev().prev().prev())//댓글 번호
+		console.log($(this).prev().prev().prev().prev().data("commenterno"))//댓글 작성자
+		console.log($(this).prev().prev().prev().prev().data("commentno"))//댓글 번호
 		
 		$.ajax({
 			url:"/myvet/gallery/updateComment.do",
-			data:"commentNo="+$(this).prev().prev().data("commentno")
-				+"&commenterNo="+$(this).prev().prev().data("commenterno")
-				+"&comment="+$(this).prev().val()
+			data:"commentNo="+$(this).prev().prev().prev().prev().data("commentno")
+				+"&commenterNo="+$(this).prev().prev().prev().prev().data("commenterno")
+				+"&comment="+$(this).prev().prev().prev().val()
 		}).done(function(){
 			console.log("댓글 수정..!")
 			$("#comment-list").children().remove();

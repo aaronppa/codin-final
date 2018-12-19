@@ -10,9 +10,17 @@ public class TipComment {
 	private Date regDate;
 	private int recommend;
 	private int recommendCnt;
+	private Member member;
 	private String memberNickname;
 
 	
+
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	public String getMemberNickname() {
 		return memberNickname;
 	}

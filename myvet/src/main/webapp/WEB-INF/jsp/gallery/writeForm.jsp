@@ -193,9 +193,11 @@
 		  </div>
           <div class="pet-add">
               <i class="fas fa-plus" ></i>
-              <span data-toggle="tooltip" title="PONY">
-                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="petImg rounded-circle">
-              </span>
+              <c:forEach var="p" items="${gallery.petList}" varStatus="loop">
+	              <span data-toggle="tooltip" title="${p.petName}">
+	                <img src="/myvet/upload${p.petFilePath}/${p.petSysName}" class="petImg rounded-circle">
+	              </span>
+              </c:forEach>
           </div>
 		</div>
 		</div>

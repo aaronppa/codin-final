@@ -7,6 +7,10 @@
     	position:relative !important;
 		top:80px !important;
     }
+    
+   #writerNickname{
+   	font-size: 25px;
+   }
     .notes-wrapper .saver-wrap {
 	  display: flex;
 	  align-items: center;
@@ -84,7 +88,7 @@
   padding-right: 60px;
   font-weight: 600;
 /*   color: #000C2F; */
-  font-size: 13px;
+  font-size: 45px;
   text-transform: uppercase;
   position: relative;
 }
@@ -94,7 +98,7 @@
   font-weight: 400;
 /*   color: #666D82; */
   line-height: 1.4;
-  font-size: 14px;
+  font-size: 30px;
   
 }
 .notes-wrapper .content span.bold {
@@ -330,14 +334,19 @@ p {
 #comment::-webkit-scrollbar{
 	display: none;
 	}
-	
+
 
 <!-- 좋아요 -->
 .rating {
   text-align: center;
 }
 
-.like,
+.like {
+  font-size: 30px;
+  display: inline-block;
+  cursor: pointer;
+  margin: 10px;
+}
 .dislike {
   font-size: 30px;
   display: inline-block;
@@ -348,17 +357,17 @@ p {
 
 .dislike:hover,
 .like:hover {
-  color:blue;
+  color:#8b787a;
   transition: all .2s ease-in-out;
   transform: scale(1.1);
 }
 
 .active {
-  color: blue;
+  color: #a56e50;
 }
 
 .comActive{
-	color: blue;
+	color: #a56e50;
 	transition:.5s;
 }
 <!--신고-->
@@ -418,6 +427,10 @@ cursor:pointer;
 .comment-list{
 	text-align: left;
 }
+.border{
+	font-size:35px;
+	
+}
 /*게시글 추천*/
 .rating{
 	font-size:30px;
@@ -460,10 +473,16 @@ cursor:pointer;
 }
 /*댓글 수정, 삭제*/
 .updateCommentBtn{
-	background:none;border:none;color:black;cursor:pointer;
+	background:none;border:none;color:black;cursor:pointer;font-size: 20px;
 }
 .deleteCommentBtn{
-	background:none;border:none;color:black;cursor:pointer;margin-right:20%;
+	background:none;border:none;color:black;cursor:pointer;font-size: 20px;margin-right:20%;
+}
+.updateCommentBtn:hover{
+	font-size: 25px;transition:1s;
+}
+.deleteCommentBtn:hover{
+	font-size: 25px;transition:1s;
 }
 /*댓글수정 FORM id="updateCommentForm"*/
 #updateCommentForm{
@@ -483,12 +502,12 @@ cursor:pointer;
 	margin-left:10%;
 }
 .com-nickname{
-	font-size:15px;
+	font-size:20px;
 	margin-left:10px;
 }
 .border{
 	font-weight: bolder;
-	font-size:15px;
+	font-size:25px;
 	border:none;
 }
 /* .commentBtn{ */

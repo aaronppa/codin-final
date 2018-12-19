@@ -64,15 +64,18 @@ public class GalleryController{
 		model.addAttribute("gallery", service.galleryList(searchGallery));
 		System.out.println("gallery result: "+service.galleryList(searchGallery));
 		model.addAttribute("count",service.countGallery());
-		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery())); 
-		
+		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery(), 8, 10)); 
+		System.out.println("pageResult : "+new PageResult(pageNo, service.countGallery(), 8, 10));
 //		service.selectFile(fileInfoList);
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countgallery()));
 	}
 	
 	@RequestMapping("writeForm.do")
-	public void writeForm(Model model) throws Exception{
-
+	public void writeForm(Model model,HttpSession session) throws Exception{
+		Gallery gallery = new Gallery(); 
+		Member member = (Member)session.getAttribute("user"); 
+		model.addAttribute("gallery",service.detailGallery(gallery));
+		System.out.println("gallery : "+service.detailGallery(gallery));
 		System.out.println("writeForm");
 	}
 	
@@ -162,7 +165,6 @@ public class GalleryController{
 	public void updateForm(Gallery gallery, Model model,Member member,HttpSession session) throws Exception{
 		member = (Member)session.getAttribute("user");
 		model.addAttribute("gallery",service.updateForm(gallery));
-		
 	}
 	
 	@RequestMapping("update.do")

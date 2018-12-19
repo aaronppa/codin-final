@@ -7,7 +7,7 @@
   crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   
-<c:if test="${pageResult.count != 0}">
+<c:if test="${count > 10}">
 
     <nav aria-label="Pagination">
         <ul class="pagination">

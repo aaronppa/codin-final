@@ -42,7 +42,7 @@
                 <div class="rest" contenteditable="false"></div>
             </div>
             <div class="writer" aria-placeholder="writer..">
-                <img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;${tip.memberNickname}
+                <img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle">&nbsp;<span id="writerNickname">${tip.memberNickname}</span>
             </div>
             <div class="information">
            		<c:if test="${tip.categoryCode eq 1 }">
@@ -95,6 +95,7 @@
 		                  <strong>List</strong>
 	                </span>
 	            </a>
+	        <c:if test="${tip.memberNo == user.memberNo }">
                  <a href="<c:url value='/tip/updateForm.do?tipNo=${tip.tipNo }'/>" class="btn btn-primary">
 	               <span id="update" data-toggle="tooltip" title="UPDATE">
 	                  		<strong>Update</strong>
@@ -105,6 +106,7 @@
 						<strong>Delete</strong>
 	                </span>
                 </a>
+            </c:if>
             </div>
             
             <!--Comment-->
@@ -113,13 +115,13 @@
 <!--                 <form action="" method="post"> -->
                     <div class="comment-wrap">
                         <div class="photo">
-                			<img src="/myvet/resources/img/gall&tip/pony01.jpg" class="rounded-circle">&nbsp;${tip.memberNickname}
+                			<img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle">
                         </div>
                        	<p class="com-nickname"><strong>${nickname}</strong></p>
                         <input type="hidden" name="tipNo" id="tipNo" value="${tip.tipNo}">
-                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="7">
+                        <input type="hidden" class="commenterNo"name="commenterNo" id="commenterNo" value="${user.memberNo }">
                         <div class="comment-block">                            
-                           <textarea name="comment" id="comment" cols="30" rows="4" placeholder="300자 이내..." ></textarea>
+                           <textarea name="comment" id="comment" cols="30" rows="4" placeholder="300자 이내..." style="font-size:20px;"></textarea>
                            <span id="counter">###</span>
                            <input type="submit" class="commentSubmit" >
                        </div>
@@ -158,7 +160,7 @@
 // 				data: "keyword="++
 // 			})
 // 		})
-        
+        console.log($("#recommend").val())
         //댓글 글자 입력수
 		$(function typing() {
 		      $('#comment').keyup(function (e){
@@ -299,8 +301,8 @@
             		   dislikeRecommend = "comActive";
 		     	   }
                 $(".comment-list").append(
-                "<img src='/myvet/resources/img/gall&tip/pony01.jpg' class='rounded-circle'/>&nbsp;"
-              	+"<span class='commenter border'><a>sssaaa</a></span>"
+                "<img src='/myvet/resources/img/gall&tip/profile.png' class='rounded-circle'/>&nbsp;"
+              	+"<span class='commenter border'><a>"+result[i].member.memberNickname+"</a></span>"
                 +"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
               	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
             	+"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
@@ -308,12 +310,19 @@
             	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
                 +"<div class='comment-content'>" 
 	                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].comment+"'/>"
-	                +"<div class='comment' data-comment='"+result[i].comment+"' height:auto;'>"+result[i].comment+"</div>"
+	                +"<div class='comment' data-comment='"+result[i].comment+"' height:auto;' style='font-size: 20px;'>"+result[i].comment+"</div>"
               	+"</div>"
-              	+"<button class='deleteCommentBtn' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
-              	+"<button class='updateCommentBtn' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' >UPDATE</button>"
+              	+"<button class='deleteCommentBtn del"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
+              	+"<button class='updateCommentBtn up"+result[i].commenterNo+"' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' >UPDATE</button>"
               	+"<hr>"
                 );
+                console.log("commenterNo : "+result[i].commenterNo)
+                console.log("memberNo : "+$("#memberNo").val())
+                	if(result[i].commenterNo != $("#memberNo").val()){
+                		$(".del"+result[i].commenterNo).css('visibility','hidden')
+                		$(".up"+result[i].commenterNo).css('visibility','hidden')
+                	}
+                
 			}
         	}).fail(function(result){
         		console.log("실패 tipNo"+result.val())
