@@ -395,13 +395,17 @@ public class QnaController {
 //			System.out.println("getUrl:"+fileInfo.getUrl());
 //			fileInfo.setUrl("/myvet/upload"+uploadPath+datePath+"/"+sysName);
 //			System.out.println(realPath+datePath+"/"+sysName);
+			fileList.add(fileInfo);
+			System.out.println("직전");
 			if(service.selectFIle(fileInfo) != null) {
-				fileList.add(fileInfo);
-				service.updateFileDb(fileInfo);
+				System.out.println("조기옴");
+			//	service.updateFileDb(fileInfo);
+				service.uploadFile(fileInfo);
 			}else {
 				System.out.println("여기옴");
-				fileList.add(fileInfo);
-				service.uploadFile(fileInfo);
+				
+				service.updateFileDb(fileInfo);
+				//
 			}
 			
 			

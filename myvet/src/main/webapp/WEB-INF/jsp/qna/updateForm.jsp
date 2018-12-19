@@ -143,13 +143,14 @@
     	if($("#fileId").attr("value").length != 0 ){
     		console.log("여기옴");
     		formData.append('fileId', $("#fileId").attr("value"));	
-    		formData.append("qnaNo",$("#qnaNo").attr("value"));
+    		
     	}else{
+    		console.log("else");
     		formData.append('fileId', 0);	
-    		formData.append("qnaNo",$("#qnaNo").attr("value"));
+    		
     	}
     	
-    	
+    	formData.append("qnaNo",$("#qnaNo").attr("value"));
    
   
     	console.log(file)

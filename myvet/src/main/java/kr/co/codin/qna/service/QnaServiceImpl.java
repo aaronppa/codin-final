@@ -169,6 +169,7 @@ public class QnaServiceImpl implements QnaService{
 	@Override
 	public FileInfo selectFIle(FileInfo info) {
 		// TODO Auto-generated method stub
+		
 		return mapper.selectFIle(info);
 	}
 	@Override
