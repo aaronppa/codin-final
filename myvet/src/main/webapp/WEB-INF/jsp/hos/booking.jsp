@@ -81,6 +81,10 @@
    		</table>
     </div>
     <script>
+    	console.dir($(".type[value=${facilityNo}]"));
+    
+    	$(".type[value=${facilityNo}]").attr("selected", "selected");
+    
 	    Date.prototype.format = function(f) {
 	        if (!this.valueOf()) return " ";
 	     
@@ -103,28 +107,13 @@
     
     	var $blockRow = $(".motherRow").clone().removeClass("disable").removeClass("motherRow");
     	
-    	$("#date").val(new Date().format("yyyy-MM-dd"));
+    	$("#date").val("${date}");
     	
-    	$("#bookingManager").click(function(){
-    		window.location.href = "/myvet/hos/bookingManager.do?hosCode=" + $("#hosCode").val();
-    	})
+    	$("#facilityType").change(function() {
+    		window.location.href = "/myvet/hos/booking.do?hosCode=${hospital.hosCode}&date=" + $("#date").val() + "&facilityNo=" + $(".type:checked").val()
+    	})	
     	
-    	$("#facilityType").change(refrash)	
-    	
-    	$(".booking").click(function(){
-    		console.log($(this).data("block"));
-    		console.log($(".petNo:checked").data("pet"));
-    		$.ajax({
-    			url: "/myvet/hos/bookingSubmit.do",
-    			data: {
-    				blockCode: $(this).data("block"),
-    				bookingOwner: ${petList[0].memberNo},
-    				bookingPet: $(".petNo:checked").data("pet"),
-    				hosCode: ${hospital.hosCode}
-	       			},
-	       		type: "post"
-    		})
-    	})
+    	bookingClick()
     	
    	    $('.date').pickadate({
    	     monthsShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -142,32 +131,33 @@
 		 format: 'yyyy-mm-dd',
 		 formatSubmit: 'yyyy-mm-dd',
 		 min: true,
-		 onSet: refrash
+		 onSet: changeDate
    	    })
 
-    	function refrash(){
-    		$(".blockRow").remove();
-    		
-    		$.ajax({
-    			url: "/myvet/hos/selectBlock.do",
-    			data: {
-    				hosCode: ${hospital.hosCode},
-    				blockDay: $("#date").val(),
-    				facilityNo: $(".type:checked").val()
-	       			},
-	       		type: "post"
-    		}).done(function(blockList) {
-    			console.dir(blockList)
-				for(let i = 0; i < blockList.length; i++) {
-					var $newRow = $blockRow.clone();
-					$newRow.find(".blockTime").html(blockList[i].blockStart + " ~ " + blockList[i].blockEnd);
-					$newRow.find(".possibility").html("불가");
-					$newRow.find(".button").html("<button class='booking' data-blockCode='"+blockList[i].blockCode+"'>예약하기</button>");
-					$("#blockTable").append($newRow);	
-				}
-    		})
+   	    function changeDate() {
+    		window.location.href = "/myvet/hos/booking.do?hosCode=${hospital.hosCode}&date=" + $("#date").val() + "&facilityNo=" + $(".type:checked").val()
     	}
+   	    
 
+    	function bookingClick() {
+    		
+	    	$(".booking").click(function(){
+	    		console.log($(this));
+	    		console.log($(this).data("block"));
+	    		console.log($(".petNo:checked").data("pet"));
+	    		$.ajax({
+	    			url: "/myvet/hos/bookingSubmit.do",
+	    			data: {
+	    				blockCode: $(this).data("block"),
+	    				bookingOwner: ${petList[0].memberNo},
+	    				bookingPet: $(".petNo:checked").data("pet"),
+	    				hosCode: ${hospital.hosCode}
+		       			},
+		       		type: "post"
+	    		})
+	    	})
+    	}
+    	
     </script>
 </body>
 </html>

@@ -19,6 +19,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.5/js/swiper.min.js"></script>
 
 <style>
+   	#background {
+   		width: 100%;
+   		height: 100%;
+   		position: absolute;
+   		z-index: -2;
+   		top:0;
+   		left:0;
+   		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
+	}
 
    .hosfacility {
        position: relative;
@@ -46,7 +56,7 @@
    }
    #map {
        width: 49%;
-       height: 250px;
+       height: 490px;
        position: relative;
        display: inline-block;
        margin-top: 10px;
@@ -55,11 +65,16 @@
    
    #hosStaff {
        width: 49%;
-       height: 250px;
+       height: 490px;
        position: relative;
        display: inline-block;
        margin-top: 10px;
        overflow: hidden;
+   }
+   
+   .staffSwiper {
+   		height: 450px;
+   		margin: auto;
    }
    
    #hosBoard {
@@ -81,7 +96,7 @@
    }
    #topContainer, #bottomContainer {
        width: 100%;
-       height: 260px;
+       height: 450px;
        text-align: center;
        border: 0px solid black;
    }
@@ -131,15 +146,42 @@
    		width: 50px;
    		height: 50px;
    }
+   
+	a {
+		text-decoration: none;
+		color: black !important;
+	}
+	
+	a:hover {
+		font-weight: bold;
+	}
+	
+	.menuTitle {
+		font-size: 20px;
+	}
+   
+    #firstTr {
+		height: 70px;
+    }
+   
 </style>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<div id="background"></div>
+
 	<div id="bodyContainer">
     <table id="hosTable">
-        <tr>
+        <tr id="firstTr">
         	<td>
-        		<img id="hosImg" src="...">
+        		<c:choose>
+        			<c:when test="${empty hospital.thumbImgInfo }">
+		        		<img id="hosImg" src="/myvet/resources/img/common/noimage.jpg">
+        			</c:when>
+        			<c:otherwise>
+		        		<img id="hosImg" src="/myvet/upload${hospital.thumbImgInfo.filePath }/${hospital.thumbImgInfo.sysName}">
+        			</c:otherwise>
+        		</c:choose>
         	</td>
             <td>
                 <h1 id="title">${hospital.title }</h1>
@@ -163,10 +205,14 @@
             <div class="hosTitle"><span>즐겨찾는 고객 수 : </span><span>${followCnt }</span><span>명</span></div>
             </td>
             <td style="text-align: center">
-                <button id="chart">진료차트</button>
+            	<c:if test="${user.hosCode == hospital.hosCode && user.memberGrade == 'V'}">
+	                <button id="chart">진료차트</button>
+                </c:if>
             </td>
             <td style="text-align: center">
-                <button id="edit">관리</button>
+            	<c:if test="${user.hosCode == hospital.hosCode}">
+	                <button id="edit">관리</button>
+                </c:if>
             </td>
         </tr>
         <tr>
@@ -182,8 +228,8 @@
     <div id="topContainer">
         <div id="map"></div>
         <div id="hosStaff">
-            <a href="hosStaff.do?hosCode=${hospital.hosCode }">직원</a>
-			<div class="swiper-container">
+            <a class="menuTitle" href="hosStaff.do?hosCode=${hospital.hosCode }">직원</a>
+			<div class="swiper-container staffSwiper">
 			     <div class="swiper-wrapper">
 			     	<c:forEach items="${staffs }" var="staff">
 			          <div class="swiper-slide">
@@ -209,7 +255,7 @@
    	</div>
     <div id="bottomContainer">
         <div id="hosBoard">
-            <a href="hosBoard.do?hosCode=${hospital.hosCode }">병원게시판</a><br>
+            <a class="menuTitle" href="hosBoard.do?hosCode=${hospital.hosCode }">병원게시판</a><br>
             <div id="boardList">
             	<c:forEach items="${boardList }" var="board">
 		            <a href="/myvet/hos/detailBoard.do?hosBoardId=" + ${board.hosBoardId }>[${board.hosBoardCategoryCode }]${board.hosBoardTitle }</a><br>
@@ -217,7 +263,7 @@
             </div>
         </div>
         <div id="book">
-            예약현황
+            <a class="menuTitle" href="#">예약현황</a>
             <div id="bookTable">
             <table>
                 <tr>
@@ -337,7 +383,7 @@
     	})
 		
     	$("#edit").click(function(){
-	    	window.open("/myvet/hos/edit.do?hosCode="+ $("#hosCode").val(), "issue", "width=500, height=500, location=no");
+	    	window.open("/myvet/hos/edit.do?hosCode="+ $("#hosCode").val(), "edit", "width=1400, height=700, location=no");
     	})
     	
     	$("#booking").click(function(){

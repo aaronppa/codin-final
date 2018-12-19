@@ -85,6 +85,8 @@ public interface HosMapper {
 	void insertReception(HosBooking booking);
 	int selectBookingByBlockCode(int blockCode);
 	void increaseViewCnt(int hosBoardId);
+	List<FileInfo> selectHosImg(int hosCode);
+	void deleteFacility(int facilityNo);
 	
 	int isRegStaff (HosStaff staff);
 	void memberHosNull(int memberNo);

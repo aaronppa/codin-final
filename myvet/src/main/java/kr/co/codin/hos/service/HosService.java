@@ -83,5 +83,7 @@ public interface HosService {
 	List<FavHos> indexFavHos(int memberNo);
 	void insertReception(HosBooking booking);
 	void increaseViewCnt(int hosBoardId);
+	List<FileInfo> selectHosImg(int hosCode);
+	void deleteFacility(int facilityNo);
 	
 }

@@ -118,7 +118,7 @@
 		        	<td><input type="file" name="chartImg" id="chartImg" multiple></td>
 		        </tr>
 		    </table>
-        	<div id="thumbs" class="disable" colspan="2">
+        	<div id="thumbs" class="disable">
         		<img class="thumb disable" src="#" />
         	</div>
 	    </form>

@@ -20,9 +20,24 @@
 
 <title>MyVet :: 괜찮🐈-건강하🐕</title>
     <style>
+    	html {
+    		height:100%
+    	}
+    
+       	#background {
+       		width: 100%;
+       		height: 100%;
+       		position: absolute;
+       		top:0;
+       		left:0;
+       		opacity: 0.5;
+    		background-image: url('/myvet/resources/img/common/background.jpg');
+    		z-index: -1
+    	}
+    
         .relative {
             /* border: 1px solid black; */
-            position: relative;
+/*             position: relative; */
         }    
         
         #mapArea {
@@ -31,12 +46,12 @@
         }
         
         #bodyContainer {
-            margin: auto;
-            margin-top: 110px;
+			margin: auto;
             width: 1100px;
+            height: 100%;
             text-align: center;
             padding: 5px;
-
+			padding-top: 80px;
         }
         
         #noticeContainer {
@@ -45,20 +60,25 @@
         }
         
         #leftContainer {
-            position: absolute;
-            top: 0px;
-            left: 0px;
+/*             position: absolute; */
+/*             top: 0px; */
+/*             left: 0px; */
             display: inline-block;
             width: 74%;
+            height: 800px;
+            overflow: hidden;
+            
         }
         
         #rightContainer {
-            position: absolute;
-            top :0px;
-            left: 930px;
+/*             position: absolute; */
+/*             top :0px; */
+/*             left: 930px; */
             /* position: relative; */
             display: inline-block;
             width: 24%;
+            height: 800px;
+            overflow: hidden;
         }
         
         #hospitalContainer {
@@ -66,7 +86,7 @@
         }
         
         #petContainer {
-            height:150px
+/*             height:150px */
         }
         
         #newsContainer {
@@ -91,16 +111,29 @@
         	height: 30px;
         	overflow: hidden;
         }
+        
+      	#MapSearchlist{
+    		background: rgba(255,255,255,0.5);
+    	}
+    
+        
     </style>
 	<link rel="stylesheet" href="<c:url value='/resources/css/common/topbar.css'/>"/>
 </head>          
-<body>
-	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+<body id="indexBody">
 
-   	<c:if test="${not empty user }">
-   		<input type="hidden" id="memberNo" value="${user.memberNo }">
-   	</c:if>
-    <div class="relative" id="bodyContainer">
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<div id="background"></div>
+	<div id="bodyContainer">
+   	<c:choose>
+	   	<c:when test="${not empty user }">
+	   		<input type="hidden" id="memberNo" value="${user.memberNo }">
+	   	</c:when>
+   		<c:otherwise>
+	   		<input type="hidden" id="memberNo" value="0">
+   		</c:otherwise>
+   	</c:choose>
+   	
         <div class="relative" id="leftContainer">
             <div class="relative" id="noticeContainer">
             	<div class="swiper-container notice">
@@ -206,7 +239,7 @@
 			
 			for (let i = 0; i < pets.length; i++) {
 				var $newPet = $myPet.clone();
-				$newPet.find(".petImg").attr("src", "/myvet"+pets[i].petFilePath+"/"+pets[i].petSysName);
+				$newPet.find(".petImg").attr("src", "/myvet/upload"+pets[i].petFilePath+"/"+pets[i].petSysName);
 				$newPet.find(".petA").attr("href", "/myvet/pet/petDetail.do?petNo="+pets[i].petNo);
 				$newPet.find(".petName").html(pets[i].petName);
 				$("#myPet").append($newPet);

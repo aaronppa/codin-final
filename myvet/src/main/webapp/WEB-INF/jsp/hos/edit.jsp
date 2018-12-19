@@ -15,42 +15,47 @@
 	.wideInput {
 		width: 80%
 	}
-
+	
     .disable {
     	display:none;
     }
-    
-    .thumbImg {
+	
+	.orgThumbImg,
+   .thumbImg {
     	width: 160px;
-     	height: 90px;
+    	height: 100px;
+    	overflow: hidden;
     	text-align: center;
       	position: relative;
-       	margin-left: 15px; 
+       	margin-left: 15px;
     	display: inline-block;
+    }
+    
+    .imgRadio {
+    	margin-top: 10px;
     }
 
     #thumbs {
-     	height: 140px;
+     	height: 160px;
     	overflow: hidden;
     	overflow-x: scroll;
     	white-space: nowrap;
     }
-
+	
 </style>
 </head>
 <body>
     <div id="body">
 	    <form id="form" method="POST" enctype="multipart/form-data">
-	    <h1>병원 등록</h1>
+	    <h1>병원 수정</h1>
 	    <table>
 	        <tr>
 	            <th colspan="2" class="thead">
 	                병원 이름 : 
 	            </th>
 	            <td>
-	                <input type="hidden" name="hosCode" id="hos-code">
-	                <input type="text" class ="wideInput" id="hos-name" disabled="disabled">
-	                <button type="button" id="search-hos">병원 검색</button>
+	                <input type="hidden" name="hosCode" id="hos-code" value="${hospital.hosCode }">
+	                <input type="text" class ="wideInput" id="hos-name" disabled="disabled" value="${hospital.title }">
 	            </td>
 	            <th>
 	                추가정보 등록
@@ -65,11 +70,17 @@
 	            도로명
 	        </th>
 	        <td>
-	            <input class="wideInput" type="text" id="hos-road-address" disabled="disabled">
+	            <input class="wideInput" type="text" id="hos-road-address" disabled="disabled" value="${hospital.roadAddress}">
 	        </td>
 	        <td id="facilityList" rowspan="8">
 	        <c:forEach var="facility" items="${facilityList }">
-		        <input type="checkbox" name="hosFacility" id="hos-facility${facility.facilityCode }" value="${facility.facilityCode}">
+		        <input type="checkbox" name="hosFacility" id="hos-facility${facility.facilityCode }" value="${facility.facilityCode}"
+		        	<c:forEach var="hosfacility" items="${hosFacilityList }">
+		        		<c:if test="${facility.facilityCode == hosfacility.facilityCode}">
+		        			checked="checked"
+		        		</c:if>
+		        	</c:forEach>
+		        >
 		        <label for="hos-facility${facility.facilityCode }">${facility.facilityName}</label><br>
 			</c:forEach>
 	        </td>
@@ -79,7 +90,7 @@
 	            지번
 	        </th>
 	            <td>
-	                <input class="wideInput" type="text" id="hos-address" disabled="disabled">
+	                <input class="wideInput" type="text" id="hos-address" disabled="disabled" value="${hospital.address }">
 	            </td>
 	        </tr>
 <!-- 	        <tr> -->
@@ -122,7 +133,7 @@
 	                병원 소개글
 	            </th>
 	            <td>
-	                <textarea name="hosComment" rows="5" cols="75" style="resize: none;"></textarea>
+	                <textarea name="hosComment" rows="5" cols="75" style="resize: none;">${hospital.hosComment}</textarea>
 	            </td>
 	        </tr>
 	        <tr>
@@ -133,55 +144,40 @@
 	                <input type="file" name="hosImg" id="hos-img" multiple>
 	            </td>
 	        </tr>
-	        <tr id="thumbsTr" class="disable">
-	        	<td colspan="3">
-		           	<div id="thumbs" class="disable">
-		           		<div class="thumbImg disable">
-			        		<img class="thumb" src="#">
+   	        <tr id="thumbsTr">
+   	        	<th colspan="2">
+   	        		대표 이미지 선택
+   	        	</th>
+	        	<td>
+		           	<div id="thumbs">
+		        		<c:forEach items="${hosImgList }" var="hosImg">
+		           		<div class="orgThumbImg">
+		           			<label class="imgLabel" for=`hosImg${hosImg.fileId }`>
+				        		<img class="orgThumb" src="/myvet/upload${hosImg.filePath }/${hosImg.sysName}"><br>
+			        		</label>
+			        		<input class="imgRadio" id=`hosImg${hosImg.fileId }` type="radio" name="thumbImg" value="${hosImg.fileId }">
 		        		</div>
+		        		</c:forEach>
 		        	</div>
 	        	<td>
 	        <tr>
+	        
 	    </table>
 	    </form>
 	    <div>
 		    <button type="button" id="submit">등록</button>
-		    <button type="button" id="debug">검사</button>
+<!-- 		    <button type="button" id="debug">검사</button> -->
 	    </div>
     </div>
     <script>
-    	var $snsDiv = $(".sns-div").clone()
-    	var $thumbImg = $(".thumbImg").clone().removeClass("disable");
-    	
-    	// 병원 검색 버튼 스크립트
-    	$("#search-hos").click(function(){
-    		window.open("/myvet/hos/hosList.do", "hosList", "width=850, height=1000, location=no")
-    	}) 
-    	
-    	function inputInfo(hosCode, hosTitle, hosAddr1, hosAddr2) {
-    		$("#hos-code").val(hosCode);
-    		$("#hos-name").val(hosTitle);
-    		$("#hos-road-address").val(hosAddr1);
-    		$("#hos-address").val(hosAddr2);
-    	}
-    	
-    	// 병원 SNS 추가 - 등록 관련 스크립트
-    	$("#add-sns").click(function() {
-    		$("#sns-container").append($snsDiv.clone());
-	    	$(".del-sns").click(function() {
-	    		$(this).parent().remove()
-	    	})
-    	})
-
-    	$(".del-sns").click(function() {
-    		$(this).parent().remove()
-    	})
-    	
+		var $thumbImg = $(".thumbImg:eq(0)").clone().removeClass("remove");
+		$(".remove").remove();
+		
     	// 병원 등록 버튼 스크립트
         $("#submit").click(function() {
    			console.log($("#form").serialize())
             $.ajax({
-            	url: "<c:url value='/hos/registerHos.do'/>",
+            	url: "<c:url value='/hos/editHos.do'/>",
             	processData: false,
                 contentType: false,
             	type: 'POST',
@@ -192,7 +188,9 @@
 					  type: 'success',
 					  title: 'OK!',
 					  text: '정상적으로 등록되었습니다.'
-				})
+				}).then(function() {
+					window.close();
+				})	   
             })
         })
         
@@ -206,19 +204,7 @@
 				})
 				return false;
 			}
-			if($("#sns-name").length > 1) {
-				for (let i = 0; i < $("#sns-name").length; i++) {
-					console.log($("#sns-name")[i].value)
-					if($("#sns-name")[i].value) {
-						swal({
-							  type: 'error',
-							  title: 'ERROR!!',
-							  text: 'SNS 이름이 않았습니다.'
-						})
-						return false
-					}
-				}
-			}
+			
         }
 
    	    function readURL(input, i) {
@@ -229,6 +215,9 @@
               reader.onload = function(e) {
 
                 $('.thumb:eq('+i+')').attr('src', e.target.result);
+                $('.imgRadio:eq('+i+')').attr('id', 'radio' + i);
+                $('.imgRadio:eq('+i+')').attr('value', i);
+                $('.imgLabel:eq('+i+')').attr('for', 'radio' + i);
 
               }
               reader.readAsDataURL(input.files[i]);
@@ -250,7 +239,7 @@
           	}
 
           });
-    	
+
     </script>
 </body>
 </html>

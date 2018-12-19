@@ -12,7 +12,7 @@
 <body>
 <c:if test="${pageResult.count != 0}">
 
-    <nav aria-label="Pagination">
+    <nav class="regHosNav" aria-label="Pagination">
         <ul class="pagination">
             <li ><a <c:if test="${pageResult.pageNo == 1}">class='disabled'</c:if> id="first" href="1">&laquo;&laquo;</a></li>
             <li ><a <c:if test="${pageResult.pageNo-5 < 1}">class='disabled'</c:if> href=${pageResult.beginPage-1 }>&laquo;</a></li>
@@ -28,7 +28,7 @@
     </nav>
     
     <script>
-	$("nav > ul.pagination > li > a").click (function(e) {
+	$("nav.regHosNav > ul.pagination > li > a").click (function(e) {
 		e.preventDefault();
 		
 		var pageNo = $(this).attr("href")
@@ -68,9 +68,15 @@
 			}
 
 			$("#resultRegister").append($registerPaging.clone());
-			$("#regPageing").load("regHosPage.do?pageNo="+1+"&ListCount="+hosMap.listCount);
+			$("#regPageing").load("regHosPage.do?pageNo="+pageNo+"&ListCount="+hosMap.listCount);
 		})
 	})
+	
+ 		$(".hos-name").click(function(e){
+			e.preventDefault();
+					
+	 		window.location.href = "hospital.do?hosCode="+$(this).attr("href");
+		})
 	
     </script>
 </c:if>

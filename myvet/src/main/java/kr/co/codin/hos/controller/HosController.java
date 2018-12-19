@@ -30,6 +30,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.codin.hos.service.HosService;
 import kr.co.codin.hos.service.HosServiceImpl;
+import kr.co.codin.msg.service.MsgService;
 import kr.co.codin.repository.domain.FavHos;
 import kr.co.codin.repository.domain.FileInfo;
 import kr.co.codin.repository.domain.HosBlock;
@@ -42,8 +43,10 @@ import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Member;
+import kr.co.codin.repository.domain.Message;
 import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.Pet;
+import kr.co.codin.repository.domain.RecipientGroup;
 import kr.co.codin.repository.domain.TempBooking;
 
 @Controller
@@ -51,7 +54,10 @@ import kr.co.codin.repository.domain.TempBooking;
 public class HosController {
 
 	@Autowired
-	HosService service = new HosServiceImpl();
+	private HosService service;
+	
+	@Autowired
+	private MsgService mService;
 	
 	@Autowired 
 	private ServletContext servletContext;
@@ -62,6 +68,8 @@ public class HosController {
 		FavHos favHos = new FavHos();
 		Member member = (Member) session.getAttribute("user");
 		page.setHosCode(hosCode);
+		
+		System.out.println(service.selectHospitalByNo(hosCode));
 		
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
 		model.addAttribute("boardList", service.selectHosBoard(page));
@@ -94,12 +102,23 @@ public class HosController {
 		}
 	}
 	
+	@RequestMapping("edit.do")
+	public void edit(Model model, int hosCode) {
+		System.out.println(service.selectHosImg(hosCode));
+		
+		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
+		model.addAttribute("facilityList", service.selectFacility());
+		model.addAttribute("hosFacilityList", service.selectFacilitybyHosCode(hosCode));
+		model.addAttribute("hosImgList", service.selectHosImg(hosCode));
+	}
+	
 	@RequestMapping("booking.do")
 	public void booking(
 				Model model, 
 				HttpSession session, 
 				int hosCode, 
-				@RequestParam(value="date", defaultValue="null") String date) {
+				@RequestParam(value="date", defaultValue="null") String date,
+				@RequestParam(value="facilityNo", defaultValue="1") int facilityNo) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		HosBlock block = new HosBlock();
 		Member member = (Member) session.getAttribute("user");
@@ -110,7 +129,7 @@ public class HosController {
 		
 		block.setBlockDay(date);
 		block.setHosCode(hosCode);
-		block.setFacilityNo(1);
+		block.setFacilityNo(facilityNo);
 		
 		System.out.println(block);
 		System.out.println(service.selectBlockList(block));
@@ -118,6 +137,8 @@ public class HosController {
 		model.addAttribute("petList", service.selectPetList(member.getMemberNo()));
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
 		model.addAttribute("blockList", service.selectBlockList(block));
+		model.addAttribute("date", date);
+		model.addAttribute("facilityNo", facilityNo);
 	}
 	
 	@RequestMapping("bookingList.do")
@@ -194,13 +215,18 @@ public class HosController {
 	
 	@RequestMapping("confirmBooking.do")
 	public void confirmBooking(int bookingNo) {
-		System.out.println(bookingNo);
 		service.confirmBooking(bookingNo);
+		HosBooking booking = service.selectBooking(bookingNo);
+
+		sendBookingResult(booking, 3, booking.getMember());
 	}
 	
 	@RequestMapping("banBooking.do")
 	public void banBooking(int bookingNo) {
 		service.banBooking(bookingNo);
+		HosBooking booking = service.selectBooking(bookingNo);
+		
+		sendBookingResult(booking, 4, booking.getMember());
 	}
 
 	
@@ -630,9 +656,11 @@ public class HosController {
 		Hospital hospital = new Hospital();
 		hospital.setHosCode(hosCode);
 		hospital.setHosComment(hosComment);
-		service.registerUpdate(hospital);
+
 		
 		if (hosImg.isEmpty()) return;
+		
+		int count = 0;
 		
 		for (MultipartFile img : hosImg) {
 			
@@ -658,13 +686,19 @@ public class HosController {
 			
 			FileInfo fileInfo = new FileInfo();
 			fileInfo.setBoardNo(hosCode);
-			fileInfo.setFilePath("/hospital/"+ sdf.format(date));
+			fileInfo.setFilePath("/hospital/basic/"+ sdf.format(date));
 			fileInfo.setOriName(img.getOriginalFilename());
 			fileInfo.setSysName(sysName);
 			fileInfo.setFileSize(img.getSize());
 			
 			service.insertFileInfo(fileInfo);
+			
+			if (count == 0) {
+				hospital.setThumbImg(fileInfo.getFileId());
+			}
 		}
+		
+		service.registerUpdate(hospital);
 		
 		Member member = (Member) session.getAttribute("user");
 		HosStaff staff = new HosStaff();
@@ -678,6 +712,121 @@ public class HosController {
 		service.insertStaff(staff);
 		service.addStaff(staff);
 		service.editStaff(staff);
+	}
+	
+	@RequestMapping("editHos.do")
+	@ResponseBody
+	public void editHos(
+			int hosCode, 
+			@RequestParam(value="thumbImg", defaultValue="0") int thumbImg,
+			int[] hosFacility, 
+			int[] dayoff,
+			String hosHomePage,
+			String hosComment,
+			List<MultipartFile> hosImg,
+			HttpSession session
+			) throws IllegalStateException, IOException {
+		
+		
+		if (hosFacility != null) {
+			
+			List<HosFacility> orgFacilityList = service.selectFacilitybyHosCode(hosCode);
+			
+			for (int facility : hosFacility) {
+				int count = 0;
+				
+				for (HosFacility orgFacility : orgFacilityList) {
+					if (facility == orgFacility.getFacilityCode()) {
+						count++;
+						break;
+					}
+				}
+				
+				if (count == 0) {
+					HosFacility newFacility = new HosFacility();
+					newFacility.setHosCode(hosCode);
+					newFacility.setFacilityCode(facility);
+					
+					service.insertFacility(newFacility);
+				}
+			}
+			
+			for (HosFacility orgFacility : orgFacilityList) {
+				int count = 0;
+				
+				for (int facility : hosFacility) {
+					if (facility == orgFacility.getFacilityCode()) {
+						count++;
+						break;
+					}
+				}
+
+				if (count == 0) {
+					
+					service.deleteFacility(orgFacility.getFacilityNo());
+				}
+
+			}
+
+		}
+		
+//		if (dayoff != null) {
+//			for (int i = 0; i < dayoff.length; i++) {
+//				HosHours hours = new HosHours();
+//				hours.setHosCode(hosCode);
+//				hours.setOpenDay(dayoff[i]);
+//				service.insertDayoff(hours);
+//			}
+//		}
+		
+		Hospital hospital = new Hospital();
+		hospital.setHosCode(hosCode);
+		hospital.setThumbImg(thumbImg);
+		hospital.setHosComment(hosComment);
+		
+		
+		if (hosImg.isEmpty()) return;
+		
+		int count = 0;
+		
+		for (MultipartFile img : hosImg) {
+			
+			if(img.isEmpty()) continue;
+			
+			boolean run = true;
+			int no = 0;
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String filePath = servletContext.getRealPath("/")+"/upload/hospital/basic/" + sdf.format(date);
+			String sysName = img.getOriginalFilename();
+			
+			File file = new File(filePath, sysName);
+			
+			while(run) {
+				if (!file.exists()) break;
+				sysName = sysName + no++;
+				file = new File(filePath, sysName);
+				continue;
+			}
+			file.mkdirs();
+			img.transferTo(file);
+			
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setBoardNo(hosCode);
+			fileInfo.setFilePath("/hospital/basic/"+ sdf.format(date));
+			fileInfo.setOriName(img.getOriginalFilename());
+			fileInfo.setSysName(sysName);
+			fileInfo.setFileSize(img.getSize());
+			
+			service.insertFileInfo(fileInfo);
+			
+			if (count == 0) {
+				hospital.setThumbImg(fileInfo.getFileId());
+			}
+		}
+		
+		service.registerUpdate(hospital);
+		
 	}
 	
 	@RequestMapping("hosList.do")
@@ -942,5 +1091,61 @@ public class HosController {
 
 	public Time calToTime(Calendar cal) {
 		return new Time(cal.getTime().getTime());
+	}
+	
+	public void sendBookingResult(HosBooking booking, int bookingType, Member member) {
+		Hospital hospital = service.selectHospitalByNo(booking.getHosCode());
+		HosBlock block = booking.getHosBlock();
+		RecipientGroup self = new RecipientGroup();
+		RecipientGroup rg = new RecipientGroup();
+		String[] bookingTimeArray = block.getBlockStart().toString().split(":");		
+		String bookingTime = bookingTimeArray[0] + ":" + bookingTimeArray[1];
+		
+		System.out.println(hospital);
+		
+		String bookingFacility = "진료";
+		String msgBody = 
+							"<span style='font-weight: bold;'>" + 
+							member.getMemberName() + "</span>님의 " + 
+							"<span style='font-weight: bold;'>" +
+							hospital.getTitle() + "</span>에 " +
+							block.getBlockDay() + " " + 
+							bookingTime + " " +
+							"<span style='font-weight: bold;'>" + 
+							booking.getPet().getPetName() + "</span>의 " +
+							"<span style='font-weight: bold;'>" + 
+							bookingFacility + "</span>";
+		
+		Message message = new Message();
+		mService.insertChatId(message);
+		
+		message.setSenderNo(hospital.getHosCode());
+		message.setMsgType(bookingType);
+		
+		if (block.getFacilityNo() == 2) {
+			bookingFacility = "미용";
+		}
+		
+		if (bookingType == 3) {
+			message.setMsgBody(msgBody + "예약이 <span style='font-weight: bold;'>확정</span> 되었습니다.");
+		}
+		
+		if (bookingType == 4) {
+			message.setMsgBody(msgBody + "예약이 <span style='font-weight: bold;'>병원 사정 상 취소</span> 되었습니다.");
+		}
+		
+		self.setRecipientNo(message.getSenderNo());
+		self.setRecipientType(1);
+		self.setRecipientGroupId(message.getChatId());
+		
+		rg.setRecipientNo(member.getMemberNo());
+		rg.setRecipientType(0);
+		rg.setRecipientGroupId(message.getChatId());
+		
+		System.out.println(message);
+		
+		mService.insertMsg(message);
+		mService.insertRecipientGroup(self);
+		mService.insertRecipientGroup(rg);
 	}
 }

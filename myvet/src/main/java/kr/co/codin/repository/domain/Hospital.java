@@ -3,19 +3,22 @@ package kr.co.codin.repository.domain;
 import java.sql.Time;
 
 public class Hospital {
-	int hosCode;
-	String title;
-	String roadAddress;
-	String address;
-	double mapx;
-	double mapy;
-	int hosSearchCnt;
-	String telephone;
-	char hosRegister;
-	Time lunchStart;
-	Time lunchEnd;
-	String hosComment;
-	int followCnt;
+	private int hosCode;
+	private String title;
+	private String roadAddress;
+	private String address;
+	private double mapx;
+	private double mapy;
+	private int hosSearchCnt;
+	private String telephone;
+	private char hosRegister;
+	private Time lunchStart;
+	private Time lunchEnd;
+	private String hosComment;
+	private int followCnt;
+	private int thumbImg;
+	private FileInfo thumbImgInfo;
+	
 	public int getHosCode() {
 		return hosCode;
 	}
@@ -94,12 +97,25 @@ public class Hospital {
 	public void setFollowCnt(int followCnt) {
 		this.followCnt = followCnt;
 	}
+	public int getThumbImg() {
+		return thumbImg;
+	}
+	public void setThumbImg(int thumbImg) {
+		this.thumbImg = thumbImg;
+	}
+	public FileInfo getThumbImgInfo() {
+		return thumbImgInfo;
+	}
+	public void setThumbImgInfo(FileInfo thumbImgInfo) {
+		this.thumbImgInfo = thumbImgInfo;
+	}
+	
 	@Override
 	public String toString() {
 		return "Hospital [hosCode=" + hosCode + ", title=" + title + ", roadAddress=" + roadAddress + ", address="
 				+ address + ", mapx=" + mapx + ", mapy=" + mapy + ", hosSearchCnt=" + hosSearchCnt + ", telephone="
 				+ telephone + ", hosRegister=" + hosRegister + ", lunchStart=" + lunchStart + ", lunchEnd=" + lunchEnd
-				+ ", hosComment=" + hosComment + ", followCnt=" + followCnt + "]";
+				+ ", hosComment=" + hosComment + ", followCnt=" + followCnt + ", thumbImg=" + thumbImg
+				+ ", thumbImgInfo=" + thumbImgInfo + "]";
 	}
-	
 }

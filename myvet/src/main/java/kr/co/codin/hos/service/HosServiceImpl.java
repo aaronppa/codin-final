@@ -356,5 +356,15 @@ public class HosServiceImpl implements HosService{
 	public 	void increaseViewCnt(int hosBoardId) {
 		mapper.increaseViewCnt(hosBoardId);
 	}
+	
+	@Override
+	public List<FileInfo> selectHosImg(int hosCode) {
+		return mapper.selectHosImg(hosCode);
+	}
+	
+	@Override
+	public void deleteFacility(int facilityNo) {
+		mapper.deleteFacility(facilityNo);
+	}
 
 }

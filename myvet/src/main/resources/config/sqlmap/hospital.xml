@@ -54,7 +54,9 @@
 		<result column="lunch_end" property="lunchEnd"/>
 		<result column="hos_homepage" property="hosHomepage"/>
 		<result column="hos_comment" property="hosComment"/>		
+		<result column="thumb_img" property="thumbImg"/>		
 		<association column="hos_code" property="followCnt" select="followCnt"></association>
+		<association column="thumb_img" property="thumbImgInfo" select="selectHosThumb"></association>
 	</resultMap>
 	
 	<resultMap type="HosFacility" id="facilityMap">
@@ -175,6 +177,19 @@
 	</resultMap>
 	
 	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
+		select *
+		from file_info
+		where file_id = #{fileId}
+	</select>
+	
+	<select id="selectHosImg" parameterType="int" resultMap="fileInfoMap">
+		select *
+		from file_info
+		where board_code = 30
+		and board_no = #{hosCode}
+	</select>
+	
+	<select id="selectHosThumb" parameterType="int" resultMap="fileInfoMap">
 		select *
 		from file_info
 		where file_id = #{fileId}
@@ -302,6 +317,12 @@
 		(#{hosCode}, #{facilityCode})
 	</insert>
 
+	<delete id="deleteFacility" parameterType="int">
+		delete
+		from hos_facility
+		where facility_no = #{facilityNo}
+	</delete>
+
 	<select id="selectFacilitybyHosCode" parameterType="int" resultMap="facilityMap">
 		select *
 		from hos_facility
@@ -318,7 +339,8 @@
 	<update id="registerUpdate" parameterType="Hospital">
 		update hos_basic
 		set hos_register = 'Y',
-			hos_comment = #{hosComment}
+			hos_comment = #{hosComment},
+			thumb_img = #{thumbImg}
 		where hos_code = #{hosCode}
 	</update>
 	
@@ -364,6 +386,7 @@
 		where block_day = #{blockDay}
 		<if test="hosCode > 0">
 			and hos_code = #{hosCode}
+			and facility_no = #{facilityNo}
 		</if>
 	</select>
 	
