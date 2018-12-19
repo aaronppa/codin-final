@@ -170,14 +170,19 @@ public class QnaController {
 	}
 	
 	@RequestMapping("updateForm.do")
-	public void updateForm(Model model, int qnaNo) {
+	public void updateForm(Model model, int qnaNo) throws Exception{
 		model.addAttribute("qna",service.selectQnaByNo(qnaNo));
-		model.addAttribute("fileId",service.forModelAttributeFIleInfo(qnaNo));
 		model.addAttribute("category",service.cateList());
+		try {
+		model.addAttribute("fileId",service.forModelAttributeFIleInfo(qnaNo));
+		
+		}catch(Exception e) {
+			
+		}
 	}
 	
 	@RequestMapping("update.do")//업데이트가 문제구나 문제여
-	public String update(Model model,Qna qna,int writerNo,FileInfo fileInfo,int fileId) throws Exception{
+	public String update(Model model,Qna qna,int writerNo) throws Exception{
 		service.updateDetail(qna);
 		/**/
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
@@ -292,18 +297,18 @@ public class QnaController {
 		System.out.println("realPath : " + realPath);
 		
 		for(MultipartFile mFile : mFileList) {
-			System.out.println("for입장");
+			//System.out.println("for입장");
 			if(mFile.isEmpty()==true) continue;
 			fileExtension = getExtension(mFile.getOriginalFilename());
 			sysName = newName + "." + fileExtension;
 			
-			System.out.println("boardCode : "+boardCode);
+			/*System.out.println("boardCode : "+boardCode);
 			System.out.println("boardNo : "+boardNo);
 			System.out.println("file.getOriName() : "+mFile.getOriginalFilename());
 			System.out.println("sysName : "+sysName);
 			System.out.println("filePath : "+uploadPath+datePath);
 			System.out.println("getSize"+(int)mFile.getSize());
-			
+			*/
 			fileInfo.setBoardNo(boardNo);
 			fileInfo.setBoardCode(boardCode);
 			fileInfo.setBoardNo(boardNo);
@@ -317,8 +322,8 @@ public class QnaController {
 			if(img.exists() == false) {
 				img.mkdirs();
 			}
-			System.out.println("for나옴");
-			System.out.println("realPath : "+ realPath);
+			//System.out.println("for나옴");
+			//System.out.println("realPath : "+ realPath);
 			mFile.transferTo(img);
 //			fileInfo.getUrl();
 //			System.out.println("getUrl:"+fileInfo.getUrl());
@@ -390,8 +395,15 @@ public class QnaController {
 //			System.out.println("getUrl:"+fileInfo.getUrl());
 //			fileInfo.setUrl("/myvet/upload"+uploadPath+datePath+"/"+sysName);
 //			System.out.println(realPath+datePath+"/"+sysName);
-			fileList.add(fileInfo);
-			service.updateFileDb(fileInfo);
+			if(service.selectFIle(fileInfo) != null) {
+				fileList.add(fileInfo);
+				service.updateFileDb(fileInfo);
+			}else {
+				System.out.println("여기옴");
+				fileList.add(fileInfo);
+				service.uploadFile(fileInfo);
+			}
+			
 			
 		}
 		

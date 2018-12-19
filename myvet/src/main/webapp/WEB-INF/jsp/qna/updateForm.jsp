@@ -133,10 +133,23 @@
     
     function sendFile(file, ele) {
     	var formData = new FormData();
+    	console.log("----------------------")
+    	console.log(file);
+    	console.log($("#qnaNo").attr("value"));
+    	console.log($("#fileId").attr("value"));
+    	console.log("-----------------------")
     	//console.log("formData", formData)
-    	formData.append('file', file);
-    	formData.append('fileId', $("#fileId").attr("value"));
-    	formData.append("qnaNo",$("#qnaNo").attr("value"));
+    		formData.append('file', file);
+    	if($("#fileId").attr("value").length != 0 ){
+    		console.log("여기옴");
+    		formData.append('fileId', $("#fileId").attr("value"));	
+    		formData.append("qnaNo",$("#qnaNo").attr("value"));
+    	}else{
+    		formData.append('fileId', 0);	
+    		formData.append("qnaNo",$("#qnaNo").attr("value"));
+    	}
+    	
+    	
    
   
     	console.log(file)
@@ -147,7 +160,7 @@
     		url : "/myvet/qna/updateFileinfo.do",
     		cache : false,
     		contentType : false,
-    		
+    		enctype : "multipart/form-data",
     		processData : false,
     		//매개변수가 파일경로
     		success : function(file) {
@@ -166,6 +179,9 @@
     			$(ele).summernote("editor.insertImage", '${pageContext.request.contextPath}' + "/upload" + file.filePath + "/" + file.sysName);
     	
     		
+    		},
+    		error:function(e){
+    			console.log("실패");
     		}
     	})//ajax
     }
