@@ -192,10 +192,15 @@ public class HosController {
 	
 	@RequestMapping("bookingSubmit.do")
 	@ResponseBody
-	public void bookingSubmit(HosBooking booking) {
+	public int bookingSubmit(HosBooking booking) {
 		System.out.println(booking.toString());
 		
+		if (service.overlapBooking(booking) > 0) {
+			return 1;
+		}
+		
 		service.insertBooking(booking);
+		return 0;
 	}
 	
 	@RequestMapping("selectBlock.do")

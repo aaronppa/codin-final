@@ -38,7 +38,7 @@ button {
      -moz-appearance: none;
           appearance: none;
   border: 1px solid black;
-  border-radius: 3px;
+  border-radius: 5px !important;
   line-height: 1;
   cursor: auto; }
   [data-whatinput='mouse'] button {

@@ -421,6 +421,13 @@
 		(#{blockCode}, #{bookingOwner}, #{bookingPet}, #{hosCode})
 	</insert>
 	
+	<select id="overlapBooking" parameterType="HosBooking" resultType="int">
+		select count(*)
+		from hos_booking
+		where block_code = #{blockCode}
+			and booking_pet = #{bookingPet}
+	</select>
+		
 	<insert id="insertReception" parameterType="HosBooking">
 		insert into hos_booking
 		(block_code, booking_owner, booking_pet, hos_code, confirm)

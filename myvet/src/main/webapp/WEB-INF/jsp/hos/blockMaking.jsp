@@ -10,6 +10,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>예약 블럭 만들기 (${hospital.title }) - MyVet</title>
     <style>
+    
+  	#background {
+   		width: 100%;
+   		height: 100%;
+   		position: fixed;
+   		z-index: -2;
+   		top:0;
+   		left:0;
+   		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
+	}
+    
     #bodyContainer {
         width: 1100px;
         margin: auto;
@@ -94,6 +106,16 @@
     	color: #000000;
     	text-decoration: none;
     }
+
+    #nextWeek:hover,
+    #lastWeek:hover {
+    	color: #000000;
+    	font-weight: bold;
+    }
+    
+    .blockData {
+    	height: 60px;
+    }
     
     </style>
 	<script
@@ -102,11 +124,13 @@
     crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="<c:url value='/resources/js/timepicker/jquery.timepicker.css'/>"/>
 	<script src="<c:url value='/resources/js/timepicker/jquery.timepicker.js'/>"></script>
-	
+	<link rel="stylesheet" href="<c:url value='/resources/css/hos/search.css'/>"/>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+   	<div id="background"></div>
     <div id="bodyContainer">
+    
         <div>
             <h1 class="inline">예약 블럭 만들기</h1>
             <span class="marginLeft">${hospital.title }</span>
@@ -164,7 +188,7 @@
 	                 </th>
            		  <% } %>
             </tr>
-            <tr>
+            <tr class="blockData">
                 <th>
                     휴무일   
                 </th>
@@ -174,7 +198,7 @@
                 </td>
                 </c:forEach>
            	</tr>
-            <tr>
+            <tr class="blockData">
                 <th>
                     진료시간
                 </th>
@@ -185,7 +209,7 @@
 	                </td>
                 </c:forEach>
             </tr>
-            <tr>
+            <tr class="blockData">
                 <th>
                     예약간격
                 </th>
@@ -195,11 +219,13 @@
 	                        <option value="15">15분</option>
 	                        <option value="30" selected="selected">30분</option>
 	                        <option value="60">1시간</option>
+	                        <option value="90">1.5시간</option>
+	                        <option value="120">2시간</option>
 	                    </select>
 	                </td>    
                 </c:forEach>
             </tr>
-            <tr class="breakTime">
+            <tr class="blockData breakTime">
                 <th id="breakTime-th" rowspan="1">
                     휴게시간
 <!--                     <br> -->
@@ -212,7 +238,7 @@
 	                </td>
 	            </c:forEach>
             </tr>
-            <tr>
+            <tr class="blockData">
             	<th>
             		최대 예약 수
             	</th>

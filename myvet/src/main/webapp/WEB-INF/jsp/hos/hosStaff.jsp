@@ -10,21 +10,45 @@
     src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
-
+<link rel="stylesheet" href="<c:url value='/resources/css/hos/search.css'/>"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>직원 관리</title>
 <style>
 	#bodyContainer {
 		width: 1100px;
+		padding-top: 110px;
 		margin: auto;
+	}
+	
+   	#background {
+   		width: 100%;
+   		height: 100%;
+   		position: absolute;
+   		z-index: -2;
+   		top:0;
+   		left:0;
+   		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
+	}
+	
+	.content1,
+	.content2 {
+		margin-left: 10px;
+		margin-bottom: 30px;
+	}
+	
+	td {
+		text-align: center;
 	}
 </style>
 </head>
 <body>
-	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />         
+	<div id="background"></div>
+	   
 	<div id="bodyContainer">
 		<h1>직원 관리</h1>
-		<div>
+		<div class="content1">
 			<h3>재직 중인 직원</h3>
 			<table>
 				<thead>
@@ -64,7 +88,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div>
+		<div class="content2">
 			<h3>직원 권한 신청 목록</h3>
 			<table>
 				<thead>

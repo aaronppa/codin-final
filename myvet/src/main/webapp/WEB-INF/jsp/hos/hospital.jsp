@@ -36,6 +36,8 @@
        border: 1px solid black;
        border-radius: 3px;
        padding: 3px  5px;
+       color: #ffffff;
+       background-color: #412427;
    }
    
    #follow{
@@ -46,7 +48,7 @@
    #title {
        display: inline;
        margin-left: 10px;
-       font-size: 2em;
+       font-size: 2.5em;
    }
    #hosTable {
        width: 1100px;
@@ -56,7 +58,7 @@
    }
    #map {
        width: 49%;
-       height: 490px;
+       height: 400px;
        position: relative;
        display: inline-block;
        margin-top: 10px;
@@ -65,15 +67,16 @@
    
    #hosStaff {
        width: 49%;
-       height: 490px;
+       height: 400px;
        position: relative;
        display: inline-block;
        margin-top: 10px;
        overflow: hidden;
+       padding: 0px 30px;
    }
    
    .staffSwiper {
-   		height: 450px;
+   		height: 350px;
    		margin: auto;
    }
    
@@ -96,9 +99,15 @@
    }
    #topContainer, #bottomContainer {
        width: 100%;
-       height: 450px;
+       height: 400px;
        text-align: center;
        border: 0px solid black;
+       overflow: hidden;
+   }
+   
+   #bottomContainer {
+   		margin-top: 30px;
+   		height: 275px;
    }
    
    #facilityTd {
@@ -157,13 +166,68 @@
 	}
 	
 	.menuTitle {
-		font-size: 20px;
+		font-size: 30px;
 	}
    
     #firstTr {
 		height: 70px;
     }
+    
+    .staffImgDiv {
+    	margin: auto;
+    	margin-bottom: 10px;
+    	margin-top: 20px;
+    	width: 150px;
+	   	height: 150px;
+    }
+    
+    .staffImg {
+    	max-width: 150px;
+    	max-height: 150px;
+    	margin: auto;
+    }
+    
+    .staffInfo {
+    	font-size: 20px;
+    	height: 150px;
+    }
    
+   #hosImgDiv {
+   		width: 70px;
+   		height: 70px;
+   }
+   
+   .hosFollow {
+   		font-size: 1.3em;
+   }
+   
+   #bookTable {
+   		font-size: 1.3em;
+   		width: 100%;
+   		margin-top: 30px;
+   		margin-bottom: 20px;
+   }
+   
+   #bookTable > td {
+   		text-align: center;
+   }
+   
+   .bold {
+   		font-weight: bold;
+   }
+   
+   #boardList {
+   		margin-top:20px;
+   		font-size: 1.3em;
+   }
+   
+   #bookingManager {
+   		margin-left: 50px;
+   }
+   
+   .firstTd {
+   		width: 80px;
+   }
 </style>
 </head>
 <body>
@@ -173,7 +237,7 @@
 	<div id="bodyContainer">
     <table id="hosTable">
         <tr id="firstTr">
-        	<td>
+        	<td id="hosImgDiv">
         		<c:choose>
         			<c:when test="${empty hospital.thumbImgInfo }">
 		        		<img id="hosImg" src="/myvet/resources/img/common/noimage.jpg">
@@ -202,7 +266,7 @@
                 </div>
             </td>
             <td>
-            <div class="hosTitle"><span>즐겨찾는 고객 수 : </span><span>${followCnt }</span><span>명</span></div>
+            <div class="hosFollow"><span>즐겨찾는 고객 수 : </span><span>${followCnt }</span><span>명</span></div>
             </td>
             <td style="text-align: center">
             	<c:if test="${user.hosCode == hospital.hosCode && user.memberGrade == 'V'}">
@@ -233,8 +297,8 @@
 			     <div class="swiper-wrapper">
 			     	<c:forEach items="${staffs }" var="staff">
 			          <div class="swiper-slide">
-			          	<div class="staffImg">
-			          		<img src="/myvet/upload${staff.member.memberFilePath }/${staff.member.memberSysName}">
+			          	<div class="staffImgDiv">
+			          		<img class="staffImg" src="/myvet/upload${staff.member.memberFilePath }/${staff.member.memberSysName}">
 			          	</div>
 			          	<div class="staffInfo">
 			          		이름 : ${staff.member.memberName } <br>
@@ -264,10 +328,10 @@
         </div>
         <div id="book">
             <a class="menuTitle" href="#">예약현황</a>
-            <div id="bookTable">
-            <table>
-                <tr>
-                    <td></td>
+            <div id="bookTableDiv">
+            <table id="bookTable">
+                <tr class="bold">
+                    <td class="firstTd"></td>
                     <td class="date"></td>
                     <td class="date"></td>
                     <td class="date"></td>
@@ -278,7 +342,7 @@
                     <td class="date"></td>
                 </tr>
                 <tr>
-                    <td style="width:100px;"><span>진료</span></td>
+                    <td><span>진료</span></td>
                     <td class="medical"></td>
                     <td class="medical"></td>
                     <td class="medical"></td>
@@ -301,8 +365,12 @@
                 </tr>
             </table>
             </div>
-            <div><button id="booking">예약</button>
-            <button id="bookingManager">예약관리</button></div>
+            <div>
+	            <button id="booking">예약</button>
+	            <c:if test="${user.hosCode == hospital.hosCode }">
+		            <button id="bookingManager">예약관리</button>
+	            </c:if>
+            </div>
         </div>
         
     </div>
@@ -342,7 +410,8 @@
 			var date = new Date();
 			date = date.setDate(date.getDate()+i);
 			date = new Date(date);
-			$(".date:eq("+i+")").html(formatDate(date, "MM/dd"));
+			$(".date:eq("+i+")").html("<a href='/myvet/hos/booking.do?hosCode=${hospital.hosCode}&date=" + formatDate(date, "yyyy-MM-dd") + "'>" + formatDate(date, "MM/dd") + "</a>")
+			$(".date:eq("+i+")").data("date", formatDate(date, "yyyy-MM-dd"));
 			
 			$.ajax({
 				url: "/myvet/hos/checkBooking.do",

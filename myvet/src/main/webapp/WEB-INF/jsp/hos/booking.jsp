@@ -16,7 +16,7 @@
 <script src="<c:url value='/resources/js/datepicker/picker.date.js'/>"></script>
 <link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.css'/>"/>
 <link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.date.css'/>"/>
-
+<link rel="stylesheet" href="<c:url value='/resources/css/hos/search.css'/>"/>
 <style>
 
 	.picker__button--today,
@@ -28,35 +28,114 @@
 		width: 1100px;
 		overflow: auto;
 		margin: auto;
-		margin-top: 30px;
+		padding-top: 110px;
+	}
+	
+   	#background {
+   		width: 100%;
+   		height: 100%;
+   		position: fixed;
+   		z-index: -2;
+   		top:0;
+   		left:0;
+   		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
 	}
 	
 	.disable {
 		display: none;
 	}
+	
+	#blockTable {
+		margin-top: 30px;
+	}
+	
+	th, td {
+		text-align: center !important;
+	}
+	
+	#thRow {
+		color: #ffffff;
+		background-color: #412427;
+		font-size: 1.3em;
+		height: 40px;
+	}
+	
+	.blockRow {
+		height: 60px;
+	}
+	
+   	.blockRow:nth-child(2n) {
+  		background: rgba(255, 255, 255, 0.5);
+  	}
+  	
+  	.blockRow:nth-child(2n-1) {
+  		background: rgba(245, 233, 195, 0.5);
+  	}
+  	
+  	.blockRow:hover,
+  	.blockRow:nth-child(2n-1):hover {
+  		background: #f4e8e6;
+  	}
+  	
+  	#hosTitle {
+  		font-size: 0.6em;
+  		margin-left: 30px;
+  	}
+  	#controlTable {
+  		border: none;
+  		border-collapse: separate !important;
+  	}
 </style>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
-
+	<div id="background"></div>
+	
+	<c:choose>
+	<c:when test="${empty petList }">
+		<script>
+			Swal({
+			  type: 'error',
+			  title: '등록된 반려동물이 없습니다.',
+			  text: '반려동물 추가 후 예약 신청 해주세요!',
+			}).then(function() {
+				window.location.href = "/myvet/member/myPage.do";
+			})
+		</script>
+	</c:when>
+	<c:otherwise>
     <div id="bodyContainer">
-   	    <h1>동물병원 예약</h1>
-   	    <span>예약일</span>
-   	    <input type="text" class="date" id="date">
-    	<c:forEach items="${petList }" var="pet">
-			<label for="pet${pet.petNo }">
-    		<div>
-    			<input type="radio" name="petNo" class="petNo" data-pet="${pet.petNo }" id="pet${pet.petNo }">
- 		   		<span>${pet.petName }</span>
-    		</div>
-    		</label>
-    	</c:forEach>
-    	<select id="facilityType">
-    		<option class="type" value="1">진료</option>
-    		<option class="type" value="2">미용</option>
-    	</select>
+   	    <h1>동물병원 예약 <span id="hosTitle">${hospital.title }</span></h1>
+   	    <table id="controlTable">
+   	    	<tr id="controlRow">
+   	    		<td>
+	   		   	    <span>예약일</span>
+	   	       	    <input type="text" class="date" id="date">
+   	    		</td>
+   	    		<td>
+    		    	<c:forEach items="${petList }" var="pet">
+					<label for="pet${pet.petNo }">
+		    			<div>
+		    				<input type="radio" name="petNo" class="petNo" data-pet="${pet.petNo }" id="pet${pet.petNo }">
+		 		   			<span>${pet.petName }</span>
+			    		</div>
+		    		</label>
+			    	</c:forEach>
+   	    		</td>
+   	    		<td>
+    		    	<select id="facilityType">
+			    		<option class="type" value="1">진료</option>
+	    				<option class="type" value="2">미용</option>
+    				</select>
+   	    		</td>
+   	    	</tr>
+   	    </table>
+
+
+
    		<table id="blockTable">
-   			<tr>
+   			<tr id="thRow">
    				<th>예약 시간</th>
 				<th>현재 예약 가능 여부</th>
 				<th>예약 신청</th>
@@ -142,6 +221,18 @@
     	function bookingClick() {
     		
 	    	$(".booking").click(function(){
+	    		
+	    		if($(".petNo:checked").length == 0) {
+	    			Swal({
+	    				  type: 'error',
+	    				  title: '선택된 반려동물이 없습니다.',
+	    				  text: '반려동물 선택 후 예약 신청 해주세요!',
+	    				}).then(function() {
+							return;
+	    				})
+	    		}
+	    		
+	    		
 	    		console.log($(this));
 	    		console.log($(this).data("block"));
 	    		console.log($(".petNo:checked").data("pet"));
@@ -154,10 +245,26 @@
 	    				hosCode: ${hospital.hosCode}
 		       			},
 		       		type: "post"
+	    		}).done(function(result) {
+	    			if (result == 0) {
+	    				Swal({
+	    					  type: 'success',
+	    					  title: '예약 접수',
+	    					  text: '병원에서 예약 확정 / 취소 시 메시지로 알려드립니다.'
+	    					})
+	    			} else {
+	    				Swal({
+	    					  type: 'error',
+	    					  title: '예약 실패',
+	    					  text: '이미 동일한 시간에 예약기록이 있습니다.'
+	    					})
+	    			}
 	    		})
 	    	})
     	}
     	
     </script>
+    </c:otherwise>
+    </c:choose>
 </body>
 </html>

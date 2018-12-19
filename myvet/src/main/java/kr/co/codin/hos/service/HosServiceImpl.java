@@ -366,5 +366,10 @@ public class HosServiceImpl implements HosService{
 	public void deleteFacility(int facilityNo) {
 		mapper.deleteFacility(facilityNo);
 	}
+	
+	@Override
+	public 	int overlapBooking(HosBooking booking) {
+		return mapper.overlapBooking(booking);
+	}
 
 }

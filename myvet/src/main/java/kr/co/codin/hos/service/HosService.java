@@ -85,5 +85,6 @@ public interface HosService {
 	void increaseViewCnt(int hosBoardId);
 	List<FileInfo> selectHosImg(int hosCode);
 	void deleteFacility(int facilityNo);
+	int overlapBooking(HosBooking booking);
 	
 }

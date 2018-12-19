@@ -10,11 +10,12 @@
    src="https://code.jquery.com/jquery-3.3.1.js"
    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="<c:url value='/resources/css/hos/search.css'/>"/>
 <style>
 	#bodyContainer {
 		width:1100px;
 		margin: auto;
-		margin-top: 110px;
+		padding-top: 110px;
 		height: 500px;
 		overflow: auto;
 		
@@ -27,23 +28,70 @@
 	.margin-left{
 		margin-left: 30px;
 	}
+	
+   	#background {
+   		width: 100%;
+   		height: 100%;
+   		position: fixed;
+   		z-index: -2;
+   		top:0;
+   		left:0;
+   		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
+	}
+	
+	#pageTitle {
+		margin-top: 20px;
+		margin-bottom: 15px;
+	}
+	
+	th, td {
+		text-align: center !important;
+	}
+	
+	#thRow {
+		color: #ffffff;
+		background-color: #412427;
+		font-size: 1.3em;
+		height: 40px;
+	}
+	
+	.bookingRow {
+		height: 60px;
+	}
+	
+   	.bookingRow:nth-child(2n) {
+  		background: rgba(255, 255, 255, 0.5);
+  	}
+  	
+  	.bookingRow:nth-child(2n-1) {
+  		background: rgba(245, 233, 195, 0.5);
+  	}
+  	
+  	.bookingRow:hover,
+  	.bookingRow:nth-child(2n-1):hover {
+  		background: #f4e8e6;
+  	}
 </style>
 </head>
 <body>
-	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />     
+	<div id="background"></div>
+	       
 	<div id="bodyContainer">
 	<input type="hidden" id="hosCode" value="${hospital.hosCode }">
 	
 	<button id="blockMake">예약 블럭 만들기</button>
 	<button id="blockEdit">예약 블럭 수정/삭제</button><br>
-	<h3 id="blockMaking">예약 확정/거부</h3>
+	<h3 id="pageTitle">예약 확정/거부</h3>
+   	<span>예약종류 : </span>
    	<select id="facilityType">
    		<option class="type" value="1">진료</option>
    		<option class="type" value="2">미용</option>
    	</select>
 
 	<table id="bookingTable">
-		<tr>
+		<tr id="thRow">
 			<th>예약일</th>
 			<th>예약 고객명</th>
 			<th>반려동물명</th>

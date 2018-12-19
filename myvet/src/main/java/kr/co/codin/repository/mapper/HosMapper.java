@@ -87,6 +87,7 @@ public interface HosMapper {
 	void increaseViewCnt(int hosBoardId);
 	List<FileInfo> selectHosImg(int hosCode);
 	void deleteFacility(int facilityNo);
+	int overlapBooking(HosBooking booking);
 	
 	int isRegStaff (HosStaff staff);
 	void memberHosNull(int memberNo);
