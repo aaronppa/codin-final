@@ -426,10 +426,23 @@
 		where board_code =20 and board_no = #{boardNo}
 	</select>
 	
-	<select id="selectFIle" parameterType="FileInfo" resultType="FileInfo">
+	<select id="selectFIle"  parameterType="FileInfo" resultType="FileInfo">
 		select *
 		from file_info
 		where board_code =20 and board_no = #{boardNo}
+	</select>
+	
+	<select id="maxFileId"  resultType="int">
+		select max(file_id)
+			from file_info
+			where board_code = 20
+	</select>
+	
+	<select id="selectBoardNo" parameterType="int" resultType="int">
+		select board_no
+			from file_info
+			where board_code = 20 and file_id = #{fildId}
+	
 	</select>
 
 </mapper>

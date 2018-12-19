@@ -39,4 +39,6 @@ public interface QnaService {
 	void deleteFileDb(int boardNo);
 	int forModelAttributeFIleInfo(int fileinfo);
 	FileInfo selectFIle(FileInfo info);
+	int maxFileId();
+	int selectBoardNo(int no);
 }

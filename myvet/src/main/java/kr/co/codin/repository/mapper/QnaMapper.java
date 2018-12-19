@@ -38,4 +38,6 @@ public interface QnaMapper {
 	void deleteFileDb(int boardNo);
 	int forModelAttributeFIleInfo(int fileinfo);
 	FileInfo selectFIle(FileInfo info);
+	int maxFileId();
+	int selectBoardNo(int no);
 }

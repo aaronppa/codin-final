@@ -171,6 +171,16 @@ public class QnaServiceImpl implements QnaService{
 		// TODO Auto-generated method stub
 		return mapper.selectFIle(info);
 	}
+	@Override
+	public int maxFileId() {
+		// TODO Auto-generated method stub
+		return mapper.maxFileId();
+	}
+	@Override
+	public int selectBoardNo(int no) {
+		// TODO Auto-generated method stub
+		return mapper.selectBoardNo(no);
+	}
 	
 	
 	
