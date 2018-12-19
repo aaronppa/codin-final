@@ -347,7 +347,7 @@
 		                 +"'>"
 		                 +"<i style='display:none;' class='far fa-thumbs-down'></i>"+"</button>"
 		               +"<i style='display:none;' class='fas fa-heart'></i><span style='display:none;' id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
-		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
+		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'   data-commenterno='"+result[i].commenterNo+"'></div>"
 		                +"<div class='comment-content'>"  +
 		                "<button class='answer answerPosition checking"+i+"' value='"+result[i].pick+"'><i >채택</i> </button>" 
 		                   +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
@@ -374,13 +374,13 @@
 		                 +"'>"
 		                 +"<i style='display:none;' class='far fa-thumbs-down'></i>"+"</button>"
 		               +"<i style='display:none;' class='fas fa-heart'></i><span style='display:none;' id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
-		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"+"<span class='checkedPick"+i+"'></span>"
+		                +"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"' data-commenterno='"+result[i].commentorNo+"'></div>"+"<span class='checkedPick"+i+"'></span>"
 		                +"<div class='comment-content'>" 
 		                   +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].content+"'/>"
 		                   +"<div class='comment' data-comment='"+result[i].commentNo+"' height:auto;'>"+result[i].content+"</div>"
 		                 +"</div>"
-		                 +"<div class='data' data-commenterNo='"+result[i].commenterNo+"' data-commentNo='"+result[i].commentNo+"'></div>"
-		                 +"<div class='updateData' style='hidden' data-commentNo="+result[i].commentNo+" data-qnaNo="+result[i].qnaNo+" data-commentorNo="+result[i].commentorNo+"></div>"
+		                 +"<div class='data' data-commenterNo='"+result[i].commenterNo+"' data-commentNo='"+result[i].commentNo+"'></div>"//$(this).data("deletecombtn")
+		                 +"<div class='updateData' style='hidden' data-commentNo="+result[i].commentNo+" data-qnaNo="+result[i].qnaNo+" data-commenterNo="+result[i].commenterNo+"></div>"
 		                 +"<button class='deleteCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
 		                 +"<button class='updateCommentBtn recomDefaultHidden"+i+"' value='"+result[i].commenterNo+"' data-updatecombtn='"+result[i].content+"' data-updatecomno='"+result[i].commentNo+"' type='button'>UPDATE</button>"
 		                 +"<hr>"
@@ -656,13 +656,13 @@
             
      
               $(".comment-list").on("click", ".submitupdatecom", function(){
-
+				
 		               $.ajax({
 		                  url : "/myvet/qna/updateComment.do",              
 		                  data : 
 		                  		{
-			                	  	commentNo:$(this).prev().prev().prev().data("commentno"),
-			                        commenterNo:$(this).prev().prev().prev().data("commenterno"),
+			                	  	commentNo:$(this).prev().prev().prev().prev().data("commentno"),
+			                        commenterNo:$(this).prev().prev().prev().prev().data("commenterno"),
 			                        content:$(this).prev().prev().val()
 		                        },
 		                  type:"post"    

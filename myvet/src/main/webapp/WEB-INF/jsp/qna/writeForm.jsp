@@ -78,7 +78,7 @@
 <!--     </div> -->
 	<br>
     <div class="information">
-        <img id="writer-img" src="/myvet/images/pony01.jpg" class="rounded-circle">
+        <img id="writer-img" src="/myvet/images/pony01.jpg" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'" class="rounded-circle">
         <span>PONY</span>
     </div>
     <br>

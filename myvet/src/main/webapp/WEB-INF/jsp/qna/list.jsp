@@ -280,7 +280,7 @@ tr:hover {
 		<input type="hidden" id="searchQuery" value="${searchQuery }"> 
 </body>
 <script>
-console.log("${searchQuery}");
+
 
 
 </script>
