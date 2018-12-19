@@ -457,14 +457,17 @@ cursor:pointer;
 .com-like, .com-dislike{
 	background:none;border:none;color:black;cursor:pointer;
 }
-.com-like{
-	margin-left:65%;
+.recommendForm{
+	text-align:right;
 }
 .com-dislike{
 	margin-left:5%;
 }
 .fa-heart{
 	margin-left: 5%;color:red;
+}
+.heartForm{
+	text-align: right;
 }
 
 /*댓글 목록*/

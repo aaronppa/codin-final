@@ -16,6 +16,7 @@
 		<result column="member_nickname" property="memberNickname"/>
 		<association property="comCnt" column="tip_no" select="countComment"></association>
 		<association property="recomCnt" column="tip_no" select="countRecommend"></association>
+		
 	</resultMap>
 
 	

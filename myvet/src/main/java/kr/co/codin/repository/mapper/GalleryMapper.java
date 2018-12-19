@@ -41,8 +41,10 @@ public interface GalleryMapper {
 	
 	
 	//파일
-	void selectFile(List<FileInfo> fileInfoList);
+	List<FileInfo> selectFile(int boardNo);
 	void uploadFile(FileInfo fileInfo);
 //	void deleteFile(FileInfo fileInfo);
-	void updateFile(FileInfo fileInfo);
+	void updateFileid(FileInfo fileInfo);
+	void updateFileDb(FileInfo fileinfo);
+	int forModelAttributeFIleInfo(int boardNo);
 }

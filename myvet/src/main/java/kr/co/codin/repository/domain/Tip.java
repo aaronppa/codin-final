@@ -14,7 +14,7 @@ public class Tip {
 	private int recomCnt;
 	private int comCnt;
 	private String memberNickname;
-
+	
 	
 	
 	public int getComCnt() {

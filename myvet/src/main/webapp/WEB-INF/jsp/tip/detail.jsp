@@ -42,7 +42,7 @@
                 <div class="rest" contenteditable="false"></div>
             </div>
             <div class="writer" aria-placeholder="writer..">
-                <img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle">&nbsp;<span id="writerNickname">${tip.memberNickname}</span>
+                <img src="" onerror="this.src='/myvet/resources/img/gall&tip/profile.png'" class="rounded-circle">&nbsp;<span id="writerNickname">${tip.memberNickname}</span>
             </div>
             <div class="information">
            		<c:if test="${tip.categoryCode eq 1 }">
@@ -61,10 +61,9 @@
                 <i class="far fa-eye" >&nbsp; ${tip.viewCnt}</i>
                 <i class="far fa-clock">&nbsp;<fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></i>
               </div>
-		  <div class="report" data-toggle="modal" data-target="#exampleModal">
-               		<i class="fas fa-exclamation-triangle" id="tipReport">신고하기</i>
-               
-		  </div>
+<!-- 		  <div class="report" data-toggle="modal" data-target="#exampleModal"> -->
+<!--               <i class="fas fa-exclamation-triangle" id="tipReport">신고하기</i> -->
+<!-- 		  </div> -->
             <div class="title" aria-placeholder="title..">
 				${tip.title }
             </div>
@@ -101,7 +100,7 @@
 	                  		<strong>Update</strong>
 	               </span>
                  </a>
-                <a href="<c:url value='/tip/delete.do?tipNo=${tip.tipNo }'/>" class="btn btn-danger">
+                <a href="<c:url value='/tip/delete.do?tipNo=${tip.tipNo }'/>" id="deleteBtn" class="btn btn-danger">
     	            <span id="delete" data-toggle="tooltip" title="DELETE">
 						<strong>Delete</strong>
 	                </span>
@@ -115,7 +114,7 @@
 <!--                 <form action="" method="post"> -->
                     <div class="comment-wrap">
                         <div class="photo">
-                			<img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle">
+                			<img src="" onerror="this.src='/myvet/resources/img/gall&tip/profile.png'" class="rounded-circle">
                         </div>
                        	<p class="com-nickname"><strong>${nickname}</strong></p>
                         <input type="hidden" name="tipNo" id="tipNo" value="${tip.tipNo}">
@@ -134,7 +133,6 @@
 				<div class="comment-list" >
 				</div>
                 </div>
-                
             </div> 
     </div>  
      
@@ -143,6 +141,17 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
 	
+        $("#deleteBtn").click(function(){
+        	var result = confirm("게시글을 정말 삭제하시겠습니까?");
+        	if(result){
+        		alert("게시글이 삭제되었습니다.")
+        	}else{
+        		alert("게시글 삭제가 취소되었습니다.")
+        		return false;
+        	}
+        })
+        
+        
         //신고하기 팝업창
         $('#tipReport').click(function(){
         	window.open("/myvet/report/reportTipForm.do?tipNo=${tip.tipNo}","report","width=1000, height=600, left=500, top=10")
@@ -293,6 +302,7 @@
         	}).done(function(result){
         		console.log("성공 tipNo"+result);
 //         		console.log(result[1].comment)
+       	    	$('.comment-list').html("");
                for (let i = 0; i < result.length; i++) {
             	   let likeRecommend = "", dislikeRecommend = "";
             	   if(result[i].recommend == 1){
@@ -303,10 +313,13 @@
                 $(".comment-list").append(
                 "<img src='/myvet/resources/img/gall&tip/profile.png' class='rounded-circle'/>&nbsp;"
               	+"<span class='commenter border'><a>"+result[i].member.memberNickname+"</a></span>"
-                +"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
+                +"<div class='recommendForm'>"
+              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
               	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
-            	+"<i class='fas fa-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
-            	
+            	+"</div>"
+            	+"<div class='heartForm'>"
+              	+"<i class='fas fa-heart com-heart' ></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+            	+"</div>"
             	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
                 +"<div class='comment-content'>" 
 	                +"<input type='hidden' class='commentval' data-commentval='"+result[i].commentNo+"' value='"+result[i].comment+"'/>"
@@ -314,6 +327,7 @@
               	+"</div>"
               	+"<button class='deleteCommentBtn del"+result[i].commenterNo+"' data-deletecombtn='"+result[i].commentNo+"' type='button'>DELETE</button>"
               	+"<button class='updateCommentBtn up"+result[i].commenterNo+"' data-updatecombtn='"+result[i].comment+"' data-updatecomno='"+result[i].commentNo+"' type='button' >UPDATE</button>"
+//               	+"<div>"+result[i].regDate+"</div>"
               	+"<hr>"
                 );
                 console.log("commenterNo : "+result[i].commenterNo)

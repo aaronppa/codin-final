@@ -106,7 +106,7 @@
                          </div>
                          <div class="card-content" >
                              <p class="card-title">${top.title} </p>
-                             <span data-toggle="tooltip" title="<c:forEach var="p" items="${top.petList}" varStatus="innerLoop">${p.petName}</c:forEach>">
+                             <span data-toggle="tooltip" title="<c:forEach var="p" items="${top.petList}" varStatus="innerLoop">${p.petName},</c:forEach>">
                                  <i class="fas fa-dog"></i>
                              </span>
 <!--                              <span data-toggle="tooltip" title="PONY!"> -->

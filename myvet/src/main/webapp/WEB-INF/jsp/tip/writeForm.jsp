@@ -43,7 +43,7 @@
 <!--     </div> -->
 	<br>
     <div class="information" style="text-align: center;">
-        <img id="writer-img" src="/myvet/images/pony01.jpg" class="rounded-circle">
+        <img id="writer-img" src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle">
         <span class="nickname">${nickname}</span>
     </div>
     <br>

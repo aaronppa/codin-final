@@ -67,7 +67,7 @@
 	<input type="hidden" name="memberNo" id="memberNo" value="${user.memberNo}">
     <div class="container">
            <div class="writer" style="text-align: center;">
-				<img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle" id="writer-img">
+				<img src="" onerror="this.src='/myvet/resources/img/gall&tip/profile.png'" class="rounded-circle" id="writer-img">
              	<span class="writerNick">${gallery.memberNickname}</span>
 			</div>
 			<hr>
@@ -159,9 +159,9 @@
                                     <div class="comments">
                                         <div class="comment-wrap writeComment">
                                             <div class="photo">
-                                                    <img src="/myvet/resources/img/gall&tip/profile.png" id="writer-pic" class="rounded-circle" >
+                                                    <img src="" onerror="this.src='/myvet/resources/img/gall&tip/profile.png'" id="writer-pic" class="rounded-circle" >
                                                 	<p class="commenter"><strong>${user.memberNickname}</strong></p>
-                                            </div>&nbsp;&nbsp;
+                                            </div>
                                             <!-- 댓글 등록 -->
                                         	<div class="comment-block">
                                             <input type="hidden" id="commenterNo" name="commenterNo" value="${user.memberNo}">
@@ -224,6 +224,18 @@
     		console.log("detail!");
     	})
     }
+    
+    //글 삭제
+    $("#deleteGall").click(function(){
+    	var result = confirm("게시글을 정말 삭제하시겠습니까?");
+    	if(result){
+    		alert("게시글이 삭제되었습니다.")
+    	}else{
+    		alert("게시글 삭제가 취소되었습니다.")
+    		return false;
+    	}
+    })
+    
 //     console.log($('#writerNick').val())
     //게시글 추천
     $("#like").on('click',function(){
@@ -358,6 +370,7 @@
 	    	console.log('댓글 불러오기')
 	    	console.log(result)
 	    		let likeRecommend = "", dislikeRecommend = "";
+	    	$('#comment-list').html("");
 	    	for(let i=0; i < result.length; i++){
 	    		if(result[i].recommend == 1){
 	    			likeRecommend = "comActive";
@@ -365,6 +378,7 @@
 	    			dislikeRecommend = "comActive";
 	    		}
 	    		console.log(likeRecommend)
+	    		
 			$('#comment-list').append(
 				//작성자 이미지
 					"<img src='/myvet/resources/img/gall&tip/profile.png' class='commenterImg rounded-circle'/>&nbsp;"+"<p>"+result[i].member.memberNickname+"</p>"

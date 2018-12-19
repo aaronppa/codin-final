@@ -143,15 +143,17 @@
  ---------------------------------->
 		
 		  <!-- Our File Inputs -->
-           <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
-           <input type="hidden" name="writerNo" value="${gallery.writerNo}">
+           <img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle" id="writer-img">
+           <input type="hidden" name="memberNo" value="${user.memberNo}">
            <input type="hidden" name="boardCode" value="10">
+           <input type="hidden" name="galleryNo" value="${gallery.galleryNo}">
            <span class="writerNick">${gallery.memberNickname}</span>
            <hr>
 		  <div class="wrap-custom-file">
 		    <input type="file" name="file" id="image1" accept=".gif, .jpg, .png" />
 		    <label  for="image1">
-		      <span>One</span>
+		    <span>One</span>
+<%-- 		      <img src="/myvet/upload${f.filePath}/${f.sysName}"/> --%>
 		      <i class="fa fa-plus-circle"></i>
 		    </label>
 		  </div>
@@ -197,7 +199,7 @@
               <i class="fas fa-plus" ></i>
                     <c:forEach var="p" items="${gallery.petList}" varStatus="loop">
                         <span data-toggle="tooltip" title="${p.petName}">
-                            <img class="petImg rounded-circle" id="petImg" src="/myvet/upload${p.petFilePath}/${p.petSysName}" style="margin-right: 10px;">
+                            <img class="petImg rounded-circle" id="petImg" src="/myvet/upload${p.petFilePath}/${p.petSysName}" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'" style="margin-right: 10px;">
                         </span>
                     </c:forEach>
           </div>
@@ -207,11 +209,11 @@
                 <div class="detail-content" >
                     <br>
                     <!--제목-->
-                    <textarea cols="150" rows="1" name="title" placeholder="제목을 입력...">${gallery.title}</textarea>
+                    <textarea cols="100" rows="1" name="title" placeholder="제목을 입력...">${gallery.title}</textarea>
                     <br>
                     <br>
                     <!--내용-->
-                    <textarea cols="150" rows="5" name="content" placeholder="내용을 입력...">${gallery.content}</textarea>
+                    <textarea cols="100" rows="5" name="content" placeholder="내용을 입력...">${gallery.content}</textarea>
                 </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <a href="<c:url value='/gallery/list.do'/>">

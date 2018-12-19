@@ -104,6 +104,8 @@
 			recommend_cnt from gallery a ) b,gallery g, member m
 		where g.writer_no = m.member_no
 		 order by recommend_cnt desc 
+<!-- 		 group by g.gallery_no -->
+<!-- 		 having recommend_cnt desc -->
 		 limit 0,4 
 	</select>
 	<select id="selectGallery" parameterType="SearchGallery" resultMap="galleryMap">
@@ -258,6 +260,21 @@
 		  from file_info
 		 where board_code = 10
 		   and board_no = #{boardNo}
+	</select>
+	<update id="updateFileid" parameterType="FileInfo">
+		update file_info
+		set board_no = #{boardNo}
+		where file_id = #{fileId}
+	</update>
+	<update id="updateFileDb" parameterType="FileInfo">
+		update file_info
+		set  ori_name =#{oriName} , sys_name =#{sysName} , file_path = #{filePath} , file_size =#{fileSize}
+		where file_id = #{fileId} and board_code=10
+	</update>
+	<select id="forModelAttributeFIleInfo" parameterType="int" resultType="int">
+		select file_id
+		from file_info
+		where board_code =10 and board_no = #{boardNo}
 	</select>
 <!-- 	<delete id="deleteFile" parameterType="file"> -->
 <!-- 		delete  -->

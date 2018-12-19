@@ -141,7 +141,7 @@
  ---------------------------------->
 		
 		  <!-- Our File Inputs -->
-           <img src="/myvet/resources/img/gall&tip/pic2.jpg" class="rounded-circle" id="writer-img">
+           <img src="/myvet/resources/img/gall&tip/profile.png" class="rounded-circle" id="writer-img">
            <input type="hidden" name="writerNo" value="${user.memberNo}">
            <input type="hidden" name="boardCode" value="10">
            <span class="writerNick">${user.memberNickname}</span>
@@ -205,11 +205,11 @@
                 <div class="detail-content" >
                     <br>
                     <!--제목-->
-                    <textarea cols="150" rows="1" name="title" placeholder="제목을 입력..."></textarea>
+                    <textarea cols="100" rows="1" name="title" placeholder="제목을 입력..."></textarea>
                     <br>
                     <br>
                     <!--내용-->
-                    <textarea cols="150" rows="5" name="content" placeholder="내용을 입력..."></textarea>
+                    <textarea cols="100" rows="5" name="content" placeholder="내용을 입력..."></textarea>
                 </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <a href="<c:url value='/gallery/list.do'/>">

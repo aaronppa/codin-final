@@ -71,8 +71,8 @@ public class GalleryController{
 	}
 	
 	@RequestMapping("writeForm.do")
-	public void writeForm(Model model,HttpSession session) throws Exception{
-		Gallery gallery = new Gallery(); 
+	public void writeForm(Model model,Gallery gallery,HttpSession session) throws Exception{
+		
 		Member member = (Member)session.getAttribute("user"); 
 		model.addAttribute("gallery",service.detailGallery(gallery));
 		System.out.println("gallery : "+service.detailGallery(gallery));
@@ -162,9 +162,13 @@ public class GalleryController{
 	}
 	
 	@RequestMapping("updateForm.do")
-	public void updateForm(Gallery gallery, Model model,Member member,HttpSession session) throws Exception{
+	public void updateForm(int galleryNo,Gallery gallery,FileInfo fileInfo, Model model,Member member,HttpSession session) throws Exception{
+		int boardNo = galleryNo;
 		member = (Member)session.getAttribute("user");
+//		model.addAttribute("file",service.selectFile(boardNo));
 		model.addAttribute("gallery",service.updateForm(gallery));
+//		model.addAttribute("fileId",service.forModelAttributeFIleInfo(boardNo));
+		
 	}
 	
 	@RequestMapping("update.do")
@@ -192,9 +196,7 @@ public class GalleryController{
 	@RequestMapping("commentList.do")
 	@ResponseBody
 	public List<GalleryComment> commentList(Gallery gallery) throws Exception{
-		System.out.println("�뙎湲�議고쉶 Controller");
-		gallery.setWriterNo(7);
-
+		System.out.println("commentListController");
 		return service.commentList(gallery);
 	}
 	@RequestMapping("updateComment.do")

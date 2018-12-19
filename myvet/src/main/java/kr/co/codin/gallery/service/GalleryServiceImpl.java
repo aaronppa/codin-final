@@ -27,6 +27,27 @@ public class GalleryServiceImpl implements GalleryService{
 	
 
 	@Override
+	public int forModelAttributeFIleInfo(int boardNo) {
+		return mapper.forModelAttributeFIleInfo(boardNo);
+	}
+
+
+
+	@Override
+	public void updateFileid(FileInfo fileInfo) {
+		mapper.updateFileid(fileInfo);
+	}
+
+
+
+	@Override
+	public void updateFileDb(FileInfo fileinfo) {
+		mapper.updateFileDb(fileinfo);
+	}
+
+
+
+	@Override
 	public List<Gallery> galleryTopList() {
 		return mapper.selectTopGallery();
 	}
@@ -34,8 +55,8 @@ public class GalleryServiceImpl implements GalleryService{
 
 
 	@Override
-	public void selectFile(List<FileInfo> fileInfoList) {
-		mapper.selectFile(fileInfoList);
+	public List<FileInfo> selectFile(int boardNo) {
+		return mapper.selectFile(boardNo);
 	}
 
 	
