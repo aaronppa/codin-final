@@ -149,6 +149,11 @@ h5 {
 	height: 50px;
 }
 
+.profile-multiple .rounded-circle {
+	width: 25px;
+	height: 25px;
+}
+
 .rounded-circle.search-result {
 	width: 32px;
 	height: 32px;
@@ -173,7 +178,7 @@ h5 {
 	display: flex;
 }
 
-.profile {
+.profile, .profile-multiple {
 	border-radius: 50%;
 	height: 64px;
 	width: 64px;
@@ -188,6 +193,23 @@ h5 {
 	background-size: cover;
 	width: 100%;
 	height: 100%;
+}
+
+.profile-multiple div{
+	display: inline-block;
+	flex: left;
+	background-position: center;
+	background-size: cover;
+	width: 25%;
+	height: 25%;
+}
+
+div.quarter{
+	height: 50%;
+}
+
+div.half, div.quarter{
+	width: 50%;
 }
 
 .chat-info {
@@ -418,29 +440,48 @@ background: #f5e9c3;
 				<c:forEach var="myChat" items="${myChat}">
 					<li class='conversation-chatroom <c:if test="${myChat.myDateRead==null}">newmsg</c:if>' data-chatid='${myChat.chatId}'>
 				        <div class='chatroom'>
-				        	<div class='profile'>
-					        	<c:if test="${fn:length(myChat.recipients)==1}">
-					        		<c:choose>
-								       	<c:when test="${profiles.recipientType=='0'}">
-								       		<div><img src="<c:url value='/upload${profiles.memberFilePath}/${profiles.memberSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
-		 						       	</c:when>
-								       	<c:when test="${profiles.recipientType=='1'}">
-								       		<div><img src="<c:url value='/upload${profiles.hosFilePath}/${profiles.hosSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+				        	
+				        	<c:choose>
+				        		<c:when test="${myChat.recipients[0].recipientType=='0'}">
+				        			<c:choose>
+								       	<c:when test="${fn:length(myChat.recipients)==1}">
+								       	<div class='profile'>
+								       	<c:choose>
+									       	<c:when test="${myChat.recipients[0].memberSysName==null}">
+									       		<div><img src="<c:url value='/upload/profile/default-profile.jpg'/>" class="rounded-circle single" data-memberno='${myChat.recipients[0].recipientNo}' data-recipienttype='${myChat.recipients[0].recipientType}'></div>
+									       	</c:when>
+									       	<c:otherwise>
+									       		<div><img src="<c:url value='/upload${myChat.recipients[0].memberFilePath}/${myChat.recipients[0].memberSysName}'/>" class="rounded-circle single" data-memberno='${myChat.recipients[0].recipientNo}' data-recipienttype='${myChat.recipients[0].recipientType}'></div>
+									       	</c:otherwise>
+									       	</c:choose>
+								       	</c:when>
+								       	<c:when test="${fn:length(myChat.recipients)>1}">
+ 								       	<div class='profile-multiple'>
+				 						    <c:forEach var="profiles" items="${myChat.recipients}" begin="0" end="6">
+				 						    	<c:choose>
+										       		<c:when test="${profiles.memberSysName==null}">
+											       		<div><img src="<c:url value='/upload/profile/default-profile.jpg'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+											       	</c:when>
+											       	<c:otherwise>		
+											      		<div><img src="<c:url value='/upload${profiles.memberFilePath}/${profiles.memberSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+									       			</c:otherwise>
+									       		</c:choose>
+									       	</c:forEach>
 								       	</c:when>
 							       	</c:choose>
-	 						    </c:if>
-	 						    <c:if test="${fn:length(myChat.recipients)>1}">
-		 						    <c:forEach var="profiles" items="${myChat.recipients}" begin="0" end="3">
-								       	<c:choose>
-									       	<c:when test="${profiles.recipientType=='0'}">
-									       		<div><img src="<c:url value='/upload${profiles.memberFilePath}/${profiles.memberSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
-			 						       	</c:when>
-									       	<c:when test="${profiles.recipientType=='1'}">
-									       		<div><img src="<c:url value='/upload${profiles.hosFilePath}/${profiles.hosSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
-									       	</c:when>
-								       	</c:choose>
-							       	</c:forEach>
-						       	</c:if>
+ 						       	</c:when>
+						       	<c:when test="${myChat.recipients[0].recipientType=='1'}">
+						       	<div class='profile'>
+						       		<c:choose>
+							       		<c:when test="${myChat.recipients[0].hosSysName==null}">
+							       			<div><img src="<c:url value='/upload/profile/Logo-Vet-02.png'/>" class="rounded-circle single" data-memberno='${myChat.recipients[0].recipientNo}' data-recipienttype='${myChat.recipients[0].recipientType}'></div>
+							       		</c:when>
+						       			<c:otherwise>		
+								      		<div><img src="<c:url value='/upload${myChat.recipients[0].hosFilePath}/${myChat.recipients[0].hosSysName}'/>" class="rounded-circle single" data-memberno='${myChat.recipients[0].recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+						       			</c:otherwise>
+					       			</c:choose>
+						       	</c:when>
+				        	</c:choose>
 					       	</div>
 					     
 					       	<div class='chat-info'>
@@ -547,7 +588,6 @@ $(window).on("load", function () {
 	
 	makeFirstListActive();
 
-	
 	// 삭제대상 
 	/* setTimeout(function() {
 	fakeMessage();
@@ -561,8 +601,10 @@ var newMsgSwitch = true;
  $("#recipientOption button").on("click", function(e){
 	e.preventDefault();
 	
-	console.log("write to who?");
-	console.dir($(e.target).data("type"));
+	$(".left-panel.scrollable").animate({ scrollTop: 0 }, "slow");
+	
+	// console.log("write to who?");
+	// console.dir($(e.target).data("type"));
 	$(".recipients-input").html("");
 	$(".conversation-chatroom.new .recipient.new").html("");
 	var recipientInputHtml;
@@ -590,7 +632,6 @@ var newMsgSwitch = true;
 		var chatRoomHtml = `<li class='conversation-chatroom new' data-chatid='0'>
 						        <div class='chatroom active'>
 							       	<div class='profile'>
-							       		<img src="<c:url value='/resources/img/test_image/test4.jpg'/>" class="rounded-circle">
 							       	</div>
 							       	<div class='chat-info'>
 							       		<div class='recipient new'>
@@ -611,6 +652,7 @@ var newMsgSwitch = true;
 		
 	};
 	$messages.mCustomScrollbar();
+	
 });
 
 
@@ -683,13 +725,13 @@ $(".top-main.header").on("click keyup","#recipientSearch", function(e){
 			for(var member of result.member){
 				var imgPath;
 				if(member.memberFilePath==null){
-					imgPath = "<c:url value='/upload/profile/default-profile.jpg'/>";
+					imgPath = "<c:url value='/upload"+member.memberFilePath+"/"+member.memberSysName+"'/>";
 				} else if(member.memberFilePath!=null){
-					imgPath = "<c:url value='/upload/profile/"+member.memberFilePath+"/"+member.memberSystem+"'/>";
+					imgPath = "<c:url value='/upload"+member.memberFilePath+"/"+member.memberSysName+"'/>";
 				}
 				
 				searchResultHtml += `<li>
-					                    <div class="resultList member" data-recipientno=`+member.memberNo+` data-recipienttype='0' data-recipientname=`+member.memberNickname+`>
+					                    <div class="resultList member" data-recipientno=`+member.memberNo+` data-recipienttype='0' data-recipientname="`+member.memberNickname+`">
 					                        <div class='profile-search'>
 					                                <img src=`+imgPath+` class="rounded-circle search-result">
 					                        </div>
@@ -714,7 +756,7 @@ $(".top-main.header").on("click keyup","#recipientSearch", function(e){
 				if(hospital.filePath==null){
 					imgPath = "<c:url value='/upload/profile/Logo-Vet-02.png'/>";
 				} else if(hospital.filePath!=null){
-					imgPath = "<c:url value='/upload/profile/"+hospital.filePath+"/"+hospital.sysName+"'/>";
+					imgPath = "<c:url value='/upload"+hospital.filePath+"/"+hospital.sysName+"'/>";
 				}
 				
 				searchResultHtml += `<li>
@@ -749,15 +791,21 @@ $(".recipientSearchLayer").on("mouseenter",function(e){
 /* 검색 아이템 선택시 Event Action */
 $(".recipientSearchBox").on("click",".resultList",function(e){
 	console.log("Search Result Select:", $(this));
-	
 	if($(this).hasClass("member")){
 		/* 두번째 수신자부터 콤마찍어주기 (앞 span에 , 추가하기) */
-		if($("li.conversation-chatroom.new").find(".recipient.new > span")!=0){
-			var lastRecipient = $("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname");
+		if($("li.conversation-chatroom.new span")!=0){
+			var lastRecipient = $("li.conversation-chatroom.new .recipient.new > span:last-child").data("recipientname");
 			/* console.log("Last Recipient:", lastRecipient); */
-			$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html(lastRecipient+", ");	
+			$("li.conversation-chatroom.new .recipient.new > span:last-child").html(lastRecipient+", ");
+			
+			// console.log("number of span added", $("li.conversation-chatroom.new span"));
+			if($("li.conversation-chatroom.new span").length+1>1){
+				$("li.conversation-chatroom.new .profile").addClass("profile-multiple").removeClass("profile");
+			}
 		} 
 		$("div.recipient.new").append("<span class='addedRecipient' data-recipientno='"+$(this).data("recipientno")+"' data-recipienttype='"+$(this).data("recipienttype")+"' data-recipientname='"+$(this).data("recipientname")+"'>"+$(this).data("recipientname")+"</span>");
+		$("li.conversation-chatroom.new [class^='profile']").append("<div>"+$(this).find(".profile-search").clone().html()+"</div>");
+		$("li.conversation-chatroom.new img").removeClass("search-result");
 		$("#recipientSearch").val("");
 		$("#recipientSearch").focus();
 	} else if($(this).hasClass("hospital")){
@@ -805,7 +853,12 @@ $(".top-main.header").on("click", "span.addedRecipient", function(e){
 	/*  */
 	if(recipientType=='0'){
 		$("span[data-recipientno='"+recipientNo+"']").remove();
+		$("li.conversation-chatroom.new [class^='profile'] div:last-child").remove();
 		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html($("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname"));
+	
+		if($("li.conversation-chatroom.new span").length==1){
+			$("li.conversation-chatroom.new .profile-multiple").addClass("profile").removeClass("profile-multiple");
+		}
 	} else if(recipientType=='1'){
 		$("span[data-recipientno='"+recipientNo+"']").remove();
 		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html($("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname"));
@@ -832,7 +885,12 @@ $(".top-main.header").on("keydown","#recipientSearch", function(e){
 		console.log("Search Key:",$("#recipientSearch").val());
 		console.log("backspaced!");
 		$("div.recipient.new > :last-child").remove();
+		$("li.conversation-chatroom.new [class^='profile'] div:last-child").remove();
 		$("li.conversation-chatroom.new").find(".recipient.new > span:last-child").html($("li.conversation-chatroom.new").find(".recipient.new > span:last-child").data("recipientname"));
+		
+		if($("li.conversation-chatroom.new span").length==1){
+			$("li.conversation-chatroom.new .profile-multiple").addClass("profile").removeClass("profile-multiple");
+		}
 	};
 });
 
@@ -857,11 +915,11 @@ function insertMessage(item) {
 	$('#msgtextarea').val(null);
 	updateMsgScrollBar();
 	
+	var addedRecipientListChat = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
 	// 신규 메세지인 경우 
 	if(item.dataset.chatid==0){
 		
 		// 등록된 수신자 배열을 변수에 담는다. 
-		var addedRecipientListChat = document.querySelectorAll('.conversation-chatroom.new span.addedRecipient');
 		for(var recipientArr of addedRecipientListChat){
 			console.log("recipientArr", recipientArr);
 			// 수신자 타입(일반회원/병원 별) 구분하여 data 심어줌 
@@ -889,6 +947,7 @@ function insertMessage(item) {
 	} 
 	// 기존 대화방 대화 메세지 전송인 경우 (chatid is not null or other than 0)
 	else{
+ 		$("<input type='hidden' name='recipientType' value='0'>").appendTo(form);
 		console.log("기존 대화방 Chatid:", item.dataset.chatid)	
 		console.dir($("form#msgform").attr("action"));
 		console.log("Existing Chatroom MsgFormData:", form.serialize());
@@ -935,9 +994,11 @@ $("#chatroomlist").on("click", ".chatroom", function(e){
 	$(this).toggleClass('active')
 	activeDo();
 	
+	
+	/*
 	var newMsgCnt = $(".userid.msgbadge span.badge").text();
 	console.log("newMsgCnt:", newMsgCnt);
-	
+
 	// 만약 안읽은 메세지가 있는 대화방을 선택했을 경우 안읽은 메세지수 -1 처리 
 	if($(this).closest("li").hasClass("newmsg")){
 		if(newMsgCnt>0){
@@ -950,6 +1011,7 @@ $("#chatroomlist").on("click", ".chatroom", function(e){
 		}
 		$(this).closest("li").removeClass("newmsg");
 	}
+	*/
 });
 
 
@@ -1000,6 +1062,7 @@ function makeFirstListActive(){
 // Active한 대화방이 선택되었을때 처리 함수 
 //   Active한 대화방 번호 Send 버튼에 넣어주기 & active한 대화방 대화 불러오기 
 function activeDo(){
+	var activeChatRoom = $(".chatroom.active").parent();
 	var activeChatId = $(".chatroom.active").parent().data("chatid");
 	// console.log("active", $(".chatroom.active"));
 	console.log("active ChatId", activeChatId);
@@ -1026,6 +1089,22 @@ function activeDo(){
 	
 	$(".top-main.header .recipient").html($(addedRecipientListChat).clone());
 	$(".recipients-input span").removeClass("addedRecipient").addClass("headerRecipient");
+	
+	// 만약 안읽은 메세지가 있는 대화방을 선택했을 경우 안읽은 메세지수 -1 처리 
+	var newMsgCnt = $(".userid.msgbadge span.badge").text();
+	console.log("newMsgCnt:", newMsgCnt);
+	
+	if(activeChatRoom.hasClass("newmsg")){
+		if(newMsgCnt>0){
+		 	var zeroCntCheck = newMsgCnt-1;
+		 	if(zeroCntCheck!=0){
+				$(".msgbadge span.badge").text(zeroCntCheck);
+		 	} else {
+		 		$(".msgbadge span.badge").text('');
+		 	}
+		}
+		activeChatRoom.removeClass("newmsg");
+	}
 	
 	/* 대화방의 메세지 가져오기 */
 	retrieveMsgs(activeChatId);
@@ -1094,7 +1173,11 @@ function retrieveMsgs(activeChatId){
 				$("<div class='message message-personal' data-msgid='"+msg.msgId+"'>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
 				$("<div class='timestamp-right'>" + timeStamp + "</div>").appendTo($(".message[data-msgid='"+msg.msgId+"']"));
 			} else{
-				$("<div class='message' data-msgid='"+msg.msgId+"'><figure class='avatar'><img src='http://askavenue.com/img/17.jpg' /></figure>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
+				if(msg.recipients[0].recipientType=='1'){
+					$("<div class='message' data-msgid='"+msg.msgId+"'><figure class='avatar'><img src='/myvet/upload"+msg.recipients[0].hosFilePath+"/"+msg.recipients[0].hosSysName+"' /></figure>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));											
+				} else{					
+					$("<div class='message' data-msgid='"+msg.msgId+"'><figure class='avatar'><img src='/myvet/upload"+msg.recipients[0].memberFilePath+"/"+msg.recipients[0].memberSysName+"' /></figure>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));					
+				}
 				$("<div class='sender-nickname'>"+senderNickname+"</div><div class='timestamp-left'>" + timeStamp + "</div>").appendTo($(".message[data-msgid='"+msg.msgId+"']"));
 			}
 			

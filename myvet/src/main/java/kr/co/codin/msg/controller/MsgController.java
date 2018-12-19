@@ -75,7 +75,8 @@ public class MsgController {
 	// 메세지 입력
 	@RequestMapping(value="/insert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public int insertMsg(Message msg, int recipientType,
+	public int insertMsg(Message msg, 
+						 @RequestParam(value="recipientType", required = false) int recipientType,
 						 @RequestParam(value="recipientNo", required = false) List<Integer> recipients) throws Exception {
 		int chatId=0;
 		RecipientGroup self = new RecipientGroup();

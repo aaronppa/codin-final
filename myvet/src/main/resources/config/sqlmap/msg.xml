@@ -106,9 +106,9 @@
 				         from member) mem on mem.member_no = r.recipient_no
 		left outer join (select hos_code, title,file_path, sys_name
 						 from hos_basic hb
-						  left outer join (select file_path, sys_name, board_no
+						  left outer join (select file_id, file_path, sys_name, board_no
 						 			 from file_info
-						 			 where board_code = 30) f on f.board_no = hb.hos_code
+						 			 where board_code = 30) f on f.file_id = hb.thumb_img
 						 where hos_register = 'Y') h on h.hos_code = r.recipient_no
         where trash = 0
         and recipient_group_id = #{chatId}
