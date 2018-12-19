@@ -130,14 +130,24 @@ public class QnaController {
 	}
 	
 	@RequestMapping("write.do")
-	public String write(Model model,Qna qna,int fileId,FileInfo fileInfo) {
+	public String write(Model model,Qna qna) {
 			service.InsertQna(qna);
 			
 		
 			
-			fileInfo.setBoardNo(service.selectQnaNo(qna));
-			fileInfo.setFileId(fileId);
-			service.updateFileid(fileInfo);
+		
+			try {
+				int fileId=0;
+				FileInfo fileInfo=new FileInfo();
+				if(fileInfo != null) {
+					
+				fileInfo.setBoardNo(service.selectQnaNo(qna));
+				fileInfo.setFileId(fileId);
+				service.updateFileid(fileInfo);
+				}
+			}catch(Exception e ) {
+				
+			}
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX+"list.do";
 	}
 	
