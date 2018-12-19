@@ -27,7 +27,7 @@
 #resultDiv {
 	border: 1px solid black;
 	width: 299px;
-	height: 473.8px;
+	height: 462px;
 	position:relative;
 }
 
@@ -45,8 +45,16 @@
 #MapSearchlist >table{
 	postion:absolute;
 	width:100%;
+	text-align:left;
 }
-
+.maptitle{
+	padding-left:10px;
+	padding-right:10px;
+	color:black;
+}
+.address{
+	font-size:15px;
+}
 </style>
 
 <script
@@ -227,7 +235,7 @@
 							if(jsondata[k].hosRegister == 'N'){
 								$("#MapSearchlist >table > tbody").append(
 									
-										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"'><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/RedFolder/redMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><br>"+jsondata[k].roadAddress+"</td>"
+										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"'><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/RedFolder/redMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><br><span class='address'>"+jsondata[k].roadAddress+"</span></td>"
 										+"</tr>"
 										)
 								
@@ -235,7 +243,7 @@
 							}else{
 								$("#MapSearchlist >table > tbody").append(
 										
-										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><br>"+jsondata[k].roadAddress+"</td>"
+										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><span class='address'><br>"+jsondata[k].roadAddress+"</span></td>"
 										+"</tr>"
 										)
 								
@@ -408,20 +416,30 @@
 									MarkerClicklist[k] = hosmarker;
 
 									//	console.log(jsondata[k].title);
-
+						var sessionId= "${user.memberNo}"
+						if(sessionId.length == 0 ){
 									 infowindow = new naver.maps.InfoWindow(
 											{
 
-												content : '<p>병원이름:'
+												content : '<span class=\"maptitle\">'
 														+ jsondata[k].title
-														+ "</p>'<a href='<c:url value='/hos/hospital.do?hosCode="
-														+jsondata[k].hosCode
-												
-														+"'/>'>"
-														+ "동물병원 찾기 페이지로 이동" 
-														+ "</a>"
+														+ "</span>"
 											});
+							 }else{
+									   infowindow = new naver.maps.InfoWindow(
+												{
 
+													content : "<a href='<c:url value='/hos/hospital.do?hosCode="
+															+jsondata[k].hosCode
+													
+															+"'/>'>"
+															+'<span class=\"maptitle\"><strong>'
+															+ jsondata[k].title
+															+ "</strong><span>"
+															+ "</a>"
+												});
+									   
+						}//if-else
 									//마크점 클릭시 나오는 action의 분기
 									if (jsondata[k].hosRegister == "N") {
 										naver.maps.Event
@@ -430,9 +448,8 @@
 														"click",
 														function(e) {
 
-															alert("병원 이름:"
-																	+ jsondata[k].title
-																	+ "은 등록되지 않은 병원입니다.");
+															alert("\""+jsondata[k].title
+																	+ "\"은 등록되지 않은 병원입니다.");
 														});
 									} else {
 										naver.maps.Event
