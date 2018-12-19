@@ -9,6 +9,7 @@ public class Message {
 	private int chatId;
 	private int senderNo;
 	private String senderNickname;
+	private String senderHosNickname;
 	private String msgBody;
 	private Date dateSent;
 	private int msgType;
@@ -56,6 +57,14 @@ public class Message {
 		this.senderNickname = senderNickname;
 	}
 
+	public String getSenderHosNickname() {
+		return senderHosNickname;
+	}
+
+	public void setSenderHosNickname(String senderHosNickname) {
+		this.senderHosNickname = senderHosNickname;
+	}
+
 	public String getMsgBody() {
 		return msgBody;
 	}
@@ -99,7 +108,9 @@ public class Message {
 	@Override
 	public String toString() {
 		return "Message [recipientNo=" + recipientNo + ", msgId=" + msgId + ", chatId=" + chatId + ", senderNo="
-				+ senderNo + ", senderNickname=" + senderNickname + ", msgBody=" + msgBody + ", dateSent=" + dateSent
-				+ ", msgType=" + msgType + ", myDateRead=" + myDateRead + ", recipients=" + recipients + "]";
+				+ senderNo + ", senderNickname=" + senderNickname + ", senderHosNickname=" + senderHosNickname
+				+ ", msgBody=" + msgBody + ", dateSent=" + dateSent + ", msgType=" + msgType + ", myDateRead="
+				+ myDateRead + ", recipients=" + recipients + "]";
 	}
+
 }

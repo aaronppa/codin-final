@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -173,9 +174,20 @@ h5 {
 }
 
 .profile {
-	height: inherit;
+	border-radius: 50%;
+	height: 64px;
 	width: 64px;
 	padding: 7px;
+	overflow: hidden;
+}
+
+.profile div{
+	display: inline-block;
+	float: left;
+	background-position: center;
+	background-size: cover;
+	width: 100%;
+	height: 100%;
 }
 
 .chat-info {
@@ -304,7 +316,7 @@ li>.chatroom>.chat-info>.recipient>span.addedRecipient {
 
 .recipients-input>div:first-child {
 	line-height: 32px;
-	width: 52px;
+	width: 60px;
 }
 
 .close-chat {
@@ -406,18 +418,29 @@ background: #f5e9c3;
 				<c:forEach var="myChat" items="${myChat}">
 					<li class='conversation-chatroom <c:if test="${myChat.myDateRead==null}">newmsg</c:if>' data-chatid='${myChat.chatId}'>
 				        <div class='chatroom'>
-				        
-					       	<div class='profile'>
-						       	<c:forEach var="profiles" items="${myChat.recipients}">
-						       	<c:choose>
-						       	<c:when test="${profiles.recipientType=='0'}">
-						       		<img src="<c:url value='"${profiles.memberFilePath}"+"${profiles.memberSysName}"'/>" class="rounded-circle">
-						       	</c:when>
-						       	<c:when test="${profiles.recipientType=='1'}">
-						       		<img src="<c:url value='"${profiles.hosFilePath}"+"${profiles.hosSysName}"'/>" class="rounded-circle">
-						       	</c:when>
-						       	</c:choose>
-						       	</c:forEach>
+				        	<div class='profile'>
+					        	<c:if test="${fn:length(myChat.recipients)==1}">
+					        		<c:choose>
+								       	<c:when test="${profiles.recipientType=='0'}">
+								       		<div><img src="<c:url value='/upload${profiles.memberFilePath}/${profiles.memberSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+		 						       	</c:when>
+								       	<c:when test="${profiles.recipientType=='1'}">
+								       		<div><img src="<c:url value='/upload${profiles.hosFilePath}/${profiles.hosSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+								       	</c:when>
+							       	</c:choose>
+	 						    </c:if>
+	 						    <c:if test="${fn:length(myChat.recipients)>1}">
+		 						    <c:forEach var="profiles" items="${myChat.recipients}" begin="0" end="3">
+								       	<c:choose>
+									       	<c:when test="${profiles.recipientType=='0'}">
+									       		<div><img src="<c:url value='/upload${profiles.memberFilePath}/${profiles.memberSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+			 						       	</c:when>
+									       	<c:when test="${profiles.recipientType=='1'}">
+									       		<div><img src="<c:url value='/upload${profiles.hosFilePath}/${profiles.hosSysName}'/>" class="rounded-circle multiple" data-memberno='${profiles.recipientNo}' data-recipienttype='${profiles.recipientType}'></div>
+									       	</c:when>
+								       	</c:choose>
+							       	</c:forEach>
+						       	</c:if>
 					       	</div>
 					     
 					       	<div class='chat-info'>
@@ -1053,7 +1076,7 @@ function retrieveMsgs(activeChatId){
 		console.log("ChatMsgs:",result);		
 		$('.mCSB_container').html("");
 		var timeStamp;
-		
+		var senderNickname;
 		for(var msg of result){
 			
 			if($.format.date(msg.dateSent,'yyyy-MM-dd')==todayDate){
@@ -1062,12 +1085,17 @@ function retrieveMsgs(activeChatId){
 				timeStamp = $.format.date(msg.dateSent,'yyyy-MM-dd HH:mm:ss');
 			}
 			
+			if(msg.msgType!='1' && msg.msgType!='2'){
+				senderNickname = msg.senderHosNickname;
+			} else {
+				senderNickname = msg.senderNickname;
+			}
 			if(msg.senderNo==me){
 				$("<div class='message message-personal' data-msgid='"+msg.msgId+"'>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
 				$("<div class='timestamp-right'>" + timeStamp + "</div>").appendTo($(".message[data-msgid='"+msg.msgId+"']"));
 			} else{
 				$("<div class='message' data-msgid='"+msg.msgId+"'><figure class='avatar'><img src='http://askavenue.com/img/17.jpg' /></figure>" + msg.msgBody + "</div>").appendTo($('.mCSB_container'));
-				$("<div class='sender-nickname'>"+msg.senderNickname+"</div><div class='timestamp-left'>" + timeStamp + "</div>").appendTo($(".message[data-msgid='"+msg.msgId+"']"));
+				$("<div class='sender-nickname'>"+senderNickname+"</div><div class='timestamp-left'>" + timeStamp + "</div>").appendTo($(".message[data-msgid='"+msg.msgId+"']"));
 			}
 			
 		}

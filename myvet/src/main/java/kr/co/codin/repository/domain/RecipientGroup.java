@@ -17,6 +17,7 @@ public class RecipientGroup {
 	private String memberFilePath;
 	private String hosSysName;
 	private String hosFilePath;
+	
 	public int getMsgId() {
 		return msgId;
 	}

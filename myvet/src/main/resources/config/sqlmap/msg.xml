@@ -39,6 +39,7 @@
 		<result column="chat_id" property="chatId"/>
 		<result column="sender_no" property="senderNo"/>
 		<result column="sender_nickname" property="senderNickname"/>
+		<result column="sender_hos_nickname" property="senderHosNickname"/>
 		<result column="msg_body" property="msgBody"/>
 		<result column="date_sent" property="dateSent"/>
 		<result column="msg_type" property="msgType"/>
@@ -128,10 +129,11 @@
 	</select>
 	
 	<select id="selectChatMsg" parameterType="RecipientGroup" resultMap="messageMap">
-		select msg_id, chat_id, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type, sender_no, mem.member_nickname sender_nickname
+		select msg_id, chat_id, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type, sender_no, mem.member_nickname sender_nickname, title sender_hos_nickname
 		from recipient_group r
 			inner join message m on m.chat_id = r.recipient_group_id
-			inner join member mem on mem.member_no = m.sender_no
+			left outer join member mem on mem.member_no = m.sender_no
+			left outer join hos_basic hos on hos.hos_code = m.sender_no
 		where chat_id = #{recipientGroupId}
 		and recipient_no = #{recipientNo}
 		and trash =0
