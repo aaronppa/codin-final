@@ -82,7 +82,7 @@
 				<div class="rest" contenteditable="false"></div>
 			</div>
 			<div class="writer" aria-placeholder="writer..">
-				<img src="/myvet/upload${qna.filePath }/${qna.sysname}" class="rounded-circle">&nbsp;${qna.memberNickname}
+				<img src="/myvet/upload${qna.filePath }/${qna.sysname}" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'" class="rounded-circle">&nbsp;${qna.memberNickname}
 			</div>
 			<div class="information">
 
@@ -339,7 +339,7 @@
                   if(result[0].pick=="N"){
 		                $(".comment-list").append(
 		                		
-		                "<img src='/myvet/upload"+result[i].filePath+"/"+result[i].sysname+"' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
+		                "<img src='/myvet/upload"+result[i].filePath+"/"+result[i].sysname+"' onerror=\"this.src=\'\/myvet\/resources\/img\/gall&tip\/myvet.png'\" class='rounded-circle'/>&nbsp;"+result[i].memberNickname
 		                 +"<button class='com-like "+likeRecommend+"'data-comno='"+result[i].commenterNo+"'>"
 		                 +"<i style='display:none;' class='far fa-thumbs-up'></i>"+"</button><button style='display:none;' class='com-dislike "
 		                 +dislikeRecommend+"' data-comno='"
@@ -366,7 +366,7 @@
                 	   
 		                $(".comment-list").append(
 		                		
-		                		"<img src='/myvet/upload"+result[i].filePath+"/"+result[i].sysname+"' class='rounded-circle'/>&nbsp;"+result[i].memberNickname
+		                		"<img src='/myvet/upload"+result[i].filePath+"/"+result[i].sysname+"' onerror=\"this.src=\'\/myvet\/resources\/img\/gall&tip\/myvet.png'\" class='rounded-circle'/>&nbsp;"+result[i].memberNickname
 		                 +"<button class='com-like "+likeRecommend+"'data-comno='"+result[i].commenterNo+"'>"
 		                 +"<i style='display:none;' class='far fa-thumbs-up'></i>"+"</button><button style='display:none;' class='com-dislike "
 		                 +dislikeRecommend+"' data-comno='"
