@@ -7,6 +7,11 @@ $(function () {
 		location.href = `${APPLICATION_PATH}/pet/petAddForm.do`;
 	});
 	
+	// 반려동물 추가 버튼을 누르면 반려동물을 추가할 수 있는 폼으로 이동
+	$("#vet-add").click(function () {
+		location.href = `${APPLICATION_PATH}/hos/search.do`;
+	});
+	
 	// 펫 상세 페이지 이동하기
 	$(".pet-info > img").click(function () {
 		var petNo = $(this).parent().data("pet-no")

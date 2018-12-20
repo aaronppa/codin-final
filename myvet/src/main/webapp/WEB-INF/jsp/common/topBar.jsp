@@ -247,7 +247,7 @@
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
 									   name="fileV">
-								<label class="custom-file-label" for="inputGroupFile01"><span id="fileName"></span></label>
+								<label class="custom-file-label" for="inputGroupFile01"><span id="fileName">인증파일 (이미지포멧)을 등록해주세요.</span></label>
 							</div>
 						</div>
                     </div>
@@ -288,39 +288,16 @@
         };
     	// 로그인 처리
     	$("#loginBtnPop").click(function () {
-    		let memberEmail = $("input[name='memberEmail']");
-    		let password = $("input[name='password']");
-
-    		if (memberEmail.val() == "") {
-    			alert("이메일을 입력하세요");
-    			memberEmail.focus();
-    			return;
-    		}
-    		if (password.val() == "") {
-    			alert("패스워드를 입력하세요");
-    			password.focus();
-    			return;
-    		}
-    		
-    		// 폼의 데이터를 처리할 수 있는 스크립트 객체
-    		var fd = new FormData($("#loginFormPop")[0]);
-    		$.ajax({
-    			url: '<c:url value="/member/loginAjax.do"/>',
-    			type: "POST",
-    			data: {
-    				memberEmail: memberEmail.val(),
-    				password: password.val()
-    			},
-    			success: function (data) {
-    				if (data == 'fail') {
-    					alert("입력한 정보가 올바르지 않습니다.");
-    					password.select();
-    					return ;
-    				}
-    				location.reload();
-    			}
-    		});
+    		loginSubmit()
     	});
+    	
+    	$("#password").on("keydown", function(e){
+    		if (e.keyCode == 13) {
+    			e.preventDefault();
+    			console.log("enter pressed to send");
+    			loginSubmit();
+    		}
+    	})
     	
     	$("#EmailCheck").click(function () {
     		var memberEmail = $("#email").val();
@@ -346,6 +323,14 @@
     			}
     		});
     	});
+    	
+    	$('#inputGroupFile01').on('change',function(){
+            //get the file name
+            var fileName = document.getElementById("inputGroupFile01").files[0].name; 
+            console.log("fileName", fileName);
+            //replace the "Choose a file" label
+            $('#fileName').text(fileName);
+        })
     	
     	$("#formSubmit").click(function (e) {
     		if (emailCheck != 1){
@@ -396,6 +381,41 @@
 			}
 			$("#input-file").show();
 		}
+		
+		function loginSubmit(){
+			let memberEmail = $("input[name='memberEmail']");
+    		let password = $("input[name='password']");
+
+    		if (memberEmail.val() == "") {
+    			alert("이메일을 입력하세요");
+    			memberEmail.focus();
+    			return;
+    		}
+    		if (password.val() == "") {
+    			alert("패스워드를 입력하세요");
+    			password.focus();
+    			return;
+    		}
+    		
+    		// 폼의 데이터를 처리할 수 있는 스크립트 객체
+    		var fd = new FormData($("#loginFormPop")[0]);
+    		$.ajax({
+    			url: '<c:url value="/member/loginAjax.do"/>',
+    			type: "POST",
+    			data: {
+    				memberEmail: memberEmail.val(),
+    				password: password.val()
+    			},
+    			success: function (data) {
+    				if (data == 'fail') {
+    					alert("입력한 정보가 올바르지 않습니다.");
+    					password.select();
+    					return ;
+    				}
+    				location.reload();
+    			}
+    		});
+		};
     </script>
 </body>
 </html>

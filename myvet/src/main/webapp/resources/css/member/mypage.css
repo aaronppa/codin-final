@@ -1,4 +1,19 @@
+.container{
+	position: relative;
+	top: 80px;
+}
+
 .container > h2 { margin-top: 1.2em; }
+
+h2.mypet, h2.myvet{
+	margin-top: 30px;
+	width:900px;
+	float:left;
+}
+
+hr{
+	clear:both !important;
+}
 
 .member__span--mod-yes {
 	float: right;
@@ -61,11 +76,12 @@ table td, table th {
     background: #00000088;
     color: #fff;
 }
-
-.height200 {
-	height: 200px;
+#pet-container, #vet-container{
+	width: 1100px;
+	height: auto;
+	display: inline-block;
+	margin-bottom: 20px;
 }
-
 .career--edit {
 	width: 90%;
 	border: 1px solid #4d90fe;
@@ -99,10 +115,11 @@ a {
 
 .pet-info {
 	width: 200px;
-	height: 160px;
+	height: auto;
 	border: 1px solid black;
+	border-radius: 5px;
 	float: left;
-	margin: 50px;
+	margin: 5px;
 	text-align: center;
 }
 
@@ -110,8 +127,9 @@ a {
 	width: 100%;
 }
 
-#pet-add {
-	padding-top: 0;
+#pet-add, #vet-add {
+	padding: 7px;
+	margin-top: 27px;
 }
 
 

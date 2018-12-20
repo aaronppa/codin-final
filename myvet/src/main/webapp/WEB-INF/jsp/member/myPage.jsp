@@ -11,11 +11,12 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<c:url value='../resources/css/common/topbar.css'/>"/>
+
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
 	<div id="container" class="container">
-		<h2>반려인</h2>
+		<h2 class="owner">반려인</h2>
 	    <hr>
 		<form id="memberInfoForm">
 		    <div>
@@ -127,11 +128,27 @@
 		</c:if>
 		
 
-	    <h2>반려동물 <button class="btn btn-warning float--right" id="pet-add" style="padding: 7px; margin: 10px 0px;">반려동물 정보 추가</button></h2>
+	    <div id="pet-container">
+	    <h2 class="mypet">반려동물</h2>
+	    <button class="btn btn-warning float--right" id="pet-add">반려동물 정보 추가</button>
 	    <hr>
-	    <div id="pet-container" class="height200">
 	    	<c:if test="${empty pet}">
 	    		<h3>등록된 반려동물이 없습니다.</h3>
+	    	</c:if>
+	    	<c:forEach var="pet" items="${pet}">
+				<div class="pet-info" data-pet-no="${pet.petNo}">
+					<img alt="강아지 사진" src="<c:url value='/upload${pet.petFilePath}/${pet.petSysName}' />" class="img-thumbnail">
+					<div>${pet.petName}</div>
+				</div>
+			</c:forEach>
+		</div>
+		
+	    <div id="vet-container">
+	    <h2 class="myvet">즐겨찾는 병원</h2>
+	    <button class="btn btn-warning float--right" id="vet-add">즐겨찾는 병원 추가</button>
+	    <hr>
+	    	<c:if test="${empty pet}">
+	    		<h3>등록된 병원이 없습니다.</h3>
 	    	</c:if>
 	    	<c:forEach var="pet" items="${pet}">
 				<div class="pet-info" data-pet-no="${pet.petNo}">

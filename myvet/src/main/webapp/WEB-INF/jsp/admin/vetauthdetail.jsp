@@ -54,14 +54,14 @@ img:hover{
 	cursor: pointer;
 }
 .btnarea {
-	width: 50px;
-	height: auto;
-	text-align: center;
-	margin: auto;
-	margin-top: 30px;
-	position: fixed;
+	width: 60px;
+    height: auto;
+    text-align: center;
+    margin: auto;
+    margin-top: 30px;
+    position: fixed;
     top: 90px;
-    left:930px;
+    left: 923px;
 }
 
 .button {

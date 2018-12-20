@@ -116,7 +116,7 @@
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
 									   name="fileV">
-								<label class="custom-file-label" for="inputGroupFile01"><span id="fileName"></span></label>
+								<label class="custom-file-label" for="inputGroupFile01"><span id="fileName">인증파일 (이미지포멧)을 등록해주세요.</span></label>
 							</div>
 						</div>
                     </div>
@@ -182,6 +182,14 @@
     			$("#checkPassword").html("<p style='color:red;'>비밀번호가 일치하지 않습니다.</p>");
     		}
     	});
+    	
+    	
+    	$('#inputGroupFile01').on('change',function(){
+            //get the file name
+            var fileName = $(this).val();
+            //replace the "Choose a file" label
+            $(this).next('.custom-file-label span#fileName').html(fileName);
+        })
     	
 //     	전화번호에 숫자만 들어가는지 체크
     	function onlyNumber(event) {
