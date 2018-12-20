@@ -248,7 +248,7 @@
 							}else{
 								$("#MapSearchlist >table > tbody").append(
 										
-										"<tr class='mapSearchResult' style='height:30px;' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><span class='address'><br>"+jsondata[k].roadAddress+"</span></td>"
+										"<tr class='mapSearchResult' style='height:80px;' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><span class='address'><br>"+jsondata[k].roadAddress+"</span></td>"
 										+"</tr>"
 										)
 								
