@@ -182,7 +182,7 @@ img:hover{
 	</table>
 	<div class="imgbox">
 		<c:forEach var='vetAuth' items="${detail.vetAuth}">
-		<a href='/myvet/upload${ vetAuth.vetFilePath}/${vetAuth.vetSysName }' target="_blank">
+		<a class="authImg" href='/myvet/upload${ vetAuth.vetFilePath}/${vetAuth.vetSysName }' target="_blank">
 		<img src='/myvet/upload${ vetAuth.vetFilePath}/${vetAuth.vetSysName }'>
 		</a>
 		</c:forEach>
@@ -211,7 +211,7 @@ $(document).keydown(function(e) {
     };
 });
 
-$("a").not(".update, .close, .cancel").on("click",(function(e){
+$("a").not(".update, .close, .cancel, .authImg").on("click",(function(e){
 	ajaxRequest(e);
 }));
 
