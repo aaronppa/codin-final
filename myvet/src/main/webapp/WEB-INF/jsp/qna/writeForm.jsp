@@ -55,12 +55,22 @@
 		.container{
 			width:1100px;			
 			
-			width:100%;
-			postion:absolute;
-			margin-top: 130px;
-			margin-left:-30px;
+			postion:absolute; 
+			margin-top: 40px;
+			margin-left:30px;
 		}
-       
+		.summerNoteClass{
+	/* 		margin-left: 20%; */
+			margin-left:70px;
+		}
+		.divClassTitle{
+			width:60%;
+			
+		}
+		.input-group{
+			width:60%;
+		}
+     
     </style>
 </head>
 <body>
@@ -79,13 +89,13 @@
 	<br>
     <div class="information">
         <img id="writer-img" src="/myvet/images/pony01.jpg" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'" class="rounded-circle">
-        <span>PONY</span>
+        <span>${user.memberNickname}</span>
     </div>
     <br>
     <!-- 제목 -->
-	<div class="input-group mb-3" style="width:60%;margin-left: 23%;">
+	<div class="input-group mb-3 divClassTitle" style="width:60%;margin-left: 23%;">
 	  <div class="input-group-prepend">
-	    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+	    <span class="input-group-text "  id="inputGroup-sizing-default">Title</span>
 	  </div>
 	 <%-- // <input name="writer">${user.memberNickname}</input> --%>
 	  <input name="title" id="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -108,7 +118,7 @@
 	
 	
     <hr>
-        <div style="margin-left: 20%;">
+        <div class="summerNoteClass" >
           <textarea name="content" class="content" id="summernote" value="" cols="100" rows="15">
           </textarea>
           <input id="fileId" name="fileId" style="visibility:hidden;" value="">

@@ -47,7 +47,7 @@ h1 {
 
 /*search*/
 .mb-3 {
-	margin-left: 20%;
+/* 	margin-left: 20%; */
 }
 
 .dropdown-toggle {
@@ -156,16 +156,27 @@ tr:hover {
 }
 
 .answered {
-	margin-left: 20px;
-	font-size: 16px;
-
+	margin-left: 5px;
+	font-size: 20px;
 }
 .searchForm{
 	width:100%;
 	postion:absolute;
-	margin-top: 110px;
-	
-	
+	margin-top: 90px;
+}
+.order{
+	float:left;
+	font-size:21px;
+	margin-left: 10px;
+}
+.categoryCode{
+	font-size: 20px;
+}
+.keywordForm{
+	float: right;
+}
+#sort{
+/* 	float:right; */
 }
 </style>
 <script src="<c:url value="../resources/js/vendor/jquery.js"/>"></script>
@@ -181,7 +192,7 @@ tr:hover {
 			<form class="searchForm" action="<c:url value='/qna/list.do'/>" method="post">
 				<input type="hidden" id="pageNo" name="pageNo" value="">
 				<!-- <div class="input-group-prepend"> -->
-				<select name="order" id="order" class="order">
+				<select name="order" id="order" class="order" >
 					<option selected value="0">조회순서</option>
 					<option value="1" <c:if test='${searchQuery.order == 1}'>selected</c:if>>조회수▲</option>
 					<option value="2" <c:if test='${searchQuery.order == 2}'>selected</c:if>>조회수▼</option>
@@ -208,6 +219,7 @@ tr:hover {
 					</c:forEach>
 				</select> 
 				
+				<div class="keywordForm">
 				<select name="sort" id="sort" class="sort">
 					<option selected value="0">검색조건</option>
 					<option value="1" <c:if test='${searchQuery.sort == 1}'>selected</c:if>>제목</option>
@@ -219,8 +231,9 @@ tr:hover {
 
 
 				<!--  </div> -->
-				<input name="keyword" id="keyword" type="text" class="input-search" placeholder="search" value="<c:if test="${searchQuery.keyword != '0'}" >${searchQuery.keyword}</c:if>"  >
-				<button id="submitBtn" type="submit" class="btn btn-outline">검색</button>
+					<input name="keyword" id="keyword" type="text" class="input-search" placeholder="search" value="<c:if test="${searchQuery.keyword != '0'}" >${searchQuery.keyword}</c:if>"  >
+					<button id="submitBtn" type="submit" class="btn btn-outline">검색</button>
+				</div>
 			</form>
 		</div>
 		<!--count-->
@@ -249,9 +262,9 @@ tr:hover {
 						<td>${q.answered }</td>
 						<td>${q.memberNickname}</td>
 						<td><a
-							href="<c:url value='/qna/detail.do?qnaNo=${q.qnaNo}'/>">${q.title }(<strong
-								style="color: brown">${q.commentCount}</strong>)
-						</a><span id="countComment"></span></td>
+							href="<c:url value='/qna/detail.do?qnaNo=${q.qnaNo}'/>">${q.title }</a>
+							&nbsp;&nbsp;<i class="fas fa-comments">${q.commentCount}</i>
+						<span id="countComment"></span></td>
 
 						<td>${q.categoryName}</td>
 

@@ -45,12 +45,12 @@
             text-align: center;
         }
  */
- 	.container{
+ 	.Updatecontainer{
 			width:1100px;			
-			top:80px;
-			width:100%;
-			postion:absolute;
-			margin-top: 130px;
+/* 			top:120px; */
+			margin-top: 40px;
+			position:absolute;
+		
 	
 		}
        .picture{
@@ -61,65 +61,75 @@
        .information{
        	text-align:center;
        }
+        .innerDiv{
+	       	width:1100px; 
+	       	/* margin-left: 23%; */
+	   
+       } 
+       .form{
+       	margin-top:130px;
+       	width:80%;
+       	margin-left:150px;
+       }
     </style>
 </head>
 <body>
 <%--    	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />             --%>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
-	<div class="container">
-    <form action="<c:url value='/qna/update.do' />" method="post">
-    <br>
-    <input name=qnaNo value="${qna.qnaNo }" id="qnaNo" type="hidden">
-    <input name="boardCode" id="writerNo" type="hidden" value="10">
-<!--     <input name="categoryCode" type="hidden" value="1"> -->
-    <input name="memberNo" type="hidden" value="33">
-    
-<!--     <div id="titleForm" style="text-align:center;"> -->
-<!-- 	    <input name="title" type="text" style="width:500px;"> -->
-<!--     </div> -->
-	<br>
-    <div class="information">
-        <img id="writer-img" src="/myvet/images/pony01.jpg" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'"  class="picture rounded-circle">
-        <span>PONY</span>
-    </div>
-    <!-- 제목 -->
-    <br>
-	<div class="input-group mb-3" style="width:60%; margin-left: 23%;">
-	  <div class="input-group-prepend">
-	    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
-	  </div>
-	  <input name="writerNo" type="hidden" value="${qna.writerNo }"/>
-	  <input name="title" id="title" type="text" class="form-control" aria-label="Sizing example input" value="${qna.title}" aria-describedby="inputGroup-sizing-default">
-		<select name="categoryCode" class="categoryCode">
-			
-				<option selected value="" >Category</option>
+	<div class="Updatecontainer">
+	    <form class="form" action="<c:url value='/qna/update.do' />" method="post">
+	    <br>
+	    <input name=qnaNo value="${qna.qnaNo }" id="qnaNo" type="hidden">
+	    <input name="boardCode" id="writerNo" type="hidden" value="10">
+	<!--     <input name="categoryCode" type="hidden" value="1"> -->
+	    <input name="memberNo" type="hidden" value="33">
+	    
+	<!--     <div id="titleForm" style="text-align:center;"> -->
+	<!-- 	    <input name="title" type="text" style="width:500px;"> -->
+	<!--     </div> -->
+		<br>
+	    <div class="information">
+	        <img id="writer-img" src="/myvet/images/pony01.jpg" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'"  class="picture rounded-circle">
+	        <span>${user.memberNickname}</span>
+	    </div>
+	    <!-- 제목 -->
+	    <br>
+		<div class="input-group mb-3 innerDiv" style="width:60%;margin-left: 23%;">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+		  </div>
+		  <input name="writerNo" type="hidden" value="${qna.writerNo }"/>
+		  <input name="title" id="title" type="text" class="form-control" aria-label="Sizing example input" value="${qna.title}" aria-describedby="inputGroup-sizing-default">
+			<select name="categoryCode" class="categoryCode">
 				
-			<c:forEach var="c" items="${category}" varStatus="loop">
-				 
-				<option value="${c.categoryCode }">${c.categoryName }</option>
+					<option selected value="" >Category</option>
+					
+				<c:forEach var="c" items="${category}" varStatus="loop">
+					 
+					<option value="${c.categoryCode }">${c.categoryName }</option>
+					
+				</c:forEach>
 				
-			</c:forEach>
+			</select>
 			
-		</select>
+		</div>
+		<!-- 카테고리 -->
 		
-	</div>
-	<!-- 카테고리 -->
+	    <hr>
+	        <div style="margin-left:8%;">
+	          <textarea name="content" id="summernote">${qna.content }</textarea>
+	          <input id="fileId" name="fileId" style="visibility:hidden;" value="${fileId}">
+	        </div>
+	        <br>
+	    <div style="text-align: center;margin-left: 5%;">
+			<input class="btn btn-primary" id="updateSubmit" type="submit" value="Update">
+			<a href="<c:url value='/qna/list.do'/>">
+				<button type="button" class="btn btn-outline-primary">List</button>			
+			</a>
+			
+	    </div>    
 	
-    <hr>
-        <div style="margin-left:8%;">
-          <textarea name="content" id="summernote">${qna.content }</textarea>
-          <input id="fileId" name="fileId" style="visibility:hidden;" value="${fileId}">
-        </div>
-        <br>
-    <div style="text-align: center;margin-left: 5%;">
-		<input class="btn btn-primary" id="updateSubmit" type="submit" value="Update">
-		<a href="<c:url value='/qna/list.do'/>">
-			<button type="button" class="btn btn-outline-primary">List</button>			
-		</a>
-		
-    </div>    
-
-    </form>
+	    </form>
     </div>
 	<script>
     

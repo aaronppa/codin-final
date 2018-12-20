@@ -46,17 +46,15 @@
 
 
 <style>
-.defaultHidden {
-	visibility: hidden;
-}
+
 /* 
 .answer {
 	visibility: hidden;
 } */
 .container{
-		width:100%;
+	width:100%;
 	postion:absolute;
-	margin-top: 110px;
+	margin-top: 10px;
 	
 }
 .answerPosition {
@@ -68,6 +66,17 @@
 	margin-left: 80%;
 	
 	position: absolute;
+}
+/*댓글러(작성폼) 이미지 */
+#commenterTopImg{
+	width:40px;
+	height: 40px;
+}
+
+
+/*동적인 버튼 생성 */
+.defaultHidden {
+	visibility: hidden;
 }
 </style>
 </head>
@@ -147,8 +156,9 @@
 					<!--                 <form action="" method="post"> -->
 					<div class="comment-wrap">
 						<div class="photo">
-							<div class="avatar"
-								style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
+<!-- 							<div class="avatar" -->
+<!-- 								style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div> -->
+                			<img src="" id="commenterTopImg" onerror="this.src='/myvet/resources/img/gall&tip/profile.png'" class="rounded-circle">
 						</div>
 						<input type="hidden" name="qnaNo" id="qnaNo" value="${qna.qnaNo}">
 						<input type="hidden" class="commenterNo" name="commenterNo"
