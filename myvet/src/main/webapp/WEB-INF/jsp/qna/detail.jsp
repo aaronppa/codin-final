@@ -78,6 +78,9 @@
 .defaultHidden {
 	visibility: hidden;
 }
+.answerPosition{
+	cursor: pointer;
+}
 </style>
 </head>
 

@@ -47,6 +47,9 @@
 	width:100%;
 	text-align:left;
 }
+
+
+
 .maptitle{
 	padding-left:10px;
 	padding-right:10px;
@@ -55,6 +58,8 @@
 .address{
 	font-size:15px;
 }
+
+
 </style>
 
 <script
@@ -235,7 +240,7 @@
 							if(jsondata[k].hosRegister == 'N'){
 								$("#MapSearchlist >table > tbody").append(
 									
-										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"'><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/RedFolder/redMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><br><span class='address'>"+jsondata[k].roadAddress+"</span></td>"
+										"<tr class='mapSearchResult' style='height:80px;' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"'><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/RedFolder/redMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><br><span class='address'>"+jsondata[k].roadAddress+"</span></td>"
 										+"</tr>"
 										)
 								
@@ -243,7 +248,7 @@
 							}else{
 								$("#MapSearchlist >table > tbody").append(
 										
-										"<tr class='mapSearchResult' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><span class='address'><br>"+jsondata[k].roadAddress+"</span></td>"
+										"<tr class='mapSearchResult' style='height:30px;' value1='"+jsondata[k].mapx+"' value2='"+jsondata[k].mapy+"' ><td class='"+(k+1)+"td'><img src='/myvet/resources/img/mapmark/blueFolder/blueMarker"+String.fromCharCode(65+k)+".png'/><strong>"+jsondata[k].title +"</strong><span class='address'><br>"+jsondata[k].roadAddress+"</span></td>"
 										+"</tr>"
 										)
 								
@@ -414,10 +419,10 @@
 										}//if-else
 					
 									MarkerClicklist[k] = hosmarker;
-
-									//	console.log(jsondata[k].title);
+							
 						var sessionId= "${user.memberNo}"
-						if(sessionId.length == 0 ){
+						if(sessionId.length == 0){
+							if (jsondata[k].hosRegister == "Y") {
 									 infowindow = new naver.maps.InfoWindow(
 											{
 
@@ -425,7 +430,9 @@
 														+ jsondata[k].title
 														+ "</span>"
 											});
-							 }else{
+							}		 
+						}else{
+							if (jsondata[k].hosRegister == "Y") {
 									   infowindow = new naver.maps.InfoWindow(
 												{
 
@@ -437,45 +444,47 @@
 															+ jsondata[k].title
 															+ "</strong><span>"
 															+ "</a>"
-												});
-									   
+												}
+										);
+							}		   
 						}//if-else
-									//마크점 클릭시 나오는 action의 분기
-									if (jsondata[k].hosRegister == "N") {
-										naver.maps.Event
-												.addListener(
-														MarkerClicklist[k],
-														"click",
-														function(e) {
+						//마크점 클릭시 나오는 action의 분기
+						MapmarkUnresister:
+						if (jsondata[k].hosRegister == "N") {
+							naver.maps.Event
+									.addListener(
+											MarkerClicklist[k],
+											"click",
+											function(e) {
 
-															alert("\""+jsondata[k].title
-																	+ "\"은 등록되지 않은 병원입니다.");
-														});
-									} else {
-										naver.maps.Event
-												.addListener(
-														MarkerClicklist[k],
-														"click",
-														function(e) {
+												alert("\""+jsondata[k].title
+														+ "\"은 등록되지 않은 병원입니다.");
+											});
+						} else {
+							naver.maps.Event
+									.addListener(
+											MarkerClicklist[k],
+											"click",
+											function(e) {
 
-															if (infowindow
-																	.getMap()) {
-																infowindow
-																		.close();
-															} else {
-																infowindow
-																		.open(
-																				map,
-																				MarkerClicklist[k]);
-															}
-														});
-									}
+												if (infowindow
+														.getMap()) {
+													infowindow
+															.close();
+												} else {
+													infowindow
+															.open(
+																	map,
+																	MarkerClicklist[k]);
+												}
+											});
+						}
 
-									let hosInfo = new naver.maps.InfoWindow({
-										content : '<p>등록되지 않은 병원입니다.</p>'
-												+ hosmarker
+						let hosInfo = new naver.maps.InfoWindow({
+							content : '<p>등록되지 않은 병원입니다.</p>'
+									+ hosmarker
 
-									});
+						});
 
 								}//for
 

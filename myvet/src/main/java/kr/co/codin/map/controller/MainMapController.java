@@ -240,7 +240,7 @@ public class MainMapController {
 	@RequestMapping("Centerajax.do")
 	@ResponseBody
 	public void CenterAjax(double x, double y) {
-		System.out.println("요기왔따");
+		
 	}
 
 }

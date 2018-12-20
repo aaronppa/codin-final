@@ -67,7 +67,7 @@
 	   
        } 
        .form{
-       	margin-top:130px;
+       	margin-top:40px;
        	width:80%;
        	margin-left:150px;
        }
@@ -128,7 +128,8 @@
 			</a>
 			
 	    </div>    
-	
+		<br>
+		<br>
 	    </form>
     </div>
 	<script>
