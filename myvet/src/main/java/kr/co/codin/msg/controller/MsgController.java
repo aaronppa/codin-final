@@ -138,7 +138,7 @@ public class MsgController {
 		System.out.println("updating unread Cnt");
 		Map<String, Object> map = new HashMap<>();
 		map.put("NewMsgCnt", service.countUnreadMsg(memberNo));
-		map.put("NewMsg", service.selectMyChat(memberNo));
+		map.put("NewMsg", service.selectMyChatNew(memberNo));
 		System.out.println("new unread: "+map);
 		return map;
 	}

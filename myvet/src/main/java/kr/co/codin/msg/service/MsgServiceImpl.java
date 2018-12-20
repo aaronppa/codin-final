@@ -45,6 +45,11 @@ public class MsgServiceImpl implements MsgService{
 	public List<Message> selectMyChat(int memberNo) {
 		return mapper.selectMyChat(memberNo);
 	}
+	
+	@Override
+	public List<Message> selectMyChatNew(int memberNo) {
+		return mapper.selectMyChatNew(memberNo);
+	}
 
 	@Override
 	public List<Message> selectChatMsg(RecipientGroup myRg) {

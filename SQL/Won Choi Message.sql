@@ -98,7 +98,7 @@ from recipient_group r
 inner join message m on m.chat_id = r.recipient_group_id
 inner join member mem on mem.member_no = m.sender_no
 where date_read is null
-and recipient_no= 3;
+and recipient_no= 45;
 
 --  내 대화방의 수신자 불러오기 2
 select recipient_group_id, recipient_no, recipient_type, trash, member_nickname, member_file_path, member_sys_name, hos_code, title, file_path as hos_file_path, sys_name as hos_sys_name
@@ -116,4 +116,32 @@ select recipient_group_id, recipient_no, recipient_type, trash, member_nickname,
         and recipient_no != 3;
 
 
+select count(*)
+		from(select *
+		from recipient_group r
+			inner join message m on m.chat_id = r.recipient_group_id
+			left outer join (select member_no from member) mem on mem.member_no = m.sender_no
+            left outer join hos_basic h on h.hos_code = m.sender_no
+		where date_read is null
+		and recipient_no = 3
+		and m.sender_no !=3
+        group by chat_id) as t;
+        
+select *
+		from recipient_group r
+			inner join message m on m.chat_id = r.recipient_group_id
+			left outer join member mem on mem.member_no = m.sender_no
+            left outer join hos_basic h on h.hos_code = m.sender_no
+		  where date_read is null
+		  and recipient_no = 45
+		  and m.sender_no !=45
+		  group by chat_id;
 
+select *
+		from recipient_group r
+			inner join message m on m.chat_id = r.recipient_group_id
+            left outer join member mem on mem.member_no = m.sender_no
+            left outer join hos_basic h on h.hos_code = m.sender_no;
+
+select *
+		from recipient_group r; 

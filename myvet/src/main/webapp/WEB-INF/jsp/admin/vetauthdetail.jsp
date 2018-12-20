@@ -182,7 +182,7 @@ img:hover{
 	</table>
 	<div class="imgbox">
 		<c:forEach var='vetAuth' items="${detail.vetAuth}">
-		<a href='http://localhost:8000/myvet/upload${ vetAuth.vetFilePath}/${vetAuth.vetOriName }' target="_blank">
+		<a href='/myvet/upload${ vetAuth.vetFilePath}/${vetAuth.vetOriName }' target="_blank">
 		<img src='/myvet/upload${ vetAuth.vetFilePath}/${vetAuth.vetOriName }'>
 		</a>
 		</c:forEach>

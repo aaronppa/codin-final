@@ -218,7 +218,7 @@ div.half, div.quarter{
 	padding-top: 10px;
 }
 
-li>.chatroom>.chat-info>.recipient, .lastmsg.brief {
+li>.chatroom>.chat-info>.recipient, .lastmsg{
 	position: relative;
 	height: 22px;
 	line-height: 20px;
@@ -420,6 +420,12 @@ background: #f5e9c3;
 .button.member-recipient-option{
 	margin-right: 10px;
 }
+
+.lastmsg{
+	font-weight: 100;
+	font-size: smaller;
+	overflow: 
+}
 </style>
 </head>
 <body>
@@ -500,6 +506,7 @@ background: #f5e9c3;
 					       		</c:forEach>
 					       		</div>
 					       		<div class='lastmsg brief'>
+					       			<span class='lastmsg' data-memberno='${myChat.recipients[0].recipientNo}' data-recipienttype='${myChat.recipients[0].recipientType}'>${myChat.msgBody}</span>
 					       		</div>
 					   		</div>
 					   		<div class="close-chat nodisplay" data-chatid='${myChat.chatId}'>

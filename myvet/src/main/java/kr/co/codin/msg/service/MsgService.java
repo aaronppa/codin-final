@@ -14,6 +14,7 @@ public interface MsgService {
 	void insertMsg(Message msg);
 	void insertRecipientGroup(RecipientGroup rg);
 	List<Message> selectMyChat(int memberNo);
+	List<Message> selectMyChatNew(int memberNo);
 	List<Message> selectChatMsg(RecipientGroup myRg);
 	void selfRead(RecipientGroup myRg);
 	void resetDateRead(int chatId);

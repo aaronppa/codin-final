@@ -128,6 +128,20 @@
 		order by msg_id desc
 	</select>
 	
+	<select id="selectMyChatNew" parameterType="int" resultMap="messageMap">
+		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
+		from recipient_group r
+		inner join(select *
+	               from message m
+                    inner join (select MAX(date_sent) as latest_msg_date
+		                        from message
+                                group by chat_id
+                                ) max on max.latest_msg_date = m.date_sent) l on l.chat_id = r.recipient_group_id
+		where recipient_no = #{memberNo}
+		and date_read is null
+		order by msg_id desc
+	</select>
+	
 	<select id="selectChatMsg" parameterType="RecipientGroup" resultMap="messageMap">
 		select msg_id, chat_id, msg_body, date_sent, recipient_no, recipient_type, date_read, trash, msg_type, sender_no, mem.member_nickname sender_nickname, title sender_hos_nickname
 		from recipient_group r
@@ -149,7 +163,7 @@
             left outer join hos_basic h on h.hos_code = m.sender_no
 		where date_read is null
 		and recipient_no = #{recipientNo}
-		and mem.member_no !=#{recipientNo} or mem.member_no is null
+		and m.sender_no != #{recipientNo}
         group by chat_id) as t
 	</select>
 	
