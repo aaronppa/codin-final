@@ -13,8 +13,8 @@
 }
 
 .map {
-	width: 620px;
-	height: 500px;
+	width: 500px;
+	height: 750px;
 	margin-left: 300px;
 /* 	margin-top: 150px; */
 }
@@ -26,8 +26,8 @@
 
 #resultDiv {
 	border: 1px solid black;
-	width: 299px;
-	height: 462px;
+	width: 300px;
+	height: 700px;
 	position:relative;
 }
 
@@ -47,8 +47,6 @@
 	width:100%;
 	text-align:left;
 }
-
-
 
 .maptitle{
 	padding-left:10px;
