@@ -27,7 +27,8 @@ hr{
 	display: none;
 }
 
-#profile { min-width: 293px; height: 183px; }
+#profile { min-width: 293px; height: auto;}
+
 #passBtn { float: right; }
 .float--right { float: right; }
 .basics {

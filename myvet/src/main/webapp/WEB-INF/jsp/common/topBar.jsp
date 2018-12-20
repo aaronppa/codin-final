@@ -8,7 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
-    
+    	#logo{
+        height: 64px;
+        margin-bottom: -17px;
+        margin-top: -17px;
+    	}
      	body {
     	font-family: 'Gamja Flower', cursive !important;
     	font-size: 20px !important;
@@ -74,7 +78,7 @@
     <div class="top-bar">
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text"><span><a href="<c:url value='/index.jsp'/>">MyVet</a></span></li>
+                <li class="menu-text"><span><a href="<c:url value='/index.jsp'/>"><img src="/myvet/resources/img/Logo.png" id="logo">MyVet</a></span></li>
                 <li class="menu-text sub"><a href="<c:url value='/hos/search.do'/>">동물병원 찾기</a></li>
                  <c:if test="${not empty user}">
                 <li class="menu-text sub">
@@ -147,7 +151,7 @@
 	                            <div class="input-group-prepend">
 	                                <span class="input-group-text" id="basic-addon1"><i class="far fa-envelope"></i></span>
 	                            </div>
-	                            <input type="email" class="form-control" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" />                       
+	                            <input id="email" type="email" class="form-control" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" />                       
 	                        </div>
 	                        <br>                       
 	                        <div class="input-group password">
@@ -173,7 +177,7 @@
     <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="/myvet/member/signup.do" method="post" enctype="multipart/form-data">
+                <form action="/myvet/member/signup.do" method="post" enctype="multipart/form-data" id="signupform">
                     <div class="modal-header">
                         <h5 class="modal-title" id="signupModalTitle">회원가입</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -185,7 +189,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="far fa-envelope"></i></span>
                             </div>
-                            <input type="email" class="form-control" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" id="email" />
+                            <input type="email" class="form-control" placeholder="Email" name="memberEmail" aria-label="Email" aria-describedby="emailHelp" id="signupemail" required/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="EmailCheck"><i class="fas fa-user-check"></i></button>
                             </div>                          
@@ -195,14 +199,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" class="form-control" id="password-first" placeholder="password" name="password" aria-label="Password" />
+                            <input type="password" class="form-control" id="password-first" placeholder="password" name="password" aria-label="Password" required/>
                         </div>
                         <br>
                         <div class="input-group password">           
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon3"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" class="form-control" id="password-second" placeholder="password" aria-label="Password" />
+                            <input type="password" class="form-control" id="password-second" placeholder="password" aria-label="Password" required/>
                         </div>
                         <span id="checkPassword"><br></span>
                         <div class="btn-group btn-group-toggle" id="grade" data-toggle="buttons">
@@ -222,7 +226,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon4"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="이름" name="memberName" aria-label="name" />                   
+                            <input type="text" class="form-control" placeholder="이름" name="memberName" aria-label="name" required/>                   
                         </div>
                         <br>
                         <div class="input-group nickname">
@@ -237,7 +241,7 @@
                                 <span class="input-group-text" id="basic-addon6">&nbsp;<i class="fas fa-mobile-alt"></i></span>
                             </div>
                             <input type="text" class="form-control" placeholder="연락처" name="memberPhone" aria-label="phone"
-                            	   onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style='ime-mode:disabled;' />
+                            	   onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style='ime-mode:disabled;' required/>
                         </div>
                         <br>
                         <div class="input-group file" id="input-file">
@@ -246,7 +250,7 @@
 							</div>
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
-									   name="fileV">
+									   name="fileV" required>
 								<label class="custom-file-label" for="inputGroupFile01"><span id="fileName">인증파일 (이미지포멧)을 등록해주세요.</span></label>
 							</div>
 						</div>
@@ -261,6 +265,8 @@
     </div>
 <script>
     var me;
+    var passwordPass=false;
+    vetSignUp = false;
     <c:if test="${ not empty user.memberNo}">
   	 me =${user.memberNo};
     </c:if>
@@ -286,10 +292,12 @@
 	        	});
         	}
         };
+        
     	// 로그인 처리
     	$("#loginBtnPop").click(function () {
     		loginSubmit()
     	});
+    	
     	
     	$("#password").on("keydown", function(e){
     		if (e.keyCode == 13) {
@@ -300,7 +308,7 @@
     	})
     	
     	$("#EmailCheck").click(function () {
-    		var memberEmail = $("#email").val();
+    		var memberEmail = $("#signupemail").val();
 //     		alert(memberEmail);
 
     		$.ajax({
@@ -314,7 +322,7 @@
     			if (data.count > 0){
     				$("#checkEmail").html("<p style='color:red;'>이메일이 존재합니다. 다른 이메일을 입력해주세요.</p>");
     				$("#formSubmit").prop("disabled", true);
-    				$("#email").focus();
+    				$("#signupemail").focus();
     			} else {
     				$("#checkEmail").html("<p style='color:blue;'>사용가능한 이메일입니다.</p>");
     				$("#formSubmit").prop("disabled", false);
@@ -333,22 +341,50 @@
         })
     	
     	$("#formSubmit").click(function (e) {
+    		e.preventDefault();
+    		signUpDo(e);
+     		
+    	});
+    	
+    	$("input[name='memberPhone']").on("keyup", function(e){
+    		if(e.keyCode == 13){
+    			signUpDo(e);
+    		}
+    	})
+    	
+    	function signUpDo(e){
     		if (emailCheck != 1){
     			e.preventDefault();
-    			alert("이메일 중복 체크를 해주세요.")
-    		} else {
-    			alert("회원가입을 축하합니다.")
+    			alert("이메일 중복 체크를 해주세요.");
+    			return false;
+    		} 
+    		if(!passwordPass){
+    			$("#checkPassword").html("<p style='color:red;'>비밀번호를 입력하지 않았거나 일치하지 않습니다..</p>");
+    			return false;
     		}
-    	});
+     		if(!$("input[name='memberName']").val() && !$("input[name='memberNickname']").val() && !$("input[name='memberPhone']").val()){
+     			alert("필수사항을 입력 해주세요.");
+     			return false;
+     		}
+     		if(vetSignUp && !$("#inputGroupFile01").val()){
+     			alert("수의사 인증 증빙 파일을 업로드 해주세요.");
+     		}
+    		else {
+    			alert("회원가입을 축하합니다.");
+    			$("#signupform").submit();
+    		}
+    	}
     	
     	$("#password-second").keyup(function (e) {
     		console.dir($("#password-first").val()==$("#password-second").val());
     		if ($("#password-first").val()==$("#password-second").val()) {
     			$("#formSubmit").prop("disabled", false);
     			$("#checkPassword").html("<p style='color:blue;'>비밀번호가 일치합니다.</p>");
+    			passwordPass = true;
     		} else {
     			$("#formSubmit").prop("disabled", true);
     			$("#checkPassword").html("<p style='color:red;'>비밀번호가 일치하지 않습니다.</p>");
+    			passwordPass = true;
     		}
     	});
     	
@@ -377,24 +413,26 @@
 		function viewHideFile(radioEleType) {
 			if (radioEleType == 1 || radioEleType == 2) {
 				$("#input-file").hide();
+				vetSignUp = false;
 				return;
 			}
 			$("#input-file").show();
+			vetSignUp = true;
 		}
 		
 		function loginSubmit(){
-			let memberEmail = $("input[name='memberEmail']");
-    		let password = $("input[name='password']");
-
-    		if (memberEmail.val() == "") {
+			let memberEmail = $("#email");
+    		let password = $("#password");
+			console.log("Email and Password:", memberEmail, password);
+    		if (!memberEmail.val()) {
     			alert("이메일을 입력하세요");
     			memberEmail.focus();
-    			return;
+    			return false;
     		}
-    		if (password.val() == "") {
+    		if (!password.val()) {
     			alert("패스워드를 입력하세요");
     			password.focus();
-    			return;
+    			return false;
     		}
     		
     		// 폼의 데이터를 처리할 수 있는 스크립트 객체

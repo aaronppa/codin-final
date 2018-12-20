@@ -23,9 +23,9 @@
 	
 	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="memberNo">
 		insert into member(
-			member_email, password, member_grade, member_name, member_phone, member_nickname
+			member_email, password, member_grade, member_name, member_phone, member_nickname, member_ori_name, member_sys_name, member_file_path
 		) values (
-			#{memberEmail}, #{password}, #{memberGrade}, #{memberName}, #{memberPhone}, #{memberNickname}
+			#{memberEmail}, #{password}, #{memberGrade}, #{memberName}, #{memberPhone}, #{memberNickname}, #{memberOriName}, #{memberSysName}, #{memberFilePath}
 		)
 	</insert>
 	

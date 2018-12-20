@@ -57,6 +57,18 @@ public class MemberController {
 	 */
 	@RequestMapping("/signup.do")
 	public String signup(Member member, MultipartFile fileV, VetAuth vetFile) throws Exception {
+		if(member.getMemberGrade().equals("U")) {
+			System.out.println("일반Member");
+			member.setMemberFilePath("/profile");
+			member.setMemberSysName("default-member-profile.jpg");
+			member.setMemberOriName("default-member-profile.jpg");
+		} else{
+			System.out.println("병원관계자");
+			member.setMemberFilePath("/profile");
+			member.setMemberSysName("default-hospital-profile.png");
+			member.setMemberOriName("default-hospital-profile.png");
+		}
+		
 		System.out.println(member);
 		
 		service.signup(member);
