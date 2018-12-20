@@ -6,6 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet"/> 
+<script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script> 
+
 <title>Insert title here</title>
 <style>
 .mapsearchdiv {
@@ -13,8 +17,8 @@
 }
 
 .map {
-	width: 500px;
-	height: 750px;
+	width: 620px;
+	height: 500px;
 	margin-left: 300px;
 /* 	margin-top: 150px; */
 }
@@ -26,8 +30,8 @@
 
 #resultDiv {
 	border: 1px solid black;
-	width: 300px;
-	height: 700px;
+	width: 299px;
+	height: 462px;
 	position:relative;
 }
 
@@ -48,11 +52,8 @@
 	text-align:left;
 }
 
-.maptitle{
-	padding-left:10px;
-	padding-right:10px;
-	color:black;
-}
+
+
 .address{
 	font-size:15px;
 }
@@ -397,7 +398,11 @@
 																	+ '.png'
 														}
 													});
+	
 										} else {
+											
+				
+											
 											hosaddr = new naver.maps.Point(
 													jsondata[k].mapx,
 													jsondata[k].mapy);
@@ -413,41 +418,33 @@
 																	+ '.png'
 														}
 													});
+											
 	
 										}//if-else
-					
+									//console.log(hosmarker);
 									MarkerClicklist[k] = hosmarker;
-							
-						var sessionId= "${user.memberNo}"
-						if(sessionId.length == 0){
-							if (jsondata[k].hosRegister == "Y") {
+								/* 	console.log(MarkerClicklist[k])
+									console.log(MarkerClicklist[k].title);
+									console.log(jsondata[k].title); */
+							/* 		console.log(k);
 									 infowindow = new naver.maps.InfoWindow(
-											{
-
-												content : '<span class=\"maptitle\">'
-														+ jsondata[k].title
-														+ "</span>"
-											});
-							}		 
-						}else{
-							if (jsondata[k].hosRegister == "Y") {
-									   infowindow = new naver.maps.InfoWindow(
 												{
 
 													content : "<a href='<c:url value='/hos/hospital.do?hosCode="
 															+jsondata[k].hosCode
 													
 															+"'/>'>"
-															+'<span class=\"maptitle\"><strong>'
-															+ jsondata[k].title
+															+'<span ><strong>'
+															+ MarkerClicklist[k].title
 															+ "</strong><span>"
 															+ "</a>"
 												}
-										);
-							}		   
-						}//if-else
+										);				
+					 */
+						 
+					
 						//마크점 클릭시 나오는 action의 분기
-						MapmarkUnresister:
+				
 						if (jsondata[k].hosRegister == "N") {
 							naver.maps.Event
 									.addListener(
@@ -455,39 +452,56 @@
 											"click",
 											function(e) {
 
-												alert("\""+jsondata[k].title
+												swal("\""+jsondata[k].title
 														+ "\"은 등록되지 않은 병원입니다.");
 											});
 						} else {
+						//	console.log(k);
+							//
 							naver.maps.Event
 									.addListener(
 											MarkerClicklist[k],
 											"click",
 											function(e) {
 
-												if (infowindow
-														.getMap()) {
-													infowindow
-															.close();
+											/* 	if (infowindow.getMap()) {
+													infowindow.close();
+													console.log("클릭"+jsondata[k].title);
 												} else {
-													infowindow
-															.open(
-																	map,
-																	MarkerClicklist[k]);
+													console.log("큼");
+													console.log("클릭"+jsondata[k].title);
+													infowindow.open(map,MarkerClicklist[k]);
+													//infowindow.open(map,jsondata[k].title);
+												} */
+												var userId = '${user.memberNickname}';
+												if(userId.length == 0 ){
+													//alert("로그인이 되어 있지 않습니다.")
+													swal('로그인 후 이용해주세요!');
+												}else{
+													swal({
+														title:jsondata[k].title+" 페이지로 이동하시겠습니까?",
+														html:"<a href=\"<c:url value='/hos/hospital.do?hosCode="+jsondata[k].hosCode+"'/>\">"+jsondata[k].title+" 병원 페이지로 이동</a>"
+													});
+											
 												}
+												
 											});
+									/* console.log('--------------');
+									console.log(k);
+									console.log(Ma rkerClicklist[k].title);*/
+							
 						}
 
-						let hosInfo = new naver.maps.InfoWindow({
+					/* 	let hosInfo = new naver.maps.InfoWindow({
 							content : '<p>등록되지 않은 병원입니다.</p>'
 									+ hosmarker
 
-						});
+						}); */
 
-								}//for
+						}//for
 
 							
-									});
+					});
 			
 		}
 
