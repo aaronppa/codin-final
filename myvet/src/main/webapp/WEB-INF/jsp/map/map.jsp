@@ -39,7 +39,7 @@
 #MapSearchlist{
 	postion:absolute;
 	height:100%;
-	overflow-y:scroll;
+	
 }
 
 #MapSearchlist >table{
