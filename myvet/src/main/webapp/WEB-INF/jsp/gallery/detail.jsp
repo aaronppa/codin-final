@@ -84,7 +84,7 @@
 			    <carousel-3d :autoplay="true" :autoplay-timeout="100000">
 			      
          <c:forEach var="f" items="${gallery.fileInfoList}" varStatus="loop">
-			      <slide :index="${loop.index}"><img src="/myvet/upload${f.filePath}/${f.sysName}"/></slide>
+			      <slide :index="${loop.index}"><img src="/myvet/upload${f.filePath}/${f.sysName}" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'"/></slide>
          </c:forEach>
 
 			    </carousel-3d>

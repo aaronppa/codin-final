@@ -23,13 +23,13 @@ public class Tip {
 	public void setComCnt(int comCnt) {
 		this.comCnt = comCnt;
 	}
+
 	public String getMemberNickname() {
 		return memberNickname;
 	}
 	public void setMemberNickname(String memberNickname) {
 		this.memberNickname = memberNickname;
 	}
-	
 	public int getTipNo() {
 		return tipNo;
 	}
@@ -84,11 +84,13 @@ public class Tip {
 	public void setRecomCnt(int recomCnt) {
 		this.recomCnt = recomCnt;
 	}
-	
 	@Override
 	public String toString() {
 		return "Tip [tipNo=" + tipNo + ", boardCode=" + boardCode + ", title=" + title + ", memberNo=" + memberNo
 				+ ", content=" + content + ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", categoryCode="
-				+ categoryCode + ", recomCnt=" + recomCnt + "]";
+				+ categoryCode + ", recomCnt=" + recomCnt + ", comCnt=" + comCnt + ", memberNickname=" + memberNickname
+				+ "]";
 	}
+	
+	
 }

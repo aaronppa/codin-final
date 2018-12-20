@@ -37,17 +37,19 @@
     <div class="container">
         <!--검색-->
      <div class="input-group mb-3">
-
-     	<select name="sort" id="sort" class="sort">
-			<option selected value="0">검색조건</option>
-			<option value="1">제목</option>
-			<option value="2">내용</option>
-			<option value="3">작성자</option>
-			<option value="4">제목+내용</option>
-		</select>
-	   <input type="text" name="keyword" id="keyword" class="input-search" placeholder="search">
-	   <input type="submit" class="btn btn-outline" value="검색"></input>
-     </div>
+		
+	     	<select name="sort" id="sort" class="sort">
+				<option selected value="0">검색조건</option>
+				<option value="1">제목</option>
+				<option value="2">내용</option>
+				<option value="3">작성자</option>
+				<option value="4">제목+내용</option>
+			</select>
+		   <input type="text" name="keyword" id="keyword" class="input-search" placeholder="search">
+		   <input type="submit" class="btn btn-outline" id="searchBtn" value="검색"></input>
+	   
+	 </div>
+     
     <div id="galleryCount" >전체 ${count} 개</div>
     <br>
                 <div class="write-btn-form">
@@ -76,14 +78,14 @@
          				</c:forEach>
 					</ol>
                     <div class="carousel-inner">
-                        <c:if test="${empty top.fileInfoList}">
-                    		<div class="carousel-item active">
-	                            <img class="d-block w-100" src="/myvet/resources/img/gall&tip/myvet.png">
-	                        </div>
-						</c:if>
+<%--                         <c:if test="${empty top.fileInfoList}"> --%>
+<!--                     		<div class="carousel-item active"> -->
+<!-- 	                            <img class="d-block w-100" src="/myvet/resources/img/gall&tip/myvet.png"> -->
+<!-- 	                        </div> -->
+<%-- 						</c:if> --%>
 						<c:forEach var="f" items="${top.fileInfoList}" varStatus="innerLoop">
                         <div class="carousel-item <c:if test='${innerLoop.first}'>active</c:if>">
-                            <img class="d-block w-100" src="/myvet/upload${f.filePath}/${f.sysName}">
+                            <img class="d-block w-100" src="/myvet/upload${f.filePath}/${f.sysName}" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'">
                         </div>
                         </c:forEach>
                     </div>
@@ -154,7 +156,7 @@
 						</c:if>
 						<c:forEach var="f" items="${g.fileInfoList}" varStatus="innerLoop">
                         <div class="carousel-item <c:if test='${innerLoop.first}'>active</c:if>">
-                            <img class="d-block w-100" src="/myvet/upload${f.filePath}/${f.sysName}">
+                            <img class="d-block w-100" src="/myvet/upload${f.filePath}/${f.sysName}" onerror="this.src='/myvet/resources/img/gall&tip/myvet.png'">
                         </div>
                         </c:forEach>
                     </div>
@@ -213,6 +215,17 @@
 //     $('.write-btn-form').click(function(){
 //     	window.open("/myvet/gallery/writeForm.do","gallery","width=1300, height=700, right=100, top=10")
 //     })
+	$("#searchBtn").click(function(){	
+// 		alert('검색')
+		if($("#keyword").val() == ""){
+			alert('검색어를 입력해 주세요');
+			return false;
+		}
+		if($("#sort").val() == 0){
+			alert('검색 조건을 선택해주세요')
+			return false;
+		}
+	})
 
     console.log('${gallery}');
     console.log("img : "+$('.no1').val())

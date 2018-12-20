@@ -41,7 +41,7 @@
     <div class="container">
     <!--search-->
     <!--category-->
-    <form action="<c:url value='/tip/list.do'/>" method="get">
+    <form action="<c:url value='/tip/list.do'/>" method="post">
 	    <div class="input-group mb-3" style="margin-left: 53%;">
 	      		<select name="sort" id="sort" class="sort">
 					<option selected value="0">검색조건</option>
@@ -60,7 +60,7 @@
 				</select>
 				
 	            <input type="text" name="keyword" id="keyword" class="input-search" placeholder="search">
-	            <input type="submit" class="btn btn-outline" value="검색"></input>
+	            <input type="submit" id="serachBtn" class="btn btn-outline" value="검색"></input>
 	    </div>
     </form>
     <!--count-->
@@ -146,7 +146,7 @@
     </div>
 </body>
 <script>
-
+	
 //search
 // function search(){
 // 	$('.input-search').click(function(){
@@ -159,7 +159,12 @@
 // 		})
 // 	})
 // }
-
+$("#serachBtn").click(function(){
+	if($("#keyword").val() == ""){
+		alert('검색어를 입력해주세요')
+		return false;
+	}
+})
 
 /*category*/
 function chainSelect(current, target){

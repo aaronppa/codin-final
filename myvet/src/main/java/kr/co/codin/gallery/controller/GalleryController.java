@@ -46,7 +46,13 @@ public class GalleryController{
 	
 	
 	@RequestMapping("list.do")
-	public void list(Model model,Member member,HttpSession session, @RequestParam(value="pageNo",defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="")String keyword,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{		
+	public void list(Model model
+					,Member member
+					,HttpSession session
+					, @RequestParam(value="pageNo",defaultValue="1") int pageNo
+					,@RequestParam(value="keyword", defaultValue="")String keyword
+					,@RequestParam(value="sort", defaultValue="0") int sort) throws Exception{		
+		
 		FileInfo fileInfo = new FileInfo();
 		Gallery gallery = new Gallery();
 		member = (Member)session.getAttribute("user");

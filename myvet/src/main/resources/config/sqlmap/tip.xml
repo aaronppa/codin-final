@@ -87,54 +87,57 @@
 	</select>
 
 <select id="selectTopTip" resultMap="tipMap">
-	select b.*, m.member_nickname
-	from (select a.*,  
-		(select sum(recommend) from tip_recommend where tip_no = a.tip_no) 
-		recommend_cnt from tip a ) b,tip t, member m
-	where t.member_no = m.member_no
+      select t.*, m.member_nickname
+	  from (select a.*,  
+		           (select sum(recommend) from tip_recommend where tip_no = a.tip_no) recommend_cnt
+                 from tip a ) t, 
+               member m
+	 where t.member_no = m.member_no
 	 order by recommend_cnt desc 
-	 limit 0,2
+	 limit 0,3 ;
 </select>
 
 
 <select id="selectTip" parameterType='SearchTip' resultMap="tipMap">
-		select t.*,m.member_nickname
-		  from tip t, member m
-		  where t.member_no = m.member_no
-		<choose>
-  			<when test="sort == 0">
-  				 and (t.title like CONCAT('%',#{keyword},'%') or t.content like CONCAT('%',#{keyword},'%') or t.member_no like CONCAT('%',#{keyword},'%'))
-  			</when>
-  			<when test="sort == 1">
-  				 and t.title like CONCAT('%',#{keyword},'%')
-  			</when>
-  			<when test="sort == 2">
-  				 and t.content like CONCAT('%',#{keyword},'%')
-  			</when>
-  			<when test="sort == 3">
-  				 and t.member_no like CONCAT('%', #{keyword},'%')
-  			</when>
-  			<when test="sort == 4">
-  				 and (t.title like CONCAT('%', #{keyword},'%') or t.content like CONCAT('%', #{keyword},'%'))
-  			</when>
-  			<when test="category == 0">
-  				and t.category_code in (1, 2, 3, 4)
-  			</when>
-  			<when test="category == 1">
-  				and t.category_code = 1
-  			</when>
-  			<when test="category == 2">
-  				and t.category_code = 2
-  			</when>
-  			<when test="category == 3">
-  				and t.category_code = 3
-  			</when>
-  			<when test="category == 4">
-  				and t.category_code = 4
-  			</when>
-  		</choose> 
-  		
-		 order by tip_no desc
+		select t.*,(select member_nickname from member where member_no = t.member_no) member_nickname
+		  from tip t 
+		<where>
+			<choose>
+	  			<when test="sort == 0">
+	  				 
+	  			</when>
+	  			<when test="sort == 1">
+	  				 and t.title like CONCAT('%',#{keyword},'%')
+	  			</when>
+	  			<when test="sort == 2">
+	  				 and t.content like CONCAT('%',#{keyword},'%')
+	  			</when>
+	  			<when test="sort == 3">
+	  				 and (select member_nickname from member where member_no = t.member_no) like CONCAT('%', #{keyword},'%')
+	  			</when>
+	  			<when test="sort == 4">
+	  				 and (t.title like CONCAT('%', #{keyword},'%') or t.content like CONCAT('%', #{keyword},'%'))
+	  			</when>
+	  		</choose>
+	  		<choose>	
+	  			<when test="category == 0">
+	  				and t.category_code in (1, 2, 3, 4)
+	  			</when>
+	  			<when test="category == 1">
+	  				and t.category_code = 1
+	  			</when>
+	  			<when test="category == 2">
+	  				and t.category_code = 2
+	  			</when>
+	  			<when test="category == 3">
+	  				and t.category_code = 3
+	  			</when>
+	  			<when test="category == 4">
+	  				and t.category_code = 4
+	  			</when>
+	  		</choose>  
+  		</where>		
+		 order by t.tip_no desc
 		 limit #{begin}, #{pageNum}		
 	</select>
   		

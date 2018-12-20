@@ -98,23 +98,23 @@
 	<!-- 공지 게시글 -->
 	<select id="selectTopGallery" resultMap="galleryMap">
 
-		select b.*, m.member_nickname
-		from (select a.*,  
-			(select sum(recommend) from gallery_recommend where gallery_no = a.gallery_no) 
-			recommend_cnt from gallery a ) b,gallery g, member m
-		where g.writer_no = m.member_no
+        select g.*, m.member_nickname
+		  from (select a.*,  
+			           (select sum(recommend) from gallery_recommend where gallery_no = a.gallery_no) recommend_cnt
+                  from gallery a ) g, 
+                member m
+		 where g.writer_no = m.member_no
 		 order by recommend_cnt desc 
-<!-- 		 group by g.gallery_no -->
-<!-- 		 having recommend_cnt desc -->
-		 limit 0,4 
+		 limit 0,4 ;
 	</select>
 	<select id="selectGallery" parameterType="SearchGallery" resultMap="galleryMap">
-		select g.*, m.member_nickname
-		  from gallery g, member m
-		 where g.writer_no = m.member_no
+		select g.*, (select member_nickname from member where member_no = g.writer_no) member_nickname
+		  from gallery g
+		  <where>
+<!-- 		 where g.writer_no = m.member_no -->
 		  	<choose>
 	  			<when test="sort == 0">
-	  				and (g.title like CONCAT('%',#{keyword},'%') or g.content like CONCAT('%',#{keyword},'%') or g.writer_no like CONCAT('%',#{keyword},'%'))
+<!-- 	  				and (g.title like CONCAT('%',#{keyword},'%') or g.content like CONCAT('%',#{keyword},'%') or g.writer_no like CONCAT('%',#{keyword},'%')) -->
 	  			</when>
 	  			<when test="sort == 1">
 	  				and g.title like CONCAT('%',#{keyword},'%')
@@ -123,13 +123,15 @@
 	  				and g.content like CONCAT('%',#{keyword},'%')
 	  			</when>
 	  			<when test="sort == 3">
-	  				and g.writer_no like CONCAT('%', #{keyword},'%')
+<!-- 	  				and g.writer_no like CONCAT('%', #{keyword},'%') -->
+	  				and (select member_nickname from member where member_no = g.writer_no) like CONCAT('%', #{keyword},'%')
 	  			</when>
 	  			<when test="sort == 4">
 	  				and (g.title like CONCAT('%', #{keyword},'%') or g.content like CONCAT('%', #{keyword},'%'))
 	  			</when>
   			</choose>
-		 order by gallery_no desc		
+  		</where>
+		 order by g.gallery_no desc		
 		 limit #{begin}, #{pageNum}
 	</select>
 	<select id="selectGalleryByNo" parameterType="gallery" resultMap="galleryMap">

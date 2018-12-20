@@ -318,7 +318,7 @@
               	+"</button><button class='com-dislike "+dislikeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-down'></i>"+"</button>"	
             	+"</div>"
             	+"<div class='heartForm'>"
-              	+"<i class='fas fa-heart com-heart' ></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
+              	+"<i class='fas fa-heart com-heart'></i><span id='recommendCnt"+result[i].commentNo+"'>"+result[i].recommendCnt+"</span>"
             	+"</div>"
             	+"<div class='commentNo' name='commentNo' data-commentno='"+result[i].commentNo+"'></div>"
                 +"<div class='comment-content'>" 

@@ -43,7 +43,17 @@ public class TipController {
 	
 	//value의 변수명
 	@RequestMapping("list.do")
-	public void list(Model model,HttpSession session, @RequestParam(value="pageNo", defaultValue="1") int pageNo,@RequestParam(value="keyword", defaultValue="") String keyword,@RequestParam(value="sort", defaultValue="0") int sort, @RequestParam(value="category", defaultValue="0") int category) throws Exception{
+	public void list(Model model
+					,HttpSession session
+					, @RequestParam(value="pageNo", defaultValue="1") int pageNo
+					,@RequestParam(value="keyword", defaultValue="") String keyword
+					,@RequestParam(value="sort", defaultValue="0") int sort
+					, @RequestParam(value="category", defaultValue="0") int category) throws Exception{
+		System.out.println("--------------------");
+		System.out.println(sort);
+		System.out.println(keyword);
+		System.out.println(category);
+		System.out.println("--------------------");
 		SearchTip searchTip = new SearchTip(pageNo);
 		searchTip.setKeyword(keyword);
 		searchTip.setSort(sort);
