@@ -359,7 +359,7 @@ pre {
   background: #fefefe;
   transition: transform 0.15s linear; }
   .drilldown .is-drilldown-submenu.is-active {
-    z-index: 300;
+    z-index: 600;
     display: block;
     -ms-transform: translateX(-100%);
         transform: translateX(-100%); }
@@ -655,7 +655,7 @@ pre {
   position: absolute;
   top: 0;
   left: 100%;
-  z-index: 300;
+  z-index: 600;
   display: none;
   min-width: 200px;
   border: 1px solid #cacaca;
@@ -695,7 +695,7 @@ pre {
 	position: fixed; /* Set the navbar to fixed position */
   	top: 0; /* Position the navbar at the top of the page */
   	width: 100%; /* Full width */
-  	z-index: 300;
+  	z-index: 600;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: nowrap;
