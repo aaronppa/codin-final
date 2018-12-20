@@ -14,6 +14,7 @@ import kr.co.codin.repository.domain.HosFacilitylist;
 import kr.co.codin.repository.domain.HosHours;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Pet;
+import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.HosStaff;
 
@@ -40,6 +41,7 @@ public interface HosService {
 	void createBlock(HosBlock block);
 	int isCreateBlock (HosBlock block);
 	List<HosBlock> selectBlockList(HosBlock block);
+	List<HosBlock> selectAllBlockList(HosBlock block);
 	HosBlock selectBlock(int blockCode);
 	void deleteBlock(int blockCode);
 	void updateBlock(HosBlock block);
@@ -86,5 +88,6 @@ public interface HosService {
 	List<FileInfo> selectHosImg(int hosCode);
 	void deleteFacility(int facilityNo);
 	int overlapBooking(HosBooking booking);
+	List<Tip> indexTip(int count);
 	
 }

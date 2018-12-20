@@ -48,6 +48,7 @@ import kr.co.codin.repository.domain.PageResult;
 import kr.co.codin.repository.domain.Pet;
 import kr.co.codin.repository.domain.RecipientGroup;
 import kr.co.codin.repository.domain.TempBooking;
+import kr.co.codin.repository.domain.Tip;
 
 @Controller
 @RequestMapping("hos")
@@ -64,6 +65,9 @@ public class HosController {
 	
 	@RequestMapping("hospital.do")
 	public void hospital(Model model, HttpSession session, int hosCode) {
+		
+		System.out.println(servletContext.getRealPath("/"));
+		
 		HosPage page = new HosPage(1, 5);
 		FavHos favHos = new FavHos();
 		Member member = (Member) session.getAttribute("user");
@@ -219,6 +223,7 @@ public class HosController {
 	}
 	
 	@RequestMapping("confirmBooking.do")
+	@ResponseBody
 	public void confirmBooking(int bookingNo) {
 		service.confirmBooking(bookingNo);
 		HosBooking booking = service.selectBooking(bookingNo);
@@ -227,6 +232,7 @@ public class HosController {
 	}
 	
 	@RequestMapping("banBooking.do")
+	@ResponseBody
 	public void banBooking(int bookingNo) {
 		service.banBooking(bookingNo);
 		HosBooking booking = service.selectBooking(bookingNo);
@@ -254,11 +260,11 @@ public class HosController {
 		block.setBlockDay(date);
 		
 		System.out.println(block);
-		System.out.println(service.selectBlockList(block));
+		System.out.println(service.selectAllBlockList(block));
 		
 		model.addAttribute("date", date);
 		model.addAttribute("hospital", service.selectHospitalByNo(hosCode));
-		model.addAttribute("blockList", service.selectBlockList(block));
+		model.addAttribute("blockList", service.selectAllBlockList(block));
 	}
 	
 	@RequestMapping("blockEditForm.do")
@@ -303,7 +309,10 @@ public class HosController {
 	@RequestMapping("createBlock.do")
 	@ResponseBody
 	public void createBlock(TempBooking booking) throws Exception {
-		System.out.println(booking.toString());
+
+		if (booking.getMaxBook() == 0) {
+			return;
+		}
 		
 		HosBlock block = new HosBlock();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -717,6 +726,9 @@ public class HosController {
 		service.insertStaff(staff);
 		service.addStaff(staff);
 		service.editStaff(staff);
+		
+		member.setHosCode(hosCode);
+		session.setAttribute("user", member);
 	}
 	
 	@RequestMapping("editHos.do")
@@ -1085,6 +1097,19 @@ public class HosController {
 		}
 		
 		return map;
+	}
+	
+	
+	@RequestMapping("indexTip.do")
+	@ResponseBody
+	public List<Tip> indexTip(HttpSession session) {
+		
+		if(session.getAttribute("user") == null) {
+			return service.indexTip(10);
+		}
+		System.out.println("Login : " + service.indexTip(5));
+		return service.indexTip(5);
+
 	}
 	
 	public Date setTimeToCal(Calendar cal, StringTokenizer st) {

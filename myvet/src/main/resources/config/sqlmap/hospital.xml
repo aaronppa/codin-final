@@ -779,12 +779,12 @@
 	
 	<select id="indexTip" parameterType="int" resultMap="tipMap">
 		select a.*
-		from tip a, (select tip_no, sum(recommend)
+		from tip a, (select *, sum(recommend) as cnt
 					from tip_recommend
 					group by tip_no
 					order by sum(recommend) desc
-					limit 0, #{count}
 					) b
-		where a.tip_no = b.tip_no;
+		where a.tip_no = b.tip_no
+		limit #{count}
 	</select>
 </mapper>

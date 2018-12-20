@@ -12,6 +12,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>예약 블럭 수정/삭제 (${hospital.title }) - MyVet</title>
     <style>
+   	#background {
+   		width: 100%;
+   		height: 100%;
+   		position: fixed;
+   		z-index: -2;
+   		top:0;
+   		left:0;
+   		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
+	}
+    
     #bodyContainer {
         width: 1100px;
         margin: auto;
@@ -97,6 +108,58 @@
     	text-decoration: none;
     }
     
+    	th, td {
+		text-align: center !important;
+	}
+	
+	#thRow {
+		color: #ffffff;
+		background-color: #412427;
+		font-size: 1.3em;
+		height: 40px;
+	}
+	
+	.blockRow {
+		height: 60px;
+	}
+	
+   	.blockRow:nth-child(2n) {
+  		background: rgba(255, 255, 255, 0.5);
+  	}
+  	
+  	.blockRow:nth-child(2n-1) {
+  		background: rgba(245, 233, 195, 0.5);
+  	}
+  	
+  	.blockRow:hover,
+  	.blockRow:nth-child(2n-1):hover {
+  		background: #f4e8e6;
+  	}
+  	
+  	#editTable {
+  		margin-top: 15px;
+  	}
+
+	.edit {
+		background: #286090;
+		color: #f5e9c3;
+	}
+  	
+  	.delete {
+  		margin-left: 20px;
+  		background: #c9302c;
+  		color: #f5e9c3
+  	}
+  	
+	#date {
+		text-align: center;
+	}
+  		
+	.edit:hover,
+	.delete:hover {
+		font-weight: bold;
+	}
+  	
     </style>
 	<script
     src="https://code.jquery.com/jquery-3.3.1.js"
@@ -107,10 +170,13 @@
 	<script src="<c:url value='/resources/js/datepicker/picker.date.js'/>"></script>
 	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.css'/>"/>
 	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.date.css'/>"/>
-	
+	<link rel="stylesheet" href="<c:url value='/resources/css/hos/search.css'/>"/>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<div id="background"></div>
+	
+	
     <div id="bodyContainer">
         <div>
             <h1 class="inline">예약 수정 / 삭제</h1>
@@ -119,8 +185,8 @@
         </div>
         <div>
    	 	    <input type="text" class="date" id="date" value="${date }">
-        	<table>
-        		<tr>
+        	<table id="editTable">
+        		<tr id="thRow">
         			<th>예약시간</th>
         			<th>예약종류</th>
         			<th>현재 예약 수</th>
@@ -196,7 +262,7 @@
 
 		$(".edit").click(function() {
 			var blockCode = $(this).data("code");
-	    	window.open("/myvet/hos/blockEditForm.do?blockCode="+blockCode, "issue", "width=500, height=500, location=no");
+	    	window.open("/myvet/hos/blockEditForm.do?blockCode="+blockCode, "issue", "width=500, height=400, location=no");
 		})
 		
 		$(".delete").click(function() {

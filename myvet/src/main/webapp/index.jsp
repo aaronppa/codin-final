@@ -60,9 +60,6 @@
         }
         
         #leftContainer {
-/*             position: absolute; */
-/*             top: 0px; */
-/*             left: 0px; */
             display: inline-block;
             width: 74%;
             height: 800px;
@@ -71,10 +68,6 @@
         }
         
         #rightContainer {
-/*             position: absolute; */
-/*             top :0px; */
-/*             left: 930px; */
-            /* position: relative; */
             display: inline-block;
             width: 24%;
             height: 800px;
@@ -90,6 +83,7 @@
         }
         
         #newsContainer {
+        	margin-top: 20px;
             height:200px 
         }
         
@@ -102,6 +96,7 @@
         	position: relative;
         }
         
+        .hosImg,
         .petImg {
         	width: 100px;
         	height: 100px;
@@ -127,7 +122,17 @@
     		width: 180px;
     		padding: 10px;
     		border: 1px solid black;
-    		background: rgba(245, 233, 195, 0.5);
+    		background: rgba(245, 233, 195, 0.3);
+    	}
+    	
+    	.hosDiv,
+    	.petDiv {
+    		margin: auto;
+    		margin-top: 70px;
+    		width: 180px;
+    		padding: 10px;
+    		border: 1px solid black;
+    		background: rgba(245, 233, 195, 0.3);
     	}
     	
     	#noticeContainer {
@@ -136,8 +141,28 @@
     		background: rgba(255, 255, 255, 0.5);
     	}
     	
+    	.petInfo {
+    		margin-top: 10px;
+    	}
+    	
+    	.hosInfo {
+    		margin-top: 10px;
+    	}
+    	
+    	.hosA {
+    		font-size: 1.1em;
+    	}
+    	
+    	h4 {
+    		font-weight: bold !important;
+    	}
+    	
     	a {
     		color: black !important;
+    	}
+    	
+    	a:hover {
+    		font-weight: bold;
     	}
     	
     </style>
@@ -175,12 +200,14 @@
             	<div class="swiper-container favHosSwip">
 				    <div id="favHosDiv" class="swiper-wrapper">
 			          <div class="swiper-slide favHos">
-			          	<div class="hosImgDiv">
-			          		<img class="hosImg" src="...">
-			          	</div>
-			          	<div class="hosInfo">
-			          		<a class="hosA" href="#"><span class="hosName"></span></a><br>
-			          		<span class="telephone"></span>
+			          	<div class="hosDiv">
+				          	<div class="hosImgDiv">
+				          		<img class="hosImg" src="...">
+				          	</div>
+				          	<div class="hosInfo">
+				          		<a class="hosA" href="#"><span class="hosName"></span></a><br>
+				          		<span class="telephone"></span>
+				          	</div>
 			          	</div>
 			          </div>
 				    </div>
@@ -197,11 +224,13 @@
             	<div class="swiper-container petSwiper">
 				    <div id="myPet" class="swiper-wrapper">
 			          <div class="swiper-slide pets">
-			          	<div class="petImgDiv">
-			          		<img class="petImg" src="...">
-			          	</div>
-			          	<div class="petInfo">
-			          		<a class="petA" href="/myvet/pet/petDetail.do?petNo=11"><span class="petName"></span></a>
+			          	<div class="petDiv">
+				          	<div class="petImgDiv">
+				          		<img class="petImg" src="...">
+				          	</div>
+				          	<div class="petInfo">
+				          		<a class="petA" href="#"><span class="petName"></span></a>
+				          	</div>
 			          	</div>
 			          </div>
 				    </div>
@@ -253,7 +282,7 @@
 			
 				for (let i = 0; i < favHos.length; i++) {
 					var $newFavHos = $favHos.clone();
-					$newFavHos.find(".hosImg").attr("src", "...");
+					$newFavHos.find(".hosImg").attr("src", "/myvet/upload/" + favHos[i].hospital.thumbImgInfo.filePath + "/" + favHos[i].hospital.thumbImgInfo.sysName);
 					$newFavHos.find(".hosA").attr("href", "/myvet/hos/hospital.do?hosCode="+favHos[i].hosCode);
 					$newFavHos.find(".hosName").html(favHos[i].hospital.title);
 					$newFavHos.find(".telephone").html(favHos[i].hospital.telephone);
@@ -355,7 +384,9 @@
 	})
 	}
 	
-	$("#mapArea").load("/myvet/map/map.do")
+	window.onload = function() {
+		$("#mapArea").load("/myvet/map/map.do")
+	}
 	
 </script>
 

@@ -19,6 +19,7 @@ import kr.co.codin.repository.domain.HosPage;
 import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Pet;
+import kr.co.codin.repository.domain.Tip;
 import kr.co.codin.repository.mapper.HosMapper;
 
 @Service
@@ -125,6 +126,11 @@ public class HosServiceImpl implements HosService{
 	@Override
 	public List<HosBlock> selectBlockList(HosBlock block) {
 		return mapper.selectBlockList(block);
+	}
+	
+	@Override
+	public List<HosBlock> selectAllBlockList(HosBlock block) {
+		return mapper.selectAllBlockList(block);
 	}
 
 	@Override
@@ -370,6 +376,11 @@ public class HosServiceImpl implements HosService{
 	@Override
 	public 	int overlapBooking(HosBooking booking) {
 		return mapper.overlapBooking(booking);
+	}
+	
+	@Override
+	public List<Tip> indexTip(int count) {
+		return mapper.indexTip(count);
 	}
 
 }

@@ -8,6 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>현장접수 - MyVet</title>
     <style>
+   	    body {
+		  	font-family: 'Gamja Flower', cursive !important;
+		  	font-size: 20px !important;
+	 	}
         #body {
             width: 1100px;
             margin: auto;
@@ -29,9 +33,22 @@
         #submitContainer{
         	text-align: center;
         }
+       	.petRow:nth-child(2n) {
+ 	 		background: rgba(255, 255, 255, 0.5);
+  		}
+  	
+	  	.petRow:nth-child(2n-1) {
+  			background: rgba(245, 233, 195, 0.5);
+	  	}
+  	
+	  	.petRow:hover,
+	  	.petRow:nth-child(2n-1):hover {
+	  		background: #f4e8e6;
+	  	}
     </style>
 <link rel="stylesheet" href="<c:url value='/resources/css/hos/register.css'/>"/>
 <link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
+<link href="https://fonts.googleapis.com/css?family=Gamja+Flower" rel="stylesheet">
 <script src="<c:url value='/resources/js/vendor/jquery.js'/>"></script>
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 </head>
@@ -105,13 +122,20 @@
 				
 				for(let i = 0; i < petList.length; i++) {
 	    			var $newRow = $petRow.clone();
+	    			var species = "";
+	    			if (petList[i].species == "cat") {
+	    				species = "고양이";
+	    			} else {
+	    				species = "강아지";
+	    			}
+	    			
 	    			$newRow.find(".radio").attr("id", "petList"+i);
 	    			$newRow.find(".label").attr("for", "petList"+i);
 	    			$newRow.find(".pet-code").val(petList[i].petNo);
 	    			$newRow.find(".member-no").val(petList[i].memberNo);
 	    			$newRow.find(".pet-name").html(petList[i].petName);
 	    			$newRow.find(".pet-owner").html("보호자 성명 : " + petList[i].member.memberName);
-	    			$newRow.find(".pet-species").html("동물 종류 : " + petList[i].species);
+	    			$newRow.find(".pet-species").html("동물 종류 : " + species);
 	    			$newRow.find(".pet-breed").html("견/묘종 : " + petList[i].breed);
 	    			$("#resultTable").append($newRow);
 				}
@@ -145,9 +169,7 @@
 	    		opener.parent.location.reload();
 				window.close();			
     		})
-    		
     	}) 
-    	
     </script>
 </body>
 </html>

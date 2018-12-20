@@ -46,6 +46,10 @@
 		margin-bottom: 15px;
 	}
 	
+	#date {
+		text-align: center;
+	}
+	
 	th, td {
 		text-align: center !important;
 	}
@@ -73,6 +77,22 @@
   	.bookingRow:nth-child(2n-1):hover {
   		background: #f4e8e6;
   	}
+  	
+	.agree {
+		background: #286090;
+		color: #f5e9c3;
+	}
+  	
+  	.ban {
+  		margin-left: 20px;
+  		background: #c9302c;
+  		color: #f5e9c3
+  	}
+	
+	.agree:hover,
+	.ban:hover {
+		font-weight: bold;
+	}
 </style>
 </head>
 <body>
@@ -109,7 +129,7 @@
 			<td class="bookingTime"><span class="startTime"></span> ~ <span class="endTime"></span></td>
 			<td class="type"></td>
 			<td class="confirm"></td>
-			<td ><button class="agree">승인</button><button class="ban margin-left">거부</button></td>
+			<td ><button class="agree">승인</button><button class="ban">거부</button></td>
 		</tr>
 	</table>
 	</div>

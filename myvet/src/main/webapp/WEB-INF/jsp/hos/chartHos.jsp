@@ -19,21 +19,35 @@
 	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.date.css'/>"/>
 	
     <style>
+       	#background {
+	   		width: 100%;
+	   		height: 100%;
+	   		position: fixed;
+	   		z-index: -2;
+	   		top:0;
+	   		left:0;
+	   		opacity: 0.3;
+			background-image: url('/myvet/resources/img/common/background.jpg');
+		}
+    
         #body {
             width:1100px;
             margin: auto;
             margin-top: 110px;
         }
+        
         #chartList {
+	   		background: rgba(245, 233, 195, 0.5);
             display: inline-block;
             width: 73%;
             height: 500px;
-            /* border: 1px solid black; */
             position: relative;
             top: 0px;
             left: 0px;
             overflow: auto;
+            margin: 20px 0px;
         }
+        
         #patientList {
             margin-left: 20px;
             display: inline-block;
@@ -73,6 +87,16 @@
         .chartRow {
         	width: 95%;
         	overflow: auto;
+	   		background: rgba(139, 120, 122, 0.5);
+	   		margin-bottom: 10px;
+	   		margin-top: 20px;
+	   		margin-left: 20px;
+	   		padding: 10px;
+	   		border: 1px solid #412427;
+        }
+        
+        .panel-body {
+        	margin-left: 15px;
         }
         
         .disable {
@@ -82,10 +106,23 @@
         .selected {
         	background-color: #ffffdd;
         }
+        
+        .accordion-title {
+        	font-size: 18px !important;
+        }
+        
+        a {
+        	color: black !important;
+        }
+        
+        #chartDiv {
+
+        }
     </style>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<div id="background"></div>
 
     <div id="body">
         <h1>차트 목록</h1>

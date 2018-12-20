@@ -86,6 +86,14 @@
   		border: none;
   		border-collapse: separate !important;
   	}
+  	
+  	.booking {
+		padding: 5px;
+  	}
+  	
+  	.booking:hover {
+  		font-weight: bold;
+  	}
 </style>
 </head>
 <body>
@@ -230,36 +238,36 @@
 	    				}).then(function() {
 							return;
 	    				})
+	    		} else {
+	
+		    		console.log($(this));
+		    		console.log($(this).data("block"));
+		    		console.log($(".petNo:checked").data("pet"));
+		    		$.ajax({
+		    			url: "/myvet/hos/bookingSubmit.do",
+		    			data: {
+		    				blockCode: $(this).data("block"),
+		    				bookingOwner: ${petList[0].memberNo},
+		    				bookingPet: $(".petNo:checked").data("pet"),
+		    				hosCode: ${hospital.hosCode}
+			       			},
+			       		type: "post"
+		    		}).done(function(result) {
+		    			if (result == 0) {
+		    				Swal({
+		    					  type: 'success',
+		    					  title: '예약 접수',
+		    					  text: '병원에서 예약 확정 / 취소 시 메시지로 알려드립니다.'
+		    					})
+		    			} else {
+		    				Swal({
+		    					  type: 'error',
+		    					  title: '예약 실패',
+		    					  text: '이미 동일한 시간에 예약기록이 있습니다.'
+		    					})
+		    			}
+		    		})
 	    		}
-	    		
-	    		
-	    		console.log($(this));
-	    		console.log($(this).data("block"));
-	    		console.log($(".petNo:checked").data("pet"));
-	    		$.ajax({
-	    			url: "/myvet/hos/bookingSubmit.do",
-	    			data: {
-	    				blockCode: $(this).data("block"),
-	    				bookingOwner: ${petList[0].memberNo},
-	    				bookingPet: $(".petNo:checked").data("pet"),
-	    				hosCode: ${hospital.hosCode}
-		       			},
-		       		type: "post"
-	    		}).done(function(result) {
-	    			if (result == 0) {
-	    				Swal({
-	    					  type: 'success',
-	    					  title: '예약 접수',
-	    					  text: '병원에서 예약 확정 / 취소 시 메시지로 알려드립니다.'
-	    					})
-	    			} else {
-	    				Swal({
-	    					  type: 'error',
-	    					  title: '예약 실패',
-	    					  text: '이미 동일한 시간에 예약기록이 있습니다.'
-	    					})
-	    			}
-	    		})
 	    	})
     	}
     	
