@@ -40,7 +40,8 @@
     	}
     	
    	 	.registerPaging {
-   	 		height: 20px;
+   	 		height: 50px;
+   	 		vertical-align: middle;
     	}
     	
         #body {
@@ -90,6 +91,21 @@
         	display:none;
         }
         
+        .firstTd {
+        	width: 60px;
+        	text-align: right;
+        }
+        
+        .hos-img {
+        	max-width: 50px;
+        	max-height: 50px;
+        }
+        
+        .addressTd {
+        	width: 440px;
+        	overflow: hidden;
+        }
+        
         #resultRegister th {
         	text-align: center;
         	margin: auto;
@@ -97,9 +113,18 @@
         	height: 60px;
         }
         
+        h4 {
+        	margin-bottom: 0px !important;
+        }
+        
         h5.hos-name {
         	font-weight: bold;
         }
+        
+        #norPaging {
+        	margin-top: 10px;
+        }
+        
         
     </style>
 </head>
@@ -120,10 +145,13 @@
     <h3>MyVet 인증병원</h3>
     <table id="resultRegister">
         <tr class="disable registerHos">
+        	<td class="firstTd">
+        		<img class="hos-img" src="...">
+        	</td>
             <th>
                 <h4><a href="#" class="hos-name">aaa 동물병원</a></h4>
             </th>
-            <td>
+            <td class="addressTd">
                 <span class="hos-addr1">경기도 성남시 분당구 어쩌고 저쩌고</span><br>
                 <span class="hos-phone">031-123-4567</span>
             </td>
@@ -135,7 +163,7 @@
 			<th>검색결과가 존재하지 않습니다.</th>
         </tr>
         <tr class="registerPaging disable">
-        	<td colspan="3">
+        	<td colspan="4" class=".paging">
 	        	<div id="regPageing"></div>
         	</td>
         </tr>
@@ -156,7 +184,7 @@
 	  	    </tr>
   	    </div>
   	</div>
-  	<div id="norPaging"></div>
+  	<div class="paging" id="norPaging"></div>
     </div>
     <script>
 	var $registerHos = $(".registerHos").clone().removeClass("disable");
@@ -166,6 +194,14 @@
 	$("#regPageing").load("regHosPage.do?pageNo="+1+"&ListCount="+0);
 	$("#norPaging").load("norHosPage.do?pageNo="+1+"&ListCount="+0);
 	
+	$("#key-word").keydown(function(e) {
+		if(e.keyCode == 13) {
+			if($(this).val() == "") {
+				return;
+			}
+			$("#search").click();
+		}
+	})
     
    	$("#search").click(function(){
    		
@@ -198,6 +234,11 @@
 				
 				for(let i = 0; i < hosList.length; i++) {
 					var $newRow = $registerHos.clone();
+					try {
+		    			$newRow.find(".hos-img").attr("src", "/myvet/upload/" + hosList[i].thumbImgInfo.filePath + "/" + hosList[i].thumbImgInfo.sysName);
+					} catch {
+						;;
+					}
 	    			$newRow.find(".hos-name").attr("href", hosList[i].hosCode);
 	    			$newRow.find(".hos-name").html(hosList[i].title);
 	    			$newRow.find(".hos-addr1").html(hosList[i].roadAddress);

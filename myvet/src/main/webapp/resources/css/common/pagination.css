@@ -334,7 +334,7 @@ textarea {
 
 .pagination {
   margin-left: 0;
-  margin-bottom: 1rem; }
+  margin-bottom: 0rem; }
   .pagination::before, .pagination::after {
     display: table;
     content: ' ';

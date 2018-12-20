@@ -125,6 +125,7 @@
 	<link rel="stylesheet" href="<c:url value='/resources/js/timepicker/jquery.timepicker.css'/>"/>
 	<script src="<c:url value='/resources/js/timepicker/jquery.timepicker.js'/>"></script>
 	<link rel="stylesheet" href="<c:url value='/resources/css/hos/search.css'/>"/>
+	<script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
@@ -137,9 +138,9 @@
             <input type="hidden" id="hosCode" name="hosCode" value="${hospital.hosCode }">
         </div>
         <div>
-            <input type="checkbox" name="medical" id="medical" value="on">
+            <input type="checkbox" class="types" name="medical" id="medical" value="on">
             <label for="medical">진료</label>
-            <input type="checkbox" name="beauty" id="beauty" value="on">
+            <input type="checkbox" class="types" name="beauty" id="beauty" value="on">
             <label for="beauty">미용</label>
         </div>
         
@@ -244,7 +245,7 @@
             	</th>
             	<c:forEach var="i" begin="0" end="6" >
 	                <td>
-	                    <input class="maxBook" type="number" name="maxBook" id="max-book" data-date="${i }">
+	                    <input class="maxBook" type="number" name="maxBook" id="max-book" min="1" data-date="${i }">
 	                </td>
 	            </c:forEach>
             </tr>
@@ -332,6 +333,18 @@
         })
 
         $('#submit').click(function(){
+        	
+        	if ($(".types:checked").length == 0) {
+        		
+        		swal({
+					  type: 'error',
+					  title: '블럭 생성 불가!',
+					  text: "진료/미용이 선택되지 않았습니다."
+				}).then(function() {
+					return;
+				})
+        	} else {
+
         	for (let i = 0; i < 7; i++) {
             	if ($(".big-checkbox[data-dayoff="+i+"]").is(":checked")) {
             		continue;
@@ -354,13 +367,24 @@
 					method: "post",
 					data: booking,
 					async: false, 
+					success: function() {
+						swal({
+							  type: 'success',
+							  title: '블럭 생성 완료!',
+							  text: '정상적으로 예약블럭이 생성 되었습니다.'
+						})
+					},
 					error: function() {
-						alert("이미 등록된 날짜입니다. " + booking.date)
+						swal({
+							  type: 'error',
+							  title: '블럭 생성 불가!',
+							  text: "이미 등록된 날짜입니다. " + booking.date
+						})
 						}
 					}
 				)
         	}
-        	
+        	}
         })
         
         

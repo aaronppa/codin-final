@@ -39,6 +39,7 @@
 			<mvc:exclude-mapping path="/hos/searchReg.do"/>
 			<mvc:exclude-mapping path="/hos/searchNor.do"/>
 			<mvc:exclude-mapping path="/hos/*HosPage.do"/>
+			<mvc:exclude-mapping path="/hos/indexTip.do"/>
 			<mvc:exclude-mapping path="/notice/indexNotice.do"/>
 			<mvc:exclude-mapping path="/member/log*.do"/>
 			<mvc:exclude-mapping path="/member/checkId.do"/>

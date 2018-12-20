@@ -17,6 +17,7 @@ import kr.co.codin.repository.domain.HosStaff;
 import kr.co.codin.repository.domain.Hospital;
 import kr.co.codin.repository.domain.Page;
 import kr.co.codin.repository.domain.Pet;
+import kr.co.codin.repository.domain.Tip;
 
 public interface HosMapper {
 	void insertHospital(Hospital hospital);
@@ -41,6 +42,7 @@ public interface HosMapper {
 	void createBlock(HosBlock block);
 	int isCreateBlock (HosBlock block);
 	List<HosBlock> selectBlockList(HosBlock block);
+	List<HosBlock> selectAllBlockList(HosBlock block);
 	HosBlock selectBlock(int blockCode);
 	void deleteBlock(int blockCode);
 	void updateBlock(HosBlock block);
@@ -88,6 +90,7 @@ public interface HosMapper {
 	List<FileInfo> selectHosImg(int hosCode);
 	void deleteFacility(int facilityNo);
 	int overlapBooking(HosBooking booking);
+	List<Tip> indexTip(int count);
 	
 	int isRegStaff (HosStaff staff);
 	void memberHosNull(int memberNo);

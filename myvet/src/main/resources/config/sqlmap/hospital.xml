@@ -176,6 +176,13 @@
 		<association column="hos_code" property="hospital" select="selectHospitalByNo"></association>
 	</resultMap>
 	
+	<resultMap type="tip" id="tipMap">
+		<result column="tip_no" property="tipNo"/>		
+		<result column="title" property="title"/>		
+		<result column="content" property="content"/>		
+	</resultMap>
+	
+	
 	<select id="selectFileInfo" parameterType="int" resultMap="fileInfoMap">
 		select *
 		from file_info
@@ -387,6 +394,15 @@
 		<if test="hosCode > 0">
 			and hos_code = #{hosCode}
 			and facility_no = #{facilityNo}
+		</if>
+	</select>
+	
+	<select id="selectAllBlockList" parameterType="HosBlock" resultMap="blockMap">
+		select *
+		from hos_block
+		where block_day = #{blockDay}
+		<if test="hosCode > 0">
+			and hos_code = #{hosCode}
 		</if>
 	</select>
 	
@@ -759,5 +775,16 @@
 		select *
 		from fav_hos
 		where member_no = #{memberNo}
+	</select>
+	
+	<select id="indexTip" parameterType="int" resultMap="tipMap">
+		select a.*
+		from tip a, (select tip_no, sum(recommend)
+					from tip_recommend
+					group by tip_no
+					order by sum(recommend) desc
+					limit 0, #{count}
+					) b
+		where a.tip_no = b.tip_no;
 	</select>
 </mapper>

@@ -192,6 +192,9 @@
 					  type: 'success',
 					  title: 'OK!',
 					  text: '정상적으로 등록되었습니다.'
+				}).then(function(){
+					opener.parent.location.reload();
+					window.close();
 				})
             })
         })

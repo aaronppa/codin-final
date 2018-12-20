@@ -82,11 +82,11 @@
         }
         
         #hospitalContainer {
-            height:230px
+            height:300px
         }
         
         #petContainer {
-/*             height:150px */
+             height:300px 
         }
         
         #newsContainer {
@@ -115,8 +115,31 @@
       	#MapSearchlist{
     		background: rgba(255,255,255,0.5);
     	}
-    
-        
+    	
+    	.favHosSwip,
+    	.petSwiper {
+    		height: 300px;
+    	}
+    	
+    	.empty {
+    		margin: auto;
+    		margin-top: 110px;
+    		width: 180px;
+    		padding: 10px;
+    		border: 1px solid black;
+    		background: rgba(245, 233, 195, 0.5);
+    	}
+    	
+    	#noticeContainer {
+    		margin: 15px 0px;
+    		border: 1px solid black;
+    		background: rgba(255, 255, 255, 0.5);
+    	}
+    	
+    	a {
+    		color: black !important;
+    	}
+    	
     </style>
 	<link rel="stylesheet" href="<c:url value='/resources/css/common/topbar.css'/>"/>
 </head>          
@@ -190,7 +213,12 @@
 	    		</div>
             </div>
             </c:if>
-            <div class="relative" id="newsContainer">유저 뉴스 영역</div>
+            <div class="relative" id="newsContainer">
+            	<h4>개꿀팁이냥 인기글</h4>
+            	<div id="tipDiv">
+            		<a href="#" class="tipRow"></a>
+            	</div>
+            </div>
         </div>
     </div>
 </body>
@@ -199,9 +227,11 @@
 	var $favHos = $(".favHos").clone();
 	var $myPet = $(".pets").clone();
 	var $noticeRow = $(".noticeRow").clone();
+	var $tipRow = $(".tipRow").clone();
 	$(".favHos").remove();
 	$(".pets").remove();
 	$(".noticeRow").remove();
+	$(".tipRow").remove();
 	
 	if($("#memberNo").val() != 0) {
 		$.ajax({
@@ -212,37 +242,41 @@
 			var favHos = result.favHos;
 			var pets = result.myPet
 			
+			console.dir(pets);
+			
 			if (favHos.length == 0) {
 				var $newFavHos = $favHos.clone();
-				$newFavHos.html("등록된 즐겨찾기 병원이<br>없습니다.")
+				$newFavHos.html("<div class='empty'>즐겨찾는 병원이<br>없습니다.</div>")
 				$("#favHosDiv").append($newFavHos);
-				return;
-			}
+				
+			} else {
 			
-			for (let i = 0; i < favHos.length; i++) {
-				var $newFavHos = $favHos.clone();
-				$newFavHos.find(".hosImg").attr("src", "...");
-				$newFavHos.find(".hosA").attr("href", "/myvet/hos/hospital.do?hosCode="+favHos[i].hosCode);
-				$newFavHos.find(".hosName").html(favHos[i].hospital.title);
-				$newFavHos.find(".telephone").html(favHos[i].hospital.telephone);
-				$("#favHosDiv").append($newFavHos);
+				for (let i = 0; i < favHos.length; i++) {
+					var $newFavHos = $favHos.clone();
+					$newFavHos.find(".hosImg").attr("src", "...");
+					$newFavHos.find(".hosA").attr("href", "/myvet/hos/hospital.do?hosCode="+favHos[i].hosCode);
+					$newFavHos.find(".hosName").html(favHos[i].hospital.title);
+					$newFavHos.find(".telephone").html(favHos[i].hospital.telephone);
+					$("#favHosDiv").append($newFavHos);
+				}
 			}
 
 			swiper(".favHosSwip");
 			
-			if (myPet.length == 0) {
-				var $pets = $pets.clone();
-				$pets.html("등록된 반려동물이<br>없습니다.")
-				$("#favHosDiv").append($newFavHos);
-				return;
-			}
+			if (pets.length == 0) {
+				var $pets = $myPet.clone();
+				$pets.html("<div class='empty'>등록된 반려동물이<br>없습니다.</div>")
+				$("#myPet").append($pets);
+				
+			} else {
 			
-			for (let i = 0; i < pets.length; i++) {
-				var $newPet = $myPet.clone();
-				$newPet.find(".petImg").attr("src", "/myvet/upload"+pets[i].petFilePath+"/"+pets[i].petSysName);
-				$newPet.find(".petA").attr("href", "/myvet/pet/petDetail.do?petNo="+pets[i].petNo);
-				$newPet.find(".petName").html(pets[i].petName);
-				$("#myPet").append($newPet);
+				for (let i = 0; i < pets.length; i++) {
+					var $newPet = $myPet.clone();
+					$newPet.find(".petImg").attr("src", "/myvet/upload"+pets[i].petFilePath+"/"+pets[i].petSysName);
+					$newPet.find(".petA").attr("href", "/myvet/pet/petDetail.do?petNo="+pets[i].petNo);
+					$newPet.find(".petName").html(pets[i].petName);
+					$("#myPet").append($newPet);
+				}
 			}
 			swiper(".petSwiper")
 		})
@@ -262,10 +296,30 @@
 		for (let i = 0; i < noticeList.length; i++) {
 			$newNotice = $noticeRow.clone();
 			$newNotice.find(".noticeInfo").attr("href", "/myvet/notice/detail.do?noticeNo="+noticeList[i].noticeNo);
-			$newNotice.find(".noticeInfo").html("[공지] " + noticeList[i].noticeTitle);
+			$newNotice.find(".noticeInfo").html("[공지] " + noticeList[i].noticeTitle + "</div>");
 			$("#noticeDiv").append($newNotice);
 		}
 		notice();
+	})
+	
+	$.ajax({
+		url: "/myvet/hos/indexTip.do"
+	}).done(function(tipList) {
+		console.dir(tipList);
+		
+		if(tipList.length == 0) {
+			$newTip = $tipRow.clone();
+			$newTip.html("등록된 게시글이 없습니다.")
+			$("#tipDiv").append($newTip);
+		}
+		for (let i = 0; i < tipList.length; i++) {
+			$newTip = $tipRow.clone();
+			$newTip.attr("href", "/myvet/tip/detail.do?tipNo="+tipList[i].tipNo);
+			$newTip.text(tipList[i].title);
+			$("#tipDiv").append($newTip);
+			$("#tipDiv").append($("<br>"));
+		}
+
 	})
 	
 	function swiper(swiper) {

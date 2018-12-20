@@ -10,13 +10,14 @@
    src="https://code.jquery.com/jquery-3.3.1.js"
    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
    crossorigin="anonymous"></script>
+<script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/hos/search.css'/>"/>
 <style>
 	#bodyContainer {
 		width:1100px;
 		margin: auto;
 		padding-top: 110px;
-		height: 500px;
+/* 		height: 500px; */
 		overflow: auto;
 		
 	}
@@ -171,6 +172,14 @@
 				$.ajax({
 					url: "/myvet/hos/confirmBooking.do",
 					data: {bookingNo: $(this).parents(".bookingRow").find(".bookingNo").val()}
+					}).done(function(){
+						swal({
+							  type: 'success',
+							  title: '예약승인!',
+							  text: '정상적으로 승인되었습니다.'
+						}).then(function(){
+							window.location.reload();
+						})
 					})
 				})
 			
@@ -179,6 +188,14 @@
 				$.ajax({
 					url: "/myvet/hos/banBooking.do",
 					data: {bookingNo: $(this).parents(".bookingRow").find(".bookingNo").val()}
+					}).done(function(){
+						swal({
+							  type: 'error',
+							  title: '예약거절!',
+							  text: '정상적으로 거절되었습니다.'
+						}).then(function(){
+							window.location.reload();
+						})
 					})
 				})
 		}

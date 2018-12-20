@@ -12,7 +12,7 @@
     <nav aria-label="Pagination">
         <ul class="pagination">
             <li ><a <c:if test="${pageResult.pageNo == 1}">class='disabled'</c:if> id="first" href="1">&laquo;&laquo;</a></li>
-            <li ><a <c:if test="${pageResult.pageNo-5 < 1}">class='disabled'</c:if>href=${pageResult.beginPage-1 }>&laquo;</a></li>
+            <li ><a <c:if test="${pageResult.pageNo == 1}">class='disabled'</c:if> href=${pageResult.pageNo-1 }>&laquo;</a></li>
             
 			<c:forEach var="i" begin="${pageResult.beginPage}" end="${pageResult.endPage}">
 		    	<li <c:if test="${i eq pageResult.pageNo }">class="current"</c:if> ><a href="${i}">${i}</a></li>
