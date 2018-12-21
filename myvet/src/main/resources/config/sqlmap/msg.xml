@@ -118,27 +118,23 @@
 	<select id="selectMyChat" parameterType="int" resultMap="messageMap">
 		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
 		from recipient_group r
-		inner join(select *
-	               from message m
-                    inner join (select MAX(date_sent) as latest_msg_date
+		inner join(select msg_id, chat_id, msg_body, MAX(date_sent) as latest_msg_date, msg_type
 		                        from message
-                                group by chat_id
-                                ) max on max.latest_msg_date = m.date_sent) l on l.chat_id = r.recipient_group_id
+                                group by chat_id) l on l.chat_id = r.recipient_group_id
 		where recipient_no = #{memberNo}
+		and trash = 0
 		order by msg_id desc
 	</select>
 	
 	<select id="selectMyChatNew" parameterType="int" resultMap="messageMap">
-		select msg_id, chat_id, msg_body, latest_msg_date as date_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
+		select msg_id, chat_id, msg_body, latest_msg_date as datwe_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
 		from recipient_group r
-		inner join(select *
-	               from message m
-                    inner join (select MAX(date_sent) as latest_msg_date
+		inner join(select msg_id, chat_id, msg_body, MAX(date_sent) as latest_msg_date, msg_type
 		                        from message
-                                group by chat_id
-                                ) max on max.latest_msg_date = m.date_sent) l on l.chat_id = r.recipient_group_id
+                                group by chat_id) l on l.chat_id = r.recipient_group_id
 		where recipient_no = #{memberNo}
 		and date_read is null
+		and trash = 0
 		order by msg_id desc
 	</select>
 	
@@ -167,6 +163,18 @@
         group by chat_id) as t
 	</select>
 	
+	<select id="selectChatExist" parameterType="Message" resultMap="messageMap">
+		select max(recipient_group_id) chat_id, recipient_no, date_read, trash, msg_id, sender_no, msg_body, latest_msg_date, msg_type
+		from recipient_group r
+		inner join(select msg_id, chat_id, sender_no, msg_body, MAX(date_sent) as latest_msg_date, msg_type
+		                        from message
+                                where sender_no= #{senderNo}
+                                group by chat_id) l on l.chat_id = r.recipient_group_id
+		where recipient_no = #{recipientNo}
+        and trash = 0
+        group by recipient_no;
+	</select>
+
 	<update id="selfRead" parameterType="RecipientGroup">
 		update recipient_group r
 			inner join message m on m.chat_id = r.recipient_group_id

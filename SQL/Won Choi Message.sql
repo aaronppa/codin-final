@@ -123,8 +123,8 @@ select count(*)
 			left outer join (select member_no from member) mem on mem.member_no = m.sender_no
             left outer join hos_basic h on h.hos_code = m.sender_no
 		where date_read is null
-		and recipient_no = 3
-		and m.sender_no !=3
+		and recipient_no = 45
+		and m.sender_no !=45
         group by chat_id) as t;
         
 select *
@@ -143,5 +143,12 @@ select *
             left outer join member mem on mem.member_no = m.sender_no
             left outer join hos_basic h on h.hos_code = m.sender_no;
 
-select *
-		from recipient_group r; 
+
+select msg_id, chat_id, sender_no, msg_body, latest_msg_date as date_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
+		from recipient_group r
+		inner join(select msg_id, chat_id, sender_no, msg_body, MAX(date_sent) as latest_msg_date, msg_type
+		                        from message
+                                where sender_no=519
+                                group by chat_id) l on l.chat_id = r.recipient_group_id
+		where recipient_no = 45
+        and trash = 0;
