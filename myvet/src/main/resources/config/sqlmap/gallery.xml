@@ -166,9 +166,30 @@
 		 where gallery_no = #{galleryNo}
 	</update>
 	
-	<select id="countGallery" resultType="int">
+	<select id="countGallery" parameterType="searchGallery" resultType="int">
 		select count(*)
-		  from gallery
+		  from gallery g
+		  		  <where>
+<!-- 		 where g.writer_no = m.member_no -->
+		  	<choose>
+	  			<when test="sort == 0">
+<!-- 	  				and (g.title like CONCAT('%',#{keyword},'%') or g.content like CONCAT('%',#{keyword},'%') or g.writer_no like CONCAT('%',#{keyword},'%')) -->
+	  			</when>
+	  			<when test="sort == 1">
+	  				and g.title like CONCAT('%',#{keyword},'%')
+	  			</when>
+	  			<when test="sort == 2">
+	  				and g.content like CONCAT('%',#{keyword},'%')
+	  			</when>
+	  			<when test="sort == 3">
+<!-- 	  				and g.writer_no like CONCAT('%', #{keyword},'%') -->
+	  				and (select member_nickname from member where member_no = g.writer_no) like CONCAT('%', #{keyword},'%')
+	  			</when>
+	  			<when test="sort == 4">
+	  				and (g.title like CONCAT('%', #{keyword},'%') or g.content like CONCAT('%', #{keyword},'%'))
+	  			</when>
+  			</choose>
+  		</where>
 	</select>
 	
 <!-- 	댓글 --> 

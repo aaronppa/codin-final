@@ -26,7 +26,7 @@ public interface GalleryService {
 	
 	void updateViewCnt(int galleryNo);
 	
-	int countGallery();
+	int countGallery(SearchGallery searchGallery);
 	
 	//댓글
 	void insertComment(GalleryComment galleryComment);

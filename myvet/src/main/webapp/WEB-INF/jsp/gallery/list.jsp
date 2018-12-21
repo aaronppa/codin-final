@@ -30,14 +30,19 @@
 			position:relative;
 			top:80px;
 		}
+	.background{
+	width: 100%;
+    height: 100%;
+    position: absolute;
+		background-image: url(/myvet/resources/img/common/background.jpg);
+	}
     </style>
     <body>
     <c:import url="/WEB-INF/jsp/common/topBar.jsp" />    
-    <form action="" method="post">        
     <div class="container">
+    <form action="" method="post">        
         <!--검색-->
      <div class="input-group mb-3">
-		
 	     	<select name="sort" id="sort" class="sort">
 				<option selected value="0">검색조건</option>
 				<option value="1">제목</option>
@@ -49,6 +54,7 @@
 		   <input type="submit" class="btn btn-outline" id="searchBtn" value="검색"></input>
 	   
 	 </div>
+  </form>  
      
     <div id="galleryCount" >전체 ${count} 개</div>
     <br>
@@ -114,7 +120,7 @@
 <!--                              <span data-toggle="tooltip" title="PONY!"> -->
 <!--                                  <i class="fas fa-dog"></i> -->
 <!--                              </span> -->
-                             <p class="card-writer">${top.memberNickname}</p>
+                             <p class="card-writer">by ${top.memberNickname}</p>
                              <p class="card-reg-date"><fmt:formatDate value="${top.regDate}" pattern="yyyy-MM-dd"/></p>
                          </div>
                      </div>
@@ -209,8 +215,8 @@
     <div id="pagination">
    		 <c:import url="page.jsp"></c:import>
     </div>
+    <br>
        </div>
-      </form>  
     <script>
 //     $('.write-btn-form').click(function(){
 //     	window.open("/myvet/gallery/writeForm.do","gallery","width=1300, height=700, right=100, top=10")

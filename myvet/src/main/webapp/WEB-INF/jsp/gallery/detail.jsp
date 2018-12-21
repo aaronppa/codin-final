@@ -160,7 +160,7 @@
                                         <div class="comment-wrap writeComment">
                                             <div class="photo">
                                                     <img src="" onerror="this.src='/myvet/resources/img/gall&tip/profile.png'" id="writer-pic" class="rounded-circle" >
-                                                	<p class="commenter"><strong>${user.memberNickname}</strong></p>
+                                                	<span class="commenter"><strong>${user.memberNickname}</strong></span>
                                             </div>
                                             <!-- 댓글 등록 -->
                                         	<div class="comment-block">
@@ -224,6 +224,15 @@
     		console.log("detail!");
     	})
     }
+    
+    //댓글 작성
+    $(".registration").click(function(){
+    	if($("#input-comment").val() == ""){
+    		alert('댓글을 입력해주세요')
+    		return false;
+    	}
+    })
+    
     
     //글 삭제
     $("#deleteGall").click(function(){
@@ -381,7 +390,7 @@
 	    		
 			$('#comment-list').append(
 				//작성자 이미지
-					"<img src='/myvet/resources/img/gall&tip/profile.png' class='commenterImg rounded-circle'/>&nbsp;"+"<p>"+result[i].member.memberNickname+"</p>"
+					"<img src='/myvet/resources/img/gall&tip/profile.png' class='commenterImg rounded-circle'/>&nbsp;"+"<span>"+result[i].member.memberNickname+"</span>"
 // 					+"<span>"+result[i].member.memberNickname+"</span>"
 // 	              	+"<div class='recommendForm'>"
 // 	              	+"<button class='com-like "+likeRecommend+"' data-comno='"+result[i].commentNo+"'>"+"<i class='far fa-thumbs-up'></i>"
@@ -407,16 +416,23 @@
 	    		console.log("memberNo : "+$("#memberNo").val());
 	    		console.log("commenterNo : "+result[i].commenterNo);
 	    		if($("#memberNo").val() != result[i].commenterNo){
-
 					console.log("ininin")
 					$('.up'+result[i].commenterNo).css('visibility','hidden');
 					$('.del'+result[i].commenterNo).css('visibility','hidden');
 	    		}
+
 	    	}
 	    })
     }
 	
-   
+	$("#comment-list").on("click","#deleteCom",function(){
+		var result = confirm('정말 삭제하시겠습니까?');
+		if(result){
+			alert('게시글이 삭제되었습니다.')
+		}else{
+			return false;
+		}
+	})
     
 	$(".comment-list").on("click",".fa-exclamation-circle",function(){
 		window.open("/myvet/report/reportCommentForm.do?boardCode=10&commentNo="+$(this).data("comno"),"report","width=1000, height=600, left=500, top=10")

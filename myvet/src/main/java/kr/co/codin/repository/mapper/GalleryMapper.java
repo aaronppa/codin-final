@@ -19,7 +19,7 @@ public interface GalleryMapper {
 	void updateGallery(Gallery gallery);
 	void deleteGallery(int galleryNo);
 	void updateViewCnt(int galleryNo);
-	int countGallery();
+	int countGallery(SearchGallery searchGallery);
 	
 	
 //	//댓글

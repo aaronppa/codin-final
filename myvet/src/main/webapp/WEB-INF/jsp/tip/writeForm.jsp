@@ -83,9 +83,9 @@
 		</a>
     </div>    
     </form>
+    <br>
+    <br>
     </div>
-    <br>
-    <br>
 	<script>
 // 	console.log("memberNo : "+${user.memberNo})
 

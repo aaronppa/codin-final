@@ -62,7 +62,7 @@
         
         /*table*/
         tr:hover{
-            background: gray;
+            background: #dee2e6;
             opacity: 0.8;
         }
         .no{

@@ -476,6 +476,12 @@
         	
         	//댓글 삭제
         	$(".comment-list").on("click", ".deleteCommentBtn", function(){
+        		var result = confirm('댓글을 삭제하시겠습니까?')
+        		if(result){
+        			alert('댓글이 삭제되었습니다.')
+        		}else{
+        			return false;
+        		}
         		console.log("delete!");
         		console.log("작성자 : "+$(".commenterNo").val());
         		console.log("댓글 번호 : "+$(this).data("deletecombtn"));

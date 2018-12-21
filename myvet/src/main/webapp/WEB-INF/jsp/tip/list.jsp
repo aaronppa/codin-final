@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>꿀팁 목록</title>
     <link rel="stylesheet" href="/myvet/resources/css/tip&qna/list.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -72,11 +72,11 @@
             <!-- <caption>List of users</caption> -->
             <thead>
                 <tr class="tipList" style="text-align: center;">
-	                <th scope="col" style="width:10%;"class="no">글 번호</th>
+<!-- 	                <th scope="col" style="width:10%;"class="no">글 번호</th> -->
 	                <th scope="col" style="width:15%;"class="writer">작성자</th>
-	                <th scope="col" style="width:25%;"class="title">제목</th>
+	                <th scope="col" style="width:30%;"class="title">제목</th>
 	                <th scope="col" style="width:10%;"class="category">카테고리</th>
-	                <th scope="col" style="width:10%;"class="regDate">작성일</th>                
+	                <th scope="col" style="width:15%;"class="regDate">작성일</th>                
 	                <th scope="col" style="width:10%;"class="viewCnt">조회수</th>
 	                <th scope="col" style="width:10%;"class="recomCnt">추천수</th>
             	</tr>
@@ -85,9 +85,9 @@
         <!-- 공지 -->
         	<c:forEach var="top" items="${topTip}" varStatus="loop">
         		<tr class="topRow" style="text-align: center;background: #e6e6e6;">
-	                <th scope="row"> ${top.tipNo} </th>
+<%-- 	                <th scope="row"> ${top.tipNo} </th> --%>
 	                <td>${top.memberNickname}</td>
-	                <td><a href="<c:url value='/tip/detail.do?tipNo=${top.tipNo}'/>">${top.title }</a>&nbsp;&nbsp;<i class="fas fa-comments">${top.comCnt}</i><span id="countComment"></span></td>
+	                <td><a href="<c:url value='/tip/detail.do?tipNo=${top.tipNo}'/>">${top.title }</a>&nbsp;&nbsp;<i class="fas fa-comments" style="font-size:15px;">${top.comCnt}</i><span id="countComment"></span></td>
 					<c:if test="${top.categoryCode eq 1}">
 		                <td>건강</td>
 					</c:if>
@@ -100,7 +100,7 @@
 					<c:if test="${top.categoryCode eq 4}">
 		                <td>기타</td>
 					</c:if>
-	                <td><fmt:formatDate value="${top.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+	                <td><fmt:formatDate value="${top.regDate}" pattern="yyyy-MM-dd/hh:mm:ss"/></td>
 	                <td>${top.viewCnt}</td>
 	                <td><i class="fas fa-heart">&nbsp;${top.recomCnt}</i> 
 	                </td>
@@ -109,9 +109,9 @@
         	<!-- 공지 끝 -->
      		<c:forEach var="t" items="${tip}" varStatus="loop">
 	            <tr style="text-align: center;">
-	                <th scope="row"> ${t.tipNo} </th>
+<%-- 	                <th scope="row"> ${t.tipNo} </th> --%>
 	                <td>${t.memberNickname}</td>
-	                <td><a href="<c:url value='/tip/detail.do?tipNo=${t.tipNo}'/>">${t.title }</a>&nbsp;&nbsp;<i class="fas fa-comments">${t.comCnt}</i><span id="countComment"></span></td>
+	                <td><a href="<c:url value='/tip/detail.do?tipNo=${t.tipNo}'/>">${t.title }</a>&nbsp;&nbsp;<i class="fas fa-comments" style="font-size:15px;">${t.comCnt}</i><span id="countComment"></span></td>
 					<c:if test="${t.categoryCode eq 1}">
 		                <td>건강</td>
 					</c:if>
@@ -124,7 +124,7 @@
 					<c:if test="${t.categoryCode eq 4}">
 		                <td>기타</td>
 					</c:if>
-	                <td><fmt:formatDate value="${t.regDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+	                <td><fmt:formatDate value="${t.regDate}" pattern="yyyy-MM-dd/hh:mm:ss"/></td>
 	                <td>${t.viewCnt}</td>
 	                <td><i class="fas fa-heart">&nbsp;${t.recomCnt}</i> 
 	                </td>
@@ -143,6 +143,7 @@
     <div id="pagination">
    		 <c:import url="page.jsp"></c:import>
     </div>
+    <br>
     </div>
 </body>
 <script>
@@ -162,6 +163,10 @@
 $("#serachBtn").click(function(){
 	if($("#keyword").val() == ""){
 		alert('검색어를 입력해주세요')
+		return false;
+	}
+	if($("#sort").val() == 0){
+		alert('검색조건을 선택해주세요')
 		return false;
 	}
 })

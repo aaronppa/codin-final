@@ -69,9 +69,9 @@ public class GalleryController{
 		model.addAttribute("topGallery",service.galleryTopList());
 		model.addAttribute("gallery", service.galleryList(searchGallery));
 		System.out.println("gallery result: "+service.galleryList(searchGallery));
-		model.addAttribute("count",service.countGallery());
-		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery(), 8, 10)); 
-		System.out.println("pageResult : "+new PageResult(pageNo, service.countGallery(), 8, 10));
+		model.addAttribute("count",service.countGallery(searchGallery));
+		model.addAttribute("pageResult", new PageResult(pageNo, service.countGallery(searchGallery), 8, 10)); 
+		System.out.println("pageResult : "+new PageResult(pageNo, service.countGallery(searchGallery), 8, 10));
 //		service.selectFile(fileInfoList);
 //		model.addAttribute("pageResult", new PageResult(pageNo, service.countgallery()));
 	}

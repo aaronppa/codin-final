@@ -189,8 +189,8 @@
 	
 	<select id="countTip" parameterType="SearchTip" resultType="int">
 		select count(*)
-		  from tip
-		  		<choose>
+		  from tip t
+  		<choose>
   			<when test="sort == 0">
   				where title like CONCAT('%',#{keyword},'%') or content like CONCAT('%',#{keyword},'%') or member_no like CONCAT('%',#{keyword},'%')
   			</when>
@@ -201,7 +201,7 @@
   				where content like CONCAT('%',#{keyword},'%')
   			</when>
   			<when test="sort == 3">
-  				where member_no like CONCAT('%', #{keyword},'%')
+  				where (select member_nickname from member where member_no = t.member_no) like CONCAT('%', #{keyword},'%')
   			</when>
   			<when test="sort == 4">
   				where title like CONCAT('%', #{keyword},'%') or content like CONCAT('%', #{keyword},'%')

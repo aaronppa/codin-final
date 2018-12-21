@@ -102,8 +102,8 @@ public class GalleryServiceImpl implements GalleryService{
 	}
 
 	@Override
-	public int countGallery() {
-		return mapper.countGallery();
+	public int countGallery(SearchGallery searchGallery) {
+		return mapper.countGallery(searchGallery);
 	}
 
 	//댓글
