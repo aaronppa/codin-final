@@ -14,9 +14,21 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
 
 <style>
+
+	#background {
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		z-index: -2;
+		top:0;
+		left:0;
+		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
+	}
     #body {
         width: 80%;
         margin: auto;
+        padding-top: 110px;
     }
     #noticeTable{
         width: 100%;
@@ -40,7 +52,9 @@
 
 </head>
 <body>
-	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />            
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />        
+	<div id="background"></div>
+	    
     <div id="body">
     <h1>공지사항</h1>
     <table id="noticeTable" class="hover">

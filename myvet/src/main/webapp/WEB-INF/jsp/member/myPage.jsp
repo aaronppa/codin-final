@@ -15,6 +15,7 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+	<div id="background"></div>
 	<div id="container" class="container">
 		<h2 class="owner">반려인</h2>
 	    <hr>
@@ -147,13 +148,12 @@
 	    <h2 class="myvet">즐겨찾는 병원</h2>
 	    <button class="btn btn-warning float--right" id="vet-add">즐겨찾는 병원 추가</button>
 	    <hr>
-	    	<c:if test="${empty pet}">
+	    	<c:if test="${empty hos}">
 	    		<h3>등록된 병원이 없습니다.</h3>
 	    	</c:if>
-	    	<c:forEach var="pet" items="${pet}">
-				<div class="pet-info" data-pet-no="${pet.petNo}">
-					<img alt="강아지 사진" src="<c:url value='/upload${pet.petFilePath}/${pet.petSysName}' />" class="img-thumbnail">
-					<div>${pet.petName}</div>
+	    	<c:forEach var="hos" items="${hos}">
+				<div class="pet-info" data-hos-no="${hos.hosCode}">
+					<div><a href="/myvet/hos/hospital.do?hosCode=${hos.hosCode }" >${hos.title}</a></div>
 				</div>
 			</c:forEach>
 		</div>

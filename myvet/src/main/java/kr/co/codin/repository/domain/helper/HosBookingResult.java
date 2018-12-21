@@ -6,6 +6,7 @@ public class HosBookingResult extends HosBlock {
 	private String confirm;
 	private String finish;
 	private String hosTitle;
+	private int bookingNo;
 	
 	public String getHosTitle() {
 		return hosTitle;
@@ -25,4 +26,11 @@ public class HosBookingResult extends HosBlock {
 	public void setFinish(String finish) {
 		this.finish = finish;
 	}
+	public int getBookingNo() {
+		return bookingNo;
+	}
+	public void setBookingNo(int bookingNo) {
+		this.bookingNo = bookingNo;
+	}
+	
 }

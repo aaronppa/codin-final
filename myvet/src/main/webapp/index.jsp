@@ -23,6 +23,16 @@
     	html {
     		height:100%
     	}
+    	
+    	strong,
+    	span.address {
+    		color: #666;
+    	}
+    	
+    	strong:hover {
+			color: #412427;
+    		cursor: pointer;
+    	}
     
        	#background {
        		width: 100%;
@@ -131,13 +141,13 @@
     		margin-top: 70px;
     		width: 180px;
     		padding: 10px;
-    		border: 1px solid black;
+    		border: 1px solid rgba(200, 200, 200, 0.3);;
     		background: rgba(245, 233, 195, 0.3);
     	}
     	
     	#noticeContainer {
     		margin: 15px 0px;
-    		border: 1px solid black;
+/*     		border: 1px solid black; */
     		background: rgba(255, 255, 255, 0.5);
     	}
     	

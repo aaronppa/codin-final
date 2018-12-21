@@ -13,6 +13,7 @@
         margin-bottom: -17px;
         margin-top: -17px;
     	}
+    	
      	body {
     	font-family: 'Gamja Flower', cursive !important;
     	font-size: 20px !important;
@@ -27,9 +28,13 @@
         }
 
         .menu > li > a {
-            color: #412427;
-            font-weight: 500;
+            color: #412427 !important;
+            font-weight: normal;
             text-decoration: none;
+        }
+
+        .menu > li > a:hover {
+			font-weight: bold;
         }
 
         .menu-text > span > a  {
@@ -111,7 +116,6 @@
 					                	<ul class="menu vertical">
 											<li><a href="<c:url value='/member/myPage.do'/>">마이페이지</a></li>
 											<li><a class="msgbadge" href="<c:url value='/msg/main.do'/>">메신저<span class="nbsp">&nbsp;</span><span class='badge badge-dark'></span></a></li>
-                							<li><a href="#">즐겨찾는 병원</a></li>
 											<li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
 										</ul>
 					                </li>

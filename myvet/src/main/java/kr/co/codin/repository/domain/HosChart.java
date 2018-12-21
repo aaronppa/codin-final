@@ -107,6 +107,12 @@ public class HosChart {
 	public void setPet(Pet pet) {
 		this.pet = pet;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "HosChart [chartNo=" + chartNo + ", boardCode=" + boardCode + ", hosCode=" + hosCode + ", vetNo=" + vetNo
+				+ ", bookingNo=" + bookingNo + ", disease=" + disease + ", diagnosis=" + diagnosis + ", warning="
+				+ warning + ", memberNo=" + memberNo + ", petNo=" + petNo + ", nextBooking=" + nextBooking
+				+ ", chartRegDate=" + chartRegDate + ", chartEditDate=" + chartEditDate + ", vet=" + vet + ", member="
+				+ member + ", pet=" + pet + "]";
+	}
 }

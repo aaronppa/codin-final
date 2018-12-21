@@ -195,6 +195,7 @@ public class MemberController {
 		model.addAttribute("member", service.myPage(memberNo));
 //		System.out.println(pService.myPet(memberNo));
 		model.addAttribute("pet", pService.myPet(memberNo));
+		model.addAttribute("hos", hService.myHos(memberNo));
 	}
 	
 	/**

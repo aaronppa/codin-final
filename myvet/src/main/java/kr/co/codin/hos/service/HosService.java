@@ -89,5 +89,7 @@ public interface HosService {
 	void deleteFacility(int facilityNo);
 	int overlapBooking(HosBooking booking);
 	List<Tip> indexTip(int count);
+	List<Hospital> myHos(int memberNo);
+	HosChart selectChart(int bookingNo);
 	
 }

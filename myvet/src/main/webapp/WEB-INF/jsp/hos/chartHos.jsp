@@ -15,6 +15,7 @@
 	<script src="<c:url value='/resources/js/timepicker/jquery.timepicker.js'/>"></script>
 	<script src="<c:url value='/resources/js/datepicker/picker.js'/>"></script>
 	<script src="<c:url value='/resources/js/datepicker/picker.date.js'/>"></script>
+	<script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.css'/>"/>
 	<link rel="stylesheet" href="<c:url value='/resources/js/datepicker/default.date.css'/>"/>
 	
@@ -128,7 +129,7 @@
         <h1>차트 목록</h1>
         <h5>병원명 : <span>${hospital.title }</span></h5>
         <h5>진료의 : <span>${user.memberName }</span></h5>
-        <input type="hidden" id="bookingNo"><br>
+        <input type="hidden" id="bookingNo" value="-1"><br>
         <button id="writeChart">차트 작성</button><br>
         <div id="chartList">
             <div class="columns" id="chartDiv">
@@ -286,6 +287,7 @@
         		$(".selected").removeClass("selected");
         		$(this).addClass("selected");
         		$("#bookingNo").val($(this).find(".bookingNo").val())
+        		console.log($(this).find(".bookingNo").val());
         		
         		$.ajax({
         			type: "post",
@@ -328,15 +330,24 @@
         }
         
         $("#writeChart").click(function(){
-        	console.log($("#bookingNo").val());
-        	
-        	window.open("/myvet/hos/writeChart.do?bookingNo=" + $("#bookingNo").val(), 
+			if ($("#bookingNo").val() == -1) {
+				swal({
+					  type: 'error',
+					  title: '아이가 없어요!',
+					  text: '선택된 진료대상이 없습니다.'
+				}).then(function(){
+					return
+				})
+			} else {
+	        	window.open("/myvet/hos/writeChart.do?bookingNo=" + $("#bookingNo").val(), 
         				"writeChart",
         				"width=850, height=1000, location=no");
+			}
+        	
         })
         
         $("#register").click(function(){
-        	window.open("/myvet/hos/reception.do?hosCode="+${hospital.hosCode}, "reception", "width=850, height=1000, location=no");
+        	window.open("/myvet/hos/reception.do?hosCode="+${hospital.hosCode}, "reception", "width=850, height=850, location=no");
         })
 
         $("#date").change(function(){

@@ -383,4 +383,14 @@ public class HosServiceImpl implements HosService{
 		return mapper.indexTip(count);
 	}
 
+	@Override
+	public List<Hospital> myHos(int memberNo) {
+		return mapper.myHos(memberNo);
+	}
+	
+	@Override
+	public 	HosChart selectChart(int bookingNo) {
+		return mapper.selectChart(bookingNo);
+	}
+
 }

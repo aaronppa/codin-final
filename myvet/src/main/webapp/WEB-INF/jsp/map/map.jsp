@@ -17,10 +17,14 @@
 }
 
 .map {
-	width: 620px;
-	height: 500px;
+	width: 500px;
+	height: 740px;
 	margin-left: 300px;
 /* 	margin-top: 150px; */
+}
+
+td {
+	padding-left: 15px
 }
 
 #addr {
@@ -31,7 +35,7 @@
 #resultDiv {
 	border: 1px solid black;
 	width: 299px;
-	height: 462px;
+	height: 700px;
 	position:relative;
 }
 
@@ -453,7 +457,7 @@
 											function(e) {
 
 												swal("\""+jsondata[k].title
-														+ "\"은 등록되지 않은 병원입니다.");
+														+ "\"은<br> 등록되지 않은 병원입니다.");
 											});
 						} else {
 						//	console.log(k);
@@ -478,14 +482,23 @@
 													//alert("로그인이 되어 있지 않습니다.")
 													swal('로그인 후 이용해주세요!');
 												}else{
-													swal({
-														title:jsondata[k].title+" 페이지로 이동하시겠습니까?",
-														html:"<a href=\"<c:url value='/hos/hospital.do?hosCode="+jsondata[k].hosCode+"'/>\">"+jsondata[k].title+" 병원 페이지로 이동</a>"
-													});
-											
+													Swal({
+														  title: jsondata[k].title,
+														  text: "페이지로 이동하시겠습니까?",
+														  type: 'question',
+														  showCancelButton: true,
+														  confirmButtonColor: '#412427',
+														  cancelButtonColor: '#8b787a',
+														  confirmButtonText: '예',
+														  cancelButtonText: '아니오'
+														}).then((result) => {
+															if (result.value) {
+															  	window.location.href = "<c:url value='/hos/hospital.do?hosCode="+jsondata[k].hosCode+"'/>"
+															}
+														})
+														  
 												}
-												
-											});
+											});	
 									/* console.log('--------------');
 									console.log(k);
 									console.log(Ma rkerClicklist[k].title);*/

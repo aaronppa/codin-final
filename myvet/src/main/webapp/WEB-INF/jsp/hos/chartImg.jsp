@@ -30,6 +30,15 @@
 			width: 100%;
 			margin: auto
 		}
+		
+		h3 {
+			margin-top: 390px;
+			text-align: center
+		}
+		
+		.item {
+			margin: auto;
+		}
 	</style>
 </head>
 <body>
@@ -44,6 +53,12 @@
 	
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
+	  <c:if test="${empty chartImgs }">
+	    <div class="item">
+	      <h3>등록된 이미지가 없습니다.</h3>
+	    </div>
+		
+	  </c:if>
 	  <c:forEach items="${chartImgs }" var="chartImg" varStatus="status2" >
 	    <div class="item">
 	      <img class="img" src="/myvet/upload${chartImg.filePath }/${chartImg.sysName}"  >

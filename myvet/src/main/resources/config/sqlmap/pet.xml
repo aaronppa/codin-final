@@ -29,6 +29,7 @@
 		<result column="block_start" property="blockStart"/>
 		<result column="block_end" property="blockEnd"/>
 		<result column="facility_no" property="facilityNo"/>
+		<result column="booking_no" property="bookingNo"/>
 		<result column="confirm" property="confirm"/>
 		<result column="finish" property="finish"/>
 	</resultMap>
@@ -46,11 +47,12 @@
 	</select>
 	
 	<select id="selectPetBooking" parameterType="int" resultMap="PetBookingMap">
-		select a.*, b.confirm, b.finish, (select title from hos_basic where hos_code = a.hos_code) as hos_title
+		select a.*, b.booking_no, b.confirm, b.finish, (select title from hos_basic where hos_code = a.hos_code) as hos_title
 		  from hos_block a 
          inner join hos_booking b
             on a.block_code = b.block_code
-		 where b.booking_pet = #{petNo}		 
+		 where b.booking_pet = #{petNo}	
+		 order by block_day desc
 	</select>
 	
 	<insert id="insertPet" parameterType="Pet">

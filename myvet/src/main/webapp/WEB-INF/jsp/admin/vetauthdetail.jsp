@@ -16,8 +16,8 @@ crossorigin="anonymous"></script>
 <link rel="stylesheet" href='<c:url value='/resources/js/sweet/sweetalert2.min.css'/>'>
 <style>
 .container {
-	width: 900px;
-	margin: auto;
+	width: 800px;
+	margin-left: 50px;
 }
 
 table{
@@ -39,7 +39,7 @@ table *{
 .imgbox{
 	margin: auto;
 	margin-top: 20px;
-	width: 800px;
+	width: 750px;
 	height: auto;
 	border: 5px dotted #a56e50;
 	padding: 20px;
@@ -61,20 +61,20 @@ img:hover{
     margin-top: 30px;
     position: fixed;
     top: 90px;
-    left: 923px;
+    left: 900px;
 }
 
 .button {
 	display: block;
+	width: 40px;
 }
 
 .button.approve {
 	background-color: #a56e50;
 	border-radius: 5px;
-	color: black;
+	color: white;
 	padding: .5em;
 	text-decoration: none;
-	width: 30px;
 	height: 20px;
 	margin: auto;
 
@@ -86,7 +86,6 @@ img:hover{
 	color: white;
 	padding: .5em;
 	text-decoration: none;
-	width: 30px;
 	height: 20px;
 	margin: auto;
 	margin-top: 70px;
@@ -99,7 +98,6 @@ img:hover{
 	color: black;
 	padding: .5em;
 	text-decoration: none;
-	width: 30px;
 	height: 20px;
 	margin: auto;
 }
@@ -110,7 +108,6 @@ img:hover{
 	color: white;
 	padding: .5em;
 	text-decoration: none;
-	width: 30px;
 	height: 20px;
 	margin: auto;
 	margin-top: 70px;
@@ -123,7 +120,6 @@ img:hover{
 	color: black;
 	padding: .5em;
 	text-decoration: none;
-	width: 30px;
 	height: 20px;
 	margin: auto;
 	margin-top: 70px;
@@ -136,7 +132,6 @@ img:hover{
 	color: black;
 	padding: .5em;
 	text-decoration: none;
-	width: 30px;
 	height: 20px;
 	margin: auto;
 	margin-top: 70px;

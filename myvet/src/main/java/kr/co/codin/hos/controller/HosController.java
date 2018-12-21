@@ -530,8 +530,9 @@ public class HosController {
 	}
 	
 	@RequestMapping("insertChart.do")
-	@ResponseBody
 	public void insertChart(HosChart chart, List<MultipartFile> chartImg) throws IllegalStateException, IOException {
+		
+		System.out.println("chart : " + chart);
 		
 		service.insertChart(chart);
 
@@ -1099,6 +1100,10 @@ public class HosController {
 		return map;
 	}
 	
+	@RequestMapping("chartPet.do")
+	public void chartPet(Model model, int bookingNo) {
+		model.addAttribute("chart", service.selectChart(bookingNo));
+	}
 	
 	@RequestMapping("indexTip.do")
 	@ResponseBody

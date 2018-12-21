@@ -559,9 +559,9 @@
 	
 	<insert id="insertChart" parameterType="HosChart" useGeneratedKeys="true" keyProperty="chartNo">
 		insert into hos_chart
-		(hos_code, vet_no, disease, diagnosis, warning, member_no, pet_no, next_booking)
+		(hos_code, booking_no, vet_no, disease, diagnosis, warning, member_no, pet_no, next_booking)
 		values
-		(#{hosCode}, #{vetNo}, #{disease}, #{diagnosis}, #{warning}, #{memberNo}, #{petNo}, #{nextBooking})
+		(#{hosCode}, #{bookingNo}, #{vetNo}, #{disease}, #{diagnosis}, #{warning}, #{memberNo}, #{petNo}, #{nextBooking})
 	</insert>
 	
 	<insert id="insertFileInfoAtChart" parameterType="FileInfo">
@@ -575,6 +575,7 @@
 		select *
 		from hos_chart
 		where pet_no = #{petNo}
+		order by chart_reg_date desc
 	</select>
 	
 	<select id="selectChartImgs" parameterType="int" resultMap="fileInfoMap">
@@ -786,5 +787,19 @@
 					) b
 		where a.tip_no = b.tip_no
 		limit #{count}
+	</select>
+	
+	<select id="myHos" parameterType="int" resultMap="hospitalMap">
+		select *
+		from hos_basic
+		where hos_code in (select hos_code
+							from fav_hos
+							where member_no = #{memberNo})
+	</select>
+	
+	<select id="selectChart" parameterType="int" resultMap="chartMap">
+		select *
+		from hos_chart
+		where booking_no = #{bookingNo}
 	</select>
 </mapper>
