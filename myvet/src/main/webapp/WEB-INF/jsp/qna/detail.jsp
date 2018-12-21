@@ -50,7 +50,7 @@
 /* 
 .answer {
 	visibility: hidden;
-} */
+}  */
 .container{
 	width:100%;
 	postion:absolute;
@@ -410,7 +410,9 @@
 	            		
 	            		
 	            	}
-                  	
+                  	if("${user.memberNo}" != "${qna.writerNo}"){
+                  		$(".checking"+i).css("visibility","hidden");
+                  	}
                   	
              
 	                 CommentList =result; 
