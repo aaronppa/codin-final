@@ -94,6 +94,12 @@
   	.booking:hover {
   		font-weight: bold;
   	}
+  	
+    #hosTitle {
+    	font-size: 0.6em;
+    	color: black !important;
+    	margin-left: 30px;
+    }
 </style>
 </head>
 <body>
@@ -114,7 +120,7 @@
 	</c:when>
 	<c:otherwise>
     <div id="bodyContainer">
-   	    <h1>동물병원 예약 <span id="hosTitle">${hospital.title }</span></h1>
+   	    <h1>동물병원 예약 <a id="hosTitle" href="/myvet/hos/hospital.do?hosCode=${hospital.hosCode }"><span class="marginLeft">${hospital.title }</span></a></h1>
    	    <table id="controlTable">
    	    	<tr id="controlRow">
    	    		<td>

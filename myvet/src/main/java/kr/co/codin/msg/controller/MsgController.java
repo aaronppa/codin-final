@@ -31,7 +31,7 @@ public class MsgController {
 	@RequestMapping("main.do")
 	public void main(Model model, HttpSession session) throws Exception{
 		Member member = (Member) session.getAttribute("user");
-		System.out.println("main.do first loading:"+member.getMemberNo()+" "+member.getMemberNickname());
+		System.out.println("main.do first loading:"+member.getMemberNo()+" "+member.getMemberNickname()+" "+member.getHosCode());
 		List<Message> myChats = service.selectMyChat(member.getMemberNo());
 		System.out.println("myChats Results:"+myChats);
 		model.addAttribute("myChat", myChats);
@@ -48,7 +48,7 @@ public class MsgController {
 		
 		// 메세지 읽음 날짜 Stamp찍기 
 		service.updateMyReadDate(myRg);
-		
+		System.out.println(service.selectChatMsg(myRg));
 		return service.selectChatMsg(myRg);
 	}
 	
@@ -144,5 +144,11 @@ public class MsgController {
 	}
 	
 	// 대화방 나가면 수신자 그룹에서 trash 처리 
+	@RequestMapping("deltechatroom.do")
+	@ResponseBody
+	public void deleteChatRoom(RecipientGroup rg) throws Exception{
+		service.deleteChatRoom(rg);
+	}
+	
 	
 } // End Class

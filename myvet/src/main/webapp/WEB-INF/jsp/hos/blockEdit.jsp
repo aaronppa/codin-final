@@ -160,6 +160,11 @@
 		font-weight: bold;
 	}
   	
+    span.marginLeft {
+    	font-size: 1.2em;
+    	color: black !important;
+    }
+    
     </style>
 	<script
     src="https://code.jquery.com/jquery-3.3.1.js"
@@ -180,7 +185,7 @@
     <div id="bodyContainer">
         <div>
             <h1 class="inline">예약 수정 / 삭제</h1>
-            <span class="marginLeft">${hospital.title }</span>
+            <a href="/myvet/hos/hospital.do?hosCode=${hospital.hosCode }"><span class="marginLeft">${hospital.title }</span></a>
             <input type="hidden" id="hosCode" name="hosCode" value="${hospital.hosCode }">
         </div>
         <div>

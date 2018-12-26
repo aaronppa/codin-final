@@ -20,4 +20,6 @@ public interface MsgService {
 	void resetDateRead(int chatId);
 	void updateMyReadDate(RecipientGroup myRg);
 	int countUnreadMsg(int recipientNo);
+	Message checkChatExist(Message message);
+	void deleteChatRoom(RecipientGroup rg);
 }

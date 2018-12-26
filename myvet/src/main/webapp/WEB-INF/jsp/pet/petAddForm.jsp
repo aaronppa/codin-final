@@ -18,6 +18,22 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
 <style>
+	#body {
+		width: 1100px;
+		margin: auto;
+		padding-top: 110px;	
+	}
+	#background {
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		z-index: -2;
+		top:0;
+		left:0;
+		opacity: 0.3;
+		background-image: url('/myvet/resources/img/common/background.jpg');
+	}
+
     table, tr, td{
         border-collapse: collapse;
     }
@@ -87,10 +103,9 @@
 </head>
 <body>
 	
-	<div id="top-menu">
-		<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
-	</div>
-	
+	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />
+	<div id="background"></div>
+	<div id="body">
 	<form id="petForm" action="petadd.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="memberNo" value="${user.memberNo}" />
 		<div id="container">
@@ -159,6 +174,7 @@
 	        <button type="submit" class="btn btn-outline-primary">작성 완료</button>
 	    </div>
 	</form>
+	</div>
 	<script src="<c:url value='/resources/js/pet/pet-add-form.js'/>"></script>
 </body>
 </html>

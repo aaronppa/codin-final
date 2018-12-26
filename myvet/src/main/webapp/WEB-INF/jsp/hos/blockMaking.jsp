@@ -47,6 +47,7 @@
 
     #blockTable {
         width: 100%;
+      	background: rgba(245, 233, 195, 0.5);
     }
 
     #blockTable th {
@@ -117,6 +118,23 @@
     	height: 60px;
     }
     
+    #hosTitle {
+    	font-size: 1.2em;
+    	color: black !important;
+    }
+    
+    #checkDiv {
+    	width: 200px;
+    	height: 50px;
+    	padding: 10px;
+    	text-align: center;
+    	background: rgba(245, 233, 195, 0.5);
+    }
+    
+    .marginRight {
+    	margin-right: 20px;
+    }
+    
     </style>
 	<script
     src="https://code.jquery.com/jquery-3.3.1.js"
@@ -134,12 +152,11 @@
     
         <div>
             <h1 class="inline">예약 블럭 만들기</h1>
-            <span class="marginLeft">${hospital.title }</span>
-            <input type="hidden" id="hosCode" name="hosCode" value="${hospital.hosCode }">
+            <a id="hosTitle" href="/myvet/hos/hospital.do?hosCode=${hospital.hosCode }"><span class="marginLeft">${hospital.title }</span></a>
         </div>
-        <div>
+        <div id="checkDiv">
             <input type="checkbox" class="types" name="medical" id="medical" value="on">
-            <label for="medical">진료</label>
+            <label class="marginRight" for="medical">진료</label>
             <input type="checkbox" class="types" name="beauty" id="beauty" value="on">
             <label for="beauty">미용</label>
         </div>

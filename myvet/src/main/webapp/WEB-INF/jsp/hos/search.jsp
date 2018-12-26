@@ -18,12 +18,13 @@
        	#background {
        		width: 100%;
        		height: 100%;
-       		position: absolute;
-       		z-index: -2;
-       		top:0;
-       		left:0;
-       		opacity: 0.3;
+	   		position: fixed;
+	   		z-index: -2;
+	   		top:0;
+	   		left:0;
+       		opacity: 0.5;
     		background-image: url('/myvet/resources/img/common/background.jpg');
+    		z-index: -1
     	}
     	
     	.registerHos:nth-child(2n) {
@@ -51,7 +52,8 @@
         }
         
         .hos-name,
-        .hos-name:hover {
+        .hos-name:hover,
+        .hos-name1 {
 			color: #412427;
         }
         
@@ -117,7 +119,7 @@
         	margin-bottom: 0px !important;
         }
         
-        h5.hos-name {
+        h5.hos-name1 {
         	font-weight: bold;
         }
         
@@ -175,7 +177,7 @@
     	<div class="disable nomalHos">
 	       <tr>
 	           <th>
-	               <h5 class="hos-name">bbb 동물병원</h5>
+	               <h5 class="hos-name1">bbb 동물병원</h5>
 	           </th>
 	           <td>
 	               <span class="hos-addr1">경기도 성남시 분당구 어쩌고 저쩌고</span><br>
@@ -253,9 +255,18 @@
 				$("#regPageing").load("regHosPage.do?pageNo="+1+"&ListCount="+hosMap.listCount);
 				
 		   		$(".hos-name").click(function(e){
-		   			e.preventDefault();
-		   					
-		   	 		window.location.href = "hospital.do?hosCode="+$(this).attr("href");
+		   			
+		   			console.log($(this).attr("href"))
+		   			
+		   			if ($(this).attr("href") == undefined) {
+		   				return;
+		   			} else {
+		   				
+			   			e.preventDefault();
+			   					
+			   	 		window.location.href = "hospital.do?hosCode="+$(this).attr("href");
+		   			}
+		   			
 		   		})
 	
 	   		})
@@ -281,7 +292,7 @@
 				
 				for(let i = 0; i < hosList.length; i++) {
 					var $newRow = $nomalHos.clone();
-	    			$newRow.find(".hos-name").html(hosList[i].title);
+	    			$newRow.find(".hos-name1").html(hosList[i].title);
 	    			$newRow.find(".hos-addr1").html(hosList[i].roadAddress);
 	    			if(hosList[i].roadAddress == null) {
 		    			$newRow.find(".hos-addr1").html(hosList[i].address);

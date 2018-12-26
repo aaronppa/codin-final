@@ -136,7 +136,7 @@
 	    <table>
 	    <form action="/myvet/hos/insertChart.do" id="form" method="POST" enctype="multipart/form-data">
 	            <input type="hidden" name="hosCode" value="${booking.hosCode }">
-        		<input type="text" name="bookingNo" value="${booking.bookingNo }">
+        		<input type="hidden" name="bookingNo" value="${booking.bookingNo }">
         		<input type="hidden" name="vetNo" value="${user.memberNo }">
 	    
 	        <tr>

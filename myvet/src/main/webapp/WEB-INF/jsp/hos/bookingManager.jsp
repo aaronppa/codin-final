@@ -19,7 +19,6 @@
 		padding-top: 110px;
 /* 		height: 500px; */
 		overflow: auto;
-		
 	}
 	
 	#bookingTable{
@@ -93,6 +92,16 @@
 	.ban:hover {
 		font-weight: bold;
 	}
+	
+	#hosTitle {
+		color: black !important;	
+		font-size: 0.6em !important;
+	}
+	
+	.marginLeft {
+		margin-left: 50px
+	}
+	
 </style>
 </head>
 <body>
@@ -104,7 +113,8 @@
 	
 	<button id="blockMake">예약 블럭 만들기</button>
 	<button id="blockEdit">예약 블럭 수정/삭제</button><br>
-	<h3 id="pageTitle">예약 확정/거부</h3>
+	<h1 id="pageTitle">예약 확정/거부 <a id="hosTitle" href="/myvet/hos/hospital.do?hosCode=${hospital.hosCode }"><span class="marginLeft">${hospital.title }</span></a><br></h1>
+	
    	<span>예약종류 : </span>
    	<select id="facilityType">
    		<option class="type" value="1">진료</option>

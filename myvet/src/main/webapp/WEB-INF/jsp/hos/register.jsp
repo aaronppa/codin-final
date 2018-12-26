@@ -7,13 +7,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>병원 등록 - MyVet</title>
+<link href="https://fonts.googleapis.com/css?family=Gamja+Flower" rel="stylesheet">
 <link rel="stylesheet" href="<c:url value='/resources/css/hos/register.css'/>"/>
 <script src="<c:url value='/resources/js/vendor/jquery.js'/>"></script>
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 
 <style>
+    body {
+    	font-family: 'Gamja Flower', cursive !important;
+    	font-size: 20px !important;
+    	padding-top: 50px;
+   	}
+
 	.wideInput {
-		width: 80%
+		width: 70%;
+		overflow: hidden;
 	}
 
     .disable {
@@ -36,6 +44,10 @@
     	white-space: nowrap;
     }
 
+	#comment {
+		width: 70%;
+		height: 120px;
+	}
 </style>
 </head>
 <body>
@@ -122,7 +134,7 @@
 	                병원 소개글
 	            </th>
 	            <td>
-	                <textarea name="hosComment" rows="5" cols="75" style="resize: none;"></textarea>
+	                <textarea name="hosComment" id="comment" style="resize: none;"></textarea>
 	            </td>
 	        </tr>
 	        <tr>

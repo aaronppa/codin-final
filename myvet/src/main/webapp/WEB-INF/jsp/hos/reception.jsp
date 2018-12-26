@@ -7,6 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>현장접수 - MyVet</title>
+<link href="https://fonts.googleapis.com/css?family=Gamja+Flower" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value='/resources/css/hos/register.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
+<script src="<c:url value='/resources/js/vendor/jquery.js'/>"></script>
+<script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
+
     <style>
    	    body {
 		  	font-family: 'Gamja Flower', cursive !important;
@@ -46,11 +52,6 @@
 	  		background: #f4e8e6;
 	  	}
     </style>
-<link rel="stylesheet" href="<c:url value='/resources/css/hos/register.css'/>"/>
-<link rel="stylesheet" href="<c:url value='/resources/css/common/pagination.css'/>"/>
-<link href="https://fonts.googleapis.com/css?family=Gamja+Flower" rel="stylesheet">
-<script src="<c:url value='/resources/js/vendor/jquery.js'/>"></script>
-<script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 </head>
 <body>
     <div id="body">

@@ -19,4 +19,6 @@ public interface MsgMapper {
 	void resetDateRead(int chatId);
 	void updateMyReadDate(RecipientGroup myRg);
 	int countUnreadMsg(int recipientNo);
+	Message selectChatExist(Message message);
+	void updateRecipientTrash(RecipientGroup myRg);
 }

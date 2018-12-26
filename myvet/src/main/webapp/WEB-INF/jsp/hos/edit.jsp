@@ -6,12 +6,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>병원 등록 - MyVet</title>
+<title>병원 수정 - MyVet</title>
 <link rel="stylesheet" href="<c:url value='/resources/css/hos/register.css'/>"/>
 <script src="<c:url value='/resources/js/vendor/jquery.js'/>"></script>
 <script src="<c:url value='/resources/js/sweet/sweetalert2.all.js'/>"></script>
 
 <style>
+    body {
+    	font-family: 'Gamja Flower', cursive !important;
+    	font-size: 20px !important;
+    	padding-top: 50px;
+   	}
+
 	.wideInput {
 		width: 80%
 	}

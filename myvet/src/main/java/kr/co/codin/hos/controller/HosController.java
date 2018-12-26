@@ -1139,6 +1139,10 @@ public class HosController {
 		System.out.println(hospital);
 		
 		String bookingFacility = "진료";
+		if (block.getFacilityNo() == 2) {
+			bookingFacility = "미용";
+		}
+		
 		String msgBody = 
 							"<span style='font-weight: bold;'>" + 
 							member.getMemberName() + "</span>님의 " + 
@@ -1152,13 +1156,37 @@ public class HosController {
 							bookingFacility + "</span>";
 		
 		Message message = new Message();
-		mService.insertChatId(message);
+		
+		// 이미 한번 메세지가 가서 Recipient_Group 에 등록되어 있는 반려동물 주인이 있는 경우(수신자가 삭제하지 않은 메일이 있다면)
 		
 		message.setSenderNo(hospital.getHosCode());
 		message.setMsgType(bookingType);
+		message.setRecipientNo(member.getMemberNo());
 		
-		if (block.getFacilityNo() == 2) {
-			bookingFacility = "미용";
+		Message chatRoomCheck = mService.checkChatExist(message);
+		
+		System.out.println("chatRoomCheck: "+chatRoomCheck);
+		
+		self.setRecipientNo(message.getSenderNo());
+		self.setRecipientType(1);
+		
+		
+		if(chatRoomCheck==null) {
+			mService.insertChatId(message);
+			int chatId = message.getChatId();
+			rg.setRecipientNo(member.getMemberNo());
+			rg.setRecipientType(0);
+			rg.setRecipientGroupId(chatId);
+			self.setRecipientGroupId(chatId);
+			
+			mService.insertRecipientGroup(self);
+			mService.insertRecipientGroup(rg);
+			mService.resetDateRead(message.getChatId());
+		} else {
+			int chatId =chatRoomCheck.getChatId();
+			message.setChatId(chatId);
+			self.setRecipientGroupId(chatId);
+			mService.resetDateRead(chatId);
 		}
 		
 		if (bookingType == 3) {
@@ -1168,19 +1196,10 @@ public class HosController {
 		if (bookingType == 4) {
 			message.setMsgBody(msgBody + "예약이 <span style='font-weight: bold;'>병원 사정 상 취소</span> 되었습니다.");
 		}
-		
-		self.setRecipientNo(message.getSenderNo());
-		self.setRecipientType(1);
-		self.setRecipientGroupId(message.getChatId());
-		
-		rg.setRecipientNo(member.getMemberNo());
-		rg.setRecipientType(0);
-		rg.setRecipientGroupId(message.getChatId());
-		
+
 		System.out.println(message);
 		
 		mService.insertMsg(message);
-		mService.insertRecipientGroup(self);
-		mService.insertRecipientGroup(rg);
+		mService.selfRead(self);
 	}
 }

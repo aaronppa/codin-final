@@ -76,5 +76,15 @@ public class MsgServiceImpl implements MsgService{
 		return mapper.countUnreadMsg(recipientNo);
 	}
 
+	@Override
+	public Message checkChatExist(Message message) {
+		return mapper.selectChatExist(message);
+	}
+
+	@Override
+	public void deleteChatRoom(RecipientGroup rg) {
+		mapper.updateRecipientTrash(rg);
+	}
+
 	
 }

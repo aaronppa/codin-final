@@ -146,7 +146,7 @@
 		
 	    <div id="vet-container">
 	    <h2 class="myvet">즐겨찾는 병원</h2>
-	    <button class="btn btn-warning float--right" id="vet-add">즐겨찾는 병원 추가</button>
+	    <button class="btn btn-warning float--right" id="vet-add">병원 검색</button>
 	    <hr>
 	    	<c:if test="${empty hos}">
 	    		<h3>등록된 병원이 없습니다.</h3>

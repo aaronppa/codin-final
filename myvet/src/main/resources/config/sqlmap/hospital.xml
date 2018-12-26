@@ -637,6 +637,9 @@
 			</if>
 		)
 		</if>
+		<if test="pageNum == 5">
+			order by hos_board_reg_date desc
+		</if>
 		limit #{begin}, #{pageNum}
 	</select>
 	

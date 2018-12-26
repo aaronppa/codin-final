@@ -110,8 +110,7 @@
 						 			 from file_info
 						 			 where board_code = 30) f on f.file_id = hb.thumb_img
 						 where hos_register = 'Y') h on h.hos_code = r.recipient_no
-        where trash = 0
-        and recipient_group_id = #{chatId}
+        where recipient_group_id = #{chatId}
         and recipient_no != #{recipientNo}
 	</select>
 	
@@ -127,11 +126,13 @@
 	</select>
 	
 	<select id="selectMyChatNew" parameterType="int" resultMap="messageMap">
-		select msg_id, chat_id, msg_body, latest_msg_date as datwe_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
+		select msg_id, chat_id, msg_body, date_sent, msg_type, recipient_no, date_read as my_date_read, recipient_type
 		from recipient_group r
-		inner join(select msg_id, chat_id, msg_body, MAX(date_sent) as latest_msg_date, msg_type
+		inner join(select msg_id, chat_id, msg_body, date_sent, msg_type
 		                        from message
-                                group by chat_id) l on l.chat_id = r.recipient_group_id
+		                        where date_sent = ( select MAX(date_sent) from message)
+                                group by chat_id
+                                ) l on l.chat_id = r.recipient_group_id
 		where recipient_no = #{memberNo}
 		and date_read is null
 		and trash = 0
@@ -164,15 +165,16 @@
 	</select>
 	
 	<select id="selectChatExist" parameterType="Message" resultMap="messageMap">
-		select max(recipient_group_id) chat_id, recipient_no, date_read, trash, msg_id, sender_no, msg_body, latest_msg_date, msg_type
+		select recipient_group_id as chat_id, recipient_no, date_read, trash, max(msg_id) as msg_id, sender_no, msg_body, latest_msg_date as date_sent, msg_type
 		from recipient_group r
-		inner join(select msg_id, chat_id, sender_no, msg_body, MAX(date_sent) as latest_msg_date, msg_type
+		inner join(select msg_id, chat_id, sender_no, msg_body, date_sent as latest_msg_date, msg_type
 		                        from message
-                                where sender_no= #{senderNo}
-                                group by chat_id) l on l.chat_id = r.recipient_group_id
+								where msg_id=( 
+												select max(msg_id) from message
+												where sender_no = #{senderNo})
+                                ) l on l.chat_id = r.recipient_group_id
 		where recipient_no = #{recipientNo}
-        and trash = 0
-        group by recipient_no;
+		and trash = 0
 	</select>
 
 	<update id="selfRead" parameterType="RecipientGroup">
@@ -183,7 +185,7 @@
 		where chat_id = #{recipientGroupId}
 		and msg_id = #{msgId}
 		and trash =0
-		and recipient_no = #{recipientNo};
+		and recipient_no = #{recipientNo}
 	</update>
 	
 	<update id="resetDateRead" parameterType="int">
@@ -195,6 +197,13 @@
 	<update id="updateMyReadDate" parameterType="RecipientGroup">
 		update recipient_group
 		   set date_read = now()
+		where recipient_group_id = #{recipientGroupId}
+		and recipient_no = #{recipientNo}
+	</update>
+	
+	<update id="updateRecipientTrash" parameterType="RecipientGroup">
+		update recipient_group
+		   set trash = 1
 		where recipient_group_id = #{recipientGroupId}
 		and recipient_no = #{recipientNo}
 	</update>

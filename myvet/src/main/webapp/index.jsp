@@ -37,9 +37,10 @@
        	#background {
        		width: 100%;
        		height: 100%;
-       		position: absolute;
-       		top:0;
-       		left:0;
+	   		position: fixed;
+	   		z-index: -2;
+	   		top:0;
+	   		left:0;
        		opacity: 0.5;
     		background-image: url('/myvet/resources/img/common/background.jpg');
     		z-index: -1
@@ -131,7 +132,7 @@
     		margin-top: 110px;
     		width: 180px;
     		padding: 10px;
-    		border: 1px solid black;
+/*     		border: 1px solid black; */
     		background: rgba(245, 233, 195, 0.3);
     	}
     	

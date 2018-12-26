@@ -2817,3 +2817,16 @@ pre {
 
 .long-delay {
   animation-delay: 700ms !important; }
+  
+.adminTop,
+.adminTop ul {
+    background-color: #ea9999ff; }
+
+.vetTop,
+.vetTop ul {
+    background-color: #b6d7a8ff; }
+
+.userTop,
+.userTop ul {
+    background-color: #9fc5e8ff; }
+

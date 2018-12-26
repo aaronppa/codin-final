@@ -22,13 +22,15 @@
    	#background {
    		width: 100%;
    		height: 100%;
-   		position: absolute;
-   		z-index: -2;
-   		top:0;
-   		left:0;
-   		opacity: 0.3;
-		background-image: url('/myvet/resources/img/common/background.jpg');
-	}
+  		position: fixed;
+  		z-index: -2;
+  		top:0;
+  		left:0;
+   		opacity: 0.5;
+  		background-image: url('/myvet/resources/img/common/background.jpg');
+  		z-index: -1
+  	}
+
 
    .hosfacility {
        position: relative;
@@ -322,7 +324,20 @@
             <a class="menuTitle" href="hosBoard.do?hosCode=${hospital.hosCode }">병원게시판</a><br>
             <div id="boardList">
             	<c:forEach items="${boardList }" var="board">
-		            <a href="/myvet/hos/detailBoard.do?hosBoardId=" + ${board.hosBoardId }>[${board.hosBoardCategoryCode }]${board.hosBoardTitle }</a><br>
+		            <a href="/myvet/hos/detailBoard.do?hosBoardId=" + ${board.hosBoardId }>
+		            <c:if test="${board.hosBoardCategoryCode == 1 }">
+		            	<span>[공지] </span>
+		            </c:if>
+		            <c:if test="${board.hosBoardCategoryCode == 2 }">
+		            	<span>[이벤트] </span>
+		            </c:if>
+		            <c:if test="${board.hosBoardCategoryCode == 3 }">
+		            	<span>[홍보] </span>
+		            </c:if>
+		            <c:if test="${board.hosBoardCategoryCode == 4 }">
+		            	<span>[후기] </span>
+		            </c:if>
+		             ${board.hosBoardTitle }</a><br>
 	            </c:forEach>
             </div>
         </div>

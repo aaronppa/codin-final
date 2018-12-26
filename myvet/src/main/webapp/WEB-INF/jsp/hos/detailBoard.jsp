@@ -7,6 +7,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 	<style>
+	  	#background {
+       		width: 100%;
+       		height: 100%;
+	   		position: fixed;
+	   		z-index: -2;
+	   		top:0;
+	   		left:0;
+       		opacity: 0.5;
+    		background-image: url('/myvet/resources/img/common/background.jpg');
+    		z-index: -1
+    	}
+    	
 		#bodyContainer{
 			width: 1100px;
 			margin: auto;
@@ -29,6 +41,7 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/jsp/common/topBar.jsp" />     
+	<div id="background"></div>
 	       
 	<div id="bodyContainer">
 		제목 : [<span id="category">${board.hosBoardCategoryCode }</span>]<span id="boardTitle">${board.hosBoardTitle }</span><br>

@@ -80,12 +80,25 @@
 </head>
 <body id="topBarBody">
 
-    <div class="top-bar">
+    <div class="top-bar" id="topBar">
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
                 <li class="menu-text"><span><a href="<c:url value='/index.jsp'/>"><img src="/myvet/resources/img/Logo.png" id="logo">MyVet</a></span></li>
                 <li class="menu-text sub"><a href="<c:url value='/hos/search.do'/>">동물병원 찾기</a></li>
                  <c:if test="${not empty user}">
+                 <input type="hidden" id="memberGrade" value="${user.memberGrade }">
+                 <script>
+                 		
+                 	if ($("#memberGrade").val() == "A") {
+                 		$("#topBar").addClass("adminTop");
+                 	}
+                 	if ($("#memberGrade").val() == "V") {
+                 		$("#topBar").addClass("vetTop");
+                 	}
+                 	if ($("#memberGrade").val() == "U") {
+                 		$("#topBar").addClass("userTop");
+                 	}
+                 </script>
                 <li class="menu-text sub">
                     <a href="#">커뮤니티</a>
                     <ul class="menu vertical">
@@ -126,7 +139,6 @@
 										<ul class="menu vertical">
 											<li><a href="<c:url value='/member/myPage.do'/>">마이페이지</a></li>
 											<li><a class="msgbadge" href="<c:url value='/msg/main.do'/>">메신저<span class="nbsp">&nbsp;</span><span class='badge badge-dark'></span></a></li>
-                							<li><a href="#">즐겨찾는 병원</a></li>
 											<li><a href="<c:url value='/member/logout.do'/>">로그아웃</a></li>
 										</ul>
 									</li>
